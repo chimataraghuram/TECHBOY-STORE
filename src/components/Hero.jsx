@@ -10,38 +10,32 @@ const Hero = () => {
                 <div className="glow glow-2"></div>
             </div>
 
-            <div className="container hero-content">
-                <div className="hero-text">
+            <div className="container hero-content-centered">
+                <div className="hero-text-centered">
                     <div className="badge-wrapper">
                         <span className="badge analyst-badge">TECHBOY ANALYST PICK</span>
                     </div>
-                    <h1 className="premium-title">
-                        Find Your Next <br />
-                        <span className="text-gradient">Tech Evolution</span>
+                    <h1 className="premium-title-centered">
+                        How to Find Your <br />
+                        <span className="text-gradient">Perfect Phone</span>
                     </h1>
-                    <p className="premium-subtitle">
+                    <p className="premium-subtitle-centered">
                         Expert analysis meeting unbeatable deals. We curate the best smartphones so you always stay ahead of the curve.
                     </p>
-                    <div className="hero-buttons">
+                    <div className="hero-buttons centered">
                         <button className="primary-btn large jelly-btn">Start Exploring</button>
                         <button className="secondary-btn large jelly-btn">Top Collections</button>
                     </div>
-
-                    <div className="trust-badges">
-                        <div className="trust-item">
-                            <span>★ ★ ★ ★ ★</span>
-                            <p>Premium Expert Support</p>
-                        </div>
-                    </div>
                 </div>
 
-                <div className="hero-visual-wrapper soft-float">
+                <div className="hero-visual-wrapper-centered soft-float">
                     <div className="hero-main-visual glass-card">
                         <img src={heroImg} alt="Cyber Workstation" className="hero-img" />
                     </div>
                     <div className="floating-elements">
                         <div className="float-icon icon-1">⚡</div>
                         <div className="float-icon icon-2">💎</div>
+                        <div className="float-icon icon-3">📱</div>
                     </div>
                 </div>
             </div>
