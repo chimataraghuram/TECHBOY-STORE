@@ -161,6 +161,75 @@
   color: #ff8c42;
 }
 
+/* User & Cart Pill */
+.user-pill {
+  padding: 6px 12px;
+  gap: 0;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-info-capsule {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-name-text {
+  color: #ff8c42;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.pill-auth-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 6px 10px;
+  transition: all 0.3s ease;
+}
+
+.pill-auth-btn:hover {
+  color: #ff8c42;
+  text-shadow: 0 0 8px rgba(255, 140, 66, 0.5);
+}
+
+.auth-icon-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #a0a0b0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.auth-icon-btn:hover {
+  background: rgba(255, 140, 66, 0.1);
+  border-color: #ff8c42;
+  color: #ff8c42;
+  transform: translateY(-1px);
+}
+
+.cart-badge-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 6px;
+  height: 6px;
+  background: #ff3296;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ff3296;
+}
+
 /* Auth Modal Styles (Unchanged or tweaked) */
 .primary-btn {
   position: relative;
