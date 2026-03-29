@@ -84,24 +84,16 @@ const Navbar = ({ onChatToggle, onSearch }) => {
                 <div className="pill-wrapper logo-pill">
                     <a href="/" className="logo-container">
                         <img src={logo} alt="TECHBOY STORE" className="logo-img" />
-                        <span className="logo-text jelly-text">PORTFOLIO</span>
+                        <span className="logo-text jelly-text">TECHBOY STORE</span>
                     </a>
                 </div>
 
                 <div className={`nav-links-pill ${isMenuOpen ? 'active' : ''}`}>
                     <div className="pill-wrapper nav-pills">
                         <a href="#home" className={`nav-pill-item ${activeSection === 'home' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Home</a>
-                        <a href="#how-it-works" className={`nav-pill-item ${activeSection === 'how-it-works' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>About</a>
-                        <a href="#products" className={`nav-pill-item ${activeSection === 'products' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Internships</a>
-                        <a href="#features" className={`nav-pill-item ${activeSection === 'features' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Projects</a>
-                        <a href="#features" className={`nav-pill-item ${activeSection === 'features' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Explorations</a>
-                        <a href="#features" className={`nav-pill-item ${activeSection === 'features' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Contact</a>
-                        
-                        <div className="v-separator"></div>
-
-                        <button className="nav-pill-item special-pill" onClick={() => setIsMenuOpen(false)}>
-                            <span className="mini-text">Mini</span> <span className="game-text">Game</span>
-                        </button>
+                        <a href="#how-it-works" className={`nav-pill-item ${activeSection === 'how-it-works' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>How it Works</a>
+                        <a href="#products" className={`nav-pill-item ${activeSection === 'products' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Products</a>
+                        <a href="#features" className={`nav-pill-item ${activeSection === 'features' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Features</a>
                     </div>
                 </div>
 
