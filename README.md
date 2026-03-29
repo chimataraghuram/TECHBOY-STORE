@@ -29,13 +29,35 @@ You can explore the live interface here: [http://localhost:5173/TECHBOY-STORE/](
 
 ## 🖼️ Project Screenshots
 
-| Title | Description | Screenshot |
-| :-- | :-- | :-- |
-| **🚀 Hero Section** | Vibrant Neon Landing Page with Interactive 3D Particles and high-impact CTAs. | ![Hero](https://placehold.co/600x300/100000/ff8c42?text=Hero+Dynamic+Dashboard) |
-| **📊 Analyst Picks** | Dynamic filtered product cards with real-time deal links and performance tags. | ![Analyst Picks](https://placehold.co/600x300/100000/ff8c42?text=Expert+Recommendations+Grid) |
-| **⚖️ Comparison Modal** | Semi-transparent side-by-side spec comparison table for deep technical analysis. | ![Comparison](https://placehold.co/600x300/100000/ff8c42?text=Comparison+Engine+Modal) |
-| **🔐 Auth Experience** | Clean Glassmorphism-style Login & Registration with JWT session management. | ![Auth](https://placehold.co/600x300/100000/ff8c42?text=Premium+Identity+System) |
-| **📈 Analytics View** | Backend dashboard tracking user engagement, referral trends, and click analytics. | ![Analytics](https://placehold.co/600x300/100000/ff8c42?text=Admin+Click+Tracking+Panel) |
+<div align="center">
+  <h3>🚀 Hero Section</h3>
+  <p>Vibrant Neon Landing Page with Interactive 3D Particles and high-impact CTAs.</p>
+  <img src="https://placehold.co/800x400/100000/ff8c42?text=Hero+Dynamic+Dashboard" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);">
+  
+  <br /><br />
+  
+  <h3>📊 Analyst Picks</h3>
+  <p>Dynamic filtered product cards with real-time deal links and performance tags.</p>
+  <img src="https://placehold.co/800x400/100000/ff8c42?text=Expert+Recommendations+Grid" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);">
+  
+  <br /><br />
+  
+  <h3>⚖️ Comparison Engine</h3>
+  <p>Semi-transparent side-by-side spec comparison table for deep technical analysis.</p>
+  <img src="https://placehold.co/800x400/100000/ff8c42?text=Comparison+Engine+Modal" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);">
+  
+  <br /><br />
+  
+  <h3>🔐 Auth Experience</h3>
+  <p>Clean Glassmorphism-style Login & Registration with JWT session management.</p>
+  <img src="https://placehold.co/800x400/100000/ff8c42?text=Premium+Identity+System" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);">
+  
+  <br /><br />
+  
+  <h3>📈 Analytics View</h3>
+  <p>Backend dashboard tracking user engagement, referral trends, and click analytics.</p>
+  <img src="https://placehold.co/800x400/100000/ff8c42?text=Admin+Click+Tracking+Panel" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);">
+</div>
 
 ---
 
