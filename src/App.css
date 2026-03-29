@@ -39,9 +39,16 @@
 }
 
 .logo-pill {
-  padding: 6px 20px;
-  gap: 12px;
+  padding: 8px 24px;
+  gap: 15px;
   box-shadow: 0 0 20px rgba(255, 140, 66, 0.1);
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
 }
 
 .logo-img {
@@ -51,6 +58,7 @@
   border-radius: 50%;
   border: 2px solid #ff8c42;
   box-shadow: 0 0 15px rgba(255, 140, 66, 0.3);
+  flex-shrink: 0;
 }
 
 .jelly-text {
