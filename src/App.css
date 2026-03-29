@@ -201,19 +201,25 @@
 }
 
 .pill-auth-btn {
-  background: transparent;
-  border: none;
+  background: #ff3333;
   color: white;
-  font-weight: 700;
-  font-size: 0.85rem;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
   cursor: pointer;
-  padding: 6px 10px;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 0 20px rgba(255, 51, 51, 0.3);
 }
 
 .pill-auth-btn:hover {
-  color: #ff8c42;
-  text-shadow: 0 0 8px rgba(255, 140, 66, 0.5);
+  transform: translateY(-2px) scale(1.05);
+  background: #ff0000;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+  color: white;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
 .auth-icon-btn {
