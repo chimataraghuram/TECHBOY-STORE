@@ -796,8 +796,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 40px;
-  min-height: 80vh;
-  padding-top: 100px;
+  min-height: 70vh;
+  padding-top: 50px;
 }
 
 .hero-text {
