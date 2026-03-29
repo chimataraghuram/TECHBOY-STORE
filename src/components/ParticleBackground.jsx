@@ -25,11 +25,11 @@ const ParticleBackground = () => {
             reset() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 1;
-                this.speedX = Math.random() * 0.8 - 0.4;
-                this.speedY = Math.random() * 0.8 - 0.4;
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
                 this.color = Math.random() > 0.5 ? '#ff4500' : '#ff8c42';
-                this.opacity = Math.random() * 0.4 + 0.1;
+                this.opacity = Math.random() * 0.3 + 0.05;
             }
 
             update(mouseX, mouseY) {
@@ -40,13 +40,13 @@ const ParticleBackground = () => {
                     const dx = mouseX - this.x;
                     const dy = mouseY - this.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 150) {
-                        this.x -= dx / 50;
-                        this.y -= dy / 50;
+                    if (dist < 100) {
+                        this.x -= dx / 100;
+                        this.y -= dy / 100;
                     }
                 }
 
-                if (this.x < -50 || this.x > canvas.width + 50 || this.y < -50 || this.y > canvas.height + 50) {
+                if (this.x < -10 || this.x > canvas.width + 10 || this.y < -10 || this.y > canvas.height + 10) {
                     this.reset();
                 }
             }
@@ -60,14 +60,24 @@ const ParticleBackground = () => {
             }
         }
 
-        // More particles for the entire website
-        for (let i = 0; i < 150; i++) particles.push(new Particle());
+        // Optimized particle count for performance
+        const particleCount = window.innerWidth < 768 ? 40 : 80;
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
 
         let mouse = { x: null, y: null };
+        let lastMove = 0;
+        
         const mouseHandler = (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
+            const now = Date.now();
+            if (now - lastMove > 16) { // ~60fps throttling
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+                lastMove = now;
+            }
         };
+        
         window.addEventListener('mousemove', mouseHandler);
 
         const animate = () => {
@@ -87,7 +97,7 @@ const ParticleBackground = () => {
         };
     }, []);
 
-    return <canvas ref={canvasRef} className="particle-canvas-global" />;
+    return <canvas ref={canvasRef} className="particle-canvas-global" style={{ willChange: 'transform' }} />;
 };
 
 export default ParticleBackground;

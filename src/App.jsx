@@ -1,3 +1,4 @@
+import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
@@ -14,7 +15,12 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
 
   return (
-    <div className="app-container">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      className="app-container"
+    >
       <ParticleBackground />
       <Navbar onChatToggle={() => setIsChatOpen(!isChatOpen)} onSearch={setSearchTerm} />
       <main>
@@ -24,8 +30,10 @@ function App() {
         <Features />
       </main>
       <Footer />
-      <ChatPopup isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
-    </div>
+      <AnimatePresence>
+        {isChatOpen && <ChatPopup isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />}
+      </AnimatePresence>
+    </motion.div>
   )
 }
 

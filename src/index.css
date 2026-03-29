@@ -1,17 +1,17 @@
 :root {
-  --bg-primary: #0a0000;
-  --bg-secondary: #1a0000;
-  --bg-glass: rgba(40, 0, 0, 0.4);
-  --bg-glass-strong: rgba(60, 0, 0, 0.7);
-  --text-primary: #ffffff;
-  --text-secondary: #ffb3b3;
-  --accent-primary: #ff0000;
-  --accent-secondary: #cc0000;
-  --primary-glow: rgba(255, 0, 0, 0.5);
-  --border-glass: rgba(255, 0, 0, 0.2);
-  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+  --bg-primary: #080101;
+  --bg-secondary: #0c0202;
+  --bg-glass: rgba(20, 5, 5, 0.45);
+  --bg-glass-strong: rgba(30, 5, 5, 0.7);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent-primary: #ef4444;
+  --accent-secondary: #f97316;
+  --primary-glow: rgba(239, 68, 68, 0.5);
+  --border-glass: rgba(249, 115, 22, 0.15);
+  --font-main: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
   --jelly-btn-grad: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 45%, rgba(0, 0, 0, 0.1) 55%, rgba(0, 0, 0, 0.3) 100%);
-  --jelly-shadow: 0 8px 32px rgba(255, 0, 0, 0.4), inset 0 4px 8px rgba(255, 255, 255, 0.4), inset 0 -4px 8px rgba(0, 0, 0, 0.3);
+  --jelly-shadow: 0 8px 32px rgba(239, 68, 68, 0.4), inset 0 4px 8px rgba(255, 255, 255, 0.4), inset 0 -4px 8px rgba(0, 0, 0, 0.3);
 }
 
 * {
@@ -121,11 +121,11 @@ body {
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #ff6666 50%, #ff0000 100%);
+  background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.3));
+  filter: drop-shadow(0 0 15px rgba(239, 68, 68, 0.35));
 }
 
 .container {

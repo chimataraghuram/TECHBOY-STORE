@@ -1,4 +1,3 @@
-/* Navbar Pill Layout */
 .navbar {
   position: fixed;
   top: 15px;
@@ -7,24 +6,72 @@
   z-index: 1000;
   transition: all 0.3s ease;
   padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* Global Container Centering */
+.container {
+  width: 1200px !important; /* Force centered 1200px area */
+  margin: 0 auto !important;
+  padding: 0 20px;
 }
 
 .navbar-content {
-  display: flex;
-  justify-content: space-between;
+  display: grid !important;
+  grid-template-columns: 350px 1fr 350px !important;
   align-items: center;
   gap: 20px;
-  width: 100%;
+  width: 1200px !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
   padding: 0 50px;
+  position: relative;
+}
+
+.navbar-left {
+  display: flex !important;
+  justify-content: flex-start !important;
+  width: 100%;
+}
+
+.navbar-center {
+  display: flex !important;
+  justify-content: center !important;
+  width: 100%;
+}
+
+.navbar-right {
+  display: flex !important;
+  justify-content: flex-end !important;
+  width: 100%;
+}
+
+/* BIG RED SIGN IN BUTTON */
+.pill-auth-btn {
+  background: #ff0000 !important;
+  color: #fff !important;
+  padding: 12px 30px !important;
+  border-radius: 50px !important;
+  font-weight: 800 !important;
+  font-size: 1rem !important;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+  box-shadow: 0 5px 20px rgba(255, 0, 0, 0.5) !important;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.pill-auth-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 30px rgba(255, 0, 0, 0.7);
+  background: #ff3333 !important;
 }
 
 .navbar-center-group {
   display: flex;
   align-items: center;
   gap: 15px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 .pill-wrapper {
@@ -415,9 +462,12 @@
   position: relative;
   min-height: 100vh;
   display: flex;
+  justify-content: center;
   align-items: center;
   padding-top: 120px;
   padding-bottom: 60px;
+  width: 100%;
+  overflow: hidden;
 }
 
 .background-glows {
@@ -2715,3 +2765,67 @@ section {
     text-align: center;
   }
 }
+
+/* Performance & Smoothness Optimizations */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.particle-canvas-global {
+  pointer-events: none;
+  z-index: -1;
+  will-change: transform;
+}
+
+.glass-card {
+  will-change: transform, opacity;
+  transform: translateZ(0); /* Force GPU acceleration */
+}
+
+/* Optimize backdrop-filter for slow devices */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Ensure product images load smoothly */
+.product-real-img {
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  backface-visibility: hidden;
+}
+
+/* 1:1 GH-PAGES GLOW ACCENTS */
+.glow-red {
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.6) !important;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5) !important;
+}
+
+.glow-red:hover {
+  box-shadow: 0 0 40px rgba(239, 68, 68, 0.8) !important;
+}
+
+.step-card {
+  position: relative;
+}
+
+.step-number {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--accent-secondary);
+  opacity: 0.08;
+}
+
+.step-icon {
+  margin-bottom: 20px;
+  color: var(--accent-secondary);
+}
+

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Search, Bot, LogOut } from 'lucide-react';
 import logo from '../assets/techboy-logo.jpg';
 
 const Navbar = ({ onChatToggle, onSearch }) => {
@@ -81,57 +82,62 @@ const Navbar = ({ onChatToggle, onSearch }) => {
     return (
         <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
             <div className="navbar-content">
-                <div className="pill-wrapper logo-pill">
-                    <a href="/" className="logo-container">
-                        <img src={logo} alt="TECHBOY STORE" className="logo-img" />
-                        <span className="logo-text jelly-text">TECHBOY STORE</span>
-                    </a>
-                </div>
-
-                <div className="navbar-center-group">
-                    <div className={`nav-links-pill ${isMenuOpen ? 'active' : ''}`}>
-                        <div className="pill-wrapper nav-pills">
-                            <a href="#home" className={`nav-pill-item ${activeSection === 'home' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Home</a>
-                            <a href="#how-it-works" className={`nav-pill-item ${activeSection === 'how-it-works' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>How it Works</a>
-                            <a href="#products" className={`nav-pill-item ${activeSection === 'products' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Products</a>
-                            <a href="#features" className={`nav-pill-item ${activeSection === 'features' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Features</a>
-                        </div>
-                    </div>
-
-                    <div className="pill-wrapper action-pill">
-                        <div className="search-pill">
-                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="search-icon">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                            <input
-                                type="text"
-                                className="pill-search-input"
-                                placeholder="Search..."
-                                onChange={handleSearchChange}
-                            />
-                        </div>
-                        
-                        <div className="v-separator"></div>
-
-                        <a href="https://chimataraghuram.github.io/TECHBOY-AI/" target="_blank" rel="noopener noreferrer" className="ai-pill-btn">
-                            <span className="ai-pill-text">TECHBOY AI</span>
+                <div className="navbar-left">
+                    <div className="pill-wrapper logo-pill">
+                        <a href="/" className="logo-container">
+                            <img src={logo} alt="TECHBOY STORE" className="logo-img" />
+                            <span className="logo-text jelly-text">TECHBOY STORE</span>
                         </a>
                     </div>
                 </div>
 
-                <div className="pill-wrapper user-pill desktop-only">
-                    {user ? (
-                        <div className="user-info-capsule">
-                            <span className="user-name-text">{user.username}</span>
-                            <button className="auth-icon-btn logout-btn" onClick={logout} title="Logout">
-                                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                </svg>
-                            </button>
+                <div className="navbar-center">
+                    <div className="navbar-center-group">
+                        <div className={`nav-links-pill ${isMenuOpen ? 'active' : ''}`}>
+                            <div className="pill-wrapper nav-pills">
+                                <a href="#home" className={`nav-pill-item ${activeSection === 'home' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Home</a>
+                                <a href="#how-it-works" className={`nav-pill-item ${activeSection === 'how-it-works' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>How it Works</a>
+                                <a href="#products" className={`nav-pill-item ${activeSection === 'products' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Products</a>
+                                <a href="#features" className={`nav-pill-item ${activeSection === 'features' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Features</a>
+                            </div>
                         </div>
-                    ) : (
-                        <button className="pill-auth-btn" onClick={() => setAuthModal('login')}>SIGN IN</button>
-                    )}
+
+                        <div className="pill-wrapper action-pill">
+                            <div className="search-pill">
+                                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="search-icon">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                                <input
+                                    type="text"
+                                    className="pill-search-input"
+                                    placeholder="Search..."
+                                    onChange={handleSearchChange}
+                                />
+                            </div>
+                            
+                            <div className="v-separator"></div>
+
+                            <a href="https://chimataraghuram.github.io/TECHBOY-AI/" target="_blank" rel="noopener noreferrer" className="ai-pill-btn">
+                                <Bot size={18} className="ai-pill-icon" />
+                                <span className="ai-pill-text">TECHBOY AI</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="navbar-right">
+                    <div className="pill-wrapper user-pill">
+                        {user ? (
+                            <div className="user-info-capsule">
+                                <span className="user-name-text">{user.username}</span>
+                                <button className="auth-icon-btn logout-btn" onClick={logout} title="Logout">
+                                    <LogOut size={16} />
+                                </button>
+                            </div>
+                        ) : (
+                            <button className="pill-auth-btn glow-red" onClick={() => setAuthModal('login')}>SIGN IN</button>
+                        )}
+                    </div>
                 </div>
             </div>
 
