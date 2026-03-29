@@ -11,11 +11,20 @@
 
 .navbar-content {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  padding: 0 50px;
+}
+
+.navbar-center-group {
+  display: flex;
   align-items: center;
   gap: 15px;
-  width: 100%;
-  padding: 0 40px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .pill-wrapper {
