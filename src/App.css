@@ -30,8 +30,25 @@
 }
 
 .logo-pill {
-  padding: 6px 24px;
+  padding: 6px 16px;
+  gap: 10px;
   box-shadow: 0 0 20px rgba(255, 140, 66, 0.1);
+}
+
+.logo-img {
+  height: 32px;
+  width: 32px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1.5px solid #ff8c42;
+}
+
+.jelly-text {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: white;
+  white-space: nowrap;
 }
 
 .nav-links-pill {
@@ -39,21 +56,23 @@
 }
 
 .nav-pills {
-  gap: 10px;
-  padding: 6px 10px;
+  gap: 8px;
+  padding: 6px;
   border-color: rgba(255, 255, 255, 0.1);
 }
 
 .nav-pill-item {
   color: #a0a0b0;
-  padding: 8px 20px;
-  border-radius: 30px;
-  font-size: 0.9rem;
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 0.85rem;
   font-weight: 600;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.3s ease;
   background: transparent;
   border: none;
   cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
 }
 
 .nav-pill-item:hover {
