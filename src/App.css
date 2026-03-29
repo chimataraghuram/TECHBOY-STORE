@@ -39,25 +39,27 @@
 }
 
 .logo-pill {
-  padding: 6px 16px;
-  gap: 10px;
+  padding: 6px 20px;
+  gap: 12px;
   box-shadow: 0 0 20px rgba(255, 140, 66, 0.1);
 }
 
 .logo-img {
-  height: 32px;
-  width: 32px;
+  height: 48px;
+  width: 48px;
   object-fit: cover;
   border-radius: 50%;
-  border: 1.5px solid #ff8c42;
+  border: 2px solid #ff8c42;
+  box-shadow: 0 0 15px rgba(255, 140, 66, 0.3);
 }
 
 .jelly-text {
-  font-size: 1rem;
-  font-weight: 800;
-  letter-spacing: 1px;
+  font-size: 1.1rem;
+  font-weight: 900;
+  letter-spacing: 1.5px;
   color: white;
   white-space: nowrap;
+  text-transform: uppercase;
 }
 
 .nav-links-pill {
