@@ -7,13 +7,15 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Product, ClickTrack
+from .models import Product, ClickTrack, PriceHistory, PriceAlert
 from .serializers import (
     UserSerializer, 
     RegisterSerializer, 
     CustomTokenObtainPairSerializer,
     ProductSerializer,
-    ClickTrackSerializer
+    ClickTrackSerializer,
+    PriceHistorySerializer,
+    PriceAlertSerializer
 )
 
 User = get_user_model()
@@ -73,3 +75,58 @@ class TrackClickAPIView(APIView):
             serializer.save()
             return Response({"message": "Click tracked successfully"}, status=status.HTTP_201_CREATED)
         return Response({"error": "Invalid request", "details": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+# --- New Feature Views ---
+
+class PriceHistoryViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = PriceHistory.objects.all()
+    serializer_class = PriceHistorySerializer
+    permission_classes = [AllowAny]
+    
+    def get_queryset(self):
+        product_id = self.request.query_params.get('product_id')
+        if product_id:
+            return self.queryset.filter(product_id=product_id).order_by('timestamp')
+        return self.queryset
+
+class PriceAlertViewSet(viewsets.ModelViewSet):
+    serializer_class = PriceAlertSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return PriceAlert.objects.filter(user=self.request.user)
+
+class ChatbotAPIView(APIView):
+    permission_classes = [AllowAny]
+    
+    def post(self, request):
+        query = request.data.get('query', '').lower()
+        if not query:
+            return Response({"response": "I'm ready to help! What kind of smartphone are you looking for?"})
+        
+        # Expert Rule-based filtering (mock AI)
+        products = Product.objects.all()
+        
+        # Simple keyword matching
+        matched = []
+        if 'gaming' in query:
+            matched = products.filter(description__icontains='gaming') | products.filter(tag__icontains='gaming')
+        elif 'budget' in query or 'cheap' in query:
+            matched = products.order_by('price')[:3]
+        elif 'camera' in query or 'photo' in query:
+            matched = products.filter(specs__icontains='MP') | products.filter(description__icontains='camera')
+        else:
+            matched = products.filter(name__icontains=query) | products.filter(category__icontains=query)
+            
+        if matched.exists():
+            recommendations = ProductSerializer(matched[:3], many=True).data
+            names = ", ".join([p['name'] for p in recommendations])
+            return Response({
+                "response": f"Based on your interest, I recommend checking out: {names}. They offer great value in that category!",
+                "products": recommendations
+            })
+        
+        return Response({
+            "response": "I couldn't find a specific match, but you can explore our 'Analyst Picks' for the best-vetted options!",
+            "products": []
+        })

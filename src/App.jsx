@@ -22,11 +22,11 @@ function App() {
       className="app-container"
     >
       <ParticleBackground />
-      <Navbar onChatToggle={() => setIsChatOpen(!isChatOpen)} onSearch={setSearchTerm} />
+      <Navbar onChatToggle={() => setIsChatOpen(!isChatOpen)} onSearch={setSearchTerm} searchTerm={searchTerm} />
       <main>
         <Hero />
         <HowToUse />
-        <StoreSection searchTerm={searchTerm} />
+        <StoreSection searchTerm={searchTerm} onSearch={setSearchTerm} />
         <Features />
       </main>
       <Footer />

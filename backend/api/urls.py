@@ -6,11 +6,16 @@ from .views import (
     ProfileView,
     ProductViewSet,
     CompareAPIView,
-    TrackClickAPIView
+    TrackClickAPIView,
+    PriceHistoryViewSet,
+    PriceAlertViewSet,
+    ChatbotAPIView
 )
 
 router = DefaultRouter()
 router.register(r'products', ProductViewSet)
+router.register(r'price-history', PriceHistoryViewSet, basename='price-history')
+router.register(r'alerts', PriceAlertViewSet, basename='alerts')
 
 urlpatterns = [
     # Auth Endpoints
@@ -21,6 +26,7 @@ urlpatterns = [
     # Feature Endpoints
     path('compare/', CompareAPIView.as_view(), name='compare'),
     path('track-click/', TrackClickAPIView.as_view(), name='track-click'),
+    path('chatbot/', ChatbotAPIView.as_view(), name='chatbot'),
     
     # Router covers products/ API
     path('', include(router.urls)),

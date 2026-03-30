@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Search, Bot, LogOut } from 'lucide-react';
+import { Search, Bot, LogOut, X } from 'lucide-react';
 import logo from '../assets/techboy-logo.jpg';
 
-const Navbar = ({ onChatToggle, onSearch }) => {
+const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
     const [scrolled, setScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
@@ -82,6 +82,7 @@ const Navbar = ({ onChatToggle, onSearch }) => {
     return (
         <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
             <div className="navbar-content">
+                {/* LOGO AREA - LEFT */}
                 <div className="navbar-left">
                     <div className="pill-wrapper logo-pill">
                         <a href="/" className="logo-container">
@@ -91,6 +92,7 @@ const Navbar = ({ onChatToggle, onSearch }) => {
                     </div>
                 </div>
 
+                {/* NAVIGATION - CENTER */}
                 <div className="navbar-center">
                     <div className="navbar-center-group">
                         <div className={`nav-links-pill ${isMenuOpen ? 'active' : ''}`}>
@@ -102,41 +104,49 @@ const Navbar = ({ onChatToggle, onSearch }) => {
                             </div>
                         </div>
 
-                        <div className="pill-wrapper action-pill">
+                        <div className="pill-wrapper search-only-pill">
                             <div className="search-pill">
-                                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="search-icon">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
+                                <Search size={18} className="search-icon" />
                                 <input
                                     type="text"
                                     className="pill-search-input"
-                                    placeholder="Search..."
+                                    placeholder="Search gear..."
+                                    value={searchTerm}
                                     onChange={handleSearchChange}
                                 />
+                                {searchTerm && (
+                                    <button className="clear-search-btn" onClick={() => onSearch('')} title="Clear Search">
+                                        <X size={14} />
+                                    </button>
+                                )}
                             </div>
-                            
-                            <div className="v-separator"></div>
-
-                            <a href="https://chimataraghuram.github.io/TECHBOY-AI/" target="_blank" rel="noopener noreferrer" className="ai-pill-btn">
-                                <Bot size={18} className="ai-pill-icon" />
-                                <span className="ai-pill-text">TECHBOY AI</span>
-                            </a>
                         </div>
                     </div>
                 </div>
 
+                {/* ACTIONS - RIGHT */}
                 <div className="navbar-right">
-                    <div className="pill-wrapper user-pill">
-                        {user ? (
-                            <div className="user-info-capsule">
-                                <span className="user-name-text">{user.username}</span>
-                                <button className="auth-icon-btn logout-btn" onClick={logout} title="Logout">
-                                    <LogOut size={16} />
-                                </button>
-                            </div>
-                        ) : (
-                            <button className="pill-auth-btn glow-red" onClick={() => setAuthModal('login')}>SIGN IN</button>
-                        )}
+                    <div className="navbar-right-group" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+
+                        <div className="pill-wrapper ai-only-pill">
+                            <button onClick={onChatToggle} className="ai-pill-btn-standalone">
+                                <Bot size={18} className="ai-pill-icon" />
+                                <span className="ai-pill-text">TECHBOY AI</span>
+                            </button>
+                        </div>
+
+                        <div className="pill-wrapper user-pill">
+                            {user ? (
+                                <div className="user-info-capsule">
+                                    <span className="user-name-text">{user.username}</span>
+                                    <button className="auth-icon-btn logout-btn" onClick={logout} title="Logout">
+                                        <LogOut size={16} />
+                                    </button>
+                                </div>
+                            ) : (
+                                <button className="pill-auth-btn glow-red" onClick={() => setAuthModal('login')}>SIGN IN</button>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

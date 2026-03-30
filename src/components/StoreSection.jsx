@@ -6,7 +6,7 @@ import QuickViewModal from './QuickViewModal';
 
 const API_BASE_URL = 'http://127.0.0.1:8000/api';
 
-const StoreSection = ({ searchTerm }) => {
+const StoreSection = ({ searchTerm, onSearch }) => {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -40,10 +40,26 @@ const StoreSection = ({ searchTerm }) => {
         return () => { mounted = false; };
     }, []); // FIXED: EMPTY ARRAY
 
+    // Auto-scroll when search becomes active
+    useEffect(() => {
+        if (searchTerm && searchTerm.length > 1) {
+            const el = document.getElementById('products');
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    }, [searchTerm]);
+
     // Logic in render - 0 hooks here
-    const term = (searchTerm || "").toLowerCase();
+    // Advanced filtering logic
+    const term = (searchTerm || "").toLowerCase().trim();
     const filteredProducts = term 
-        ? products.filter(p => p.name.toLowerCase().includes(term) || p.category.toLowerCase().includes(term))
+        ? products.filter(p => 
+            p.name.toLowerCase().includes(term) || 
+            p.category.toLowerCase().includes(term) ||
+            (p.tag && p.tag.toLowerCase().includes(term)) ||
+            (p.description && p.description.toLowerCase().includes(term))
+        )
         : products.filter(p => p.category === selectedRange);
 
     const handleCompare = (product) => {
@@ -87,6 +103,13 @@ const StoreSection = ({ searchTerm }) => {
                     </div>
                 )}
 
+                {searchTerm && (
+                    <div className="search-results-info">
+                        <h3>Showing {filteredProducts.length} results for "<span className="text-gradient">{searchTerm}</span>"</h3>
+                        {filteredProducts.length > 0 && <p>Found the best tech matches for your query.</p>}
+                    </div>
+                )}
+
                 <div className="product-grid" style={{ marginTop: '40px' }}>
                     {filteredProducts.map((product, idx) => (
                         <ProductCard
@@ -99,7 +122,18 @@ const StoreSection = ({ searchTerm }) => {
                         />
                     ))}
                     {filteredProducts.length === 0 && (
-                        <div className="no-results">No smartphones found matching "{searchTerm}"</div>
+                        <div className="no-results-premium glass-card">
+                            <div className="no-results-content">
+                                <span className="warning-icon">⚠️</span>
+                                <h3>No matches found</h3>
+                                <p>We couldn't find any products matching "{searchTerm}". Try a different category or name.</p>
+                                <button className="secondary-btn mini clear-results-btn" onClick={() => {
+                                    onSearch('');
+                                    window.scrollTo({top: 0, behavior: 'smooth'});
+                                }}>Try Again</button>
+                                <button className="jelly-btn mini" onClick={() => (onSearch(''), window.location.hash = '#products')}>Return to Home</button>
+                            </div>
+                        </div>
                     )}
                 </div>
 
