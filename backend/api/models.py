@@ -15,6 +15,8 @@ class Product(models.Model):
     amazon_link = models.URLField(max_length=1024, blank=True, null=True)
     flipkart_link = models.URLField(max_length=1024, blank=True, null=True)
     category = models.CharField(max_length=100, db_index=True)
+    brand = models.CharField(max_length=100, blank=True, null=True, db_index=True)
+    rating = models.FloatField(default=0.0)
     tag = models.CharField(max_length=100, blank=True, null=True)
     specs = models.JSONField(default=dict, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, db_index=True)

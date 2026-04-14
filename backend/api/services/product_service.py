@@ -32,6 +32,10 @@ def get_recommendations(product, limit=5):
     
     return recommendations
 
+def get_featured_products(limit=6):
+    # Highest rated and expensive products (Premium selection)
+    return Product.objects.order_by('-rating', '-price')[:limit]
+
 def compare_products(product_ids):
     products = list(Product.objects.filter(id__in=product_ids))
     
@@ -78,8 +82,6 @@ def compare_products(product_ids):
             "lowest": lowest_price_id,
             "highest": highest_price_id
         },
-        "value": {
-            "best_value": best_value_id
-        },
-        "specs": specs_comparison
+        "specs": specs_comparison,
+        "winner": best_value_id
     }

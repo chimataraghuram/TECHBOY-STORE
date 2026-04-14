@@ -79,6 +79,13 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = self.get_serializer(trending_products, many=True)
         return Response(serializer.data)
 
+    @method_decorator(cache_page(60))
+    @action(detail=False, methods=['get'])
+    def featured(self, request):
+        featured_products = product_service.get_featured_products(limit=6)
+        serializer = self.get_serializer(featured_products, many=True)
+        return Response(serializer.data)
+
     @action(detail=True, methods=['get'])
     def recommendations(self, request, pk=None):
         product = self.get_object()
@@ -119,7 +126,7 @@ class AnalyticsAPIView(APIView):
         action = request.query_params.get('action')
         if action == 'top-products':
             return Response(analytics_service.get_top_products())
-        elif action == 'source-breakdown':
+        elif action == 'sources':
             return Response(analytics_service.get_source_breakdown())
         return Response({"error": "Invalid action parameter"}, status=400)
 

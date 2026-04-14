@@ -40,7 +40,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'price', 'description', 'image', 'amazon_link', 'flipkart_link', 'category', 'tag', 'specs', 'score']
+        fields = ['id', 'name', 'price', 'description', 'image', 'amazon_link', 'flipkart_link', 'category', 'brand', 'rating', 'tag', 'specs', 'score']
 
     def get_score(self, obj):
         if obj.price and obj.price > 0 and isinstance(obj.specs, dict):
