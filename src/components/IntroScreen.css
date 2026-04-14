@@ -37,7 +37,9 @@
   letter-spacing: 3px;
 }
 
-.intro-subtitle {
+.intro-footer {
+  position: absolute;
+  bottom: 40px;
   font-size: 1.2rem;
   font-weight: 800;
   text-transform: uppercase;

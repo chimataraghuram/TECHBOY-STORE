@@ -47,15 +47,16 @@ const IntroScreen = ({ onComplete }) => {
         >
           TECHBOY STORE
         </motion.h1>
-        <motion.p
-          className="intro-subtitle"
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-        >
-          COOKED BY RAGHU❤️
-        </motion.p>
       </div>
+
+      <motion.p
+        className="intro-footer"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.6, duration: 0.8 }}
+      >
+        COOKED BY RAGHU❤️
+      </motion.p>
     </motion.div>
   );
 };
