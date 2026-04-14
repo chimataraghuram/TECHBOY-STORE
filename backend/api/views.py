@@ -9,6 +9,9 @@ from rest_framework import filters
 from rest_framework.decorators import action
 from django.db.models import Count
 from django_filters.rest_framework import DjangoFilterBackend
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from .services import product_service, analytics_service
 from .models import Product, ClickTrack, PriceHistory, PriceAlert
 from .filters import ProductFilter
 from .serializers import (
@@ -29,14 +32,13 @@ class RegisterView(APIView):
     permission_classes = [AllowAny]
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.save()
-            refresh = RefreshToken.for_user(user)
-            return Response({
-                "token": str(refresh.access_token),
-                "user": UserSerializer(user).data
-            }, status=status.HTTP_201_CREATED)
-        return Response({"error": "Invalid request", "details": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            "token": str(refresh.access_token),
+            "user": UserSerializer(user).data
+        }, status=status.HTTP_201_CREATED)
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
@@ -66,11 +68,22 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
             qs = qs.order_by('-price')
         return qs
 
+    @method_decorator(cache_page(60))
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+    @method_decorator(cache_page(60))
     @action(detail=False, methods=['get'])
     def trending(self, request):
-        trending_products = Product.objects.annotate(click_count=Count('clicks')).order_by('-click_count')
-        # Return all in descending order, we can also paginate or slice if desired
+        trending_products = product_service.get_trending_products(limit=10)
         serializer = self.get_serializer(trending_products, many=True)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['get'])
+    def recommendations(self, request, pk=None):
+        product = self.get_object()
+        recommendations = product_service.get_recommendations(product, limit=5)
+        serializer = self.get_serializer(recommendations, many=True)
         return Response(serializer.data)
 
 class CompareAPIView(APIView):
@@ -80,20 +93,35 @@ class CompareAPIView(APIView):
         if not isinstance(product_ids, list):
             return Response({"error": "Invalid request. 'products' should be a list of IDs."}, status=status.HTTP_400_BAD_REQUEST)
         
-        products = Product.objects.filter(id__in=product_ids)
+        products, comparison_data = product_service.compare_products(product_ids)
         serializer = ProductSerializer(products, many=True)
+        
         return Response({
-            "products": serializer.data
+            "products": serializer.data,
+            "comparison": comparison_data
         })
 
 class TrackClickAPIView(APIView):
     permission_classes = [AllowAny]
     def post(self, request):
         serializer = ClickTrackSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"message": "Click tracked successfully"}, status=status.HTTP_201_CREATED)
-        return Response({"error": "Invalid request", "details": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        product_id = serializer.validated_data['product'].id
+        source = serializer.validated_data['source']
+        user = request.user if request.user.is_authenticated else None
+        
+        analytics_service.track_click(product_id, source, user)
+        return Response({"message": "Click tracked successfully"}, status=status.HTTP_201_CREATED)
+
+class AnalyticsAPIView(APIView):
+    permission_classes = [AllowAny]
+    def get(self, request):
+        action = request.query_params.get('action')
+        if action == 'top-products':
+            return Response(analytics_service.get_top_products())
+        elif action == 'source-breakdown':
+            return Response(analytics_service.get_source_breakdown())
+        return Response({"error": "Invalid action parameter"}, status=400)
 
 # --- New Feature Views ---
 

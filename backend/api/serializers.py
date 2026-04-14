@@ -36,9 +36,18 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         return data
 
 class ProductSerializer(serializers.ModelSerializer):
+    score = serializers.SerializerMethodField()
+
     class Meta:
         model = Product
-        fields = ['id', 'name', 'price', 'description', 'image', 'amazon_link', 'flipkart_link', 'category', 'tag', 'specs']
+        fields = ['id', 'name', 'price', 'description', 'image', 'amazon_link', 'flipkart_link', 'category', 'tag', 'specs', 'score']
+
+    def get_score(self, obj):
+        if obj.price and obj.price > 0 and isinstance(obj.specs, dict):
+            # Scale score for cleanliness 
+            score = (len(obj.specs.keys()) / obj.price) * 1000
+            return round(score, 4)
+        return 0.0
 
 class ClickTrackSerializer(serializers.ModelSerializer):
     # accept product_id instead of full product object for ease of posting

@@ -7,3 +7,4 @@ Pillow>=10.0.0
 drf-spectacular>=0.26.4
 django-q2>=1.6.0
 whitenoise>=6.5.0
+gunicorn>=21.2.0

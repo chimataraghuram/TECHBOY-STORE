@@ -9,7 +9,8 @@ from .views import (
     TrackClickAPIView,
     PriceHistoryViewSet,
     PriceAlertViewSet,
-    ChatbotAPIView
+    ChatbotAPIView,
+    AnalyticsAPIView
 )
 
 router = DefaultRouter()
@@ -26,6 +27,7 @@ urlpatterns = [
     # Feature Endpoints
     path('compare/', CompareAPIView.as_view(), name='compare'),
     path('track-click/', TrackClickAPIView.as_view(), name='track-click'),
+    path('analytics/', AnalyticsAPIView.as_view(), name='analytics'),
     path('chatbot/', ChatbotAPIView.as_view(), name='chatbot'),
     
     # Router covers products/ API
