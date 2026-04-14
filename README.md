@@ -67,38 +67,29 @@ You can explore the live interface here: [https://chimataraghuram.github.io/TECH
 | :--- | :--- | :--- |
 | 📱 | **Analyst Picks** | Multi-category budget-vetted recommendations (Under 10k to Flagship). |
 | ⚖️ | **Smart Comparison** | Overlay comparison engine for a detailed spec-by-spec breakdown. |
-| 🔗 | **Referral Tracking** | Direct background tracking for Amazon and Flipkart affiliate links. |
+| 📈 | **Weighted Trending** | Advanced sorting logic using recent (24h) and total click momentum. |
+| 🧠 | **Smart Recommendations** | AI-like similarity matching based on price buffers and categories. |
+| 📊 | **Analytics Suite** | Real-time tracking of referral sources and top product engagement. |
 | 🔐 | **JWT Integration** | Secure account management with personalized search and profiles. |
-| ⚡ | **Vite-Powered** | Instant search results and blazing-fast HMR for a smooth UX. |
-
----
-
-## ❓ The Problem
-Students and developers often struggle to find the best value smartphones amidst overwhelming marketing noise, fragmented e-commerce data, and unreliable reviews. Making a data-driven choice shouldn't take hours of research.
-
-## ✅ The Solution
-**TechBoy Store** centralizes expert picks and real-time deal tracking into a single, high-performance dashboard. By leveraging the **Django REST Framework** for the data layer and **React** for a fluid UI, it provides a "Source of Truth" for smartphone hunters.
+| ⚡ | **DRF Caching** | Server-side LocMem caching for lightning-fast API response times. |
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **React 19** - UI Core
-- **Vite** - Build Tooling
-- **Vanilla CSS** - Neon Styling & Glassmorphism
-- **Context API** - State Management
+- **React 19** - UI Core with Context API
+- **Vite** - High-performance build tooling
+- **Vanilla CSS** - Premium Neon Styling & Glassmorphism
+- **Framer Motion** - Smooth micro-animations
 
-### Backend
+### Backend (Production-Grade)
 - **Django 6** - Robust Backend Framework
-- **Django REST Framework (DRF)** - REST API Layer
-- **SQLite** - High-speed Local Database
-- **SimpleJWT** - Secure Authentication
-
-### APIs & Tools
-- **FilterBackend** - Real-time Querying
-- **CORS Headers** - Cross-origin safety
-- **Dotenv** - Environment Security
+- **DRF (REST Framework)** - Scalable API Layer
+- **Service Layer Architecture** - Decoupled business logic (Services/Views)
+- **Caching & Throttling** - High-speed LocMemCache and API rate limiting
+- **SQLite / PostgreSQL** - Enterprise-ready database design
+- **Gunicorn** - Production-grade WSGI server
 
 ---
 
@@ -106,27 +97,26 @@ Students and developers often struggle to find the best value smartphones amidst
 
 ```text
 TECHBOY-STORE/
-├── backend/                # Django REST API
-│   ├── api/                # Core Application Logic
-│   │   ├── models.py       # Product & ClickTrack Models
-│   │   ├── views.py        # Auth & Resource Endpoints
-│   │   └── serializers.py  # Data Transform Layer
-│   └── core/               # Main Configuration
+├── backend/                # Django REST API (Production Setup)
+│   ├── api/                
+│   │   ├── services/       # Decoupled Business Logic (Analytics, Products)
+│   │   ├── models.py       # Optimized DB Models with Indexing
+│   │   ├── views.py        # Thin ViewSet Layer
+│   │   ├── serializers.py  # Advanced Data Transform Layer (Score Logic)
+│   │   └── exceptions.py   # Global Unified JSON Error Handler
+│   └── core/               # Central Config (Logging, Cache, Throttle)
 ├── src/                    # React Frontend
-│   ├── assets/             # Branding & Icons
 │   ├── components/         # Modular UI Components
-│   │   ├── Navbar.jsx      # Dynamic Auth Control
-│   │   └── StoreSection.jsx # API Integration Core
 │   └── App.css             # Neon/Glassmorphism Design System
-└── README.md               # User Documentation
+└── README.md               # Production Documentation
 ```
 
 ---
 
 ## 🛣️ Future Roadmap
-- [ ] **AI-Powered Recommendation**: Integrate a Llama-3 based chatbot for personalized phone advice.
+- [ ] **AI Chatbot**: Integrate a Llama-3 based assistant for personalized advice.
 - [ ] **Global Price Alert**: Email notifications for price drops on watched devices.
-- [ ] **Production-Ready DB**: Migrate to PostgreSQL for enhanced scalability.
+- [ ] **Deployment**: One-click deploy configuration for AWS/Render.
 
 ---
 
