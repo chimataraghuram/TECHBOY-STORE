@@ -6,8 +6,11 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
 from rest_framework import filters
+from rest_framework.decorators import action
+from django.db.models import Count
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Product, ClickTrack, PriceHistory, PriceAlert
+from .filters import ProductFilter
 from .serializers import (
     UserSerializer, 
     RegisterSerializer, 
@@ -51,8 +54,24 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProductSerializer
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    filterset_fields = ['category']
-    search_fields = ['name', 'category']
+    filterset_class = ProductFilter
+    search_fields = ['name', 'category', 'description']
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        sort = self.request.query_params.get('sort')
+        if sort == 'price_asc':
+            qs = qs.order_by('price')
+        elif sort == 'price_desc':
+            qs = qs.order_by('-price')
+        return qs
+
+    @action(detail=False, methods=['get'])
+    def trending(self, request):
+        trending_products = Product.objects.annotate(click_count=Count('clicks')).order_by('-click_count')
+        # Return all in descending order, we can also paginate or slice if desired
+        serializer = self.get_serializer(trending_products, many=True)
+        return Response(serializer.data)
 
 class CompareAPIView(APIView):
     permission_classes = [AllowAny]
