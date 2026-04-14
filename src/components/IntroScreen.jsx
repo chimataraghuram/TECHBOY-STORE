@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import './IntroScreen.css';
 import { motion } from 'framer-motion';
+import introVideo from '../assets/intro.mp4';
 
 const IntroScreen = ({ onComplete }) => {
   const videoRef = useRef(null);
@@ -33,7 +34,7 @@ const IntroScreen = ({ onComplete }) => {
         <video 
           ref={videoRef}
           className="intro-video"
-          src="/intro.mp4"
+          src={introVideo}
           muted
           playsInline
           autoPlay
