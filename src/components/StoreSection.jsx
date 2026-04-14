@@ -24,8 +24,9 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                 const res = await fetch(`${API_BASE_URL}/products/`);
                 const data = await res.json();
                 if (mounted) {
-                    setProducts(data);
-                    const cats = [...new Set(data.map(p => p.category))];
+                    const productsList = data.results || data;
+                    setProducts(productsList);
+                    const cats = [...new Set(productsList.map(p => p.category))];
                     setCategories(cats);
                     if (cats.length > 0) setSelectedRange(cats[0]);
                 }
