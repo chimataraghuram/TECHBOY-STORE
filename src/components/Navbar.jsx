@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Search, Bot, LogOut, X, Bookmark } from 'lucide-react';
+import { Search, Bot, LogOut, X, Bookmark, Menu } from 'lucide-react';
 import logo from '../assets/techboy-logo.jpg';
 import WatchlistModal from './WatchlistModal';
 
@@ -86,6 +86,9 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
             <div className="navbar-content">
                 {/* LOGO AREA - LEFT */}
                 <div className="navbar-left">
+                    <button className="mobile-menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
                     <div className="pill-wrapper logo-pill">
                         <a href="/" className="logo-container">
                             <img src={logo} alt="TECHBOY STORE" className="logo-img" />

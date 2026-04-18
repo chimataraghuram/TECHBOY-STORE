@@ -12,7 +12,8 @@
 
 /* Global Container Centering */
 .container {
-  width: 1200px !important; /* Force centered 1200px area */
+  max-width: 1200px !important; /* Allow fluid width */
+  width: 100% !important;
   margin: 0 auto !important;
   padding: 0 20px;
 }
@@ -3111,3 +3112,103 @@ html {
 
 .status-msg.success { color: #00ff88; }
 .status-msg.error { color: #ff3333; }
+
+/* Responsive Stylings */
+.mobile-menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: white;
+  margin-right: 15px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+@media (max-width: 1024px) {
+  .hero-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero-buttons {
+    justify-content: center;
+  }
+  .hero-visual {
+    margin-top: 40px;
+  }
+  .trust-badges {
+    justify-content: center;
+  }
+  .product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  }
+  .features-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-toggle {
+    display: block;
+  }
+  .navbar-content {
+    grid-template-columns: 1fr auto !important;
+    padding: 10px 15px;
+  }
+  .navbar-center {
+    display: none; /* Hide default center content */
+  }
+  .nav-links-pill {
+    position: absolute;
+    top: 60px;
+    left: 20px;
+    right: 20px;
+    background: rgba(20, 5, 5, 0.95);
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 15px;
+    display: none !important;
+    border: 1px solid rgba(255, 100, 100, 0.4);
+    z-index: 1000;
+  }
+  .nav-links-pill.active {
+    display: flex !important;
+  }
+  .nav-pills {
+    flex-direction: column;
+    width: 100%;
+    background: transparent;
+    box-shadow: none;
+    border: none;
+  }
+  .search-only-pill {
+    margin-top: 15px;
+    width: 100%;
+    justify-content: center;
+  }
+  .ai-pill-text {
+    display: none;
+  }
+  .user-name-text {
+    display: none;
+  }
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  .section-title {
+    font-size: 2rem;
+  }
+  .hero-section {
+    padding-top: 100px;
+  }
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  .chat-popup {
+    bottom: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 90vh !important;
+    border-radius: 20px 20px 0 0 !important;
+  }
+}
+
