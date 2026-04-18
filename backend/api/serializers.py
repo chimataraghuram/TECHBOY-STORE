@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from .models import Product, ClickTrack, PriceHistory, PriceAlert
+from .models import Product, ClickTrack, PriceHistory, PriceAlert, Watchlist
 
 User = get_user_model()
 
@@ -71,3 +71,11 @@ class PriceAlertSerializer(serializers.ModelSerializer):
     class Meta:
         model = PriceAlert
         fields = ['id', 'user', 'product', 'product_name', 'target_price', 'is_active', 'created_at']
+
+class WatchlistSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    product_details = ProductSerializer(source='product', read_only=True)
+
+    class Meta:
+        model = Watchlist
+        fields = ['id', 'user', 'product', 'product_details', 'created_at']

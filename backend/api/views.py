@@ -1,3 +1,5 @@
+import os
+import requests
 from rest_framework import generics, viewsets, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -12,7 +14,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from .services import product_service, analytics_service
-from .models import Product, ClickTrack, PriceHistory, PriceAlert
+from .models import Product, ClickTrack, PriceHistory, PriceAlert, Watchlist
 from .filters import ProductFilter
 from .serializers import (
     UserSerializer, 
@@ -21,7 +23,8 @@ from .serializers import (
     ProductSerializer,
     ClickTrackSerializer,
     PriceHistorySerializer,
-    PriceAlertSerializer
+    PriceAlertSerializer,
+    WatchlistSerializer
 )
 
 User = get_user_model()
@@ -150,6 +153,16 @@ class PriceAlertViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return PriceAlert.objects.filter(user=self.request.user)
 
+class WatchlistViewSet(viewsets.ModelViewSet):
+    serializer_class = WatchlistSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Watchlist.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 class ChatbotAPIView(APIView):
     permission_classes = [AllowAny]
     
@@ -158,10 +171,30 @@ class ChatbotAPIView(APIView):
         if not query:
             return Response({"response": "I'm ready to help! What kind of smartphone are you looking for?"})
         
-        # Expert Rule-based filtering (mock AI)
-        products = Product.objects.all()
+        openrouter_key = os.environ.get('OPENROUTER_API_KEY')
+        ai_response = "I couldn't find a specific match, but you can explore our 'Analyst Picks' for the best-vetted options!"
         
-        # Simple keyword matching
+        if openrouter_key:
+            try:
+                headers = {
+                    "Authorization": f"Bearer {openrouter_key}",
+                    "Content-Type": "application/json"
+                }
+                data = {
+                    "model": "meta-llama/llama-3-8b-instruct:free",
+                    "messages": [
+                        {"role": "system", "content": "You are TechBoy AI, an expert smartphone recommender. Be concise and conversational. Do not output markdown, just plain text."},
+                        {"role": "user", "content": query}
+                    ]
+                }
+                response = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data, timeout=10)
+                if response.status_code == 200:
+                    ai_response = response.json()['choices'][0]['message']['content']
+            except Exception as e:
+                print(f"OpenRouter Error: {e}")
+
+        # Extract some mock products for the demo UI based on query if AI didn't explicitly return product objects
+        products = Product.objects.all()
         matched = []
         if 'gaming' in query:
             matched = products.filter(description__icontains='gaming') | products.filter(tag__icontains='gaming')
@@ -171,16 +204,14 @@ class ChatbotAPIView(APIView):
             matched = products.filter(specs__icontains='MP') | products.filter(description__icontains='camera')
         else:
             matched = products.filter(name__icontains=query) | products.filter(category__icontains=query)
-            
-        if matched.exists():
-            recommendations = ProductSerializer(matched[:3], many=True).data
-            names = ", ".join([p['name'] for p in recommendations])
-            return Response({
-                "response": f"Based on your interest, I recommend checking out: {names}. They offer great value in that category!",
-                "products": recommendations
-            })
         
+        recommendations = ProductSerializer(matched[:3], many=True).data if matched.exists() else []
+        
+        if not openrouter_key and matched.exists():
+            names = ", ".join([p['name'] for p in recommendations])
+            ai_response = f"Based on your interest, I recommend checking out: {names}. They offer great value in that category!"
+
         return Response({
-            "response": "I couldn't find a specific match, but you can explore our 'Analyst Picks' for the best-vetted options!",
-            "products": []
+            "response": ai_response,
+            "products": recommendations
         })

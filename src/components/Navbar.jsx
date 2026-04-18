@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Search, Bot, LogOut, X } from 'lucide-react';
+import { Search, Bot, LogOut, X, Bookmark } from 'lucide-react';
 import logo from '../assets/techboy-logo.jpg';
+import WatchlistModal from './WatchlistModal';
 
 const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
     const [scrolled, setScrolled] = useState(false);
@@ -12,6 +13,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
     const [authData, setAuthData] = useState({ username: '', password: '', email: '' });
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('techboy_user') || 'null'));
     const [msg, setMsg] = useState('');
+    const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -139,6 +141,9 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                             {user ? (
                                 <div className="user-info-capsule">
                                     <span className="user-name-text">{user.username}</span>
+                                    <button className="auth-icon-btn action-btn text-gradient" onClick={() => setIsWatchlistOpen(true)} title="Watchlist" style={{ marginRight: '8px' }}>
+                                        <Bookmark size={18} />
+                                    </button>
                                     <button className="auth-icon-btn logout-btn" onClick={logout} title="Logout">
                                         <LogOut size={16} />
                                     </button>
@@ -194,6 +199,8 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                     </div>
                 </div>
             )}
+            
+            <WatchlistModal isOpen={isWatchlistOpen} onClose={() => setIsWatchlistOpen(false)} />
         </nav>
     );
 };

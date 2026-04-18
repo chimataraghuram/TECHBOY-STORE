@@ -31,7 +31,7 @@ const ChatPopup = ({ isOpen, onClose }) => {
         setIsTyping(true);
 
         try {
-            const res = await fetch(`${API_BASE_URL}/chatbot/`, {
+            const res = await fetch(`${API_BASE_URL}/chat/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ query: text })
@@ -68,7 +68,7 @@ const ChatPopup = ({ isOpen, onClose }) => {
                     </div>
                     <div className="chat-brand-info">
                         <h3>TECHBOY AI</h3>
-                        <p><span className="status-dot"></span> ONLINE & READY</p>
+                        <p><span className="status-dot"></span> ONLINE & READY <span style={{fontSize: '0.75em', marginLeft: '6px', opacity: 0.8, color: '#ef4444'}}>| Powered by Llama-3</span></p>
                     </div>
                 </div>
                 <button className="chat-close-btn" onClick={onClose} aria-label="Close Chat">

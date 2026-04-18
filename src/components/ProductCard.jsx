@@ -14,6 +14,35 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index }) => {
     const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
     const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
 
+    const [isSaved, setIsSaved] = React.useState(false);
+
+    const handleSaveToWatchlist = async (e) => {
+        e.stopPropagation();
+        const token = localStorage.getItem('techboy_token');
+        if (!token) {
+            alert('Please login to save products to your watchlist!');
+            return;
+        }
+
+        try {
+            const res = await fetch(`${API_BASE_URL}/watchlist/`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ product: product.id })
+            });
+            if (res.ok) {
+                setIsSaved(true);
+            } else {
+                alert('Already in watchlist or error saving.');
+            }
+        } catch (err) {
+            console.error('Failed to save', err);
+        }
+    };
+
     const handleMouseMove = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
         const mouseX = (e.clientX - rect.left) / rect.width - 0.5;
@@ -55,7 +84,18 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index }) => {
             viewport={{ once: true }}
             whileHover={{ scale: 1.02 }}
         >
-            {product.tag && <span className="product-tag">{product.tag}</span>}
+            <div className="product-card-header">
+                {product.tag && <span className="product-tag">{product.tag}</span>}
+                <button 
+                    className={`watchlist-btn ${isSaved ? 'saved' : ''}`}
+                    onClick={handleSaveToWatchlist}
+                    title="Save to Watchlist"
+                >
+                    <svg width="20" height="20" fill={isSaved ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                    </svg>
+                </button>
+            </div>
             <div className="product-image-wrapper" style={{ transform: "translateZ(50px)" }}>
                 <img src={product.image || balancedImg} alt={product.name} className="product-real-img" loading="lazy" />
             </div>
