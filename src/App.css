@@ -3155,23 +3155,34 @@ html {
     padding: 10px 15px;
   }
   .navbar-center {
-    display: none; /* Hide default center content */
-  }
-  .nav-links-pill {
     position: absolute;
-    top: 60px;
+    top: 65px;
     left: 20px;
     right: 20px;
-    background: rgba(20, 5, 5, 0.95);
-    flex-direction: column;
+    background: rgba(15, 2, 2, 0.98);
     padding: 20px;
-    border-radius: 15px;
-    display: none !important;
-    border: 1px solid rgba(255, 100, 100, 0.4);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 60, 60, 0.4);
     z-index: 1000;
+    display: none !important;
+    flex-direction: column;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
   }
-  .nav-links-pill.active {
+  .navbar-center.active {
     display: flex !important;
+  }
+  .navbar-center-group {
+    flex-direction: column;
+    width: 100%;
+    align-items: stretch;
+    gap: 15px;
+  }
+  .nav-links-pill {
+    position: static;
+    background: transparent;
+    padding: 0;
+    border: none;
+    border-radius: 0;
   }
   .nav-pills {
     flex-direction: column;
@@ -3179,11 +3190,21 @@ html {
     background: transparent;
     box-shadow: none;
     border: none;
+    gap: 10px;
+  }
+  .nav-pill-item {
+    padding: 12px;
+    font-size: 1rem;
+    text-align: center;
+    border-radius: 12px;
   }
   .search-only-pill {
-    margin-top: 15px;
     width: 100%;
     justify-content: center;
+    margin: 0;
+  }
+  .pill-search-input {
+    width: 100%;
   }
   .ai-pill-text {
     display: none;
@@ -3209,6 +3230,15 @@ html {
     width: 100% !important;
     height: 90vh !important;
     border-radius: 20px 20px 0 0 !important;
+    z-index: 9999;
+  }
+  .price-tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+  .product-category-pills {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
-

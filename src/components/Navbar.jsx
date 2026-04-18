@@ -98,7 +98,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                 </div>
 
                 {/* NAVIGATION - CENTER */}
-                <div className="navbar-center">
+                <div className={`navbar-center ${isMenuOpen ? 'active' : ''}`}>
                     <div className="navbar-center-group">
                         <div className={`nav-links-pill ${isMenuOpen ? 'active' : ''}`}>
                             <div className="pill-wrapper nav-pills">
