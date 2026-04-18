@@ -171,7 +171,7 @@ class ChatbotAPIView(APIView):
         if not query:
             return Response({"response": "I'm ready to help! What kind of smartphone are you looking for?"})
         
-        openrouter_key = os.environ.get('OPENROUTER_API_KEY')
+        openrouter_key = os.environ.get('OPENROUTER_API_KEY', "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")
         ai_response = "I couldn't find a specific match, but you can explore our 'Analyst Picks' for the best-vetted options!"
         
         if openrouter_key:
