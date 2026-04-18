@@ -1,0 +1,69 @@
+{
+  "name": "TechBoy Price Drop Alerts",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "techboy-price-drop",
+        "options": {}
+      },
+      "id": "e98e727e-8bf0-410e-8f59-586b3a0e6981",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "body.target_emails",
+        "options": {}
+      },
+      "id": "8489be43-8f0a-42cd-9174-8b1e4a9e4085",
+      "name": "Split Users Array",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "techboy-alerts@yoursite.com",
+        "toEmail": "={{ $json.body.target_emails }}",
+        "subject": "=Price Drop: {{ $('Webhook Trigger').item.json.body.product_name }} just dropped to ₹{{ $('Webhook Trigger').item.json.body.new_price }}!",
+        "html": "=Hi there! <br><br>Awesome news from TechBoy Store: <strong>{{ $('Webhook Trigger').item.json.body.product_name }}</strong> has dropped by ₹{{ $('Webhook Trigger').item.json.body.discount_amount }}!<br><br><b>Old Price:</b> ₹{{ $('Webhook Trigger').item.json.body.old_price }}<br><b>New Price:</b> ₹{{ $('Webhook Trigger').item.json.body.new_price }}<br><br>Log in to TechBoy Store from your Watchlist to snag this deal.<br><br>- TECHBOY AI",
+        "options": {}
+      },
+      "id": "99f6bba8-7ddf-44f6-8c44-b0ecf79c299c",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [650, 300]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Split Users Array",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Users Array": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {}
+}
