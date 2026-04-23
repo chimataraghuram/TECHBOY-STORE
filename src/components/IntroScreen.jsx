@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import './IntroScreen.css';
 import { motion } from 'framer-motion';
-import introVideo from '../assets/intro.mp4';
+// import introVideo from '../assets/intro.mp4'; // Removed missing import
+const introVideo = ""; // Fallback
 
 const IntroScreen = ({ onComplete }) => {
   const videoRef = useRef(null);
@@ -9,7 +10,10 @@ const IntroScreen = ({ onComplete }) => {
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
-        
+      if (!introVideo) {
+        setTimeout(onComplete, 2000);
+        return;
+      }
       video.play().catch(error => {
         console.error("Video autoplay failed", error);
         // Fallback in case autoplay is blocked by browser policies

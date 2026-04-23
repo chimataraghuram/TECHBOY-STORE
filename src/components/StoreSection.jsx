@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ProductCard from './ProductCard';
 import ComparisonModal from './ComparisonModal';
 import QuickViewModal from './QuickViewModal';
+import localPhonesData from '../data/phones.json';
 
 const API_BASE_URL = 'http://127.0.0.1:8000/api';
 
@@ -25,13 +26,23 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                 const data = await res.json();
                 if (mounted) {
                     const productsList = data.results || data;
-                    setProducts(productsList);
-                    const cats = [...new Set(productsList.map(p => p.category))];
+                    if (productsList && productsList.length > 0) {
+                        setProducts(productsList);
+                        const cats = [...new Set(productsList.map(p => p.category))];
+                        setCategories(cats);
+                        if (cats.length > 0) setSelectedRange(cats[0]);
+                    } else {
+                        throw new Error("Empty API results");
+                    }
+                }
+            } catch (err) {
+                console.error("Fetch failed, falling back to local data", err);
+                if (mounted) {
+                    setProducts(localPhonesData);
+                    const cats = [...new Set(localPhonesData.map(p => p.category))];
                     setCategories(cats);
                     if (cats.length > 0) setSelectedRange(cats[0]);
                 }
-            } catch (err) {
-                console.error("Fetch failed", err);
             } finally {
                 if (mounted) setLoading(false);
             }
