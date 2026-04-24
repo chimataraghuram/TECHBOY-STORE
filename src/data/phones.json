@@ -5,7 +5,7 @@
     "tag": "🎮 Best Gaming",
     "category": "Under ₹10K",
     "price": 8499,
-    "description": "Chip: Helio G88 | Display: 6.67\" 90Hz IPS | RAM: 8GB | Battery: 5000mAh | Storage: 128GB"
+    "description": "Chip: Helio G88 | Display: 6.67\" 90Hz IPS | RAM: 8GB | Battery: 5000mAh"
   },
   {
     "id": 2,
@@ -13,7 +13,7 @@
     "tag": "📷 Best Camera",
     "category": "Under ₹10K",
     "price": 9299,
-    "description": "Camera: 50MP AI | Chip: Dimensity 6100+ | Display: 6.74\" 90Hz | Battery: 5000mAh | Network: 5G"
+    "description": "Camera: 50MP AI | Chip: Dimensity 6100+ | Display: 6.74\" 90Hz | Network: 5G"
   },
   {
     "id": 3,
@@ -21,7 +21,7 @@
     "tag": "✨ Best UI",
     "category": "Under ₹10K",
     "price": 9499,
-    "description": "OS: One UI 7 / Android 15 | Chip: Helio G99 | Display: 6.7\" 120Hz LCD | OS Updates: 6 major | IP rating: IP54"
+    "description": "OS: One UI 7 | Display: 6.7\" 120Hz LCD | Chip: Helio G99 | OS Updates: 6 major"
   },
   {
     "id": 4,
@@ -29,7 +29,7 @@
     "tag": "⭐ All-round Best",
     "category": "Under ₹10K",
     "price": 9999,
-    "description": "Chip: Helio G91 | Camera: 50MP | Battery: 6000mAh | Charging: 45W | Display: 6.74\" 90Hz"
+    "description": "Chip: Helio G91 | Battery: 6000mAh 45W | Camera: 50MP | Display: 6.74\" 90Hz"
   },
   {
     "id": 5,
@@ -37,15 +37,15 @@
     "tag": "💰 Best Value",
     "category": "Under ₹10K",
     "price": 7499,
-    "description": "RAM: 8GB | Storage: 128GB | Battery: 5000mAh | Display: 6.7\" 90Hz | Value: Cheapest on list"
+    "description": "RAM: 8GB | Storage: 128GB | Battery: 5000mAh | Display: 6.7\" 90Hz"
   },
   {
     "id": 6,
     "name": "Samsung Galaxy M07",
-    "tag": "🏆 Best Brand Value",
+    "tag": "🏆 Brand Value",
     "category": "Under ₹10K",
     "price": 9499,
-    "description": "Warranty: Nationwide Samsung | OS updates: 6 major | IP rating: IP54 | Resale: Best in segment | Service: Pan-India centres"
+    "description": "Warranty: Nationwide | IP Rating: IP54 | Resale: Best in segment | Updates: 6 major OS"
   },
   {
     "id": 7,
@@ -53,7 +53,7 @@
     "tag": "🎮 Best Gaming",
     "category": "Under ₹20K",
     "price": 17999,
-    "description": "Chip: Snapdragon 7 Gen 3 | Display: 6.78\" 144Hz AMOLED | RAM: 8GB LPDDR5 | Battery: 5000mAh 44W | Network: 5G"
+    "description": "Chip: Snapdragon 7 Gen 3 | Display: 6.78\" 144Hz AMOLED | RAM: 8GB LPDDR5 | Battery: 5000mAh 44W"
   },
   {
     "id": 8,
@@ -61,7 +61,7 @@
     "tag": "📷 Best Camera",
     "category": "Under ₹20K",
     "price": 18999,
-    "description": "Camera: 108MP main | Display: 6.67\" 120Hz AMOLED | Chip: Dimensity 7025 | Battery: 5500mAh | Network: 5G"
+    "description": "Camera: 108MP main | Display: 6.67\" 120Hz AMOLED | Chip: Dimensity 7025 | Battery: 5500mAh"
   },
   {
     "id": 9,
@@ -69,7 +69,7 @@
     "tag": "✨ Best UI",
     "category": "Under ₹20K",
     "price": 19999,
-    "description": "OS: One UI 7 / Android 15 | Display: 6.6\" Super AMOLED | Camera: 50MP OIS | Updates: 4 yrs OS, 5 yrs sec | IP rating: IP67"
+    "description": "OS: One UI 7 + Galaxy AI | Display: 6.6\" Super AMOLED | Camera: 50MP OIS | Updates: 4 yrs OS + 5 sec"
   },
   {
     "id": 10,
@@ -77,7 +77,7 @@
     "tag": "⭐ All-round Best",
     "category": "Under ₹20K",
     "price": 19999,
-    "description": "Chip: Snapdragon 7s Gen 3 | Camera: 50MP triple | Display: 6.77\" AMOLED 120Hz | Design: Glyph interface | Network: 5G"
+    "description": "Chip: Snapdragon 7s Gen 3 | Camera: 50MP triple | Display: 6.77\" AMOLED 120Hz | Design: Glyph interface"
   },
   {
     "id": 11,
@@ -85,15 +85,15 @@
     "tag": "💰 Best Value",
     "category": "Under ₹20K",
     "price": 18999,
-    "description": "Chip: Dimensity 7300 | Battery: 6500mAh | RAM: 8GB | Display: 6.72\" 120Hz | Network: 5G"
+    "description": "Chip: Dimensity 7300 | Battery: 6500mAh | Display: 6.72\" 120Hz | Network: 5G"
   },
   {
     "id": 12,
     "name": "Samsung Galaxy A26 5G",
-    "tag": "🏆 Best Brand Value",
+    "tag": "🏆 Brand Value",
     "category": "Under ₹20K",
     "price": 19999,
-    "description": "After-sales: Best in class | Resale value: High | IP rating: IP67 | Updates: 4 OS + 5 security yrs | Trust: ★★★★★"
+    "description": "IP Rating: IP67 | Resale: High | Updates: 4+5 years | Trust: ★★★★★"
   },
   {
     "id": 13,
@@ -101,7 +101,7 @@
     "tag": "🎮 Best Gaming",
     "category": "Under ₹30K",
     "price": 27999,
-    "description": "Chip: Snapdragon 8s Gen 3 | Display: 6.78\" 144Hz AMOLED | BGMI: Stable 90fps | Cooling: Vapor chamber + Q2 | RAM: 12GB LPDDR5X"
+    "description": "Chip: Snapdragon 8s Gen 3 | Display: 6.78\" 144Hz AMOLED | Cooling: Vapor chamber + Q2 | BGMI: Stable 90fps"
   },
   {
     "id": 14,
@@ -109,7 +109,7 @@
     "tag": "📷 Best Camera",
     "category": "Under ₹30K",
     "price": 29999,
-    "description": "Camera: 48MP + Google AI | Chip: Tensor G4 | Display: 6.3\" OLED 120Hz | Night Sight: Best in class | Updates: 7 years guaranteed"
+    "description": "Camera: 48MP + Google AI | Chip: Tensor G4 | Display: 6.3\" OLED 120Hz | Updates: 7 years"
   },
   {
     "id": 15,
@@ -117,7 +117,7 @@
     "tag": "✨ Best UI",
     "category": "Under ₹30K",
     "price": 25999,
-    "description": "OS: Nothing OS 3.0 | Design: Unique Glyph UI | Chip: Snapdragon 7s Gen 3 | Camera: 50MP triple | Display: 6.77\" AMOLED 120Hz"
+    "description": "OS: Nothing OS 3.0 | Design: Unique Glyph UI | Camera: 50MP triple | Chip: Snapdragon 7s Gen 3"
   },
   {
     "id": 16,
@@ -125,7 +125,7 @@
     "tag": "⭐ All-round Best",
     "category": "Under ₹30K",
     "price": 26999,
-    "description": "Chip: Snapdragon 8s Gen 3 | Display: 6.78\" 144Hz AMOLED | Charging: 120W SuperVOOC | Camera: 50MP Sony IMX | Battery: 5000mAh"
+    "description": "Chip: Snapdragon 8s Gen 3 | Charging: 120W SuperVOOC | Display: 6.78\" 144Hz AMOLED | Camera: 50MP Sony IMX"
   },
   {
     "id": 17,
@@ -133,15 +133,15 @@
     "tag": "💰 Best Value",
     "category": "Under ₹30K",
     "price": 24999,
-    "description": "Chip: Snapdragon 8s Gen 3 | RAM: 12GB LPDDR5X | Battery: 6000mAh 90W | Display: 6.67\" 120Hz AMOLED | Storage: 256GB"
+    "description": "Chip: Snapdragon 8s Gen 3 | RAM: 12GB LPDDR5X | Battery: 6000mAh 90W | Storage: 256GB"
   },
   {
     "id": 18,
     "name": "OnePlus Nord CE 5",
-    "tag": "🏆 Best Brand Value",
+    "tag": "🏆 Brand Value",
     "category": "Under ₹30K",
     "price": 28710,
-    "description": "Brand rep: Premium positioning | OS: OxygenOS 15 | Updates: 4 years OS | Resale: Strong | Build: Premium glass"
+    "description": "OS: OxygenOS 15 | Updates: 4 years OS | Build: Premium glass | Resale: Strong"
   },
   {
     "id": 19,
@@ -149,7 +149,7 @@
     "tag": "🎮 Best Gaming",
     "category": "Under ₹40K",
     "price": 42999,
-    "description": "Chip: Snapdragon 8 Gen 3 | Display: 6.73\" 144Hz AMOLED | RAM: 16GB LPDDR5X | Cooling: Improved vapor chamber | Battery: 5000mAh 90W"
+    "description": "Chip: Snapdragon 8 Gen 3 | Display: 6.73\" 144Hz AMOLED | RAM: 16GB LPDDR5X | Cooling: Vapor chamber"
   },
   {
     "id": 20,
@@ -157,7 +157,7 @@
     "tag": "📷 Best Camera",
     "category": "Under ₹40K",
     "price": 37088,
-    "description": "Camera: 50MP ZEISS OIS | Portrait: ZEISS tuning | Display: 6.73\" AMOLED 120Hz | Chip: Dimensity 9200 | Battery: 5500mAh"
+    "description": "Camera: 50MP ZEISS OIS | Portrait: ZEISS tuning | Chip: Dimensity 9200 | Display: 6.73\" AMOLED 120Hz"
   },
   {
     "id": 21,
@@ -165,7 +165,7 @@
     "tag": "✨ Best UI",
     "category": "Under ₹40K",
     "price": 34999,
-    "description": "OS: One UI 7 + Galaxy AI | Display: 6.5\" Super AMOLED | Camera: 50MP OIS | Updates: 4 OS + 5 sec yrs | AI features: Galaxy AI suite"
+    "description": "OS: One UI 7 + Galaxy AI | Display: 6.5\" Super AMOLED | Camera: 50MP OIS | Updates: 4 OS + 5 sec yrs"
   },
   {
     "id": 22,
@@ -173,7 +173,7 @@
     "tag": "⭐ All-round Best",
     "category": "Under ₹40K",
     "price": 35999,
-    "description": "Chip: Snapdragon 8s Gen 4 | Display: 6.77\" ProXDR 120Hz | Charging: 100W SUPERVOOC | Build: Glass + aluminum | Camera: 50MP triple OIS"
+    "description": "Chip: Snapdragon 8s Gen 4 | Display: 6.77\" ProXDR 120Hz | Charging: 100W SUPERVOOC | Build: Glass + aluminum"
   },
   {
     "id": 23,
@@ -181,15 +181,15 @@
     "tag": "💰 Best Value",
     "category": "Under ₹40K",
     "price": 37999,
-    "description": "Chip: Snapdragon 8 Elite | Charging: 120W SuperVOOC | Camera: 50MP triple | Display: 6.78\" 144Hz AMOLED | Value score: Flagship chip at mid-price"
+    "description": "Chip: Snapdragon 8 Elite | Charging: 120W SuperVOOC | Camera: 50MP triple | Display: 6.78\" 144Hz AMOLED"
   },
   {
     "id": 24,
     "name": "Samsung Galaxy A37 5G",
-    "tag": "🏆 Best Brand Value",
+    "tag": "🏆 Brand Value",
     "category": "Under ₹40K",
     "price": 34999,
-    "description": "Service: Nationwide centres | Resale: Best in segment | Galaxy AI: Yes | IP rating: IP67 | Trust: ★★★★★"
+    "description": "Service: Nationwide centres | Resale: Best in segment | IP Rating: IP67 | Trust: ★★★★★"
   },
   {
     "id": 25,
@@ -197,7 +197,7 @@
     "tag": "🎮 Best Gaming",
     "category": "Under ₹50K",
     "price": 47999,
-    "description": "Chip: Snapdragon 8 Elite | Display: 6.82\" 144Hz LTPO | RAM: 16GB LPDDR5X | Cooling: Q2 supercomputing chip | Charging: 120W flash"
+    "description": "Chip: Snapdragon 8 Elite | Display: 6.82\" 144Hz LTPO | RAM: 16GB LPDDR5X | Cooling: Q2 supercomputing chip"
   },
   {
     "id": 26,
@@ -205,7 +205,7 @@
     "tag": "📷 Best Camera",
     "category": "Under ₹50K",
     "price": 45999,
-    "description": "Camera: 50MP ZEISS triple | Portrait: 85mm portrait lens | Display: 6.78\" AMOLED 120Hz | Chip: Dimensity 9300 | Battery: 5500mAh 90W"
+    "description": "Camera: 50MP ZEISS triple | Portrait: 85mm lens | Chip: Dimensity 9300 | Battery: 5500mAh 90W"
   },
   {
     "id": 27,
@@ -213,7 +213,7 @@
     "tag": "✨ Best UI",
     "category": "Under ₹50K",
     "price": 51860,
-    "description": "OS: One UI 7 + Galaxy AI | Display: 6.5\" 120Hz AMOLED | Camera: 200MP | Updates: 4 OS + 5 security | AI: Full Galaxy AI"
+    "description": "OS: One UI 7 + Galaxy AI | Camera: 200MP | Display: 6.5\" 120Hz AMOLED | Updates: 4 OS + 5 sec yrs"
   },
   {
     "id": 28,
@@ -221,7 +221,7 @@
     "tag": "⭐ All-round Best",
     "category": "Under ₹50K",
     "price": 42999,
-    "description": "Chip: Snapdragon 8 Gen 3 | Battery: 6000mAh 80W | Display: 6.78\" AMOLED 120Hz | Camera: 50MP Hasselblad | Build: Glass + aluminum"
+    "description": "Chip: Snapdragon 8 Gen 3 | Battery: 6000mAh 80W | Camera: 50MP Hasselblad | Display: 6.78\" AMOLED 120Hz"
   },
   {
     "id": 29,
@@ -229,15 +229,15 @@
     "tag": "💰 Best Value",
     "category": "Under ₹50K",
     "price": 47999,
-    "description": "Flagship chip at: ₹48K price point | Charging: 120W flash | Display: 144Hz LTPO AMOLED | RAM: 16GB LPDDR5X | Value score: 10/10"
+    "description": "Flagship chip at: ₹48K price | Charging: 120W flash | Display: 144Hz LTPO AMOLED | Value score: 10/10"
   },
   {
     "id": 30,
     "name": "Samsung Galaxy A57 5G",
-    "tag": "🏆 Best Brand Value",
+    "tag": "🏆 Brand Value",
     "category": "Under ₹50K",
     "price": 51860,
-    "description": "Support: Pan-India premium | Resale: Highest in range | AI features: Galaxy AI suite | Camera MP: 200MP flagship sensor | Trust: ★★★★★"
+    "description": "Support: Pan-India premium | AI: Full Galaxy AI | 200MP camera: Yes | Trust: ★★★★★"
   },
   {
     "id": 31,
@@ -245,7 +245,7 @@
     "tag": "🎮 Best Gaming",
     "category": "Under ₹60K",
     "price": 58999,
-    "description": "Chip: Snapdragon 8 Elite | Display: 6.82\" LTPO3 120Hz | Cooling: Cryoflux system | Charging: 100W SUPERVOOC | RAM: 16GB LPDDR5X"
+    "description": "Chip: Snapdragon 8 Elite | Display: 6.82\" LTPO3 120Hz | Cooling: Cryoflux system | Battery: 6000mAh 100W"
   },
   {
     "id": 32,
@@ -253,7 +253,7 @@
     "tag": "📷 Best Camera",
     "category": "Under ₹60K",
     "price": 59999,
-    "description": "Camera: 50MP triple + AI | Video: 8K Pro Video | Chip: Tensor G4 | Updates: 7 years guaranteed | Night sight: Industry-leading"
+    "description": "Camera: 50MP triple + AI | Video: 8K Pro Video | Chip: Tensor G4 | Updates: 7 years guaranteed"
   },
   {
     "id": 33,
@@ -261,7 +261,7 @@
     "tag": "✨ Best UI",
     "category": "Under ₹60K",
     "price": 68107,
-    "description": "OS: One UI 7 + Galaxy AI | Chip: Snapdragon 8 Elite | Display: 6.2\" QHD+ 120Hz | Updates: 7 OS updates | AI: Full Galaxy AI suite"
+    "description": "OS: One UI 7 + Galaxy AI | Chip: Snapdragon 8 Elite | Display: 6.2\" QHD+ 120Hz | Updates: 7 OS updates"
   },
   {
     "id": 34,
@@ -269,7 +269,7 @@
     "tag": "⭐ All-round Best",
     "category": "Under ₹60K",
     "price": 58999,
-    "description": "Camera: 50MP Hasselblad triple | Battery: 6000mAh 100W | Chip: Snapdragon 8 Elite | Build: Marble / Silk finish | Display: 6.82\" AMOLED 120Hz"
+    "description": "Camera: 50MP Hasselblad triple | Battery: 6000mAh 100W | Chip: Snapdragon 8 Elite | Build: Marble / Silk finish"
   },
   {
     "id": 35,
@@ -277,15 +277,15 @@
     "tag": "💰 Best Value",
     "category": "Under ₹60K",
     "price": 58999,
-    "description": "SD 8 Elite chip at: ₹59K | Hasselblad camera: Yes | 100W charging: Yes | 6000mAh battery: Yes | Value score: 9.5/10"
+    "description": "SD 8 Elite chip at: ₹59K | Hasselblad camera: Yes | 100W charging: Yes | Value score: 9.5/10"
   },
   {
     "id": 36,
     "name": "Samsung Galaxy S25",
-    "tag": "🏆 Best Brand Value",
+    "tag": "🏆 Brand Value",
     "category": "Under ₹60K",
     "price": 68107,
-    "description": "Resale: Strongest ever | Support: Samsung Premium care | AI: Galaxy AI | Updates: 7 years | Trust: ★★★★★"
+    "description": "Resale: Strongest ever | AI: Galaxy AI | Updates: 7 years | Trust: ★★★★★"
   },
   {
     "id": 37,
@@ -293,23 +293,23 @@
     "tag": "🎮 Best Gaming",
     "category": "Under ₹1 Lakh",
     "price": 89999,
-    "description": "Chip: SD 8 Elite Gen 5 | Display: 6.7\" QHD+ AMOLED 120Hz | Cooling: 29% vapor upgrade | Battery: 4900mAh | RAM: 12GB LPDDR5X"
+    "description": "Chip: SD 8 Elite Gen 5 | Display: 6.7\" QHD+ AMOLED | Cooling: 29% vapor upgrade | Battery: 4900mAh"
   },
   {
     "id": 38,
     "name": "Apple iPhone 17",
     "tag": "📷 Best Camera",
     "category": "Under ₹1 Lakh",
-    "price": 0,
-    "description": "Camera: 48MP + 48MP ultrawide | Chip: Apple A19 | Video: 4K 120fps Cinematic | Selfie: 18MP Centre Stage | OS: iOS 26"
+    "price": 82900,
+    "description": "Camera: 48MP + 48MP ultrawide | Chip: Apple A19 | Video: 4K 120fps Cinematic | OS: iOS 26"
   },
   {
     "id": 39,
     "name": "Apple iPhone 17",
     "tag": "✨ Best UI",
     "category": "Under ₹1 Lakh",
-    "price": 0,
-    "description": "OS: iOS 26 | AI: Apple Intelligence | Updates: 6+ years iOS | Ecosystem: iCloud, AirDrop, Handoff | Privacy: Industry-leading"
+    "price": 82900,
+    "description": "OS: iOS 26 | AI: Apple Intelligence | Updates: 6+ yrs iOS | Privacy: Industry-leading"
   },
   {
     "id": 40,
@@ -317,23 +317,23 @@
     "tag": "⭐ All-round Best",
     "category": "Under ₹1 Lakh",
     "price": 75715,
-    "description": "Chip: Exynos 2600 | Camera: 50MP triple + AI ISP | Display: 6.3\" QHD+ AMOLED | Updates: 7 OS updates | AI: Galaxy AI"
+    "description": "Chip: Exynos 2600 | Camera: 50MP triple + AI ISP | Display: 6.3\" QHD+ AMOLED | Updates: 7 OS updates"
   },
   {
     "id": 41,
     "name": "Apple iPhone 17",
     "tag": "💰 Best Value",
     "category": "Under ₹1 Lakh",
-    "price": 0,
-    "description": "Resale: Unmatched Apple retention | Longevity: 6+ yrs iOS updates | A19 chip: Latest Apple silicon | Build: Ceramic Shield unibody | Value score: 9/10"
+    "price": 82900,
+    "description": "Resale: Unmatched retention | Longevity: 6+ yrs iOS updates | Value score: 9/10 | Chip: Apple A19"
   },
   {
     "id": 42,
     "name": "Apple iPhone 17",
-    "tag": "🏆 Best Brand Value",
+    "tag": "🏆 Brand Value",
     "category": "Under ₹1 Lakh",
-    "price": 0,
-    "description": "Brand: World's most premium | Resale: Highest retention ever | Ecosystem lock: Strong iCloud/App Store | Status symbol: Top tier | Trust: ★★★★★"
+    "price": 82900,
+    "description": "Brand: World's most premium | Resale: Highest retention | Ecosystem: Strong iCloud/App Store | Trust: ★★★★★"
   },
   {
     "id": 43,
@@ -356,8 +356,8 @@
     "name": "Samsung Galaxy S26 Ultra",
     "tag": "Best Android camera",
     "category": "Flagship 1L+",
-    "price": 0,
-    "description": "Chip: SD 8 Elite Gen 5 | Camera: 200MP quad + AI ISP | Display: 6.9\" QHD+ Privacy AMOLED | Battery: 5000mAh 60W | Unique feature: Built-in Privacy Display"
+    "price": 119000,
+    "description": "Chip: SD 8 Elite Gen 5 | Camera: 200MP quad + AI ISP | Display: 6.9\" QHD+ Privacy AMOLED | Battery: 5000mAh 60W | Unique: Built-in Privacy Display"
   },
   {
     "id": 46,
@@ -372,23 +372,23 @@
     "name": "Samsung Galaxy Z Fold 7",
     "tag": "Best productivity phone",
     "category": "Flagship 1L+",
-    "price": 0,
-    "description": "Inner display: 8\" AMOLED 120Hz | Outer display: 6.5\" AMOLED 120Hz | Chip: Snapdragon 8 Elite | Camera: 200MP triple | Design: 4.5mm thin when folded"
+    "price": 174999,
+    "description": "Inner display: 8\" AMOLED 120Hz | Outer display: 6.5\" AMOLED 120Hz | Chip: Snapdragon 8 Elite | Camera: 200MP triple | Design: 4.5mm thin folded"
   },
   {
     "id": 48,
     "name": "Apple iPhone 17",
     "tag": "Best value iPhone",
     "category": "Flagship 1L+",
-    "price": 0,
-    "description": "Chip: Apple A19 | Camera: 48MP + 48MP ultrawide | Display: 6.1\" ProMotion 120Hz | Design: Aluminum unibody | OS: iOS 26"
+    "price": 82900,
+    "description": "Chip: Apple A19 | Camera: 48MP + 48MP ultrawide | Display: 6.1\" ProMotion 120Hz | Build: Aluminum unibody | OS: iOS 26"
   },
   {
     "id": 49,
     "name": "Apple iPhone 17 Pro",
     "tag": "Best photo + video",
     "category": "Flagship 1L+",
-    "price": 0,
+    "price": 134900,
     "description": "Chip: Apple A19 Pro | Camera: 48MP triple system | Zoom: 5x optical | Video: 4K ProRes RAW | Display: 6.3\" Super Retina 120Hz"
   },
   {
@@ -396,8 +396,8 @@
     "name": "Apple iPhone 17 Pro Max",
     "tag": "Best iPhone overall",
     "category": "Flagship 1L+",
-    "price": 0,
-    "description": "Chip: Apple A19 Pro | Camera: All 48MP triple + 8x zoom | Display: 6.9\" Super Retina 120Hz | Battery: 4832mAh · 39hr video | Shield: Ceramic Shield 2 (4x crack)"
+    "price": 149900,
+    "description": "Chip: Apple A19 Pro | Camera: All 48MP + 8x zoom | Display: 6.9\" Super Retina 120Hz | Battery: 4832mAh · 39hr video | Shield: Ceramic Shield 2"
   },
   {
     "id": 51,
@@ -405,7 +405,7 @@
     "tag": "Best deal Apple",
     "category": "Flagship 1L+",
     "price": 72900,
-    "description": "Chip: Apple A18 | Camera: 48MP dual | Display: 6.1\" OLED Super Retina | Apple Intelligence: Yes | Value: Best deal iPhone 2026"
+    "description": "Chip: Apple A18 | Camera: 48MP dual | Display: 6.1\" Super Retina XDR | Apple Intelligence: Yes | Saving vs 17: ~₹10,000 cheaper"
   },
   {
     "id": 52,
@@ -413,15 +413,15 @@
     "tag": "Still flagship-tier",
     "category": "Flagship 1L+",
     "price": 119900,
-    "description": "Chip: Apple A18 Pro | Camera: 48MP + 48MP + 12MP | Display: 6.9\" ProMotion OLED | Battery: 4685mAh | Deal: ₹30K cheaper than 17 Pro Max"
+    "description": "Chip: Apple A18 Pro | Camera: 48MP + 48MP + 12MP | Display: 6.9\" ProMotion OLED | Battery: 4685mAh | Saving vs 17 Pro Max: ~₹30,000 cheaper"
   },
   {
     "id": 53,
     "name": "Apple iPhone 15",
-    "tag": "Entry to Apple ecosystem",
+    "tag": "Entry-level Apple",
     "category": "Flagship 1L+",
     "price": 59900,
-    "description": "Chip: Apple A16 Bionic | Camera: 48MP + 12MP | Display: 6.1\" Super Retina XDR | USB: USB-C first gen | Value: Cheapest new Apple"
+    "description": "Chip: Apple A16 Bionic | Camera: 48MP + 12MP | Display: 6.1\" Super Retina XDR | USB: USB-C first gen | Value: Entry to Apple ecosystem"
   },
   {
     "id": 54,
