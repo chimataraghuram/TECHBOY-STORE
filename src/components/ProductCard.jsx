@@ -31,7 +31,13 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
     const [imgError, setImgError] = React.useState(false);
     const [imgLoaded, setImgLoaded] = React.useState(false);
 
-    const imageSrc = !imgError && product.image ? product.image : balancedImg;
+    const resolveImg = (src) => {
+        if (!src) return balancedImg;
+        // Local public paths (start with /) need the Vite base URL prepended
+        if (src.startsWith('/')) return `${import.meta.env.BASE_URL}${src.replace(/^\//, '')}`;
+        return src; // external URLs (http/https) pass through unchanged
+    };
+    const imageSrc = !imgError && product.image ? resolveImg(product.image) : balancedImg;
 
     const handleSaveToWatchlist = async (e) => {
         e.stopPropagation();
