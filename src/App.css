@@ -10,6 +10,18 @@
   justify-content: center;
 }
 
+.scroll-progress-bar {
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff8c42, #ff3296);
+  transform-origin: 0%;
+  z-index: 1001;
+  box-shadow: 0 0 10px rgba(255, 140, 66, 0.5);
+}
+
 /* Global Container Centering */
 .container {
   max-width: 1200px !important; /* Allow fluid width */

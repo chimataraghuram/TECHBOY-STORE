@@ -94,9 +94,26 @@ const StoreSection = ({ searchTerm, onSearch }) => {
         <section id="products" className="store-section">
             <div className="container">
                 <div className="section-header text-center">
-                    <span className="badge analyst-badge">TECHBOY ANALYST PICK</span>
-                    <h2 className="section-title">Explore Expert <span className="text-gradient">Recommendations</span></h2>
-                    <p className="section-subtitle">Categorized by budget and performance. We do the research, you get the best deal.</p>
+                    <motion.span 
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        className="badge analyst-badge"
+                    >TECHBOY ANALYST PICK</motion.span>
+                    <motion.h2 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                        viewport={{ once: true }}
+                        className="section-title"
+                    >Explore Expert <span className="text-gradient">Recommendations</span></motion.h2>
+                    <motion.p 
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ delay: 0.4 }}
+                        viewport={{ once: true }}
+                        className="section-subtitle"
+                    >Categorized by budget and performance. We do the research, you get the best deal.</motion.p>
                 </div>
 
                 {!searchTerm && (

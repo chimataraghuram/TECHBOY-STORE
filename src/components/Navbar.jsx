@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { Search, Bot, LogOut, X, Bookmark, Menu } from 'lucide-react';
 import logo from '../../images/logos/new-logo.jpg';
 import WatchlistModal from './WatchlistModal';
@@ -8,6 +9,13 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
     const [searchActive, setSearchActive] = useState(false);
+
+    const { scrollYProgress } = useScroll();
+    const scaleX = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001
+    });
 
     const [authModal, setAuthModal] = useState(null); // 'login' or 'register'
     const [authData, setAuthData] = useState({ username: '', password: '', email: '' });
@@ -83,6 +91,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
 
     return (
         <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+            <motion.div className="scroll-progress-bar" style={{ scaleX }} />
             <div className="navbar-content">
                 {/* LOGO AREA - LEFT */}
                 <div className="navbar-left">
