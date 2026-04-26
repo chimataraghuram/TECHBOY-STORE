@@ -148,6 +148,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                             onCompare={handleCompare}
                             onView={setActiveViewProduct}
                             isComparing={!!compareList.find(p => p.id === product.id)}
+                            searchTerm={searchTerm}
                         />
                     ))}
                     {filteredProducts.length === 0 && (

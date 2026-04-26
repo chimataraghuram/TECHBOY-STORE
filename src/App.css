@@ -270,6 +270,15 @@
     margin-bottom: 20px;
 }
 
+.search-highlight {
+    background: rgba(255, 50, 150, 0.3);
+    color: #fff;
+    border-radius: 4px;
+    padding: 0 4px;
+    box-shadow: 0 0 8px rgba(255, 50, 150, 0.4);
+    font-weight: 800;
+}
+
 .search-results-info h3 {
     font-size: 1.5rem;
     font-weight: 800;

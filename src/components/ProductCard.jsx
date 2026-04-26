@@ -4,7 +4,20 @@ import balancedImg from '../../images/products/balanced-phone.png';
 
 const API_BASE_URL = 'http://127.0.0.1:8000/api';
 
-const ProductCard = ({ product, onCompare, isComparing, onView, index }) => {
+const HighlightText = ({ text, highlight }) => {
+    if (!highlight || !highlight.trim() || !text) return <>{text}</>;
+    const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+    return (
+        <>
+            {parts.map((part, i) => 
+                part.toLowerCase() === highlight.toLowerCase() ? 
+                    <span key={i} className="search-highlight">{part}</span> : part
+            )}
+        </>
+    );
+};
+
+const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTerm }) => {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
@@ -100,8 +113,12 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index }) => {
                 <img src={product.image || balancedImg} alt={product.name} className="product-real-img" loading="lazy" />
             </div>
             <div className="product-info" style={{ transform: "translateZ(30px)" }}>
-                <span className="category-label">{product.category}</span>
-                <h3 className="product-title">{product.name}</h3>
+                <span className="category-label">
+                    <HighlightText text={product.category} highlight={searchTerm} />
+                </span>
+                <h3 className="product-title">
+                    <HighlightText text={product.name} highlight={searchTerm} />
+                </h3>
 
                 <div className="product-actions-row">
                     <button className="jelly-btn mini view-phone-btn" onClick={() => onView(product)}>View Phone</button>
