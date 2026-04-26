@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="src/assets/techboy-logo.jpg" alt="TechBoy Logo" width="120" style="border-radius: 50%; box-shadow: 0 0 20px rgba(255, 140, 66, 0.4); border: 2px solid #ff8c42;">
+  <img src="images/logos/new-logo.jpg" alt="TechBoy Logo" width="120" style="border-radius: 50%; box-shadow: 0 0 20px rgba(255, 140, 66, 0.4); border: 2px solid #ff8c42;">
 
   # <span style="color: #ff8c42;">TECHBOY STORE</span>
   
@@ -105,9 +105,12 @@ TECHBOY-STORE/
 │   │   ├── serializers.py  # Advanced Data Transform Layer (Score Logic)
 │   │   └── exceptions.py   # Global Unified JSON Error Handler
 │   └── core/               # Central Config (Logging, Cache, Throttle)
+├── images/                 # Categorized Project Assets (Logos, Heroes, etc.)
+├── scripts/                # Data Parsing and Automation Scripts
 ├── src/                    # React Frontend
 │   ├── components/         # Modular UI Components
 │   └── App.css             # Neon/Glassmorphism Design System
+├── workflows/              # Automation Workflows (e.g., n8n Price Drop)
 └── README.md               # Production Documentation
 ```
 
