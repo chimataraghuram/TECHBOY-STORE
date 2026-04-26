@@ -24,7 +24,7 @@
     "category": "Under ₹10K",
     "price": 9499,
     "description": "OS: One UI 7 | Display: 6.7\" 120Hz LCD | Chip: Helio G99 | OS Updates: 6 major",
-    "image": "https://m.media-amazon.com/images/I/61sC0IcMMrL._SX679_.jpg"
+    "image": "/images/phones/samsung-galaxy-m07.jpg"
   },
   {
     "id": 4,
@@ -51,7 +51,7 @@
     "category": "Under ₹10K",
     "price": 9499,
     "description": "Warranty: Nationwide | IP Rating: IP54 | Resale: Best in segment | Updates: 6 major OS",
-    "image": "https://m.media-amazon.com/images/I/61sC0IcMMrL._SX679_.jpg"
+    "image": "/images/phones/samsung-galaxy-m07.jpg"
   },
   {
     "id": 7,
@@ -60,7 +60,7 @@
     "category": "Under ₹20K",
     "price": 17999,
     "description": "Chip: Snapdragon 7 Gen 3 | Display: 6.78\" 144Hz AMOLED | RAM: 8GB LPDDR5 | Battery: 5000mAh 44W",
-    "image": "https://m.media-amazon.com/images/I/71wGQJVivVL._SX679_.jpg"
+    "image": "/images/phones/iqoo-z9-5g.jpg"
   },
   {
     "id": 8,
@@ -69,7 +69,7 @@
     "category": "Under ₹20K",
     "price": 18999,
     "description": "Camera: 108MP main | Display: 6.67\" 120Hz AMOLED | Chip: Dimensity 7025 | Battery: 5500mAh",
-    "image": "https://m.media-amazon.com/images/I/71HjKibISBL._SX679_.jpg"
+    "image": "/images/phones/redmi-note-14-5g.jpg"
   },
   {
     "id": 9,
@@ -78,7 +78,7 @@
     "category": "Under ₹20K",
     "price": 19999,
     "description": "OS: One UI 7 + Galaxy AI | Display: 6.6\" Super AMOLED | Camera: 50MP OIS | Updates: 4 yrs OS + 5 sec",
-    "image": "https://m.media-amazon.com/images/I/71GkPnhJAML._SX679_.jpg"
+    "image": "/images/phones/samsung-galaxy-a26-5g.jpg"
   },
   {
     "id": 10,
@@ -96,7 +96,7 @@
     "category": "Under ₹20K",
     "price": 18999,
     "description": "Chip: Dimensity 7300 | Battery: 6500mAh | Display: 6.72\" 120Hz | Network: 5G",
-    "image": "https://m.media-amazon.com/images/I/71z1yg-JcxL._SX679_.jpg"
+    "image": "/images/phones/vivo-t5x-5g.jpg"
   },
   {
     "id": 12,
@@ -105,7 +105,7 @@
     "category": "Under ₹20K",
     "price": 19999,
     "description": "IP Rating: IP67 | Resale: High | Updates: 4+5 years | Trust: ★★★★★",
-    "image": "https://m.media-amazon.com/images/I/71GkPnhJAML._SX679_.jpg"
+    "image": "/images/phones/samsung-galaxy-a26-5g.jpg"
   },
   {
     "id": 13,
@@ -114,7 +114,7 @@
     "category": "Under ₹30K",
     "price": 27999,
     "description": "Chip: Snapdragon 8s Gen 3 | Display: 6.78\" 144Hz AMOLED | Cooling: Vapor chamber + Q2 | BGMI: Stable 90fps",
-    "image": "https://m.media-amazon.com/images/I/71BxrM9FKZL._SX679_.jpg"
+    "image": "/images/phones/iqoo-neo-10r.jpg"
   },
   {
     "id": 14,
@@ -150,7 +150,7 @@
     "category": "Under ₹30K",
     "price": 24999,
     "description": "Chip: Snapdragon 8s Gen 3 | RAM: 12GB LPDDR5X | Battery: 6000mAh 90W | Storage: 256GB",
-    "image": "https://m.media-amazon.com/images/I/71HiBVWSwWL._SX679_.jpg"
+    "image": "/images/phones/poco-f7-5g.jpg"
   },
   {
     "id": 18,
@@ -168,7 +168,7 @@
     "category": "Under ₹40K",
     "price": 42999,
     "description": "Chip: Snapdragon 8 Gen 3 | Display: 6.73\" 144Hz AMOLED | RAM: 16GB LPDDR5X | Cooling: Vapor chamber",
-    "image": "https://m.media-amazon.com/images/I/71u8wHNEqcL._SX679_.jpg"
+    "image": "/images/phones/poco-x8-pro-max.jpg"
   },
   {
     "id": 20,
@@ -177,7 +177,7 @@
     "category": "Under ₹40K",
     "price": 37088,
     "description": "Camera: 50MP ZEISS OIS | Portrait: ZEISS tuning | Chip: Dimensity 9200 | Display: 6.73\" AMOLED 120Hz",
-    "image": "https://m.media-amazon.com/images/I/71yfkpCeT1L._SX679_.jpg"
+    "image": "/images/phones/vivo-v70-fe.jpg"
   },
   {
     "id": 21,
@@ -186,7 +186,7 @@
     "category": "Under ₹40K",
     "price": 34999,
     "description": "OS: One UI 7 + Galaxy AI | Display: 6.5\" Super AMOLED | Camera: 50MP OIS | Updates: 4 OS + 5 sec yrs",
-    "image": "https://m.media-amazon.com/images/I/71xJQo6mvlL._SX679_.jpg"
+    "image": "/images/phones/samsung-galaxy-a37-5g.jpg"
   },
   {
     "id": 22,
@@ -195,7 +195,7 @@
     "category": "Under ₹40K",
     "price": 35999,
     "description": "Chip: Snapdragon 8s Gen 4 | Display: 6.77\" ProXDR 120Hz | Charging: 100W SUPERVOOC | Build: Glass + aluminum",
-    "image": "https://m.media-amazon.com/images/I/71OqD9jtMEL._SX679_.jpg"
+    "image": "/images/phones/oneplus-nord-6.jpg"
   },
   {
     "id": 23,
@@ -204,7 +204,7 @@
     "category": "Under ₹40K",
     "price": 37999,
     "description": "Chip: Snapdragon 8 Elite | Charging: 120W SuperVOOC | Camera: 50MP triple | Display: 6.78\" 144Hz AMOLED",
-    "image": "https://m.media-amazon.com/images/I/71lgWn4VHIL._SX679_.jpg"
+    "image": "/images/phones/realme-gt7-pro.jpg"
   },
   {
     "id": 24,
@@ -213,7 +213,7 @@
     "category": "Under ₹40K",
     "price": 34999,
     "description": "Service: Nationwide centres | Resale: Best in segment | IP Rating: IP67 | Trust: ★★★★★",
-    "image": "https://m.media-amazon.com/images/I/71xJQo6mvlL._SX679_.jpg"
+    "image": "/images/phones/samsung-galaxy-a37-5g.jpg"
   },
   {
     "id": 25,
@@ -222,7 +222,7 @@
     "category": "Under ₹50K",
     "price": 47999,
     "description": "Chip: Snapdragon 8 Elite | Display: 6.82\" 144Hz LTPO | RAM: 16GB LPDDR5X | Cooling: Q2 supercomputing chip",
-    "image": "https://m.media-amazon.com/images/I/71Mm2IUAWVL._SX679_.jpg"
+    "image": "/images/phones/iqoo-13-5g.jpg"
   },
   {
     "id": 26,
@@ -231,7 +231,7 @@
     "category": "Under ₹50K",
     "price": 45999,
     "description": "Camera: 50MP ZEISS triple | Portrait: 85mm lens | Chip: Dimensity 9300 | Battery: 5500mAh 90W",
-    "image": "https://m.media-amazon.com/images/I/71qn2RbY-qL._SX679_.jpg"
+    "image": "/images/phones/vivo-v70.jpg"
   },
   {
     "id": 27,
@@ -240,7 +240,7 @@
     "category": "Under ₹50K",
     "price": 51860,
     "description": "OS: One UI 7 + Galaxy AI | Camera: 200MP | Display: 6.5\" 120Hz AMOLED | Updates: 4 OS + 5 sec yrs",
-    "image": "https://m.media-amazon.com/images/I/71NZj6C-5SL._SX679_.jpg"
+    "image": "/images/phones/samsung-galaxy-a57-5g.jpg"
   },
   {
     "id": 28,
@@ -249,7 +249,7 @@
     "category": "Under ₹50K",
     "price": 42999,
     "description": "Chip: Snapdragon 8 Gen 3 | Battery: 6000mAh 80W | Camera: 50MP Hasselblad | Display: 6.78\" AMOLED 120Hz",
-    "image": "https://m.media-amazon.com/images/I/71qbVEDFaJL._SX679_.jpg"
+    "image": "/images/phones/oneplus-13r.jpg"
   },
   {
     "id": 29,
@@ -258,7 +258,7 @@
     "category": "Under ₹50K",
     "price": 47999,
     "description": "Flagship chip at: ₹48K price | Charging: 120W flash | Display: 144Hz LTPO AMOLED | Value score: 10/10",
-    "image": "https://m.media-amazon.com/images/I/71Mm2IUAWVL._SX679_.jpg"
+    "image": "/images/phones/iqoo-13-5g.jpg"
   },
   {
     "id": 30,
@@ -267,7 +267,7 @@
     "category": "Under ₹50K",
     "price": 51860,
     "description": "Support: Pan-India premium | AI: Full Galaxy AI | 200MP camera: Yes | Trust: ★★★★★",
-    "image": "https://m.media-amazon.com/images/I/71NZj6C-5SL._SX679_.jpg"
+    "image": "/images/phones/samsung-galaxy-a57-5g.jpg"
   },
   {
     "id": 31,
@@ -294,7 +294,7 @@
     "category": "Under ₹60K",
     "price": 68107,
     "description": "OS: One UI 7 + Galaxy AI | Chip: Snapdragon 8 Elite | Display: 6.2\" QHD+ 120Hz | Updates: 7 OS updates",
-    "image": "https://m.media-amazon.com/images/I/71c0u6GUTgL._SX679_.jpg"
+    "image": "/images/phones/samsung-galaxy-s25.jpg"
   },
   {
     "id": 34,
@@ -321,7 +321,7 @@
     "category": "Under ₹60K",
     "price": 68107,
     "description": "Resale: Strongest ever | AI: Galaxy AI | Updates: 7 years | Trust: ★★★★★",
-    "image": "https://m.media-amazon.com/images/I/71c0u6GUTgL._SX679_.jpg"
+    "image": "/images/phones/samsung-galaxy-s25.jpg"
   },
   {
     "id": 37,
@@ -339,7 +339,7 @@
     "category": "Under ₹1 Lakh",
     "price": 82900,
     "description": "Camera: 48MP + 48MP ultrawide | Chip: Apple A19 | Video: 4K 120fps Cinematic | OS: iOS 26",
-    "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-17-finish-select-202509-6-9inch?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1725370339167"
+    "image": "/images/phones/apple-iphone-17.jpg"
   },
   {
     "id": 39,
@@ -348,7 +348,7 @@
     "category": "Under ₹1 Lakh",
     "price": 82900,
     "description": "OS: iOS 26 | AI: Apple Intelligence | Updates: 6+ yrs iOS | Privacy: Industry-leading",
-    "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-17-finish-select-202509-6-9inch?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1725370339167"
+    "image": "/images/phones/apple-iphone-17.jpg"
   },
   {
     "id": 40,
@@ -357,7 +357,7 @@
     "category": "Under ₹1 Lakh",
     "price": 75715,
     "description": "Chip: Exynos 2600 | Camera: 50MP triple + AI ISP | Display: 6.3\" QHD+ AMOLED | Updates: 7 OS updates",
-    "image": "https://m.media-amazon.com/images/I/71c0u6GUTgL._SX679_.jpg"
+    "image": "/images/phones/samsung-galaxy-s26.jpg"
   },
   {
     "id": 41,
@@ -366,7 +366,7 @@
     "category": "Under ₹1 Lakh",
     "price": 82900,
     "description": "Resale: Unmatched retention | Longevity: 6+ yrs iOS updates | Value score: 9/10 | Chip: Apple A19",
-    "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-17-finish-select-202509-6-9inch?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1725370339167"
+    "image": "/images/phones/apple-iphone-17.jpg"
   },
   {
     "id": 42,
@@ -375,7 +375,7 @@
     "category": "Under ₹1 Lakh",
     "price": 82900,
     "description": "Brand: World's most premium | Resale: Highest retention | Ecosystem: Strong iCloud/App Store | Trust: ★★★★★",
-    "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-17-finish-select-202509-6-9inch?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1725370339167"
+    "image": "/images/phones/apple-iphone-17.jpg"
   },
   {
     "id": 43,
@@ -384,7 +384,7 @@
     "category": "Flagship 1L+",
     "price": 75715,
     "description": "Chip: Exynos 2600 | Display: 6.3\" QHD+ AMOLED 120Hz | Camera: 50MP triple | Battery: 4300mAh | OS updates: 7 years",
-    "image": "https://m.media-amazon.com/images/I/71c0u6GUTgL._SX679_.jpg"
+    "image": "/images/phones/samsung-galaxy-s26.jpg"
   },
   {
     "id": 44,
@@ -402,7 +402,7 @@
     "category": "Flagship 1L+",
     "price": 119000,
     "description": "Chip: SD 8 Elite Gen 5 | Camera: 200MP quad + AI ISP | Display: 6.9\" QHD+ Privacy AMOLED | Battery: 5000mAh 60W | Unique: Built-in Privacy Display",
-    "image": "https://images.samsung.com/in/smartphones/galaxy-s26-ultra/buy/gallery/galaxy-s26-ultra-sm-s938-sm-s938bzkgxfe-thumb-539505826.jpg"
+    "image": "/images/phones/samsung-galaxy-s26-ultra.jpg"
   },
   {
     "id": 46,
@@ -411,7 +411,7 @@
     "category": "Flagship 1L+",
     "price": 109999,
     "description": "Inner display: 6.9\" AMOLED 120Hz | Cover screen: 4.1\" FlexWindow | Chip: Exynos 2500 | Camera: 50MP dual | Battery: 4300mAh",
-    "image": "https://images.samsung.com/in/smartphones/galaxy-z-flip7/images/galaxy-z-flip7-highlights-kv.jpg"
+    "image": "/images/phones/samsung-galaxy-z-flip-7.jpg"
   },
   {
     "id": 47,
@@ -420,7 +420,7 @@
     "category": "Flagship 1L+",
     "price": 174999,
     "description": "Inner display: 8\" AMOLED 120Hz | Outer display: 6.5\" AMOLED 120Hz | Chip: Snapdragon 8 Elite | Camera: 200MP triple | Design: 4.5mm thin folded",
-    "image": "https://images.samsung.com/in/smartphones/galaxy-z-fold7/images/galaxy-z-fold7-highlights-kv.jpg"
+    "image": "/images/phones/samsung-galaxy-z-fold-7.jpg"
   },
   {
     "id": 48,
@@ -429,7 +429,7 @@
     "category": "Flagship 1L+",
     "price": 82900,
     "description": "Chip: Apple A19 | Camera: 48MP + 48MP ultrawide | Display: 6.1\" ProMotion 120Hz | Build: Aluminum unibody | OS: iOS 26",
-    "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-17-finish-select-202509-6-9inch?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1725370339167"
+    "image": "/images/phones/apple-iphone-17.jpg"
   },
   {
     "id": 49,
@@ -438,7 +438,7 @@
     "category": "Flagship 1L+",
     "price": 134900,
     "description": "Chip: Apple A19 Pro | Camera: 48MP triple system | Zoom: 5x optical | Video: 4K ProRes RAW | Display: 6.3\" Super Retina 120Hz",
-    "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-17-pro-finish-select-202509-6-3inch?wid=5120&hei=2880&fmt=p-jpg&qlt=80"
+    "image": "/images/phones/apple-iphone-17-pro.jpg"
   },
   {
     "id": 50,
@@ -447,7 +447,7 @@
     "category": "Flagship 1L+",
     "price": 149900,
     "description": "Chip: Apple A19 Pro | Camera: All 48MP + 8x zoom | Display: 6.9\" Super Retina 120Hz | Battery: 4832mAh · 39hr video | Shield: Ceramic Shield 2",
-    "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-17-pro-max-finish-select-202509?wid=5120&hei=2880&fmt=p-jpg&qlt=80"
+    "image": "/images/phones/apple-iphone-17-pro-max.jpg"
   },
   {
     "id": 51,
@@ -456,7 +456,7 @@
     "category": "Flagship 1L+",
     "price": 72900,
     "description": "Chip: Apple A18 | Camera: 48MP dual | Display: 6.1\" Super Retina XDR | Apple Intelligence: Yes | Saving vs 17: ~₹10,000 cheaper",
-    "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-16-finish-select-202409-6-1inch?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1724925065270"
+    "image": "/images/phones/apple-iphone-16.jpg"
   },
   {
     "id": 52,
@@ -465,7 +465,7 @@
     "category": "Flagship 1L+",
     "price": 119900,
     "description": "Chip: Apple A18 Pro | Camera: 48MP + 48MP + 12MP | Display: 6.9\" ProMotion OLED | Battery: 4685mAh | Saving vs 17 Pro Max: ~₹30,000 cheaper",
-    "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-16-pro-max-finish-select-202409-6-9inch-deserttitanium?wid=5120&hei=2880&fmt=p-jpg&qlt=80"
+    "image": "/images/phones/apple-iphone-16-pro-max.jpg"
   },
   {
     "id": 53,
@@ -474,7 +474,7 @@
     "category": "Flagship 1L+",
     "price": 59900,
     "description": "Chip: Apple A16 Bionic | Camera: 48MP + 12MP | Display: 6.1\" Super Retina XDR | USB: USB-C first gen | Value: Entry to Apple ecosystem",
-    "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-finish-select-202309-6-1inch-pink?wid=5120&hei=2880&fmt=p-jpg&qlt=80"
+    "image": "/images/phones/apple-iphone-15.jpg"
   },
   {
     "id": 54,
@@ -483,6 +483,6 @@
     "category": "Flagship 1L+",
     "price": 89900,
     "description": "Chip: Apple A17 Pro | Camera: 48MP + 12MP + 12MP 5x | Display: 6.7\" ProMotion OLED | Build: Titanium frame | Cameras: Still excellent in 2026",
-    "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-max-finish-select-202309-6-7inch-bluetitanium?wid=5120&hei=2880&fmt=p-jpg&qlt=80"
+    "image": "/images/phones/apple-iphone-15-pro-max.jpg"
   }
 ]
