@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../assets/techboy-logo.jpg';
+import logo from '../../images/logos/new-logo.jpg';
 
 const Footer = () => {
     return (

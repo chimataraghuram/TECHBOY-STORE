@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import heroImg from '../assets/hero-cyber.png';
+import heroImg from '../../images/hero_banners/hero-cyber.png';
 import { Zap, Diamond, Smartphone } from 'lucide-react';
 
 const Hero = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import balancedImg from '../assets/balanced-phone.png';
+import balancedImg from '../../images/products/balanced-phone.png';
 
 const API_BASE_URL = 'http://127.0.0.1:8000/api';
 

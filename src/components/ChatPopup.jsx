@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import logo from '../assets/techboy-logo.jpg';
+import logo from '../../images/logos/new-logo.jpg';
 import ProductCard from './ProductCard'; // We might use a mini version or just links
 
 const API_BASE_URL = 'http://127.0.0.1:8000/api';

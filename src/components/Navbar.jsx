@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Search, Bot, LogOut, X, Bookmark, Menu } from 'lucide-react';
-import logo from '../assets/techboy-logo.jpg';
+import logo from '../../images/logos/new-logo.jpg';
 import WatchlistModal from './WatchlistModal';
 
 const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
