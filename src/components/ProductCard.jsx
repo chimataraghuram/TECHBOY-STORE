@@ -28,6 +28,10 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
     const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
 
     const [isSaved, setIsSaved] = React.useState(false);
+    const [imgError, setImgError] = React.useState(false);
+    const [imgLoaded, setImgLoaded] = React.useState(false);
+
+    const imageSrc = !imgError && product.image ? product.image : balancedImg;
 
     const handleSaveToWatchlist = async (e) => {
         e.stopPropagation();
@@ -110,7 +114,15 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
                 </button>
             </div>
             <div className="product-image-wrapper" style={{ transform: "translateZ(50px)" }}>
-                <img src={product.image || balancedImg} alt={product.name} className="product-real-img" loading="lazy" />
+                {!imgLoaded && <div className="img-shimmer" />}
+                <img 
+                    src={imageSrc}
+                    alt={product.name} 
+                    className={`product-real-img ${imgLoaded ? 'img-loaded' : 'img-loading'}`}
+                    loading="lazy"
+                    onLoad={() => setImgLoaded(true)}
+                    onError={() => { setImgError(true); setImgLoaded(true); }}
+                />
             </div>
             <div className="product-info" style={{ transform: "translateZ(30px)" }}>
                 <span className="category-label">

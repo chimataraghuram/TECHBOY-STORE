@@ -759,12 +759,47 @@
   }
 }
 
+.product-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, 
+    rgba(255,255,255,0.03) 0%, 
+    rgba(255,140,66,0.08) 50%, 
+    rgba(255,255,255,0.03) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 12px;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
 .product-real-img {
   width: 100%;
   height: 200px;
   object-fit: contain;
   padding: 20px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.4s ease;
+}
+
+.product-real-img.img-loading {
+  opacity: 0;
+}
+
+.product-real-img.img-loaded {
+  opacity: 1;
 }
 
 .product-card:hover .product-real-img {
