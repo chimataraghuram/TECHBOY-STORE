@@ -64,7 +64,13 @@ const inlineFormat = (text) => {
     });
 };
 
-/* ── Main component ── */
+/* Free models to try in order if one fails */
+const FREE_MODELS = [
+    'meta-llama/llama-3.1-8b-instruct:free',
+    'mistralai/mistral-7b-instruct:free',
+    'google/gemma-3-4b-it:free',
+];
+
 const ChatPopup = ({ isOpen, onClose }) => {
     const [messages, setMessages] = useState([
         {
@@ -85,51 +91,75 @@ const ChatPopup = ({ isOpen, onClose }) => {
 
     useEffect(() => { scrollToBottom(); }, [messages, scrollToBottom]);
 
-    /* ── Stream from OpenRouter ── */
+    /* ── Stream from OpenRouter (tries models in order) ── */
     const streamOpenRouter = async (history, onChunk) => {
+        // Check key is loaded
+        if (!OPENROUTER_API_KEY) {
+            throw new Error('NO_API_KEY');
+        }
+
         abortRef.current = new AbortController();
-        const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-                'HTTP-Referer': 'https://techboy-store.vercel.app',
-                'X-Title': 'TechBoy Store AI'
-            },
-            body: JSON.stringify({
-                model: 'meta-llama/llama-3.1-8b-instruct:free',
-                messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history],
-                max_tokens: 320,
-                temperature: 0.7,
-                stream: true
-            }),
-            signal: abortRef.current.signal
-        });
+        let lastError = null;
 
-        if (!res.ok) throw new Error(`OpenRouter ${res.status}`);
+        for (const model of FREE_MODELS) {
+            try {
+                const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                        'HTTP-Referer': 'https://techboy-store.vercel.app',
+                        'X-Title': 'TechBoy Store AI'
+                    },
+                    body: JSON.stringify({
+                        model,
+                        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history],
+                        max_tokens: 320,
+                        temperature: 0.7,
+                        stream: true
+                    }),
+                    signal: abortRef.current.signal
+                });
 
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer = '';
+                if (!res.ok) {
+                    const errText = await res.text();
+                    console.warn(`Model ${model} failed (${res.status}):`, errText);
+                    lastError = new Error(`HTTP_${res.status}`);
+                    continue; // try next model
+                }
 
-        while (true) {
-            const { value, done } = await reader.read();
-            if (done) break;
-            buffer += decoder.decode(value, { stream: true });
-            const lines = buffer.split('\n');
-            buffer = lines.pop();
+                const reader = res.body.getReader();
+                const decoder = new TextDecoder();
+                let buffer = '';
 
-            for (const line of lines) {
-                if (!line.startsWith('data: ')) continue;
-                const data = line.slice(6).trim();
-                if (data === '[DONE]') return;
-                try {
-                    const json = JSON.parse(data);
-                    const chunk = json.choices?.[0]?.delta?.content || '';
-                    if (chunk) onChunk(chunk);
-                } catch { /* skip malformed */ }
+                while (true) {
+                    const { value, done } = await reader.read();
+                    if (done) break;
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop();
+
+                    for (const line of lines) {
+                        if (!line.startsWith('data: ')) continue;
+                        const data = line.slice(6).trim();
+                        if (data === '[DONE]') return;
+                        try {
+                            const json = JSON.parse(data);
+                            const chunk = json.choices?.[0]?.delta?.content || '';
+                            if (chunk) onChunk(chunk);
+                        } catch { /* skip malformed */ }
+                    }
+                }
+                return; // success — exit loop
+            } catch (err) {
+                if (err.name === 'AbortError') throw err;
+                console.warn(`Model ${model} threw:`, err.message);
+                lastError = err;
             }
         }
+
+        // All models failed
+        throw lastError || new Error('ALL_MODELS_FAILED');
     };
 
     /* ── Send message ── */
@@ -158,24 +188,42 @@ const ChatPopup = ({ isOpen, onClose }) => {
                     ));
                 });
             } else {
-                // Backend fallback (no streaming)
-                const res = await fetch(`${BACKEND_URL}/chat/`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ query: text })
-                });
-                const data = await res.json();
+                console.warn('No VITE_OPENROUTER_API_KEY — trying backend');
+                const result = await callBackend(text);
                 setMessages(prev => prev.map(m =>
-                    m.id === aiId ? { ...m, text: data.response || 'No response.' } : m
+                    m.id === aiId ? { ...m, text: result.text || 'No response.' } : m
                 ));
             }
         } catch (err) {
-            if (err.name === 'AbortError') return;
-            setMessages(prev => prev.map(m =>
-                m.id === aiId
-                    ? { ...m, text: "Sorry, I'm having trouble connecting right now. Please try again! 🔄" }
-                    : m
-            ));
+            if (err.name === 'AbortError') {
+                setMessages(prev => prev.map(m => m.id === aiId ? { ...m, done: true } : m));
+                setIsStreaming(false);
+                return;
+            }
+
+            console.error('OpenRouter failed:', err.message);
+
+            // Friendly error messages per error type
+            let errMsg = "Sorry, I couldn't get a response right now. Please try again! 🔄";
+            if (err.message === 'NO_API_KEY') {
+                errMsg = "⚠️ API key not loaded. Please restart the dev server (`npm run dev`) and try again.";
+            } else if (err.message?.includes('429') || err.message?.includes('rate')) {
+                errMsg = "⏳ The free AI is rate-limited right now. Please wait 30 seconds and try again.";
+            } else if (err.message?.includes('401') || err.message?.includes('403')) {
+                errMsg = "🔑 API key error. Please check your .env file.";
+            }
+
+            // Try backend as final fallback
+            try {
+                const result = await callBackend(text);
+                setMessages(prev => prev.map(m =>
+                    m.id === aiId ? { ...m, text: result.text } : m
+                ));
+            } catch {
+                setMessages(prev => prev.map(m =>
+                    m.id === aiId ? { ...m, text: errMsg } : m
+                ));
+            }
         } finally {
             setMessages(prev => prev.map(m => m.id === aiId ? { ...m, done: true } : m));
             setIsStreaming(false);
