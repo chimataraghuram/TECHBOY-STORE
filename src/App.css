@@ -3997,3 +3997,81 @@ html {
   overflow-x: hidden;
 }
 img { max-width: 100%; height: auto; }
+
+/* ---------------------------------------
+   NAVBAR SEARCH + AI FIXES
+--------------------------------------- */
+
+/* -- Always show AI pill text on desktop -- */
+@media (min-width: 769px) {
+  .ai-pill-text {
+    display: inline !important;
+  }
+  .ai-pill-btn-standalone {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+/* -- Mobile: show search INSIDE hamburger menu properly -- */
+@media (max-width: 768px) {
+  /* Keep AI icon visible even without text */
+  .ai-pill-btn-standalone {
+    padding: 8px 14px !important;
+    min-width: unset;
+  }
+  .ai-pill-text {
+    display: none !important;
+  }
+  .ai-pill-icon {
+    color: #ff8c42;
+  }
+
+  /* Search inside mobile menu — full width */
+  .navbar-center.active .search-only-pill {
+    width: 100%;
+    border-radius: 14px;
+    padding: 10px 16px;
+  }
+  .navbar-center.active .search-pill {
+    width: 100%;
+    gap: 10px;
+  }
+  .navbar-center.active .pill-search-input {
+    width: 100%;
+    font-size: 1rem;
+    padding: 4px 0;
+  }
+
+  /* Hamburger menu toggle visible */
+  .mobile-menu-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  /* Show search as standalone row below navbar on mobile too */
+  .navbar-center.active {
+    display: flex !important;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 0 0 20px 20px;
+  }
+}
+
+/* -- Tablet -- */
+@media (min-width: 641px) and (max-width: 768px) {
+  /* Show AI label at tablet size */
+  .ai-pill-text { display: inline !important; }
+  .ai-pill-btn-standalone { padding: 8px 18px !important; }
+}

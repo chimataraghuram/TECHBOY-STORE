@@ -90,8 +90,13 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
             <div className="navbar-content">
                 {/* LOGO AREA - LEFT */}
                 <div className="navbar-left">
-                    <button className="mobile-menu-toggle" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-                        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    <button 
+                        className="mobile-menu-toggle" 
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        aria-label="Toggle menu"
+                        aria-expanded={isMenuOpen}
+                    >
+                        {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
                     </button>
                     <div className="pill-wrapper logo-pill">
                         <a href="/" className="logo-container">
