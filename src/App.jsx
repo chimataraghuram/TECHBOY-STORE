@@ -10,6 +10,7 @@ import Footer from './components/Footer'
 import ChatPopup from './components/ChatPopup'
 import ParticleBackground from './components/ParticleBackground'
 import IntroScreen from './components/IntroScreen'
+import { ScrollProgressBar, CursorTrail, StatsStrip } from './components/AnimationEngine'
 
 function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -29,10 +30,15 @@ function App() {
           transition={{ duration: 1 }}
           className="app-container"
         >
+          <ScrollProgressBar />
+          <CursorTrail />
           <ParticleBackground />
           <Navbar onChatToggle={() => setIsChatOpen(!isChatOpen)} onSearch={setSearchTerm} searchTerm={searchTerm} />
           <main>
             <Hero />
+            <div className="container">
+              <StatsStrip />
+            </div>
             <HowToUse />
             <StoreSection searchTerm={searchTerm} onSearch={setSearchTerm} />
             <Features />
