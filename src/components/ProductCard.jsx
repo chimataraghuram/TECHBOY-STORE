@@ -154,7 +154,7 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
                         <span className="price">₹{product.price?.toLocaleString()}</span>
                     </div>
                     <a 
-                        href={product.amazon_link || '#'} 
+                        href={product.amazonLink || product.flipkartLink || '#'} 
                         target="_blank" 
                         rel="noopener noreferrer" 
                         className="get-deal-btn" 

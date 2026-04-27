@@ -100,21 +100,24 @@ const QuickViewModal = ({ product, onClose }) => {
                         </div>
 
                         <div className="specs-detail-list">
-                            <div className="spec-detail-item">
-                                <span>Display</span>
-                                <p>{product.specs.display || '6.7" OLED 120Hz'}</p>
-                            </div>
-                            <div className="spec-detail-item">
-                                <span>Performance</span>
-                                <p>{product.specs.processor || 'Snapdragon 8 Gen 4'}</p>
-                            </div>
+                            {product.description && product.description.split('|').map((spec, i) => (
+                                <div key={i} className="spec-detail-item">
+                                    <p>{spec.trim()}</p>
+                                </div>
+                            ))}
                         </div>
 
                         <div className="modal-actions">
-                            <a href={product.amazon_link || '#'} target="_blank" rel="noopener noreferrer" className="primary-btn large jelly-btn full-width">
-                                Get Deal on Amazon &rarr;
-                            </a>
-                            <p className="redirect-hint">Redirecting to official Amazon page</p>
+                            {product.amazonLink && (
+                                <a href={product.amazonLink} target="_blank" rel="noopener noreferrer" className="primary-btn large jelly-btn full-width">
+                                    Buy on Amazon &rarr;
+                                </a>
+                            )}
+                            {product.flipkartLink && (
+                                <a href={product.flipkartLink} target="_blank" rel="noopener noreferrer" className="secondary-btn large jelly-btn full-width" style={{marginTop:'10px'}}>
+                                    Buy on Flipkart &rarr;
+                                </a>
+                            )}
                         </div>
                     </div>
                 </div>

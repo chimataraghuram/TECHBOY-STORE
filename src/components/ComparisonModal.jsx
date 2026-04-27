@@ -1,16 +1,30 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+// Parse a value from the description string, e.g. "RAM: 8GB" → 8
+const parseFromDesc = (description = '', key) => {
+    if (!description) return null;
+    const regex = new RegExp(`${key}[:\\s]+([\\w.]+)`, 'i');
+    const match = description.match(regex);
+    return match ? match[1] : null;
+};
+
 const ComparisonModal = ({ products, onClose }) => {
     const getWinner = (specType) => {
-        if (products.length < 2) return null;
+        if (products.length < 2) return [];
 
         const vals = products.map(p => {
             let val = 0;
-            if (specType === 'price') val = typeof p.price === 'string' ? parseInt(p.price.replace(/[^\d]/g, '')) : p.price;
-            if (specType === 'ram') val = parseInt(p.specs.ram.replace(/[^\d]/g, ''));
+            const desc = p.description || '';
+            if (specType === 'price') {
+                val = typeof p.price === 'string' ? parseInt(p.price.replace(/[^\d]/g, '')) : (p.price || 0);
+            }
+            if (specType === 'ram') {
+                const ramStr = parseFromDesc(desc, 'RAM') || '0';
+                val = parseInt(ramStr) || 0;
+            }
             if (specType === 'refresh') {
-                const match = p.specs.display.match(/(\d+)Hz/);
+                const match = desc.match(/(\d+)Hz/);
                 val = match ? parseInt(match[1]) : 60;
             }
             return { id: p.id, val };
@@ -57,25 +71,40 @@ const ComparisonModal = ({ products, onClose }) => {
                         <div>Display</div>
                         <div>RAM</div>
                         <div>Verdict</div>
+                        <div>Buy Now</div>
                     </div>
-                    {products.map(p => (
-                        <div key={p.id} className={`comparison-col ${winners.price.includes(p.id) && winners.ram.includes(p.id) ? 'winner-card' : ''}`}>
-                            <div className="col-header">
-                                <img src={p.image} alt={p.name} />
-                                <h4>{p.name}</h4>
+                    {products.map(p => {
+                        const desc = p.description || '';
+                        const displayVal = (() => { const m = desc.match(/Display:\s*([^|]+)/i); return m ? m[1].trim() : '—'; })();
+                        const ramVal = parseFromDesc(desc, 'RAM') || '—';
+                        const isWinner = (winners.price?.includes(p.id) || []).length > 0 && (winners.ram?.includes(p.id) || []).length > 0;
+                        return (
+                            <div key={p.id} className={`comparison-col ${winners.price?.includes(p.id) && winners.ram?.includes(p.id) ? 'winner-card' : ''}`}>
+                                <div className="col-header">
+                                    <img src={p.image} alt={p.name} />
+                                    <h4>{p.name}</h4>
+                                </div>
+                                <div className={`spec-val ${winners.price?.includes(p.id) ? 'winner' : ''}`}>
+                                    ₹{p.price?.toLocaleString()}
+                                </div>
+                                <div className={`spec-val ${winners.refresh?.includes(p.id) ? 'winner' : ''}`}>
+                                    {displayVal}
+                                </div>
+                                <div className={`spec-val ${winners.ram?.includes(p.id) ? 'winner' : ''}`}>
+                                    {ramVal !== '—' ? `${ramVal} GB` : '—'}
+                                </div>
+                                <div className="spec-val smaller">{p.tag || 'Expert Selection'}</div>
+                                <div className="spec-val buy-links-row">
+                                    {p.amazonLink && (
+                                        <a href={p.amazonLink} target="_blank" rel="noopener noreferrer" className="buy-link amazon-link">Amazon</a>
+                                    )}
+                                    {p.flipkartLink && (
+                                        <a href={p.flipkartLink} target="_blank" rel="noopener noreferrer" className="buy-link flipkart-link">Flipkart</a>
+                                    )}
+                                </div>
                             </div>
-                            <div className={`spec-val ${winners.price.includes(p.id) ? 'winner' : ''}`}>
-                                ₹{p.price?.toLocaleString()}
-                            </div>
-                            <div className={`spec-val ${winners.refresh.includes(p.id) ? 'winner' : ''}`}>
-                                {p.specs.display}
-                            </div>
-                            <div className={`spec-val ${winners.ram.includes(p.id) ? 'winner' : ''}`}>
-                                {p.specs.ram}
-                            </div>
-                            <div className="spec-val smaller">{p.reason || 'Expert Selection'}</div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
             </motion.div>
         </motion.div>

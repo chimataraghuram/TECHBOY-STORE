@@ -986,6 +986,46 @@
   color: white;
 }
 
+.buy-links-row {
+  height: auto !important;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 0;
+}
+
+.buy-link {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.amazon-link {
+  background: rgba(255, 153, 0, 0.2);
+  border: 1px solid rgba(255, 153, 0, 0.5);
+  color: #ff9900;
+}
+
+.amazon-link:hover {
+  background: rgba(255, 153, 0, 0.35);
+  box-shadow: 0 0 12px rgba(255, 153, 0, 0.4);
+}
+
+.flipkart-link {
+  background: rgba(40, 116, 240, 0.2);
+  border: 1px solid rgba(40, 116, 240, 0.5);
+  color: #2874f0;
+}
+
+.flipkart-link:hover {
+  background: rgba(40, 116, 240, 0.35);
+  box-shadow: 0 0 12px rgba(40, 116, 240, 0.4);
+}
+
+
 /* Fly to Cart Animation */
 @keyframes flyToCart {
   0% {
