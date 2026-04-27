@@ -6,7 +6,9 @@
     "category": "Under ₹10K",
     "price": 8499,
     "description": "Chip: Helio G88 | Display: 6.67\" 90Hz IPS | RAM: 8GB | Battery: 5000mAh",
-    "image": "/images/phones/tecno-spark-30c.png"
+    "image": "/images/phones/tecno-spark-30c.png",
+    "amazonLink": "https://www.amazon.in/s?k=Tecno+Spark+30C",
+    "flipkartLink": "https://www.flipkart.com/search?q=Tecno+Spark+30C"
   },
   {
     "id": 2,
@@ -15,7 +17,9 @@
     "category": "Under ₹10K",
     "price": 9299,
     "description": "Camera: 50MP AI | Chip: Dimensity 6100+ | Display: 6.74\" 90Hz | Network: 5G",
-    "image": "/images/phones/redmi-13c-5g.png"
+    "image": "/images/phones/redmi-13c-5g.png",
+    "amazonLink": "https://www.amazon.in/s?k=Redmi+13C+5G",
+    "flipkartLink": "https://www.flipkart.com/search?q=Redmi+13C+5G"
   },
   {
     "id": 3,
@@ -24,7 +28,9 @@
     "category": "Under ₹10K",
     "price": 9499,
     "description": "OS: One UI 7 | Display: 6.7\" 120Hz LCD | Chip: Helio G99 | OS Updates: 6 major",
-    "image": "/images/phones/samsung-galaxy-m07.jpg"
+    "image": "/images/phones/samsung-galaxy-m07.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+M07",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+M07"
   },
   {
     "id": 4,
@@ -33,7 +39,9 @@
     "category": "Under ₹10K",
     "price": 9999,
     "description": "Chip: Helio G91 | Battery: 6000mAh 45W | Camera: 50MP | Display: 6.74\" 90Hz",
-    "image": "/images/phones/realme-c75.jpg"
+    "image": "/images/phones/realme-c75.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Realme+C75",
+    "flipkartLink": "https://www.flipkart.com/search?q=Realme+C75"
   },
   {
     "id": 5,
@@ -42,7 +50,9 @@
     "category": "Under ₹10K",
     "price": 7499,
     "description": "RAM: 8GB | Storage: 128GB | Battery: 5000mAh | Display: 6.7\" 90Hz",
-    "image": "/images/phones/infinix-hot-50i.jpg"
+    "image": "/images/phones/infinix-hot-50i.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Infinix+Hot+50i",
+    "flipkartLink": "https://www.flipkart.com/search?q=Infinix+Hot+50i"
   },
   {
     "id": 6,
@@ -51,7 +61,9 @@
     "category": "Under ₹10K",
     "price": 9499,
     "description": "Warranty: Nationwide | IP Rating: IP54 | Resale: Best in segment | Updates: 6 major OS",
-    "image": "/images/phones/samsung-galaxy-m07.jpg"
+    "image": "/images/phones/samsung-galaxy-m07.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+M07",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+M07"
   },
   {
     "id": 7,
@@ -60,7 +72,9 @@
     "category": "Under ₹20K",
     "price": 17999,
     "description": "Chip: Snapdragon 7 Gen 3 | Display: 6.78\" 144Hz AMOLED | RAM: 8GB LPDDR5 | Battery: 5000mAh 44W",
-    "image": "/images/phones/iqoo-z9-5g.jpg"
+    "image": "/images/phones/iqoo-z9-5g.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=iQOO+Z9+5G",
+    "flipkartLink": "https://www.flipkart.com/search?q=iQOO+Z9+5G"
   },
   {
     "id": 8,
@@ -69,7 +83,9 @@
     "category": "Under ₹20K",
     "price": 18999,
     "description": "Camera: 108MP main | Display: 6.67\" 120Hz AMOLED | Chip: Dimensity 7025 | Battery: 5500mAh",
-    "image": "/images/phones/redmi-note-14-5g.jpg"
+    "image": "/images/phones/redmi-note-14-5g.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Redmi+Note+14+5G",
+    "flipkartLink": "https://www.flipkart.com/search?q=Redmi+Note+14+5G"
   },
   {
     "id": 9,
@@ -78,7 +94,9 @@
     "category": "Under ₹20K",
     "price": 19999,
     "description": "OS: One UI 7 + Galaxy AI | Display: 6.6\" Super AMOLED | Camera: 50MP OIS | Updates: 4 yrs OS + 5 sec",
-    "image": "/images/phones/samsung-galaxy-a26-5g.jpg"
+    "image": "/images/phones/samsung-galaxy-a26-5g.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+A26+5G",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+A26+5G"
   },
   {
     "id": 10,
@@ -87,7 +105,9 @@
     "category": "Under ₹20K",
     "price": 19999,
     "description": "Chip: Snapdragon 7s Gen 3 | Camera: 50MP triple | Display: 6.77\" AMOLED 120Hz | Design: Glyph interface",
-    "image": "/images/phones/nothing-phone-3a.jpg"
+    "image": "/images/phones/nothing-phone-3a.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Nothing+Phone+3a",
+    "flipkartLink": "https://www.flipkart.com/search?q=Nothing+Phone+3a"
   },
   {
     "id": 11,
@@ -96,7 +116,9 @@
     "category": "Under ₹20K",
     "price": 18999,
     "description": "Chip: Dimensity 7300 | Battery: 6500mAh | Display: 6.72\" 120Hz | Network: 5G",
-    "image": "/images/phones/vivo-t5x-5g.jpg"
+    "image": "/images/phones/vivo-t5x-5g.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=vivo+T5x+5G",
+    "flipkartLink": "https://www.flipkart.com/search?q=vivo+T5x+5G"
   },
   {
     "id": 12,
@@ -105,7 +127,9 @@
     "category": "Under ₹20K",
     "price": 19999,
     "description": "IP Rating: IP67 | Resale: High | Updates: 4+5 years | Trust: ★★★★★",
-    "image": "/images/phones/samsung-galaxy-a26-5g.jpg"
+    "image": "/images/phones/samsung-galaxy-a26-5g.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+A26+5G",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+A26+5G"
   },
   {
     "id": 13,
@@ -114,7 +138,9 @@
     "category": "Under ₹30K",
     "price": 27999,
     "description": "Chip: Snapdragon 8s Gen 3 | Display: 6.78\" 144Hz AMOLED | Cooling: Vapor chamber + Q2 | BGMI: Stable 90fps",
-    "image": "/images/phones/iqoo-neo-10r.jpg"
+    "image": "/images/phones/iqoo-neo-10r.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=iQOO+Neo+10R",
+    "flipkartLink": "https://www.flipkart.com/search?q=iQOO+Neo+10R"
   },
   {
     "id": 14,
@@ -123,7 +149,9 @@
     "category": "Under ₹30K",
     "price": 29999,
     "description": "Camera: 48MP + Google AI | Chip: Tensor G4 | Display: 6.3\" OLED 120Hz | Updates: 7 years",
-    "image": "/images/phones/google-pixel-9a.jpg"
+    "image": "/images/phones/google-pixel-9a.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Google+Pixel+9a",
+    "flipkartLink": "https://www.flipkart.com/search?q=Google+Pixel+9a"
   },
   {
     "id": 15,
@@ -132,7 +160,9 @@
     "category": "Under ₹30K",
     "price": 25999,
     "description": "OS: Nothing OS 3.0 | Design: Unique Glyph UI | Camera: 50MP triple | Chip: Snapdragon 7s Gen 3",
-    "image": "/images/phones/nothing-phone-3a.jpg"
+    "image": "/images/phones/nothing-phone-3a.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Nothing+Phone+3a+Pro",
+    "flipkartLink": "https://www.flipkart.com/search?q=Nothing+Phone+3a+Pro"
   },
   {
     "id": 16,
@@ -141,7 +171,9 @@
     "category": "Under ₹30K",
     "price": 26999,
     "description": "Chip: Snapdragon 8s Gen 3 | Charging: 120W SuperVOOC | Display: 6.78\" 144Hz AMOLED | Camera: 50MP Sony IMX",
-    "image": "/images/phones/realme-gt7t.webp"
+    "image": "/images/phones/realme-gt7t.webp",
+    "amazonLink": "https://www.amazon.in/s?k=Realme+GT+7T",
+    "flipkartLink": "https://www.flipkart.com/search?q=Realme+GT+7T"
   },
   {
     "id": 17,
@@ -150,7 +182,9 @@
     "category": "Under ₹30K",
     "price": 24999,
     "description": "Chip: Snapdragon 8s Gen 3 | RAM: 12GB LPDDR5X | Battery: 6000mAh 90W | Storage: 256GB",
-    "image": "/images/phones/poco-f7-5g.jpg"
+    "image": "/images/phones/poco-f7-5g.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=POCO+F7+5G",
+    "flipkartLink": "https://www.flipkart.com/search?q=POCO+F7+5G"
   },
   {
     "id": 18,
@@ -159,7 +193,9 @@
     "category": "Under ₹30K",
     "price": 28710,
     "description": "OS: OxygenOS 15 | Updates: 4 years OS | Build: Premium glass | Resale: Strong",
-    "image": "/images/phones/oneplus-nord-ce5.png"
+    "image": "/images/phones/oneplus-nord-ce5.png",
+    "amazonLink": "https://www.amazon.in/s?k=OnePlus+Nord+CE+5",
+    "flipkartLink": "https://www.flipkart.com/search?q=OnePlus+Nord+CE+5"
   },
   {
     "id": 19,
@@ -168,7 +204,9 @@
     "category": "Under ₹40K",
     "price": 42999,
     "description": "Chip: Snapdragon 8 Gen 3 | Display: 6.73\" 144Hz AMOLED | RAM: 16GB LPDDR5X | Cooling: Vapor chamber",
-    "image": "/images/phones/poco-x8-pro-max.jpg"
+    "image": "/images/phones/poco-x8-pro-max.jpg",
+    "amazonLink": null,
+    "flipkartLink": "https://www.flipkart.com/search?q=POCO+X8+Pro"
   },
   {
     "id": 20,
@@ -177,7 +215,9 @@
     "category": "Under ₹40K",
     "price": 37088,
     "description": "Camera: 50MP ZEISS OIS | Portrait: ZEISS tuning | Chip: Dimensity 9200 | Display: 6.73\" AMOLED 120Hz",
-    "image": "/images/phones/vivo-v70-fe.jpg"
+    "image": "/images/phones/vivo-v70-fe.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=vivo+V70+FE",
+    "flipkartLink": "https://www.flipkart.com/search?q=vivo+V70+FE"
   },
   {
     "id": 21,
@@ -186,7 +226,9 @@
     "category": "Under ₹40K",
     "price": 34999,
     "description": "OS: One UI 7 + Galaxy AI | Display: 6.5\" Super AMOLED | Camera: 50MP OIS | Updates: 4 OS + 5 sec yrs",
-    "image": "/images/phones/samsung-galaxy-a37-5g.jpg"
+    "image": "/images/phones/samsung-galaxy-a37-5g.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+A37+5G",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+A37+5G"
   },
   {
     "id": 22,
@@ -195,7 +237,9 @@
     "category": "Under ₹40K",
     "price": 35999,
     "description": "Chip: Snapdragon 8s Gen 4 | Display: 6.77\" ProXDR 120Hz | Charging: 100W SUPERVOOC | Build: Glass + aluminum",
-    "image": "/images/phones/oneplus-nord-6.jpg"
+    "image": "/images/phones/oneplus-nord-6.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=OnePlus+Nord+6",
+    "flipkartLink": "https://www.flipkart.com/search?q=OnePlus+Nord+6"
   },
   {
     "id": 23,
@@ -204,7 +248,9 @@
     "category": "Under ₹40K",
     "price": 37999,
     "description": "Chip: Snapdragon 8 Elite | Charging: 120W SuperVOOC | Camera: 50MP triple | Display: 6.78\" 144Hz AMOLED",
-    "image": "/images/phones/realme-gt7-pro.jpg"
+    "image": "/images/phones/realme-gt7-pro.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Realme+GT+7+Pro",
+    "flipkartLink": "https://www.flipkart.com/search?q=Realme+GT+7+Pro"
   },
   {
     "id": 24,
@@ -213,7 +259,9 @@
     "category": "Under ₹40K",
     "price": 34999,
     "description": "Service: Nationwide centres | Resale: Best in segment | IP Rating: IP67 | Trust: ★★★★★",
-    "image": "/images/phones/samsung-galaxy-a37-5g.jpg"
+    "image": "/images/phones/samsung-galaxy-a37-5g.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+A37+5G",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+A37+5G"
   },
   {
     "id": 25,
@@ -222,7 +270,9 @@
     "category": "Under ₹50K",
     "price": 47999,
     "description": "Chip: Snapdragon 8 Elite | Display: 6.82\" 144Hz LTPO | RAM: 16GB LPDDR5X | Cooling: Q2 supercomputing chip",
-    "image": "/images/phones/iqoo-13-5g.jpg"
+    "image": "/images/phones/iqoo-13-5g.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=iQOO+13+5G",
+    "flipkartLink": "https://www.flipkart.com/search?q=iQOO+13+5G"
   },
   {
     "id": 26,
@@ -231,7 +281,9 @@
     "category": "Under ₹50K",
     "price": 45999,
     "description": "Camera: 50MP ZEISS triple | Portrait: 85mm lens | Chip: Dimensity 9300 | Battery: 5500mAh 90W",
-    "image": "/images/phones/vivo-v70.jpg"
+    "image": "/images/phones/vivo-v70.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=vivo+V70",
+    "flipkartLink": "https://www.flipkart.com/search?q=vivo+V70"
   },
   {
     "id": 27,
@@ -240,7 +292,9 @@
     "category": "Under ₹50K",
     "price": 51860,
     "description": "OS: One UI 7 + Galaxy AI | Camera: 200MP | Display: 6.5\" 120Hz AMOLED | Updates: 4 OS + 5 sec yrs",
-    "image": "/images/phones/samsung-galaxy-a57-5g.jpg"
+    "image": "/images/phones/samsung-galaxy-a57-5g.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+A57+5G",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+A57+5G"
   },
   {
     "id": 28,
@@ -249,7 +303,9 @@
     "category": "Under ₹50K",
     "price": 42999,
     "description": "Chip: Snapdragon 8 Gen 3 | Battery: 6000mAh 80W | Camera: 50MP Hasselblad | Display: 6.78\" AMOLED 120Hz",
-    "image": "/images/phones/oneplus-13r.jpg"
+    "image": "/images/phones/oneplus-13r.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=OnePlus+13R",
+    "flipkartLink": "https://www.flipkart.com/search?q=OnePlus+13R"
   },
   {
     "id": 29,
@@ -258,7 +314,9 @@
     "category": "Under ₹50K",
     "price": 47999,
     "description": "Flagship chip at: ₹48K price | Charging: 120W flash | Display: 144Hz LTPO AMOLED | Value score: 10/10",
-    "image": "/images/phones/iqoo-13-5g.jpg"
+    "image": "/images/phones/iqoo-13-5g.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=iQOO+13+5G",
+    "flipkartLink": "https://www.flipkart.com/search?q=iQOO+13+5G"
   },
   {
     "id": 30,
@@ -267,7 +325,9 @@
     "category": "Under ₹50K",
     "price": 51860,
     "description": "Support: Pan-India premium | AI: Full Galaxy AI | 200MP camera: Yes | Trust: ★★★★★",
-    "image": "/images/phones/samsung-galaxy-a57-5g.jpg"
+    "image": "/images/phones/samsung-galaxy-a57-5g.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+A57+5G",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+A57+5G"
   },
   {
     "id": 31,
@@ -276,7 +336,9 @@
     "category": "Under ₹60K",
     "price": 58999,
     "description": "Chip: Snapdragon 8 Elite | Display: 6.82\" LTPO3 120Hz | Cooling: Cryoflux system | Battery: 6000mAh 100W",
-    "image": "/images/phones/oneplus-13.jpg"
+    "image": "/images/phones/oneplus-13.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=OnePlus+13",
+    "flipkartLink": "https://www.flipkart.com/search?q=OnePlus+13"
   },
   {
     "id": 32,
@@ -285,7 +347,9 @@
     "category": "Under ₹60K",
     "price": 59999,
     "description": "Camera: 50MP triple + AI | Video: 8K Pro Video | Chip: Tensor G4 | Updates: 7 years guaranteed",
-    "image": "/images/phones/google-pixel-9-pro.jpg"
+    "image": "/images/phones/google-pixel-9-pro.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Google+Pixel+9+Pro",
+    "flipkartLink": "https://www.flipkart.com/search?q=Google+Pixel+9+Pro"
   },
   {
     "id": 33,
@@ -294,7 +358,9 @@
     "category": "Under ₹60K",
     "price": 68107,
     "description": "OS: One UI 7 + Galaxy AI | Chip: Snapdragon 8 Elite | Display: 6.2\" QHD+ 120Hz | Updates: 7 OS updates",
-    "image": "/images/phones/samsung-galaxy-s25.jpg"
+    "image": "/images/phones/samsung-galaxy-s25.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+S25",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+S25"
   },
   {
     "id": 34,
@@ -303,7 +369,9 @@
     "category": "Under ₹60K",
     "price": 58999,
     "description": "Camera: 50MP Hasselblad triple | Battery: 6000mAh 100W | Chip: Snapdragon 8 Elite | Build: Marble / Silk finish",
-    "image": "/images/phones/oneplus-13.jpg"
+    "image": "/images/phones/oneplus-13.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=OnePlus+13",
+    "flipkartLink": "https://www.flipkart.com/search?q=OnePlus+13"
   },
   {
     "id": 35,
@@ -312,7 +380,9 @@
     "category": "Under ₹60K",
     "price": 58999,
     "description": "SD 8 Elite chip at: ₹59K | Hasselblad camera: Yes | 100W charging: Yes | Value score: 9.5/10",
-    "image": "/images/phones/oneplus-13.jpg"
+    "image": "/images/phones/oneplus-13.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=OnePlus+13",
+    "flipkartLink": "https://www.flipkart.com/search?q=OnePlus+13"
   },
   {
     "id": 36,
@@ -321,7 +391,9 @@
     "category": "Under ₹60K",
     "price": 68107,
     "description": "Resale: Strongest ever | AI: Galaxy AI | Updates: 7 years | Trust: ★★★★★",
-    "image": "/images/phones/samsung-galaxy-s25.jpg"
+    "image": "/images/phones/samsung-galaxy-s25.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+S25",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+S25"
   },
   {
     "id": 37,
@@ -330,7 +402,9 @@
     "category": "Under ₹1 Lakh",
     "price": 89999,
     "description": "Chip: SD 8 Elite Gen 5 | Display: 6.7\" QHD+ AMOLED | Cooling: 29% vapor upgrade | Battery: 4900mAh",
-    "image": "/images/phones/samsung-galaxy-s26-plus.jpg"
+    "image": "/images/phones/samsung-galaxy-s26-plus.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+S26+Plus",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+S26+Plus"
   },
   {
     "id": 38,
@@ -339,7 +413,9 @@
     "category": "Under ₹1 Lakh",
     "price": 82900,
     "description": "Camera: 48MP + 48MP ultrawide | Chip: Apple A19 | Video: 4K 120fps Cinematic | OS: iOS 26",
-    "image": "/images/phones/apple-iphone-17.jpg"
+    "image": "/images/phones/apple-iphone-17.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+17",
+    "flipkartLink": "https://www.flipkart.com/search?q=Apple+iPhone+17"
   },
   {
     "id": 39,
@@ -348,7 +424,9 @@
     "category": "Under ₹1 Lakh",
     "price": 82900,
     "description": "OS: iOS 26 | AI: Apple Intelligence | Updates: 6+ yrs iOS | Privacy: Industry-leading",
-    "image": "/images/phones/apple-iphone-17.jpg"
+    "image": "/images/phones/apple-iphone-17.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+17",
+    "flipkartLink": "https://www.flipkart.com/search?q=Apple+iPhone+17"
   },
   {
     "id": 40,
@@ -357,7 +435,9 @@
     "category": "Under ₹1 Lakh",
     "price": 75715,
     "description": "Chip: Exynos 2600 | Camera: 50MP triple + AI ISP | Display: 6.3\" QHD+ AMOLED | Updates: 7 OS updates",
-    "image": "/images/phones/samsung-galaxy-s26.jpg"
+    "image": "/images/phones/samsung-galaxy-s26.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+S26",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+S26"
   },
   {
     "id": 41,
@@ -366,7 +446,9 @@
     "category": "Under ₹1 Lakh",
     "price": 82900,
     "description": "Resale: Unmatched retention | Longevity: 6+ yrs iOS updates | Value score: 9/10 | Chip: Apple A19",
-    "image": "/images/phones/apple-iphone-17.jpg"
+    "image": "/images/phones/apple-iphone-17.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+17",
+    "flipkartLink": "https://www.flipkart.com/search?q=Apple+iPhone+17"
   },
   {
     "id": 42,
@@ -375,7 +457,9 @@
     "category": "Under ₹1 Lakh",
     "price": 82900,
     "description": "Brand: World's most premium | Resale: Highest retention | Ecosystem: Strong iCloud/App Store | Trust: ★★★★★",
-    "image": "/images/phones/apple-iphone-17.jpg"
+    "image": "/images/phones/apple-iphone-17.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+17",
+    "flipkartLink": "https://www.flipkart.com/search?q=Apple+iPhone+17"
   },
   {
     "id": 43,
@@ -384,7 +468,9 @@
     "category": "Flagship 1L+",
     "price": 75715,
     "description": "Chip: Exynos 2600 | Display: 6.3\" QHD+ AMOLED 120Hz | Camera: 50MP triple | Battery: 4300mAh | OS updates: 7 years",
-    "image": "/images/phones/samsung-galaxy-s26.jpg"
+    "image": "/images/phones/samsung-galaxy-s26.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+S26",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+S26"
   },
   {
     "id": 44,
@@ -393,7 +479,9 @@
     "category": "Flagship 1L+",
     "price": 89999,
     "description": "Chip: SD 8 Elite Gen 5 | Display: 6.7\" QHD+ AMOLED 120Hz | Camera: 50MP triple OIS | Battery: 4900mAh | Cooling: 29% vapor upgrade",
-    "image": "/images/phones/samsung-galaxy-s26-plus.jpg"
+    "image": "/images/phones/samsung-galaxy-s26-plus.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+S26+Plus",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+S26+Plus"
   },
   {
     "id": 45,
@@ -402,7 +490,9 @@
     "category": "Flagship 1L+",
     "price": 119000,
     "description": "Chip: SD 8 Elite Gen 5 | Camera: 200MP quad + AI ISP | Display: 6.9\" QHD+ Privacy AMOLED | Battery: 5000mAh 60W | Unique: Built-in Privacy Display",
-    "image": "/images/phones/samsung-galaxy-s26-ultra.jpg"
+    "image": "/images/phones/samsung-galaxy-s26-ultra.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+S26+Ultra",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+S26+Ultra"
   },
   {
     "id": 46,
@@ -411,7 +501,9 @@
     "category": "Flagship 1L+",
     "price": 109999,
     "description": "Inner display: 6.9\" AMOLED 120Hz | Cover screen: 4.1\" FlexWindow | Chip: Exynos 2500 | Camera: 50MP dual | Battery: 4300mAh",
-    "image": "/images/phones/samsung-galaxy-z-flip-7.jpg"
+    "image": "/images/phones/samsung-galaxy-z-flip-7.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+Z+Flip+7",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+Z+Flip+7"
   },
   {
     "id": 47,
@@ -420,7 +512,9 @@
     "category": "Flagship 1L+",
     "price": 174999,
     "description": "Inner display: 8\" AMOLED 120Hz | Outer display: 6.5\" AMOLED 120Hz | Chip: Snapdragon 8 Elite | Camera: 200MP triple | Design: 4.5mm thin folded",
-    "image": "/images/phones/samsung-galaxy-z-fold-7.jpg"
+    "image": "/images/phones/samsung-galaxy-z-fold-7.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+Z+Fold+7",
+    "flipkartLink": "https://www.flipkart.com/search?q=Samsung+Galaxy+Z+Fold+7"
   },
   {
     "id": 48,
@@ -429,7 +523,9 @@
     "category": "Flagship 1L+",
     "price": 82900,
     "description": "Chip: Apple A19 | Camera: 48MP + 48MP ultrawide | Display: 6.1\" ProMotion 120Hz | Build: Aluminum unibody | OS: iOS 26",
-    "image": "/images/phones/apple-iphone-17.jpg"
+    "image": "/images/phones/apple-iphone-17.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+17",
+    "flipkartLink": "https://www.flipkart.com/search?q=Apple+iPhone+17"
   },
   {
     "id": 49,
@@ -438,7 +534,9 @@
     "category": "Flagship 1L+",
     "price": 134900,
     "description": "Chip: Apple A19 Pro | Camera: 48MP triple system | Zoom: 5x optical | Video: 4K ProRes RAW | Display: 6.3\" Super Retina 120Hz",
-    "image": "/images/phones/apple-iphone-17-pro.jpg"
+    "image": "/images/phones/apple-iphone-17-pro.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+17+Pro",
+    "flipkartLink": "https://www.flipkart.com/search?q=Apple+iPhone+17+Pro"
   },
   {
     "id": 50,
@@ -447,7 +545,9 @@
     "category": "Flagship 1L+",
     "price": 149900,
     "description": "Chip: Apple A19 Pro | Camera: All 48MP + 8x zoom | Display: 6.9\" Super Retina 120Hz | Battery: 4832mAh · 39hr video | Shield: Ceramic Shield 2",
-    "image": "/images/phones/apple-iphone-17-pro-max.jpg"
+    "image": "/images/phones/apple-iphone-17-pro-max.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+17+Pro+Max",
+    "flipkartLink": "https://www.flipkart.com/search?q=Apple+iPhone+17+Pro+Max"
   },
   {
     "id": 51,
@@ -456,7 +556,9 @@
     "category": "Flagship 1L+",
     "price": 72900,
     "description": "Chip: Apple A18 | Camera: 48MP dual | Display: 6.1\" Super Retina XDR | Apple Intelligence: Yes | Saving vs 17: ~₹10,000 cheaper",
-    "image": "/images/phones/apple-iphone-16.jpg"
+    "image": "/images/phones/apple-iphone-16.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+16",
+    "flipkartLink": "https://www.flipkart.com/search?q=Apple+iPhone+16"
   },
   {
     "id": 52,
@@ -465,7 +567,9 @@
     "category": "Flagship 1L+",
     "price": 119900,
     "description": "Chip: Apple A18 Pro | Camera: 48MP + 48MP + 12MP | Display: 6.9\" ProMotion OLED | Battery: 4685mAh | Saving vs 17 Pro Max: ~₹30,000 cheaper",
-    "image": "/images/phones/apple-iphone-16-pro-max.jpg"
+    "image": "/images/phones/apple-iphone-16-pro-max.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+16+Pro+Max",
+    "flipkartLink": "https://www.flipkart.com/search?q=Apple+iPhone+16+Pro+Max"
   },
   {
     "id": 53,
@@ -474,7 +578,9 @@
     "category": "Flagship 1L+",
     "price": 59900,
     "description": "Chip: Apple A16 Bionic | Camera: 48MP + 12MP | Display: 6.1\" Super Retina XDR | USB: USB-C first gen | Value: Entry to Apple ecosystem",
-    "image": "/images/phones/apple-iphone-15.jpg"
+    "image": "/images/phones/apple-iphone-15.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+15",
+    "flipkartLink": "https://www.flipkart.com/search?q=Apple+iPhone+15"
   },
   {
     "id": 54,
@@ -483,6 +589,8 @@
     "category": "Flagship 1L+",
     "price": 89900,
     "description": "Chip: Apple A17 Pro | Camera: 48MP + 12MP + 12MP 5x | Display: 6.7\" ProMotion OLED | Build: Titanium frame | Cameras: Still excellent in 2026",
-    "image": "/images/phones/apple-iphone-15-pro-max.jpg"
+    "image": "/images/phones/apple-iphone-15-pro-max.jpg",
+    "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+15+Pro+Max",
+    "flipkartLink": "https://www.flipkart.com/search?q=Apple+iPhone+15+Pro+Max"
   }
 ]
