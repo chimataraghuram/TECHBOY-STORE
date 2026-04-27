@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import './App.css'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -24,7 +25,7 @@ function App() {
       </AnimatePresence>
 
       {!showIntro && (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
@@ -44,10 +45,17 @@ function App() {
             <Features />
           </main>
           <Footer />
-          <AnimatePresence>
-            {isChatOpen && <ChatPopup isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />}
-          </AnimatePresence>
         </motion.div>
+      )}
+
+      {/* ── Chat Portal: rendered directly in <body> so position:fixed always works ── */}
+      {!showIntro && createPortal(
+        <AnimatePresence>
+          {isChatOpen && (
+            <ChatPopup isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+          )}
+        </AnimatePresence>,
+        document.body
       )}
     </>
   )
