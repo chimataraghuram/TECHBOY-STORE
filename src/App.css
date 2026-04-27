@@ -1927,6 +1927,40 @@
   filter: drop-shadow(0 0 8px rgba(255, 0, 0, 0.5));
 }
 
+.send-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Chat Quick Suggestion Chips */
+.chat-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 24px 12px;
+  z-index: 1;
+}
+
+.suggestion-chip {
+  background: rgba(167, 139, 250, 0.1);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  color: #a78bfa;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.suggestion-chip:hover {
+  background: rgba(167, 139, 250, 0.25);
+  border-color: rgba(167, 139, 250, 0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(167, 139, 250, 0.2);
+}
+
 @media (max-width: 480px) {
   .chat-popup {
     bottom: 0;
@@ -1936,6 +1970,7 @@
     border-radius: 0;
   }
 }
+
 
 @media (max-width: 768px) {
   .hero-content {
