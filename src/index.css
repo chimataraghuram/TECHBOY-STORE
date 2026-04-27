@@ -131,7 +131,8 @@ body {
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 clamp(16px, 4vw, 40px);
+  width: 100%;
 }
 
 button {
