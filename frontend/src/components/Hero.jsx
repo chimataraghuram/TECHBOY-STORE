@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import heroImg from '../../images/hero_banners/hero-cyber.png';
-import { Zap, Diamond, Smartphone } from 'lucide-react';
+import { Zap, Diamond, Smartphone, Timer } from 'lucide-react';
+
+const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
 const Hero = () => {
     const containerVariants = {
@@ -23,6 +25,36 @@ const Hero = () => {
             transition: { duration: 0.8, ease: [0.6, 0.05, -0.01, 0.9] }
         }
     };
+
+    const [dealOfDay, setDealOfDay] = useState(null);
+    const [timeLeft, setTimeLeft] = useState({ hours: 14, minutes: 23, seconds: 59 });
+
+    useEffect(() => {
+        const fetchDeal = async () => {
+            try {
+                const res = await fetch(`${API_BASE_URL}/products/deal_of_the_day/`);
+                if (res.ok) {
+                    const data = await res.json();
+                    setDealOfDay(data);
+                }
+            } catch (err) {
+                console.error("Failed to fetch deal of the day", err);
+            }
+        };
+        fetchDeal();
+
+        const timer = setInterval(() => {
+            setTimeLeft(prev => {
+                let { hours, minutes, seconds } = prev;
+                if (seconds > 0) { seconds--; }
+                else if (minutes > 0) { minutes--; seconds = 59; }
+                else if (hours > 0) { hours--; minutes = 59; seconds = 59; }
+                return { hours, minutes, seconds };
+            });
+        }, 1000);
+        
+        return () => clearInterval(timer);
+    }, []);
 
     return (
         <section id="home" className="hero-section">
@@ -109,6 +141,36 @@ const Hero = () => {
                             <Smartphone size={24} fill="#ff4500" stroke="#ff4500" />
                         </motion.div>
                     </div>
+
+                    {dealOfDay && (
+                        <motion.div 
+                            className="deal-of-day-card glass-card"
+                            initial={{ opacity: 0, x: 50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 1.5, duration: 0.8 }}
+                            style={{ position: 'absolute', bottom: '-40px', right: '-20px', zIndex: 10, padding: '15px', borderRadius: '15px', border: '1px solid #ff4500', width: '250px' }}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                                <Timer size={18} color="#ff4500" />
+                                <span style={{ color: '#ff4500', fontWeight: 'bold', fontSize: '14px' }}>FLASH SALE ENDS IN:</span>
+                            </div>
+                            <div style={{ fontSize: '20px', fontWeight: '800', marginBottom: '10px', display: 'flex', gap: '5px' }}>
+                                <span style={{ background: 'rgba(255, 69, 0, 0.2)', padding: '4px 8px', borderRadius: '6px' }}>{String(timeLeft.hours).padStart(2, '0')}</span> :
+                                <span style={{ background: 'rgba(255, 69, 0, 0.2)', padding: '4px 8px', borderRadius: '6px' }}>{String(timeLeft.minutes).padStart(2, '0')}</span> :
+                                <span style={{ background: 'rgba(255, 69, 0, 0.2)', padding: '4px 8px', borderRadius: '6px' }}>{String(timeLeft.seconds).padStart(2, '0')}</span>
+                            </div>
+                            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                                <img src={dealOfDay.image} alt={dealOfDay.name} style={{ width: '50px', height: '50px', objectFit: 'contain' }} />
+                                <div>
+                                    <h4 style={{ margin: 0, fontSize: '14px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '140px' }}>{dealOfDay.name}</h4>
+                                    <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+                                        <span style={{ textDecoration: 'line-through', fontSize: '12px', color: '#888' }}>₹{(dealOfDay.price * 1.2).toLocaleString()}</span>
+                                        <span style={{ color: '#00ff88', fontWeight: 'bold' }}>₹{dealOfDay.price.toLocaleString()}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
                 </motion.div>
             </motion.div>
         </section>

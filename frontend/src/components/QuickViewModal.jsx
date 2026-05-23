@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Sparkles } from 'lucide-react';
 import RadarChart from './RadarChart';
 import PriceHistoryChart from './PriceHistoryChart';
 
@@ -9,6 +10,26 @@ const QuickViewModal = ({ product, onClose }) => {
     const [alertPrice, setAlertPrice] = useState(product.price - 1000);
     const [isAlertSubmitting, setIsAlertSubmitting] = useState(false);
     const [alertStatus, setAlertStatus] = useState(null); // 'success', 'error'
+    const [aiSummary, setAiSummary] = useState(null);
+    const [isLoadingAi, setIsLoadingAi] = useState(false);
+
+    useEffect(() => {
+        const fetchAiSummary = async () => {
+            setIsLoadingAi(true);
+            try {
+                const res = await fetch(`${API_BASE_URL}/products/${product.id}/ai_summary/`);
+                if (res.ok) {
+                    const data = await res.json();
+                    setAiSummary(data.summary);
+                }
+            } catch (err) {
+                console.error("Failed to fetch AI summary", err);
+            } finally {
+                setIsLoadingAi(false);
+            }
+        };
+        fetchAiSummary();
+    }, [product.id]);
 
     const handleSetAlert = async (e) => {
         e.preventDefault();
@@ -74,9 +95,18 @@ const QuickViewModal = ({ product, onClose }) => {
                             <span className="store-tag">Lowest @ Amazon</span>
                         </div>
 
-                        <div className="recommendation-box glass-card">
-                            <h4>Expert's Guide Summary:</h4>
-                            <p>{product.description || 'This phone offers the best hardware-to-price ratio in its segment, making it our #1 recommendation for mid-2026.'}</p>
+                        <div className="recommendation-box glass-card" style={{ position: 'relative', overflow: 'hidden' }}>
+                            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '2px', background: 'linear-gradient(90deg, transparent, #00ff88, transparent)', animation: 'scanline 2s linear infinite' }}></div>
+                            <h4 style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#00ff88' }}>
+                                <Sparkles size={18} /> NVIDIA AI Summary
+                            </h4>
+                            {isLoadingAi ? (
+                                <p style={{ color: '#aaa', fontStyle: 'italic', display: 'flex', gap: '5px' }}>
+                                    Analyzing specs and market data <span className="loading-dots">...</span>
+                                </p>
+                            ) : (
+                                <p>{aiSummary || product.description}</p>
+                            )}
                         </div>
 
                         <div className="price-alert-section glass-card">

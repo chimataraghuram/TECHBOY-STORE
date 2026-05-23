@@ -96,6 +96,42 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = self.get_serializer(recommendations, many=True)
         return Response(serializer.data)
 
+    @method_decorator(cache_page(60))
+    @action(detail=False, methods=['get'])
+    def deal_of_the_day(self, request):
+        deal = product_service.get_deal_of_the_day()
+        if not deal:
+            return Response({"error": "No deals available"}, status=404)
+        serializer = self.get_serializer(deal)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['get'])
+    def ai_summary(self, request, pk=None):
+        product = self.get_object()
+        nvidia_key = os.environ.get('NVIDIA_API_KEY')
+        ai_response = f"AI Verdict: The {product.name} offers great value with a focus on core performance and reliability in its price segment."
+        
+        if nvidia_key:
+            try:
+                headers = {
+                    "Authorization": f"Bearer {nvidia_key}",
+                    "Content-Type": "application/json"
+                }
+                data = {
+                    "model": "meta/llama-3.1-8b-instruct",
+                    "messages": [
+                        {"role": "system", "content": "You are TechBoy AI, an expert smartphone recommender. Keep it to exactly two sentences and do not use markdown."},
+                        {"role": "user", "content": f"Write a quick, punchy 2-sentence summary about the {product.name}. Its description is: {product.description}. Its specs are: {product.specs}"}
+                    ]
+                }
+                response = requests.post("https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=data, timeout=10)
+                if response.status_code == 200:
+                    ai_response = "AI Verdict: " + response.json()['choices'][0]['message']['content']
+            except Exception as e:
+                print(f"NVIDIA API Error in ai_summary: {e}")
+                
+        return Response({"summary": ai_response})
+
 class CompareAPIView(APIView):
     permission_classes = [AllowAny]
     def post(self, request):

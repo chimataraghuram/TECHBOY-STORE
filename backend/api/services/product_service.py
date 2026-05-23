@@ -36,6 +36,11 @@ def get_featured_products(limit=6):
     # Highest rated and expensive products (Premium selection)
     return Product.objects.order_by('-rating', '-price')[:limit]
 
+def get_deal_of_the_day():
+    # Simplest logic: Lowest price product
+    return Product.objects.order_by('price').first()
+
+
 def compare_products(product_ids):
     products = list(Product.objects.filter(id__in=product_ids))
     
