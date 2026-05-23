@@ -246,3 +246,21 @@ a {
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite linear;
 }
+
+/* ── Stacking Context Fixes to Prevent Gradient pseudo-elements from Hiding Button Text ── */
+.primary-btn, .jelly-btn {
+  background: transparent !important;
+  z-index: 1 !important;
+}
+
+.primary-btn::before, .jelly-btn::before {
+  z-index: -1 !important;
+}
+
+.secondary-btn {
+  z-index: 1 !important;
+}
+
+.secondary-btn::before {
+  z-index: -1 !important;
+}

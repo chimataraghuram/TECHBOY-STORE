@@ -28,7 +28,7 @@ const ParticleBackground = () => {
                 this.size = Math.random() * 1.5 + 0.5;
                 this.speedX = (Math.random() - 0.5) * 0.5;
                 this.speedY = (Math.random() - 0.5) * 0.5;
-                this.color = Math.random() > 0.5 ? '#ff4500' : '#ff8c42';
+                this.color = Math.random() > 0.5 ? '#ff2a2a' : '#ff7a00';
                 this.opacity = Math.random() * 0.3 + 0.05;
             }
 

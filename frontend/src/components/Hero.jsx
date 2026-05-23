@@ -128,21 +128,21 @@ const Hero = () => {
                             animate={{ y: [0, -15, 0], x: [0, 5, 0] }}
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                         >
-                            <Zap size={24} fill="#ff4500" stroke="#ff4500" />
+                            <Zap size={24} fill="var(--accent-primary)" stroke="var(--accent-primary)" />
                         </motion.div>
                         <motion.div 
                             className="float-icon icon-2"
                             animate={{ y: [0, -25, 0], x: [0, -5, 0] }}
                             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
                         >
-                            <Diamond size={24} fill="#ff4500" stroke="#ff4500" />
+                            <Diamond size={24} fill="var(--accent-secondary)" stroke="var(--accent-secondary)" />
                         </motion.div>
                         <motion.div 
                             className="float-icon icon-3"
                             animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }}
                             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                         >
-                            <Smartphone size={24} fill="#ff4500" stroke="#ff4500" />
+                            <Smartphone size={24} fill="var(--accent-primary)" stroke="var(--accent-primary)" />
                         </motion.div>
                     </div>
 

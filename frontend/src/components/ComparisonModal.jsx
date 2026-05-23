@@ -77,9 +77,9 @@ const ComparisonModal = ({ products, onClose }) => {
                         const desc = p.description || '';
                         const displayVal = (() => { const m = desc.match(/Display:\s*([^|]+)/i); return m ? m[1].trim() : '—'; })();
                         const ramVal = parseFromDesc(desc, 'RAM') || '—';
-                        const isWinner = (winners.price?.includes(p.id) || []).length > 0 && (winners.ram?.includes(p.id) || []).length > 0;
+                        const isWinner = winners.price?.includes(p.id) && winners.ram?.includes(p.id);
                         return (
-                            <div key={p.id} className={`comparison-col ${winners.price?.includes(p.id) && winners.ram?.includes(p.id) ? 'winner-card' : ''}`}>
+                            <div key={p.id} className={`comparison-col ${isWinner ? 'winner-card' : ''}`}>
                                 <div className="col-header">
                                     <img src={p.image} alt={p.name} />
                                     <h4>{p.name}</h4>

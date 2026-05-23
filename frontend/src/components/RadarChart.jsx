@@ -69,7 +69,7 @@ const RadarChart = ({ product }) => {
                     const { x, y } = getCoordinates(i, points.length, 100);
                     return <line key={i} x1={center} y1={center} x2={x} y2={y} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />;
                 })}
-                <polygon points={polygonPoints} fill="rgba(255, 69, 0, 0.3)" stroke="#ff4500" strokeWidth="2" />
+                <polygon points={polygonPoints} fill="rgba(var(--accent-rgb-primary), 0.3)" stroke="var(--accent-primary)" strokeWidth="2" />
                 {points.map((p, i) => {
                     const { x, y } = getCoordinates(i, points.length, 115);
                     return (

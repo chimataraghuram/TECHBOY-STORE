@@ -57,7 +57,7 @@ const QuickViewModal = ({ product, onClose }) => {
             } else {
                 setAlertStatus('error');
             }
-        } catch (err) {
+        } catch {
             setAlertStatus('error');
         } finally {
             setIsAlertSubmitting(false);

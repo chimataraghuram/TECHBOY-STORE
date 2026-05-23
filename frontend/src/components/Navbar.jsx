@@ -8,7 +8,6 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
     const [scrolled, setScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
-    const [searchActive, setSearchActive] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
     const [authModal, setAuthModal] = useState(null); // 'login' or 'register'
@@ -83,7 +82,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
             } else {
                 setMsg(data.error || 'Authentication failed');
             }
-        } catch (err) {
+        } catch {
             setMsg('Server error. Make sure backend is running.');
         }
     };
