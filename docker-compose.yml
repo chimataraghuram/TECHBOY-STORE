@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: techboy_db
+      POSTGRES_USER: techboy_user
+      POSTGRES_PASSWORD: techboy_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             gunicorn core.wsgi:application --bind 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgres://techboy_user:techboy_password@db:5432/techboy_db
+      - SECRET_KEY=development-secret-key
+      - DEBUG=True
+      - ALLOWED_HOSTS=*
+      # Email Configuration (Fill these out in your local .env or replace them)
+      - EMAIL_HOST=smtp.gmail.com
+      - EMAIL_PORT=587
+      - EMAIL_USE_TLS=True
+      - EMAIL_HOST_USER=chimataraghuram02a@gmail.com
+      - EMAIL_HOST_PASSWORD=your_gmail_app_password
+      - DEFAULT_FROM_EMAIL=chimataraghuram02a@gmail.com
+    depends_on:
+      - db
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: python manage.py qcluster
+    environment:
+      - DATABASE_URL=postgres://techboy_user:techboy_password@db:5432/techboy_db
+      - SECRET_KEY=development-secret-key
+      - DEBUG=True
+      # Email Configuration
+      - EMAIL_HOST=smtp.gmail.com
+      - EMAIL_PORT=587
+      - EMAIL_USE_TLS=True
+      - EMAIL_HOST_USER=chimataraghuram02a@gmail.com
+      - EMAIL_HOST_PASSWORD=your_gmail_app_password
+      - DEFAULT_FROM_EMAIL=chimataraghuram02a@gmail.com
+    depends_on:
+      - db
+      - backend
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

@@ -1,0 +1,9 @@
+node_modules
+dist
+.git
+.env
+.github
+README.md
+backend/
+workflows/
+scripts/

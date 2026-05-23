@@ -171,27 +171,27 @@ class ChatbotAPIView(APIView):
         if not query:
             return Response({"response": "I'm ready to help! What kind of smartphone are you looking for?"})
         
-        openrouter_key = os.environ.get('OPENROUTER_API_KEY')
+        nvidia_key = os.environ.get('NVIDIA_API_KEY')
         ai_response = "I couldn't find a specific match, but you can explore our 'Analyst Picks' for the best-vetted options!"
         
-        if openrouter_key:
+        if nvidia_key:
             try:
                 headers = {
-                    "Authorization": f"Bearer {openrouter_key}",
+                    "Authorization": f"Bearer {nvidia_key}",
                     "Content-Type": "application/json"
                 }
                 data = {
-                    "model": "meta-llama/llama-3-8b-instruct:free",
+                    "model": "meta/llama-3.1-8b-instruct",
                     "messages": [
                         {"role": "system", "content": "You are TechBoy AI, an expert smartphone recommender. Be concise and conversational. Do not output markdown, just plain text."},
                         {"role": "user", "content": query}
                     ]
                 }
-                response = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data, timeout=10)
+                response = requests.post("https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=data, timeout=10)
                 if response.status_code == 200:
                     ai_response = response.json()['choices'][0]['message']['content']
             except Exception as e:
-                print(f"OpenRouter Error: {e}")
+                print(f"NVIDIA API Error: {e}")
 
         # Extract some mock products for the demo UI based on query if AI didn't explicitly return product objects
         products = Product.objects.all()
@@ -207,7 +207,7 @@ class ChatbotAPIView(APIView):
         
         recommendations = ProductSerializer(matched[:3], many=True).data if matched.exists() else []
         
-        if not openrouter_key and matched.exists():
+        if not nvidia_key and matched.exists():
             names = ", ".join([p['name'] for p in recommendations])
             ai_response = f"Based on your interest, I recommend checking out: {names}. They offer great value in that category!"
 

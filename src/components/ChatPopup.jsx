@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import logo from '../../images/logos/new-logo.jpg';
 import localPhonesData from '../data/phones.json';
 
-const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
+const NVIDIA_API_KEY = import.meta.env.VITE_NVIDIA_API_KEY;
 const BACKEND_URL = 'http://127.0.0.1:8000/api';
 
 /* ── Catalog injected into system prompt ── */
@@ -66,10 +66,26 @@ const inlineFormat = (text) => {
 
 /* Free models to try in order if one fails */
 const FREE_MODELS = [
-    'meta-llama/llama-3.1-8b-instruct:free',
-    'mistralai/mistral-7b-instruct:free',
-    'google/gemma-3-4b-it:free',
+    'meta/llama-3.1-8b-instruct',
+    'mistralai/mixtral-8x22b-instruct-v0.1',
+    'google/gemma-2-9b-it',
 ];
+
+const callBackend = async (text) => {
+    try {
+        const res = await fetch(`${BACKEND_URL}/chatbot/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: text })
+        });
+        if (!res.ok) throw new Error('Backend failed');
+        const data = await res.json();
+        return { text: data.response };
+    } catch (err) {
+        console.error(err);
+        return { text: "Sorry, I am offline right now. Try again later! 💤" };
+    }
+};
 
 const ChatPopup = ({ isOpen, onClose }) => {
     const [messages, setMessages] = useState([
@@ -91,10 +107,10 @@ const ChatPopup = ({ isOpen, onClose }) => {
 
     useEffect(() => { scrollToBottom(); }, [messages, scrollToBottom]);
 
-    /* ── Stream from OpenRouter (tries models in order) ── */
-    const streamOpenRouter = async (history, onChunk) => {
+    /* ── Stream from NVIDIA NIM (tries models in order) ── */
+    const streamNvidia = async (history, onChunk) => {
         // Check key is loaded
-        if (!OPENROUTER_API_KEY) {
+        if (!NVIDIA_API_KEY) {
             throw new Error('NO_API_KEY');
         }
 
@@ -103,13 +119,11 @@ const ChatPopup = ({ isOpen, onClose }) => {
 
         for (const model of FREE_MODELS) {
             try {
-                const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                const res = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-                        'HTTP-Referer': 'https://techboy-store.vercel.app',
-                        'X-Title': 'TechBoy Store AI'
+                        'Authorization': `Bearer ${NVIDIA_API_KEY}`
                     },
                     body: JSON.stringify({
                         model,
@@ -181,14 +195,14 @@ const ChatPopup = ({ isOpen, onClose }) => {
             .map(m => ({ role: m.sender === 'user' ? 'user' : 'assistant', content: m.text }));
 
         try {
-            if (OPENROUTER_API_KEY) {
-                await streamOpenRouter(history, (chunk) => {
+            if (NVIDIA_API_KEY) {
+                await streamNvidia(history, (chunk) => {
                     setMessages(prev => prev.map(m =>
                         m.id === aiId ? { ...m, text: m.text + chunk } : m
                     ));
                 });
             } else {
-                console.warn('No VITE_OPENROUTER_API_KEY — trying backend');
+                console.warn('No VITE_NVIDIA_API_KEY — trying backend');
                 const result = await callBackend(text);
                 setMessages(prev => prev.map(m =>
                     m.id === aiId ? { ...m, text: result.text || 'No response.' } : m
@@ -201,7 +215,7 @@ const ChatPopup = ({ isOpen, onClose }) => {
                 return;
             }
 
-            console.error('OpenRouter failed:', err.message);
+            console.error('NVIDIA NIM failed:', err.message);
 
             // Friendly error messages per error type
             let errMsg = "Sorry, I couldn't get a response right now. Please try again! 🔄";
