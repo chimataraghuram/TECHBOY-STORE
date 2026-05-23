@@ -42,8 +42,8 @@ services:
   - type: web
     name: techboy-frontend
     env: static
-    buildCommand: "npm install && npm run build"
-    staticPublishPath: "./dist"
+    buildCommand: "cd frontend && npm install && npm run build"
+    staticPublishPath: "./frontend/dist"
     envVars:
       - key: VITE_NVIDIA_API_KEY
         value: "" # Provide NVIDIA NIM API Key in Render Dashboard

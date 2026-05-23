@@ -73,7 +73,7 @@ const FREE_MODELS = [
 
 const callBackend = async (text) => {
     try {
-        const res = await fetch(`${BACKEND_URL}/chatbot/`, {
+        const res = await fetch(`${BACKEND_URL}/chat/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ query: text })
