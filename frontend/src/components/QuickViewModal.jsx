@@ -95,13 +95,13 @@ const QuickViewModal = ({ product, onClose }) => {
                             <span className="store-tag">Lowest @ Amazon</span>
                         </div>
 
-                        <div className="recommendation-box glass-card" style={{ position: 'relative', overflow: 'hidden' }}>
-                            <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '2px', background: 'linear-gradient(90deg, transparent, #00ff88, transparent)', animation: 'scanline 2s linear infinite' }}></div>
-                            <h4 style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#00ff88' }}>
+                        <div className="recommendation-box glass-card ai-summary-box">
+                            <div className="ai-summary-scanline"></div>
+                            <h4 className="ai-summary-header">
                                 <Sparkles size={18} /> NVIDIA AI Summary
                             </h4>
                             {isLoadingAi ? (
-                                <p style={{ color: '#aaa', fontStyle: 'italic', display: 'flex', gap: '5px' }}>
+                                <p className="ai-loading-text">
                                     Analyzing specs and market data <span className="loading-dots">...</span>
                                 </p>
                             ) : (

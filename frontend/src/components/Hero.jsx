@@ -148,7 +148,6 @@ const Hero = () => {
                             initial={{ opacity: 0, x: 50 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 1.5, duration: 0.8 }}
-                            style={{ position: 'absolute', bottom: '-40px', right: '-20px', zIndex: 10, padding: '15px', borderRadius: '15px', border: '1px solid #ff4500', width: '250px' }}
                         >
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
                                 <Timer size={18} color="#ff4500" />

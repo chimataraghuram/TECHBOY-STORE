@@ -107,14 +107,14 @@ const ComparisonModal = ({ products, onClose }) => {
                     })}
                 </div>
                 
-                <div style={{ marginTop: '30px', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '20px', textAlign: 'center' }}>
-                    <h4 style={{ marginBottom: '15px', color: '#aaa' }}>Share this Comparison</h4>
-                    <div style={{ display: 'flex', justifyContent: 'center', gap: '15px' }}>
+                <div className="share-comparison-container">
+                    <h4>Share this Comparison</h4>
+                    <div className="share-buttons-wrapper">
                         <a 
                             href={`https://wa.me/?text=${encodeURIComponent(`Check out this comparison between ${products.map(p => p.name).join(' vs ')} on TechBoy Store! Which one is better? \n\nhttps://techboy-store.vercel.app/`)}`} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', background: '#25D366', color: '#fff', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold' }}
+                            className="share-btn whatsapp-btn"
                         >
                             WhatsApp
                         </a>
@@ -122,7 +122,7 @@ const ComparisonModal = ({ products, onClose }) => {
                             href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out this comparison between ${products.map(p => p.name).join(' vs ')} on TechBoy Store! Which one is better? \n\nhttps://techboy-store.vercel.app/`)}`} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', background: '#000', border: '1px solid #333', color: '#fff', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold' }}
+                            className="share-btn x-btn"
                         >
                             𝕏 Post
                         </a>
