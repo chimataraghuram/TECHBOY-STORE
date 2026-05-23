@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import balancedImg from '../../images/products/balanced-phone.png';
 
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
+const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
 const HighlightText = ({ text, highlight }) => {
     if (!highlight || !highlight.trim() || !text) return <>{text}</>;

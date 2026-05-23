@@ -3,7 +3,7 @@ import logo from '../../images/logos/new-logo.jpg';
 import localPhonesData from '../data/phones.json';
 
 const NVIDIA_API_KEY = import.meta.env.VITE_NVIDIA_API_KEY;
-const BACKEND_URL = 'http://127.0.0.1:8000/api';
+const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
 /* ── Catalog injected into system prompt ── */
 const CATALOG = localPhonesData.map(p =>

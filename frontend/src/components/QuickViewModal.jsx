@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import RadarChart from './RadarChart';
 import PriceHistoryChart from './PriceHistoryChart';
 
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
+const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
 const QuickViewModal = ({ product, onClose }) => {
     const [alertPrice, setAlertPrice] = useState(product.price - 1000);

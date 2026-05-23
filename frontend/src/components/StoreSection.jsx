@@ -5,7 +5,7 @@ import ComparisonModal from './ComparisonModal';
 import QuickViewModal from './QuickViewModal';
 import localPhonesData from '../data/phones.json';
 
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
+const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
 const StoreSection = ({ searchTerm, onSearch }) => {
     const [products, setProducts] = useState([]);
