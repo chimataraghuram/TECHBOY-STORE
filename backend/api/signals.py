@@ -59,12 +59,13 @@ def trigger_price_drop_webhook(sender, instance, created, **kwargs):
                     print(f"[TechBoy] Failed to post price drop to n8n Webhook: {e}")
 
 from .models import PriceHistory
-from django_q.tasks import async_task
+from api.tasks import process_price_alerts
 
 @receiver(post_save, sender=PriceHistory)
 def trigger_global_price_alerts(sender, instance, created, **kwargs):
     """
     Triggers checking of global PriceAlerts whenever a new PriceHistory is recorded.
+    Runs synchronously to be compatible with free hosts like PythonAnywhere.
     """
     if created:
-        async_task('api.tasks.process_price_alerts', instance.id)
+        process_price_alerts(instance.id)
