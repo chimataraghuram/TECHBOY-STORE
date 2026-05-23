@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="images/logos/new-logo.jpg" alt="TechBoy Logo" width="120" style="border-radius: 50%; box-shadow: 0 0 20px rgba(255, 140, 66, 0.4); border: 2px solid #ff8c42;">
+  <img src="frontend/images/logos/new-logo.jpg" alt="TechBoy Logo" width="120" style="border-radius: 50%; box-shadow: 0 0 20px rgba(255, 140, 66, 0.4); border: 2px solid #ff8c42;">
 
   # <span style="color: #ff8c42;">TECHBOY STORE</span>
   
