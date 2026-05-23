@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ProductCard from './ProductCard';
 import ComparisonModal from './ComparisonModal';
 import QuickViewModal from './QuickViewModal';
+import FilterSidebar from './FilterSidebar';
 import localPhonesData from '../data/phones.json';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
@@ -15,6 +16,11 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     const [compareList, setCompareList] = useState([]);
     const [isCompModalOpen, setIsCompModalOpen] = useState(false);
     const [activeViewProduct, setActiveViewProduct] = useState(null);
+
+    // Advanced Filtering States
+    const [selectedBrands, setSelectedBrands] = useState([]);
+    const [maxPrice, setMaxPrice] = useState(150000);
+    const [sortBy, setSortBy] = useState("featured");
 
     // ONE STABLE MOUNT EFFECT
     useEffect(() => {
@@ -31,6 +37,8 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                         const cats = [...new Set(productsList.map(p => p.category))];
                         setCategories(cats);
                         if (cats.length > 0) setSelectedRange(cats[0]);
+                        const highPrice = Math.max(...productsList.map(p => p.price));
+                        setMaxPrice(highPrice);
                     } else {
                         throw new Error("Empty API results");
                     }
@@ -42,6 +50,8 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                     const cats = [...new Set(localPhonesData.map(p => p.category))];
                     setCategories(cats);
                     if (cats.length > 0) setSelectedRange(cats[0]);
+                    const highPrice = Math.max(...localPhonesData.map(p => p.price));
+                    setMaxPrice(highPrice);
                 }
             } finally {
                 if (mounted) setLoading(false);
@@ -62,17 +72,41 @@ const StoreSection = ({ searchTerm, onSearch }) => {
         }
     }, [searchTerm]);
 
-    // Logic in render - 0 hooks here
+    const highestPrice = products.length > 0 ? Math.max(...products.map(p => p.price)) : 150000;
+    const availableBrands = [...new Set(products.map(p => p.brand).filter(b => b))];
+
     // Advanced filtering logic
     const term = (searchTerm || "").toLowerCase().trim();
-    const filteredProducts = term 
-        ? products.filter(p => 
+    let filteredProducts = [...products];
+
+    // 1. Search & Category
+    if (term) {
+        filteredProducts = filteredProducts.filter(p => 
             p.name.toLowerCase().includes(term) || 
             p.category.toLowerCase().includes(term) ||
             (p.tag && p.tag.toLowerCase().includes(term)) ||
             (p.description && p.description.toLowerCase().includes(term))
-        )
-        : products.filter(p => p.category === selectedRange);
+        );
+    } else if (selectedRange) {
+        filteredProducts = filteredProducts.filter(p => p.category === selectedRange);
+    }
+
+    // 2. Brands
+    if (selectedBrands.length > 0) {
+        filteredProducts = filteredProducts.filter(p => p.brand && selectedBrands.includes(p.brand));
+    }
+
+    // 3. Price
+    filteredProducts = filteredProducts.filter(p => p.price <= maxPrice);
+
+    // 4. Sort
+    if (sortBy === 'price_asc') {
+        filteredProducts.sort((a, b) => a.price - b.price);
+    } else if (sortBy === 'price_desc') {
+        filteredProducts.sort((a, b) => b.price - a.price);
+    } else if (sortBy === 'rating') {
+        filteredProducts.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+    }
 
     const handleCompare = (product) => {
         setCompareList(prev => {
@@ -139,8 +173,25 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                     </div>
                 )}
 
-                <div className="product-grid" style={{ marginTop: '40px' }}>
-                    {filteredProducts.map((product, idx) => (
+                <div className="store-layout" style={{ marginTop: '40px' }}>
+                    <FilterSidebar 
+                        brands={availableBrands}
+                        selectedBrands={selectedBrands}
+                        setSelectedBrands={setSelectedBrands}
+                        maxPrice={maxPrice}
+                        setMaxPrice={setMaxPrice}
+                        highestPrice={highestPrice}
+                        sortBy={sortBy}
+                        setSortBy={setSortBy}
+                        onClearFilters={() => {
+                            setSelectedBrands([]);
+                            setMaxPrice(highestPrice);
+                            setSortBy("featured");
+                        }}
+                    />
+
+                    <div className="product-grid">
+                        {filteredProducts.map((product, idx) => (
                         <ProductCard
                             key={product.id || idx}
                             index={idx}
@@ -165,6 +216,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                             </div>
                         </div>
                     )}
+                    </div>
                 </div>
 
                 <AnimatePresence>
