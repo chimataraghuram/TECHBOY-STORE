@@ -61,11 +61,12 @@
 }
 
 .intro-loading-dots span {
-  width: 10px;
-  height: 10px;
+  display: block;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   background: #ff8c42;
-  box-shadow: 0 0 10px rgba(255, 140, 66, 0.8);
+  box-shadow: 0 0 12px rgba(255, 140, 66, 0.9);
   animation: intro-bounce 1.4s infinite ease-in-out both;
 }
 
@@ -76,19 +77,20 @@
 .intro-loading-dots span:nth-child(2) {
   animation-delay: -0.16s;
   background: #ff3296;
-  box-shadow: 0 0 10px rgba(255, 50, 150, 0.8);
+  box-shadow: 0 0 12px rgba(255, 50, 150, 0.9);
 }
 
 .intro-loading-dots span:nth-child(3) {
   background: #00ff88;
-  box-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.9);
 }
 
 @keyframes intro-bounce {
   0%, 80%, 100% { 
-    transform: scale(0);
+    transform: scale(0.3);
+    opacity: 0.5;
   } 40% { 
     transform: scale(1);
+    opacity: 1;
   }
 }
-

@@ -53,9 +53,9 @@ const IntroScreen = ({ onComplete }) => {
 
         <motion.div 
           className="intro-loading-dots"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.5 }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
         >
           <span></span>
           <span></span>
