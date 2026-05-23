@@ -50,6 +50,17 @@ const IntroScreen = ({ onComplete }) => {
         >
           TECHBOY STORE
         </motion.h1>
+
+        <motion.div 
+          className="intro-loading-dots"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </motion.div>
       </div>
 
       <motion.p
