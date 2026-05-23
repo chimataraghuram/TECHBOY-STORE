@@ -6,7 +6,7 @@
   
   **The Ultimate Expert-Curated Smartphone Discovery Platform**
 
-  [![Live Demo](https://img.shields.io/badge/Live-Demo-ff8c42?style=for-the-badge&logoColor=white)](https://chimataraghuram.github.io/TECHBOY-STORE/)
+  [![Live Demo](https://img.shields.io/badge/Live-Demo-ff8c42?style=for-the-badge&logoColor=white)](https://techboy-store.vercel.app/)
   [![GitHub Repo](https://img.shields.io/badge/GitHub-Repo-white?style=for-the-badge&logo=github&logoColor=black)](https://github.com/chimataraghuram/TECHBOY-STORE)
   [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
@@ -21,7 +21,7 @@
 ---
 
 ## 🌐 Live Demo
-You can explore the live interface here: [https://chimataraghuram.github.io/TECHBOY-STORE/](https://chimataraghuram.github.io/TECHBOY-STORE/)
+You can explore the live interface here: [https://techboy-store.vercel.app/](https://techboy-store.vercel.app/)
 
 > "Empowering users to find the best tech deals with zero marketing fluff, just pure performance data."
 
@@ -117,9 +117,9 @@ TECHBOY-STORE/
 ---
 
 ## 🛣️ Future Roadmap
-- [ ] **AI Chatbot**: Integrate a Llama-3 based assistant for personalized advice.
-- [ ] **Global Price Alert**: Email notifications for price drops on watched devices.
-- [ ] **Deployment**: One-click deploy configuration for AWS/Render.
+- [x] **AI Chatbot**: Integrate a Llama-3 based assistant for personalized advice.
+- [x] **Global Price Alert**: Email notifications for price drops on watched devices.
+- [x] **Deployment**: Live Deployment to Vercel and PythonAnywhere.
 
 ---
 
