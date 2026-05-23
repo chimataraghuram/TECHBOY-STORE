@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Bot, LogOut, X, Bookmark, Menu } from 'lucide-react';
 import logo from '../../images/logos/new-logo.jpg';
 import WatchlistModal from './WatchlistModal';
@@ -9,14 +9,24 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
     const [searchActive, setSearchActive] = useState(false);
-
-
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
     const [authModal, setAuthModal] = useState(null); // 'login' or 'register'
     const [authData, setAuthData] = useState({ username: '', password: '', email: '' });
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('techboy_user') || 'null'));
     const [msg, setMsg] = useState('');
     const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+            if (window.innerWidth >= 768) {
+                setIsMenuOpen(false);
+            }
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -107,36 +117,79 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                 </div>
 
                 {/* NAVIGATION - CENTER */}
-                <div className={`navbar-center ${isMenuOpen ? 'active' : ''}`}>
-                    <div className="navbar-center-group">
-                        <div className={`nav-links-pill ${isMenuOpen ? 'active' : ''}`}>
-                            <div className="pill-wrapper nav-pills">
-                                <a href="#home" className={`nav-pill-item ${activeSection === 'home' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Home</a>
-                                <a href="#how-it-works" className={`nav-pill-item ${activeSection === 'how-it-works' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>How it Works</a>
-                                <a href="#products" className={`nav-pill-item ${activeSection === 'products' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Products</a>
-                                <a href="#features" className={`nav-pill-item ${activeSection === 'features' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Features</a>
+                {!isMobile ? (
+                    <div className="navbar-center">
+                        <div className="navbar-center-group">
+                            <div className="nav-links-pill">
+                                <div className="pill-wrapper nav-pills">
+                                    <a href="#home" className={`nav-pill-item ${activeSection === 'home' ? 'active' : ''}`}>Home</a>
+                                    <a href="#how-it-works" className={`nav-pill-item ${activeSection === 'how-it-works' ? 'active' : ''}`}>How it Works</a>
+                                    <a href="#products" className={`nav-pill-item ${activeSection === 'products' ? 'active' : ''}`}>Products</a>
+                                    <a href="#features" className={`nav-pill-item ${activeSection === 'features' ? 'active' : ''}`}>Features</a>
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="pill-wrapper search-only-pill">
-                            <div className="search-pill">
-                                <Search size={18} className="search-icon" />
-                                <input
-                                    type="text"
-                                    className="pill-search-input"
-                                    placeholder="Search gear..."
-                                    value={searchTerm}
-                                    onChange={handleSearchChange}
-                                />
-                                {searchTerm && (
-                                    <button className="clear-search-btn" onClick={() => onSearch('')} title="Clear Search">
-                                        <X size={14} />
-                                    </button>
-                                )}
+                            <div className="pill-wrapper search-only-pill">
+                                <div className="search-pill">
+                                    <Search size={18} className="search-icon" />
+                                    <input
+                                        type="text"
+                                        className="pill-search-input"
+                                        placeholder="Search gear..."
+                                        value={searchTerm}
+                                        onChange={handleSearchChange}
+                                    />
+                                    {searchTerm && (
+                                        <button className="clear-search-btn" onClick={() => onSearch('')} title="Clear Search">
+                                            <X size={14} />
+                                        </button>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                ) : (
+                    <AnimatePresence>
+                        {isMenuOpen && (
+                            <motion.div 
+                                initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                                className="navbar-center active mobile-drawer"
+                            >
+                                <div className="navbar-center-group">
+                                    <div className="nav-links-pill active">
+                                        <div className="pill-wrapper nav-pills">
+                                            <a href="#home" className={`nav-pill-item ${activeSection === 'home' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Home</a>
+                                            <a href="#how-it-works" className={`nav-pill-item ${activeSection === 'how-it-works' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>How it Works</a>
+                                            <a href="#products" className={`nav-pill-item ${activeSection === 'products' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Products</a>
+                                            <a href="#features" className={`nav-pill-item ${activeSection === 'features' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Features</a>
+                                        </div>
+                                    </div>
+
+                                    <div className="pill-wrapper search-only-pill">
+                                        <div className="search-pill">
+                                            <Search size={18} className="search-icon" />
+                                            <input
+                                                type="text"
+                                                className="pill-search-input"
+                                                placeholder="Search gear..."
+                                                value={searchTerm}
+                                                onChange={handleSearchChange}
+                                            />
+                                            {searchTerm && (
+                                                <button className="clear-search-btn" onClick={() => onSearch('')} title="Clear Search">
+                                                    <X size={14} />
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                )}
 
                 {/* ACTIONS - RIGHT */}
                 <div className="navbar-right">

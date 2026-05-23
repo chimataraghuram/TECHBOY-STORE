@@ -4193,3 +4193,249 @@ img { max-width: 100%; height: auto; }
     gap: 20px;
   }
 }
+
+/* ==========================================================================
+   MODERN UI REDESIGN OVERRIDES (RED-NEON STYLING & RESPONSIVENESS)
+   ========================================================================== */
+
+/* --- Navbar Glass & Mobile Drawer --- */
+.navbar.scrolled {
+  background: var(--bg-glass-strong);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 42, 42, 0.15);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 42, 42, 0.05);
+}
+
+.mobile-drawer {
+  position: fixed !important;
+  top: 80px !important;
+  left: 5% !important;
+  width: 90% !important;
+  right: 5% !important;
+  background: var(--bg-glass-strong) !important;
+  backdrop-filter: blur(28px) !important;
+  -webkit-backdrop-filter: blur(28px) !important;
+  border: 1px solid var(--border-glass-hover) !important;
+  border-radius: 20px !important;
+  padding: 24px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 42, 42, 0.2) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  z-index: 10000 !important;
+}
+
+/* --- Premium Logo Pulse & Hover --- */
+.logo-img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+}
+.logo-pill:hover .logo-img {
+  transform: scale(1.1) rotate(360deg);
+  filter: drop-shadow(0 0 10px var(--accent-primary));
+}
+
+/* --- LED Flash Sale Counter --- */
+.tech-deal-card {
+  border: 1px solid var(--border-glass) !important;
+  padding: 20px !important;
+  border-radius: 16px !important;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+.tech-deal-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+}
+.deal-header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.deal-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--accent-primary);
+  box-shadow: 0 0 10px var(--accent-primary);
+  animation: pulse-indicator 1.2s infinite ease-in-out;
+}
+@keyframes pulse-indicator {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+.deal-timer-icon {
+  color: var(--accent-primary);
+}
+.deal-title-label {
+  color: var(--accent-secondary);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+}
+.led-countdown {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.led-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(10, 2, 2, 0.65);
+  border: 1px solid rgba(255, 42, 42, 0.15);
+  border-radius: 8px;
+  padding: 6px 10px;
+  min-width: 48px;
+}
+.led-digits {
+  font-family: monospace;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--accent-primary);
+  text-shadow: 0 0 8px rgba(255, 42, 42, 0.6);
+  letter-spacing: 0.5px;
+}
+.led-label {
+  font-size: 8px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+  letter-spacing: 0.5px;
+}
+.led-separator {
+  color: var(--accent-primary);
+  font-weight: bold;
+  font-size: 18px;
+  animation: separator-blink 1s infinite steps(2);
+  text-shadow: 0 0 6px var(--accent-primary);
+}
+@keyframes separator-blink {
+  0% { opacity: 0.1; }
+  100% { opacity: 1; }
+}
+
+.deal-product-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+.deal-img-container {
+  width: 52px;
+  height: 52px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.deal-product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.deal-product-info {
+  flex: 1;
+  min-width: 0;
+}
+.deal-product-title {
+  margin: 0 0 4px 0;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.deal-price-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.deal-price-old {
+  text-decoration: line-through;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+.deal-price-new {
+  color: #00ff88;
+  font-weight: 800;
+  font-size: 13px;
+  text-shadow: 0 0 6px rgba(0, 255, 136, 0.3);
+}
+
+/* --- ProductCard Layout Upgrades --- */
+.product-card-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 8px;
+}
+.product-rating-badge {
+  background: rgba(255, 122, 0, 0.15);
+  border: 1px solid var(--accent-secondary);
+  color: var(--accent-secondary);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 20px;
+  text-shadow: 0 0 5px rgba(255, 122, 0, 0.4);
+  box-shadow: 0 0 10px rgba(255, 122, 0, 0.1);
+  display: inline-flex;
+  align-items: center;
+}
+.get-deal-btn {
+  background: rgba(255, 42, 42, 0.1);
+  border: 1px solid rgba(255, 42, 42, 0.3);
+  color: var(--text-primary);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.get-deal-btn:hover {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border-color: transparent;
+  color: white;
+  transform: scale(1.1) rotate(15deg);
+  box-shadow: 0 0 15px var(--primary-glow);
+}
+
+/* --- Hero Layout Responsive Spacing --- */
+@media (max-width: 992px) {
+  .hero-content {
+    flex-direction: column !important;
+    text-align: center;
+    gap: 40px !important;
+  }
+  .hero-text {
+    max-width: 100% !important;
+  }
+  .hero-buttons {
+    justify-content: center;
+  }
+  .hero-visual-wrapper {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.8rem !important;
+  }
+}
+

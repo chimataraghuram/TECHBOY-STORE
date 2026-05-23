@@ -24,8 +24,8 @@
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 0 40px rgba(255, 140, 66, 0.4);
-  border: 2px solid #ff8c42;
+  box-shadow: 0 0 40px rgba(255, 42, 42, 0.5);
+  border: 2px solid #ff2a2a;
   margin-bottom: 15px;
 }
 
@@ -33,7 +33,7 @@
   font-size: 2rem;
   color: #ffffff;
   margin: 0;
-  text-shadow: 0 0 15px rgba(255, 140, 66, 0.6);
+  text-shadow: 0 0 15px rgba(255, 42, 42, 0.7);
   letter-spacing: 4px;
 }
 

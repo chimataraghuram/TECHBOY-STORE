@@ -85,8 +85,12 @@ const Hero = () => {
                     </motion.p>
                     
                     <motion.div variants={itemVariants} className="hero-buttons">
-                        <button className="primary-btn large jelly-btn">Start Exploring</button>
-                        <button className="secondary-btn large jelly-btn">Top Collections</button>
+                        <button className="primary-btn large jelly-btn" onClick={() => {
+                            document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+                        }}>Start Exploring</button>
+                        <button className="secondary-btn large jelly-btn" onClick={() => {
+                            document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+                        }}>Top Collections</button>
                     </motion.div>
 
                     <motion.div variants={itemVariants} className="trust-badges">
@@ -144,27 +148,42 @@ const Hero = () => {
 
                     {dealOfDay && (
                         <motion.div 
-                            className="deal-of-day-card glass-card"
-                            initial={{ opacity: 0, x: 50 }}
-                            animate={{ opacity: 1, x: 0 }}
+                            className="deal-of-day-card glass-card tech-deal-card"
+                            initial={{ opacity: 0, x: 50, scale: 0.9 }}
+                            animate={{ opacity: 1, x: 0, scale: 1 }}
                             transition={{ delay: 1.5, duration: 0.8 }}
+                            whileHover={{ scale: 1.03, y: -5 }}
                         >
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
-                                <Timer size={18} color="#ff4500" />
-                                <span style={{ color: '#ff4500', fontWeight: 'bold', fontSize: '14px' }}>FLASH SALE ENDS IN:</span>
+                            <div className="deal-header-row">
+                                <span className="deal-pulse-dot"></span>
+                                <Timer size={14} className="deal-timer-icon" />
+                                <span className="deal-title-label">FLASH SALE ENDS IN</span>
                             </div>
-                            <div style={{ fontSize: '20px', fontWeight: '800', marginBottom: '10px', display: 'flex', gap: '5px' }}>
-                                <span style={{ background: 'rgba(255, 69, 0, 0.2)', padding: '4px 8px', borderRadius: '6px' }}>{String(timeLeft.hours).padStart(2, '0')}</span> :
-                                <span style={{ background: 'rgba(255, 69, 0, 0.2)', padding: '4px 8px', borderRadius: '6px' }}>{String(timeLeft.minutes).padStart(2, '0')}</span> :
-                                <span style={{ background: 'rgba(255, 69, 0, 0.2)', padding: '4px 8px', borderRadius: '6px' }}>{String(timeLeft.seconds).padStart(2, '0')}</span>
+                            <div className="led-countdown">
+                                <div className="led-unit">
+                                    <span className="led-digits">{String(timeLeft.hours).padStart(2, '0')}</span>
+                                    <span className="led-label">HRS</span>
+                                </div>
+                                <span className="led-separator">:</span>
+                                <div className="led-unit">
+                                    <span className="led-digits">{String(timeLeft.minutes).padStart(2, '0')}</span>
+                                    <span className="led-label">MIN</span>
+                                </div>
+                                <span className="led-separator">:</span>
+                                <div className="led-unit">
+                                    <span className="led-digits">{String(timeLeft.seconds).padStart(2, '0')}</span>
+                                    <span className="led-label">SEC</span>
+                                </div>
                             </div>
-                            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                                <img src={dealOfDay.image} alt={dealOfDay.name} style={{ width: '50px', height: '50px', objectFit: 'contain' }} />
-                                <div>
-                                    <h4 style={{ margin: 0, fontSize: '14px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '140px' }}>{dealOfDay.name}</h4>
-                                    <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
-                                        <span style={{ textDecoration: 'line-through', fontSize: '12px', color: '#888' }}>₹{(dealOfDay.price * 1.2).toLocaleString()}</span>
-                                        <span style={{ color: '#00ff88', fontWeight: 'bold' }}>₹{dealOfDay.price.toLocaleString()}</span>
+                            <div className="deal-product-row">
+                                <div className="deal-img-container">
+                                    <img src={dealOfDay.image} alt={dealOfDay.name} className="deal-product-img" />
+                                </div>
+                                <div className="deal-product-info">
+                                    <h4 className="deal-product-title">{dealOfDay.name}</h4>
+                                    <div className="deal-price-wrapper">
+                                        <span className="deal-price-old">₹{(dealOfDay.price * 1.2).toLocaleString()}</span>
+                                        <span className="deal-price-new">₹{dealOfDay.price.toLocaleString()}</span>
                                     </div>
                                 </div>
                             </div>

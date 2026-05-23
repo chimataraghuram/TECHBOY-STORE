@@ -131,9 +131,16 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
                 />
             </div>
             <div className="product-info" style={{ transform: "translateZ(30px)" }}>
-                <span className="category-label">
-                    <HighlightText text={product.category} highlight={searchTerm} />
-                </span>
+                <div className="product-card-top-row">
+                    <span className="category-label">
+                        <HighlightText text={product.category} highlight={searchTerm} />
+                    </span>
+                    {product.rating && (
+                        <span className="product-rating-badge">
+                            ★ {product.rating}
+                        </span>
+                    )}
+                </div>
                 <h3 className="product-title">
                     <HighlightText text={product.name} highlight={searchTerm} />
                 </h3>
