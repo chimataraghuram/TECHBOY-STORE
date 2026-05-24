@@ -30,11 +30,9 @@ body {
     radial-gradient(circle at 12% 42%, rgba(166, 0, 25, 0.26), transparent 24rem),
     linear-gradient(180deg, #070202 0%, #0d0305 46%, #030101 100%) !important;
   color: var(--redline-ice);
-  overflow-x: hidden !important;
 }
 
 html {
-  overflow-x: hidden !important;
 }
 
 .app-container {

@@ -39,7 +39,6 @@ body {
     radial-gradient(circle at 50% 50%, rgba(255, 0, 0, 0.03) 0%, transparent 60%);
   background-attachment: fixed;
   color: var(--text-primary);
-  overflow-x: hidden;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
 }
