@@ -6,12 +6,21 @@ import PriceHistoryChart from './PriceHistoryChart';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
+const buildLocalSummary = (product) => {
+    const desc = product.description || 'a balanced spec sheet';
+    const tag = product.tag ? `${product.tag} pick` : 'expert pick';
+    return `AI Verdict: The ${product.name} is a ${tag} around Rs ${product.price?.toLocaleString()}. Key highlights: ${desc}.`;
+};
+
 const QuickViewModal = ({ product, onClose }) => {
     const [alertPrice, setAlertPrice] = useState(product.price - 1000);
     const [isAlertSubmitting, setIsAlertSubmitting] = useState(false);
     const [alertStatus, setAlertStatus] = useState(null); // 'success', 'error'
     const [aiSummary, setAiSummary] = useState(null);
     const [isLoadingAi, setIsLoadingAi] = useState(false);
+    const amazonUrl = product.amazon_link || product.amazonLink;
+    const flipkartUrl = product.flipkart_link || product.flipkartLink;
+    const imageUrl = product.image?.startsWith('/') ? `${import.meta.env.BASE_URL}${product.image.replace(/^\//, '')}` : product.image;
 
     useEffect(() => {
         const fetchAiSummary = async () => {
@@ -20,10 +29,13 @@ const QuickViewModal = ({ product, onClose }) => {
                 const res = await fetch(`${API_BASE_URL}/products/${product.id}/ai_summary/`);
                 if (res.ok) {
                     const data = await res.json();
-                    setAiSummary(data.summary);
+                    setAiSummary(data.summary || buildLocalSummary(product));
+                } else {
+                    setAiSummary(buildLocalSummary(product));
                 }
             } catch (err) {
                 console.error("Failed to fetch AI summary", err);
+                setAiSummary(buildLocalSummary(product));
             } finally {
                 setIsLoadingAi(false);
             }
@@ -33,7 +45,7 @@ const QuickViewModal = ({ product, onClose }) => {
 
     const handleSetAlert = async (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('techboy_token');
         if (!token) {
             setAlertStatus('error');
             return;
@@ -82,7 +94,7 @@ const QuickViewModal = ({ product, onClose }) => {
                 <button className="close-btn top-right" onClick={onClose}>&times;</button>
                 <div className="quickview-body">
                     <div className="quickview-image-side">
-                        <img src={product.image} alt={product.name} className="floating-img" />
+                        <img src={imageUrl} alt={product.name} className="floating-img" />
                         <RadarChart product={product} />
                         <PriceHistoryChart productId={product.id} currentPrice={product.price} />
                         <div className="img-glow-effect"></div>
@@ -91,7 +103,7 @@ const QuickViewModal = ({ product, onClose }) => {
                         <span className="category-label">{product.category}</span>
                         <h2 className="modal-title">{product.name}</h2>
                         <div className="modal-price-row">
-                            <span className="price-tag-big">₹{product.price?.toLocaleString()}</span>
+                            <span className="price-tag-big">Rs {product.price?.toLocaleString()}</span>
                             <span className="store-tag">Lowest @ Amazon</span>
                         </div>
 
@@ -113,7 +125,7 @@ const QuickViewModal = ({ product, onClose }) => {
                             <h4>Set Price Alert</h4>
                             <form className="alert-form" onSubmit={handleSetAlert}>
                                 <div className="input-group">
-                                    <span>₹</span>
+                                    <span>Rs</span>
                                     <input 
                                         type="number" 
                                         value={alertPrice} 
@@ -138,13 +150,13 @@ const QuickViewModal = ({ product, onClose }) => {
                         </div>
 
                         <div className="modal-actions">
-                            {product.amazonLink && (
-                                <a href={product.amazonLink} target="_blank" rel="noopener noreferrer" className="primary-btn large jelly-btn full-width">
+                            {amazonUrl && (
+                                <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="primary-btn large jelly-btn full-width">
                                     Buy on Amazon &rarr;
                                 </a>
                             )}
-                            {product.flipkartLink && (
-                                <a href={product.flipkartLink} target="_blank" rel="noopener noreferrer" className="secondary-btn large jelly-btn full-width" style={{marginTop:'10px'}}>
+                            {flipkartUrl && (
+                                <a href={flipkartUrl} target="_blank" rel="noopener noreferrer" className="secondary-btn large jelly-btn full-width" style={{marginTop:'10px'}}>
                                     Buy on Flipkart &rarr;
                                 </a>
                             )}

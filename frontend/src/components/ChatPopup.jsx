@@ -5,6 +5,8 @@ import localPhonesData from '../data/phones.json';
 const NVIDIA_API_KEY = import.meta.env.VITE_NVIDIA_API_KEY;
 const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
+const money = (value) => `Rs ${Number(value || 0).toLocaleString()}`;
+
 /* ── Catalog injected into system prompt ── */
 const CATALOG = localPhonesData.map(p =>
     `[${p.category}] ${p.name} (${p.tag}) — ₹${p.price?.toLocaleString()} — ${p.description}`
@@ -18,6 +20,39 @@ If recommending, mention name, price, and why it fits. Suggest 1-3 phones max pe
 
 CATALOG:
 ${CATALOG}`;
+
+const localAdvisor = (text) => {
+    const query = text.toLowerCase();
+    let matches = [...localPhonesData];
+
+    const budgetMatch = query.match(/(?:under|below|budget|rs|₹)\s*(\d+)\s*k?/i);
+    if (budgetMatch) {
+        let budget = Number(budgetMatch[1]);
+        if (budget < 1000) budget *= 1000;
+        matches = matches.filter(p => Number(p.price) <= budget);
+    }
+
+    if (query.includes('gaming') || query.includes('game')) {
+        matches = matches.filter(p => `${p.tag} ${p.description}`.toLowerCase().includes('gaming') || `${p.description}`.toLowerCase().includes('snapdragon'));
+    } else if (query.includes('camera') || query.includes('photo')) {
+        matches = matches.filter(p => `${p.tag} ${p.description}`.toLowerCase().includes('camera') || `${p.description}`.toLowerCase().includes('mp'));
+    } else if (query.includes('battery')) {
+        matches = matches.filter(p => `${p.description}`.toLowerCase().includes('battery') || `${p.description}`.toLowerCase().includes('mah'));
+    } else if (query.includes('cheap') || query.includes('budget')) {
+        matches.sort((a, b) => a.price - b.price);
+    }
+
+    if (matches.length === 0) {
+        matches = [...localPhonesData].sort((a, b) => a.price - b.price);
+    }
+
+    const picks = matches.slice(0, 3);
+    return [
+        'Here are my TechBoy picks:',
+        ...picks.map(p => `- **${p.name}** - ${money(p.price)}: ${p.tag || 'Strong value'}; ${p.description}`),
+        'Use Compare for a side-by-side view, or open View Phone for the quick verdict and price alert.'
+    ].join('\n');
+};
 
 /* ── Simple markdown → JSX renderer ── */
 const renderMarkdown = (text) => {
@@ -80,10 +115,10 @@ const callBackend = async (text) => {
         });
         if (!res.ok) throw new Error('Backend failed');
         const data = await res.json();
-        return { text: data.response };
+        return { text: data.response || localAdvisor(text) };
     } catch (err) {
         console.error(err);
-        return { text: "Sorry, I am offline right now. Try again later! 💤" };
+        return { text: localAdvisor(text) };
     }
 };
 

@@ -15,44 +15,22 @@
     },
     {
       "parameters": {
-        "fieldToSplitOut": "body.target_emails",
-        "options": {}
-      },
-      "id": "8489be43-8f0a-42cd-9174-8b1e4a9e4085",
-      "name": "Split Users Array",
-      "type": "n8n-nodes-base.itemLists",
-      "typeVersion": 1,
-      "position": [450, 300]
-    },
-    {
-      "parameters": {
         "fromEmail": "techboy-alerts@yoursite.com",
-        "toEmail": "={{ $json.body.target_emails }}",
-        "subject": "=Price Drop: {{ $('Webhook Trigger').item.json.body.product_name }} just dropped to ₹{{ $('Webhook Trigger').item.json.body.new_price }}!",
-        "html": "=Hi there! <br><br>Awesome news from TechBoy Store: <strong>{{ $('Webhook Trigger').item.json.body.product_name }}</strong> has dropped by ₹{{ $('Webhook Trigger').item.json.body.discount_amount }}!<br><br><b>Old Price:</b> ₹{{ $('Webhook Trigger').item.json.body.old_price }}<br><b>New Price:</b> ₹{{ $('Webhook Trigger').item.json.body.new_price }}<br><br>Log in to TechBoy Store from your Watchlist to snag this deal.<br><br>- TECHBOY AI",
+        "toEmail": "={{ Array.isArray($json.body.target_emails) ? $json.body.target_emails.join(',') : $json.body.target_emails }}",
+        "subject": "=Price Drop: {{ $json.body.product_name }} is now Rs {{ $json.body.new_price }}",
+        "html": "=<div style=\"font-family:Arial,sans-serif;background:#0d0d0d;color:#f5f5f5;padding:24px\"><div style=\"max-width:620px;margin:auto;background:#160407;border:1px solid #ff1f3d;border-radius:16px;padding:28px\"><h1 style=\"color:#ff1f3d\">TECHBOY STORE</h1><h2>Price drop detected</h2><p><strong>{{ $json.body.product_name }}</strong> just dropped in price.</p><p>Old price: <strong>Rs {{ $json.body.old_price }}</strong></p><p>New price: <strong style=\"color:#ff6d7d\">Rs {{ $json.body.new_price }}</strong></p><p>You save: <strong>Rs {{ $json.body.discount_amount }}</strong></p><p>Open TechBoy Store and grab the deal before it changes.</p></div></div>",
         "options": {}
       },
       "id": "99f6bba8-7ddf-44f6-8c44-b0ecf79c299c",
       "name": "Send Email",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2,
-      "position": [650, 300]
+      "position": [520, 300]
     }
   ],
   "pinData": {},
   "connections": {
     "Webhook Trigger": {
-      "main": [
-        [
-          {
-            "node": "Split Users Array",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Split Users Array": {
       "main": [
         [
           {

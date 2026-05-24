@@ -34,8 +34,10 @@ services:
       - EMAIL_HOST_USER=chimataraghuram02a@gmail.com
       - EMAIL_HOST_PASSWORD=your_gmail_app_password
       - DEFAULT_FROM_EMAIL=chimataraghuram02a@gmail.com
+      - N8N_WEBHOOK_URL=http://n8n:5678/webhook/techboy-price-drop
     depends_on:
       - db
+      - n8n
 
   worker:
     build:
@@ -53,6 +55,7 @@ services:
       - EMAIL_HOST_USER=chimataraghuram02a@gmail.com
       - EMAIL_HOST_PASSWORD=your_gmail_app_password
       - DEFAULT_FROM_EMAIL=chimataraghuram02a@gmail.com
+      - N8N_WEBHOOK_URL=http://n8n:5678/webhook/techboy-price-drop
     depends_on:
       - db
       - backend
@@ -66,5 +69,19 @@ services:
     depends_on:
       - backend
 
+  n8n:
+    image: n8nio/n8n:latest
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://localhost:5678/
+      - GENERIC_TIMEZONE=Asia/Kolkata
+    volumes:
+      - n8n_data:/home/node/.n8n
+
 volumes:
   postgres_data:
+  n8n_data:

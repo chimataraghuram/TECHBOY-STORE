@@ -25,6 +25,7 @@ dist-ssr
 
 # --- Python & Django ---
 backend/venv/
+backend/.venv/
 backend/db.sqlite3
 __pycache__/
 *.pyc

@@ -20,8 +20,10 @@ const IntroScreen = ({ onComplete }) => {
       });
 
       video.addEventListener('ended', onComplete);
+      const introTimeout = setTimeout(onComplete, 3200);
       return () => {
         video.removeEventListener('ended', onComplete);
+        clearTimeout(introTimeout);
       };
     }
   }, [onComplete]);

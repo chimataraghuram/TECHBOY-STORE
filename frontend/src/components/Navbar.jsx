@@ -80,7 +80,8 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                 setUser(data.user);
                 setAuthModal(null);
             } else {
-                setMsg(data.error || 'Authentication failed');
+                const detail = data.detail || data.error || data.username?.[0] || data.email?.[0] || data.password?.[0] || data.non_field_errors?.[0];
+                setMsg(detail || 'Authentication failed');
             }
         } catch {
             setMsg('Server error. Make sure backend is running.');

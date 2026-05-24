@@ -9,6 +9,12 @@ const parseFromDesc = (description = '', key) => {
     return match ? match[1] : null;
 };
 
+const resolveImage = (src) => {
+    if (!src) return '';
+    if (src.startsWith('/')) return `${import.meta.env.BASE_URL}${src.replace(/^\//, '')}`;
+    return src;
+};
+
 const ComparisonModal = ({ products, onClose }) => {
     const getWinner = (specType) => {
         if (products.length < 2) return [];
@@ -75,17 +81,19 @@ const ComparisonModal = ({ products, onClose }) => {
                     </div>
                     {products.map(p => {
                         const desc = p.description || '';
+                        const amazonUrl = p.amazon_link || p.amazonLink;
+                        const flipkartUrl = p.flipkart_link || p.flipkartLink;
                         const displayVal = (() => { const m = desc.match(/Display:\s*([^|]+)/i); return m ? m[1].trim() : '—'; })();
                         const ramVal = parseFromDesc(desc, 'RAM') || '—';
                         const isWinner = winners.price?.includes(p.id) && winners.ram?.includes(p.id);
                         return (
                             <div key={p.id} className={`comparison-col ${isWinner ? 'winner-card' : ''}`}>
                                 <div className="col-header">
-                                    <img src={p.image} alt={p.name} />
+                                    <img src={resolveImage(p.image)} alt={p.name} />
                                     <h4>{p.name}</h4>
                                 </div>
                                 <div className={`spec-val ${winners.price?.includes(p.id) ? 'winner' : ''}`}>
-                                    ₹{p.price?.toLocaleString()}
+                                    Rs {p.price?.toLocaleString()}
                                 </div>
                                 <div className={`spec-val ${winners.refresh?.includes(p.id) ? 'winner' : ''}`}>
                                     {displayVal}
@@ -95,11 +103,11 @@ const ComparisonModal = ({ products, onClose }) => {
                                 </div>
                                 <div className="spec-val smaller">{p.tag || 'Expert Selection'}</div>
                                 <div className="spec-val buy-links-row">
-                                    {p.amazonLink && (
-                                        <a href={p.amazonLink} target="_blank" rel="noopener noreferrer" className="buy-link amazon-link">Amazon</a>
+                                    {amazonUrl && (
+                                        <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="buy-link amazon-link">Amazon</a>
                                     )}
-                                    {p.flipkartLink && (
-                                        <a href={p.flipkartLink} target="_blank" rel="noopener noreferrer" className="buy-link flipkart-link">Flipkart</a>
+                                    {flipkartUrl && (
+                                        <a href={flipkartUrl} target="_blank" rel="noopener noreferrer" className="buy-link flipkart-link">Flipkart</a>
                                     )}
                                 </div>
                             </div>

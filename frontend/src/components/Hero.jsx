@@ -1,31 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import heroImg from '../../images/hero_banners/hero-cyber.png';
-import { Zap, Diamond, Smartphone, Timer } from 'lucide-react';
+import {
+    Zap,
+    Diamond,
+    Smartphone,
+    Timer,
+    Cpu,
+    Gauge,
+    ShieldCheck,
+    RadioTower
+} from 'lucide-react';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
+const resolveProductImage = (src) => {
+    if (!src) return '';
+    if (src.startsWith('/')) return `${import.meta.env.BASE_URL}${src.replace(/^\//, '')}`;
+    return src;
+};
+
 const Hero = () => {
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.2,
-                delayChildren: 0.3
-            }
-        }
-    };
-
-    const itemVariants = {
-        hidden: { y: 20, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1,
-            transition: { duration: 0.8, ease: [0.6, 0.05, -0.01, 0.9] }
-        }
-    };
-
     const [dealOfDay, setDealOfDay] = useState(null);
     const [timeLeft, setTimeLeft] = useState({ hours: 14, minutes: 23, seconds: 59 });
 
@@ -38,33 +33,59 @@ const Hero = () => {
                     setDealOfDay(data);
                 }
             } catch (err) {
-                console.error("Failed to fetch deal of the day", err);
+                console.error('Failed to fetch deal of the day', err);
             }
         };
+
         fetchDeal();
 
         const timer = setInterval(() => {
             setTimeLeft(prev => {
                 let { hours, minutes, seconds } = prev;
-                if (seconds > 0) { seconds--; }
-                else if (minutes > 0) { minutes--; seconds = 59; }
-                else if (hours > 0) { hours--; minutes = 59; seconds = 59; }
+                if (seconds > 0) seconds -= 1;
+                else if (minutes > 0) {
+                    minutes -= 1;
+                    seconds = 59;
+                } else if (hours > 0) {
+                    hours -= 1;
+                    minutes = 59;
+                    seconds = 59;
+                }
                 return { hours, minutes, seconds };
             });
         }, 1000);
-        
+
         return () => clearInterval(timer);
     }, []);
 
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: { staggerChildren: 0.16, delayChildren: 0.18 }
+        }
+    };
+
+    const itemVariants = {
+        hidden: { y: 24, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+            transition: { duration: 0.72, ease: [0.16, 1, 0.3, 1] }
+        }
+    };
+
     return (
-        <section id="home" className="hero-section">
-            <div className="liquid-glow"></div>
+        <section id="home" className="hero-section redesigned-hero">
+            <div className="redesign-grid-bg"></div>
+            <div className="redesign-beam redesign-beam-1"></div>
+            <div className="redesign-beam redesign-beam-2"></div>
             <div className="background-glows">
                 <div className="glow glow-1"></div>
                 <div className="glow glow-2"></div>
             </div>
 
-            <motion.div 
+            <motion.div
                 className="container hero-content"
                 variants={containerVariants}
                 initial="hidden"
@@ -72,86 +93,107 @@ const Hero = () => {
             >
                 <div className="hero-text">
                     <motion.div variants={itemVariants} className="badge-wrapper">
-                        <span className="badge analyst-badge">TECHBOY ANALYST PICK</span>
+                        <span className="badge analyst-badge">LIVE SMARTPHONE COMMAND CENTER</span>
                     </motion.div>
-                    
+
                     <motion.h1 variants={itemVariants} className="premium-title">
-                        Find Your Next <br />
-                        <span className="text-gradient">Tech Evolution</span>
+                        Discover Phones in a <br />
+                        <span className="text-gradient">Red 3D Arena</span>
                     </motion.h1>
-                    
+
                     <motion.p variants={itemVariants} className="premium-subtitle">
-                        Expert analysis meeting unbeatable deals. We curate the best smartphones so you always stay ahead of the curve.
+                        A cinematic buying experience with expert picks, animated comparisons, price intelligence, and deal shortcuts built for serious phone hunters.
                     </motion.p>
-                    
+
                     <motion.div variants={itemVariants} className="hero-buttons">
-                        <button className="primary-btn large jelly-btn" onClick={() => {
-                            document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
-                        }}>Start Exploring</button>
-                        <button className="secondary-btn large jelly-btn" onClick={() => {
-                            document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
-                        }}>Top Collections</button>
+                        <button
+                            className="primary-btn large jelly-btn"
+                            onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
+                        >
+                            Enter Store
+                        </button>
+                        <button
+                            className="secondary-btn large jelly-btn"
+                            onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+                        >
+                            See System
+                        </button>
                     </motion.div>
 
                     <motion.div variants={itemVariants} className="trust-badges">
                         <div className="trust-item">
-                            <span>★ ★ ★ ★ ★</span>
-                            <p>Premium Expert Support</p>
+                            <span>5.0</span>
+                            <p>Expert-curated picks</p>
+                        </div>
+                        <div className="trust-item">
+                            <span>AI</span>
+                            <p>Instant buying verdicts</p>
                         </div>
                     </motion.div>
                 </div>
 
-                <motion.div 
+                <motion.div
                     className="hero-visual-wrapper"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1.2, ease: "easeOut" }}
+                    initial={{ opacity: 0, scale: 0.84, rotateY: -10 }}
+                    animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                    transition={{ duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <motion.div 
-                        className="hero-main-visual glass-card"
-                        animate={{ 
-                            y: [0, -10, 0],
-                            rotate: [0, 1, 0] 
-                        }}
-                        transition={{ 
-                            duration: 5, 
-                            repeat: Infinity, 
-                            ease: "easeInOut" 
-                        }}
+                    <motion.div
+                        className="hero-main-visual glass-card hero-device-stage"
+                        animate={{ y: [0, -12, 0], rotateZ: [0, 0.8, 0] }}
+                        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
                     >
-                        <img src={heroImg} alt="Cyber Workstation" className="hero-img" />
+                        <div className="hero-stage-rings">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <div className="hero-phone-3d">
+                            <div className="phone-side phone-side-left"></div>
+                            <div className="phone-face">
+                                <img src={heroImg} alt="TECHBOY red 3D phone showcase" className="hero-img" />
+                                <div className="phone-screen-scan"></div>
+                            </div>
+                            <div className="phone-side phone-side-right"></div>
+                        </div>
+
+                        <div className="hero-hud-card hud-card-top">
+                            <Cpu size={16} />
+                            <span>Performance Rank</span>
+                            <strong>98</strong>
+                        </div>
+                        <div className="hero-hud-card hud-card-bottom">
+                            <Gauge size={16} />
+                            <span>Deal Score</span>
+                            <strong>Hot</strong>
+                        </div>
                     </motion.div>
-                    
+
                     <div className="floating-elements">
-                        <motion.div 
-                            className="float-icon icon-1"
-                            animate={{ y: [0, -15, 0], x: [0, 5, 0] }}
-                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                        >
+                        <motion.div className="float-icon icon-1" animate={{ y: [0, -15, 0], x: [0, 5, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}>
                             <Zap size={24} fill="var(--accent-primary)" stroke="var(--accent-primary)" />
                         </motion.div>
-                        <motion.div 
-                            className="float-icon icon-2"
-                            animate={{ y: [0, -25, 0], x: [0, -5, 0] }}
-                            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-                        >
+                        <motion.div className="float-icon icon-2" animate={{ y: [0, -25, 0], x: [0, -5, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}>
                             <Diamond size={24} fill="var(--accent-secondary)" stroke="var(--accent-secondary)" />
                         </motion.div>
-                        <motion.div 
-                            className="float-icon icon-3"
-                            animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }}
-                            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                        >
+                        <motion.div className="float-icon icon-3" animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}>
                             <Smartphone size={24} fill="var(--accent-primary)" stroke="var(--accent-primary)" />
+                        </motion.div>
+                        <motion.div className="float-icon icon-4" animate={{ y: [0, -18, 0], rotate: [0, -8, 0] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}>
+                            <ShieldCheck size={24} stroke="var(--accent-secondary)" />
+                        </motion.div>
+                        <motion.div className="float-icon icon-5" animate={{ y: [0, -16, 0], x: [0, 8, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}>
+                            <RadioTower size={24} stroke="var(--accent-primary)" />
                         </motion.div>
                     </div>
 
                     {dealOfDay && (
-                        <motion.div 
+                        <motion.div
                             className="deal-of-day-card glass-card tech-deal-card"
                             initial={{ opacity: 0, x: 50, scale: 0.9 }}
                             animate={{ opacity: 1, x: 0, scale: 1 }}
-                            transition={{ delay: 1.5, duration: 0.8 }}
+                            transition={{ delay: 1.1, duration: 0.8 }}
                             whileHover={{ scale: 1.03, y: -5 }}
                         >
                             <div className="deal-header-row">
@@ -177,13 +219,13 @@ const Hero = () => {
                             </div>
                             <div className="deal-product-row">
                                 <div className="deal-img-container">
-                                    <img src={dealOfDay.image} alt={dealOfDay.name} className="deal-product-img" />
+                                    <img src={resolveProductImage(dealOfDay.image)} alt={dealOfDay.name} className="deal-product-img" />
                                 </div>
                                 <div className="deal-product-info">
                                     <h4 className="deal-product-title">{dealOfDay.name}</h4>
                                     <div className="deal-price-wrapper">
-                                        <span className="deal-price-old">₹{(dealOfDay.price * 1.2).toLocaleString()}</span>
-                                        <span className="deal-price-new">₹{dealOfDay.price.toLocaleString()}</span>
+                                        <span className="deal-price-old">Rs {(dealOfDay.price * 1.2).toLocaleString()}</span>
+                                        <span className="deal-price-new">Rs {dealOfDay.price.toLocaleString()}</span>
                                     </div>
                                 </div>
                             </div>

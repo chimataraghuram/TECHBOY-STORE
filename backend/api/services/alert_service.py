@@ -2,7 +2,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
-from api.models import PriceAlert, Product
+from api.models import PriceAlert
 
 def check_and_send_price_alerts(price_history):
     """
@@ -63,3 +63,45 @@ def check_and_send_price_alerts(price_history):
         except Exception as e:
             # Depending on how logging is handled
             print(f"Failed to send email to {user.email}: {str(e)}")
+
+
+def send_watchlist_price_drop_email(user, product, old_price, new_price):
+    """
+    Sends a direct email fallback for watchlist users when n8n is not configured.
+    """
+    if not user.email:
+        return False
+
+    discount_amount = old_price - new_price
+    subject = f"Price Drop Alert: {product.name} is now Rs {new_price}!"
+    html_content = f"""
+    <html>
+        <body style="font-family: Arial, sans-serif; background-color: #0d0d0d; color: #f5f5f5; padding: 20px;">
+            <div style="max-width: 600px; margin: 0 auto; background: #160407; border: 1px solid rgba(255, 31, 61, 0.35); border-radius: 16px; padding: 28px;">
+                <h1 style="color: #ff1f3d; margin-top: 0;">TECHBOY STORE</h1>
+                <h2>Price dropped for {product.name}</h2>
+                <p>Good news, {user.username}. A phone on your watchlist just became cheaper.</p>
+                <p><b>Old price:</b> Rs {old_price}</p>
+                <p><b>New price:</b> Rs {new_price}</p>
+                <p><b>You save:</b> Rs {discount_amount}</p>
+                <a href="https://techboy-store.vercel.app/" style="display: inline-block; padding: 12px 18px; background: linear-gradient(135deg, #ff1f3d, #ff4d2e); color: #fff; text-decoration: none; border-radius: 10px; font-weight: bold;">Open TechBoy Store</a>
+            </div>
+        </body>
+    </html>
+    """
+    text_content = strip_tags(html_content)
+
+    msg = EmailMultiAlternatives(
+        subject,
+        text_content,
+        getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@techboystore.com'),
+        [user.email]
+    )
+    msg.attach_alternative(html_content, "text/html")
+
+    try:
+        msg.send()
+        return True
+    except Exception as e:
+        print(f"Failed to send watchlist price drop email to {user.email}: {str(e)}")
+        return False

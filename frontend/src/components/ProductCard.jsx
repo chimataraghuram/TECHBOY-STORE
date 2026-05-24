@@ -30,6 +30,8 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
     const [isSaved, setIsSaved] = React.useState(false);
     const [imgError, setImgError] = React.useState(false);
     const [imgLoaded, setImgLoaded] = React.useState(false);
+    const amazonUrl = product.amazon_link || product.amazonLink;
+    const flipkartUrl = product.flipkart_link || product.flipkartLink;
 
     const resolveImg = (src) => {
         if (!src) return balancedImg;
@@ -158,10 +160,10 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
                 <div className="product-meta">
                     <div className="price-info">
                         <span className="price-label">Best Price @ Amazon</span>
-                        <span className="price">₹{product.price?.toLocaleString()}</span>
+                        <span className="price">Rs {product.price?.toLocaleString()}</span>
                     </div>
                     <a 
-                        href={product.amazonLink || product.flipkartLink || '#'} 
+                        href={amazonUrl || flipkartUrl || '#'} 
                         target="_blank" 
                         rel="noopener noreferrer" 
                         className="get-deal-btn" 
