@@ -66,67 +66,142 @@ const FilterSidebar = ({
 
             {(() => {
                 const maxLimit = highestPrice > 5000 ? highestPrice : 150000;
-                const percentage = ((maxPrice - 5000) / (maxLimit - 5000)) * 100;
+                
+                // Safe fallbacks if props are somehow undefined
+                const currentMin = minPrice || 0;
+                const currentMax = maxPrice || maxLimit;
+                
+                // Calculate percentages for track fill
+                const minPercent = (currentMin / maxLimit) * 100;
+                const maxPercent = (currentMax / maxLimit) * 100;
+                
+                // Smart hints logic
+                const getSmartHints = () => {
+                    if (currentMax < 25000) return ["✓ Best budget smartphones", "✓ Reliable daily drivers", "✓ Excellent battery life"];
+                    if (currentMax < 45000) return ["✓ Mid-range killers", "✓ Great camera systems", "✓ Smooth 120Hz displays"];
+                    if (currentMax <= 80000) return ["✓ Premium segment", "✓ Flagship performance", "✓ High-end photography"];
+                    return ["✓ Ultimate flagships", "✓ Best-in-class cameras", "✓ No-compromise experience"];
+                };
+
+                const handleQuickPick = (min, max) => {
+                    if (setMinPrice) setMinPrice(min);
+                    setMaxPrice(max);
+                };
+
                 return (
                     <div className="filter-section">
-                        <div className="price-header-wrapper">
-                            <h4>Max Price</h4>
-                            <div className="price-input-wrapper">
-                                <span className="currency-symbol">₹</span>
-                                <input 
-                                    type="number"
-                                    className="price-glow-input"
-                                    min="5000"
-                                    max={maxLimit}
-                                    value={maxPrice === 0 ? '' : maxPrice}
-                                    onChange={(e) => {
-                                        let val = parseInt(e.target.value);
-                                        if (isNaN(val)) val = 0;
-                                        setMaxPrice(val);
-                                    }}
-                                    onBlur={() => {
-                                        if (!maxPrice || maxPrice < 5000) setMaxPrice(5000);
-                                        else if (maxPrice > maxLimit) setMaxPrice(maxLimit);
-                                    }}
-                                />
+                        <h4>Budget Range</h4>
+                        
+                        <div className="budget-inputs">
+                            <div className="budget-input-group">
+                                <span className="budget-label">Min</span>
+                                <div className="price-input-wrapper">
+                                    <span className="currency-symbol">₹</span>
+                                    <input 
+                                        type="number"
+                                        className="price-glow-input"
+                                        min="0"
+                                        max={currentMax}
+                                        value={currentMin === 0 ? '' : currentMin}
+                                        onChange={(e) => {
+                                            if (setMinPrice) {
+                                                let val = parseInt(e.target.value);
+                                                if (isNaN(val)) val = 0;
+                                                setMinPrice(val);
+                                            }
+                                        }}
+                                        onBlur={() => {
+                                            if (setMinPrice) {
+                                                if (currentMin > currentMax) setMinPrice(currentMax);
+                                                else if (currentMin < 0) setMinPrice(0);
+                                            }
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            
+                            <div className="budget-input-group">
+                                <span className="budget-label">Max</span>
+                                <div className="price-input-wrapper">
+                                    <span className="currency-symbol">₹</span>
+                                    <input 
+                                        type="number"
+                                        className="price-glow-input"
+                                        min={currentMin}
+                                        max={maxLimit}
+                                        value={currentMax === 0 ? '' : currentMax}
+                                        onChange={(e) => {
+                                            let val = parseInt(e.target.value);
+                                            if (isNaN(val)) val = 0;
+                                            setMaxPrice(val);
+                                        }}
+                                        onBlur={() => {
+                                            if (!currentMax || currentMax < currentMin) setMaxPrice(currentMin);
+                                            else if (currentMax > maxLimit) setMaxPrice(maxLimit);
+                                        }}
+                                    />
+                                </div>
                             </div>
                         </div>
+
                         <div className="slider-wrapper">
+                            <div className="slider-track-bg"></div>
+                            <div 
+                                className="slider-track-fill" 
+                                style={{ 
+                                    left: `${minPercent}%`, 
+                                    width: `${maxPercent - minPercent}%` 
+                                }}
+                            ></div>
+                            
                             <input 
                                 type="range" 
-                                className="price-slider neon-slider"
-                                min="5000" 
+                                className="neon-slider"
+                                min="0" 
                                 max={maxLimit} 
                                 step="1000"
-                                value={maxPrice || 5000} 
-                                onChange={(e) => setMaxPrice(parseInt(e.target.value))}
-                                style={{ 
-                                    background: `linear-gradient(90deg, var(--accent-primary) ${percentage}%, rgba(255, 255, 255, 0.08) ${percentage}%)` 
+                                value={currentMin} 
+                                onChange={(e) => {
+                                    if (setMinPrice) {
+                                        const val = parseInt(e.target.value);
+                                        if (val <= currentMax) setMinPrice(val);
+                                    }
+                                }}
+                            />
+                            
+                            <input 
+                                type="range" 
+                                className="neon-slider"
+                                min="0" 
+                                max={maxLimit} 
+                                step="1000"
+                                value={currentMax} 
+                                onChange={(e) => {
+                                    const val = parseInt(e.target.value);
+                                    if (val >= currentMin) setMaxPrice(val);
                                 }}
                             />
                         </div>
+                        
                         <div className="price-labels">
-                            <span>₹5,000</span>
+                            <span>₹0</span>
                             <span>₹{maxLimit.toLocaleString()}</span>
                         </div>
+                        
                         <div className="price-quick-picks">
-                            {[15000, 30000, 50000, 80000].map(tier => (
-                                tier < maxLimit && (
-                                    <button 
-                                        key={tier}
-                                        className={`price-pill ${maxPrice === tier ? 'active' : ''}`}
-                                        onClick={() => setMaxPrice(tier)}
-                                    >
-                                        {tier / 1000}k
-                                    </button>
-                                )
-                            ))}
-                            <button 
-                                className={`price-pill ${maxPrice === maxLimit ? 'active' : ''}`}
-                                onClick={() => setMaxPrice(maxLimit)}
-                            >
-                                Max
-                            </button>
+                            <button className={`price-pill ${currentMax === 15000 ? 'active' : ''}`} onClick={() => handleQuickPick(0, 15000)}>Under 15K</button>
+                            <button className={`price-pill ${currentMax === 25000 ? 'active' : ''}`} onClick={() => handleQuickPick(0, 25000)}>Under 25K</button>
+                            <button className={`price-pill ${currentMax === 40000 ? 'active' : ''}`} onClick={() => handleQuickPick(0, 40000)}>Under 40K</button>
+                            <button className={`price-pill ${(currentMin >= 40000 && currentMax <= 80000 && currentMax !== maxLimit) ? 'active' : ''}`} onClick={() => handleQuickPick(40000, 80000)}>Premium</button>
+                            <button className={`price-pill ${currentMin >= 80000 ? 'active' : ''}`} onClick={() => handleQuickPick(80000, maxLimit)}>Flagship</button>
+                        </div>
+                        
+                        <div className="smart-hints">
+                            <ul>
+                                {getSmartHints().map((hint, i) => (
+                                    <li key={i}>{hint}</li>
+                                ))}
+                            </ul>
                         </div>
                     </div>
                 );

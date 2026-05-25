@@ -19,6 +19,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
 
     // Advanced Filtering States
     const [selectedBrands, setSelectedBrands] = useState([]);
+    const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(150000);
     const [sortBy, setSortBy] = useState("featured");
 
@@ -97,7 +98,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     }
 
     // 3. Price
-    filteredProducts = filteredProducts.filter(p => p.price <= maxPrice);
+    filteredProducts = filteredProducts.filter(p => p.price >= minPrice && p.price <= maxPrice);
 
     // 4. Sort
     if (sortBy === 'price_asc') {
@@ -178,6 +179,8 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                         brands={availableBrands}
                         selectedBrands={selectedBrands}
                         setSelectedBrands={setSelectedBrands}
+                        minPrice={minPrice}
+                        setMinPrice={setMinPrice}
                         maxPrice={maxPrice}
                         setMaxPrice={setMaxPrice}
                         highestPrice={highestPrice}
@@ -185,6 +188,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                         setSortBy={setSortBy}
                         onClearFilters={() => {
                             setSelectedBrands([]);
+                            setMinPrice(0);
                             setMaxPrice(highestPrice);
                             setSortBy("featured");
                         }}
