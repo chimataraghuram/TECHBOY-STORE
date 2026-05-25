@@ -64,22 +64,36 @@ const FilterSidebar = ({
                 </select>
             </div>
 
-            <div className="filter-section">
-                <h4>Max Price: ₹{maxPrice.toLocaleString()}</h4>
-                <input 
-                    type="range" 
-                    className="price-slider"
-                    min="5000" 
-                    max={highestPrice > 5000 ? highestPrice : 150000} 
-                    step="1000"
-                    value={maxPrice} 
-                    onChange={(e) => setMaxPrice(parseInt(e.target.value))}
-                />
-                <div className="price-labels">
-                    <span>₹5,000</span>
-                    <span>₹{highestPrice.toLocaleString()}</span>
-                </div>
-            </div>
+            {(() => {
+                const maxLimit = highestPrice > 5000 ? highestPrice : 150000;
+                const percentage = ((maxPrice - 5000) / (maxLimit - 5000)) * 100;
+                return (
+                    <div className="filter-section">
+                        <div className="price-header-wrapper">
+                            <h4>Max Price</h4>
+                            <div className="price-glow-badge">₹{maxPrice.toLocaleString()}</div>
+                        </div>
+                        <div className="slider-wrapper">
+                            <input 
+                                type="range" 
+                                className="price-slider neon-slider"
+                                min="5000" 
+                                max={maxLimit} 
+                                step="1000"
+                                value={maxPrice} 
+                                onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+                                style={{ 
+                                    background: `linear-gradient(90deg, var(--accent-primary) ${percentage}%, rgba(255, 255, 255, 0.08) ${percentage}%)` 
+                                }}
+                            />
+                        </div>
+                        <div className="price-labels">
+                            <span>₹5,000</span>
+                            <span>₹{maxLimit.toLocaleString()}</span>
+                        </div>
+                    </div>
+                );
+            })()}
 
             <div className="filter-section">
                 <h4>Brands</h4>
