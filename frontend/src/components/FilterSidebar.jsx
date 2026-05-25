@@ -7,6 +7,8 @@ const FilterSidebar = ({
     brands,
     selectedBrands,
     setSelectedBrands,
+    minPrice,
+    setMinPrice,
     maxPrice,
     setMaxPrice,
     highestPrice,
