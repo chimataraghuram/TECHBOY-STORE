@@ -91,17 +91,50 @@
     margin: 0;
 }
 
-.price-glow-badge {
+.price-input-wrapper {
+    display: flex;
+    align-items: center;
     background: rgba(255, 42, 42, 0.15);
     border: 1px solid rgba(255, 42, 42, 0.3);
     padding: 4px 10px;
     border-radius: 8px;
+    box-shadow: 0 0 10px rgba(255, 42, 42, 0.2);
+    transition: all 0.3s ease;
+}
+
+.price-input-wrapper:focus-within {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 15px rgba(255, 42, 42, 0.4);
+}
+
+.currency-symbol {
     color: var(--accent-primary);
     font-weight: 700;
-    font-size: 0.85rem;
-    box-shadow: 0 0 10px rgba(255, 42, 42, 0.2);
+    font-size: 0.9rem;
+    margin-right: 2px;
+}
+
+.price-glow-input {
+    background: transparent;
+    border: none;
+    color: var(--accent-primary);
+    font-weight: 700;
+    font-size: 0.9rem;
+    width: 65px;
     text-shadow: 0 0 8px rgba(255, 42, 42, 0.4);
-    letter-spacing: 0.5px;
+    outline: none;
+    font-family: inherit;
+    -moz-appearance: textfield;
+}
+
+.price-glow-input::-webkit-outer-spin-button,
+.price-glow-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.price-glow-input:focus {
+    color: #fff;
 }
 
 .slider-wrapper {
@@ -142,6 +175,38 @@
     justify-content: space-between;
     font-size: 0.8rem;
     color: #aaa;
+}
+
+.price-quick-picks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.price-pill {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ccc;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.price-pill:hover {
+    background: rgba(255, 42, 42, 0.15);
+    color: white;
+    border-color: rgba(255, 42, 42, 0.3);
+}
+
+.price-pill.active {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 10px rgba(255, 42, 42, 0.4);
 }
 
 /* Checkboxes */

@@ -71,7 +71,25 @@ const FilterSidebar = ({
                     <div className="filter-section">
                         <div className="price-header-wrapper">
                             <h4>Max Price</h4>
-                            <div className="price-glow-badge">₹{maxPrice.toLocaleString()}</div>
+                            <div className="price-input-wrapper">
+                                <span className="currency-symbol">₹</span>
+                                <input 
+                                    type="number"
+                                    className="price-glow-input"
+                                    min="5000"
+                                    max={maxLimit}
+                                    value={maxPrice === 0 ? '' : maxPrice}
+                                    onChange={(e) => {
+                                        let val = parseInt(e.target.value);
+                                        if (isNaN(val)) val = 0;
+                                        setMaxPrice(val);
+                                    }}
+                                    onBlur={() => {
+                                        if (!maxPrice || maxPrice < 5000) setMaxPrice(5000);
+                                        else if (maxPrice > maxLimit) setMaxPrice(maxLimit);
+                                    }}
+                                />
+                            </div>
                         </div>
                         <div className="slider-wrapper">
                             <input 
@@ -80,7 +98,7 @@ const FilterSidebar = ({
                                 min="5000" 
                                 max={maxLimit} 
                                 step="1000"
-                                value={maxPrice} 
+                                value={maxPrice || 5000} 
                                 onChange={(e) => setMaxPrice(parseInt(e.target.value))}
                                 style={{ 
                                     background: `linear-gradient(90deg, var(--accent-primary) ${percentage}%, rgba(255, 255, 255, 0.08) ${percentage}%)` 
@@ -90,6 +108,25 @@ const FilterSidebar = ({
                         <div className="price-labels">
                             <span>₹5,000</span>
                             <span>₹{maxLimit.toLocaleString()}</span>
+                        </div>
+                        <div className="price-quick-picks">
+                            {[15000, 30000, 50000, 80000].map(tier => (
+                                tier < maxLimit && (
+                                    <button 
+                                        key={tier}
+                                        className={`price-pill ${maxPrice === tier ? 'active' : ''}`}
+                                        onClick={() => setMaxPrice(tier)}
+                                    >
+                                        {tier / 1000}k
+                                    </button>
+                                )
+                            ))}
+                            <button 
+                                className={`price-pill ${maxPrice === maxLimit ? 'active' : ''}`}
+                                onClick={() => setMaxPrice(maxLimit)}
+                            >
+                                Max
+                            </button>
                         </div>
                     </div>
                 );
