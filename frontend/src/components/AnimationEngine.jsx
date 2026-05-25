@@ -1,22 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useSpring } from 'framer-motion';
 
 /* ── Scroll Progress Bar ── */
 export const ScrollProgressBar = () => {
-    const [progress, setProgress] = useState(0);
-
-    useEffect(() => {
-        const update = () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            setProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0);
-        };
-        window.addEventListener('scroll', update, { passive: true });
-        return () => window.removeEventListener('scroll', update);
-    }, []);
+    const { scrollYProgress } = useScroll();
+    const scaleX = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001
+    });
 
     return (
         <div className="scroll-progress-track">
-            <div className="scroll-progress-bar" style={{ width: `${progress}%` }} />
+            <motion.div 
+                className="scroll-progress-bar" 
+                style={{ scaleX, transformOrigin: '0%' }} 
+            />
         </div>
     );
 };
