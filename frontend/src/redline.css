@@ -241,6 +241,64 @@ html {
   50% { opacity: 0.78; transform: translateX(6rem) rotate(-24deg); }
 }
 
+.hero-search-wrapper {
+  margin: 28px 0;
+}
+
+.hero-search-form {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 31, 61, 0.3);
+  border-radius: 999px;
+  padding: 6px 6px 6px 20px;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.hero-search-form:focus-within {
+  border-color: rgba(255, 31, 61, 0.8);
+  box-shadow: 0 4px 25px rgba(255, 31, 61, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.search-icon-hero {
+  color: var(--accent-primary);
+  margin-right: 12px;
+}
+
+.hero-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+}
+
+.hero-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.hero-search-submit {
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hero-search-submit:hover {
+  background: var(--accent-secondary);
+  transform: scale(1.05);
+}
+
+
 .hero-content {
   display: grid !important;
   grid-template-columns: minmax(0, 0.88fr) minmax(380px, 0.95fr) !important;
@@ -629,13 +687,59 @@ html {
   padding: 0 20px 22px !important;
 }
 
-.product-tag,
+.product-tag {
+  border-radius: 999px !important;
+  background: linear-gradient(135deg, rgba(255, 31, 61, 0.25), rgba(255, 88, 88, 0.1)) !important;
+  border: 1px solid rgba(255, 88, 88, 0.5) !important;
+  color: #fff !important;
+  font-weight: 600;
+  box-shadow: 0 0 15px rgba(255, 31, 61, 0.2);
+  padding: 4px 12px;
+  font-size: 0.85rem;
+}
+
 .category-label,
 .product-rating-badge {
   border-radius: 999px !important;
   background: rgba(255, 31, 61, 0.13) !important;
   border: 1px solid rgba(255, 88, 88, 0.28) !important;
   color: #ffd3d9 !important;
+}
+
+.smart-snippet {
+  margin: 12px 0;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: left;
+}
+
+.spec-list-mini {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.spec-list-mini li {
+  font-size: 0.8rem;
+  color: #bbb;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.spec-list-mini li:last-child {
+  margin-bottom: 0;
+}
+
+.value-score-badge {
+  display: inline-block;
+  background: var(--accent-secondary);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.9rem;
 }
 
 .product-title {

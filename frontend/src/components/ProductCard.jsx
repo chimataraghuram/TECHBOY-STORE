@@ -157,6 +157,16 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
                     </button>
                 </div>
 
+                <div className="smart-snippet">
+                    {product.description && (
+                        <ul className="spec-list-mini">
+                            {product.description.split('|').slice(0, 3).map((spec, idx) => (
+                                <li key={idx}>✓ {spec.trim()}</li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+
                 <div className="product-meta">
                     <div className="price-info">
                         <span className="price-label">Best Price @ Amazon</span>

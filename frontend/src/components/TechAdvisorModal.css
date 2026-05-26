@@ -1,0 +1,438 @@
+.advisor-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.advisor-modal {
+    width: 100%;
+    max-width: 800px;
+    min-height: 500px;
+    border-radius: 24px;
+    padding: 40px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.close-advisor {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 8px;
+    border-radius: 50%;
+}
+
+.close-advisor:hover {
+    color: var(--accent-primary);
+    background: rgba(255, 31, 61, 0.1);
+}
+
+.advisor-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.advisor-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--accent-primary);
+    background: rgba(255, 31, 61, 0.1);
+    padding: 6px 16px;
+    border-radius: 999px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255, 31, 61, 0.2);
+}
+
+.advisor-header h2 {
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+.advisor-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.advisor-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.advisor-step h3 {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: var(--text-light);
+}
+
+.optional-tag {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* Step 1: Budget */
+.budget-slider-container {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 40px;
+}
+
+.budget-display {
+    font-size: 3.5rem;
+    color: var(--accent-primary);
+    margin-bottom: 30px;
+    text-shadow: 0 0 20px rgba(255, 31, 61, 0.3);
+}
+
+.advisor-range-slider {
+    width: 100%;
+    appearance: none;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    outline: none;
+    margin-bottom: 30px;
+}
+
+.advisor-range-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background: var(--text-light);
+    border-radius: 50%;
+    cursor: pointer;
+    border: 4px solid var(--accent-primary);
+    box-shadow: 0 0 15px rgba(255, 31, 61, 0.6);
+    transition: transform 0.2s;
+}
+
+.advisor-range-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.budget-presets {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.budget-presets button {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+    padding: 8px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.budget-presets button:hover {
+    background: rgba(255, 31, 61, 0.1);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+/* Step 2: Usage */
+.usage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.usage-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 24px 20px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.usage-icon {
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    transition: color 0.3s;
+}
+
+.usage-card h4 {
+    margin: 0 0 8px 0;
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+.usage-card p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.usage-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-4px);
+}
+
+.usage-card.active {
+    background: rgba(255, 31, 61, 0.1);
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 24px rgba(255, 31, 61, 0.15);
+}
+
+.usage-card.active .usage-icon {
+    color: var(--accent-primary);
+}
+
+/* Step 3: Brand */
+.brand-chip-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    max-width: 600px;
+    margin-bottom: 40px;
+}
+
+.brand-chip {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    padding: 12px 24px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.brand-chip:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+}
+
+.brand-chip.active {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 31, 61, 0.3);
+}
+
+/* Actions */
+.advisor-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    width: 100%;
+}
+
+.advisor-back-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-light);
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.advisor-back-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.advisor-next-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 32px;
+    border-radius: 8px;
+}
+
+.advisor-next-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Analyzing */
+.analyzing-step {
+    padding: 60px 0;
+}
+
+.scanner {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 31, 61, 0.2);
+    border-top-color: var(--accent-primary);
+    animation: spin 1s linear infinite;
+    margin-bottom: 24px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Results */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.result-card {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.top-match-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--accent-secondary);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+.result-img {
+    height: 140px;
+    object-fit: contain;
+    margin-bottom: 16px;
+    transition: transform 0.3s;
+}
+
+.result-card:hover .result-img {
+    transform: translateY(-8px);
+}
+
+.result-info {
+    text-align: left;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.result-info h4 {
+    margin: 0 0 4px 0;
+    font-size: 1.1rem;
+}
+
+.result-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--accent-primary);
+    margin-bottom: 12px;
+}
+
+.result-reason {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.reason-icon {
+    color: var(--accent-primary);
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.result-reason p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.result-actions {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    margin-top: auto;
+}
+
+.buy-link {
+    flex: 1;
+    text-align: center;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.buy-link.amazon {
+    background: #ff9900;
+    color: #111;
+}
+
+.buy-link.amazon:hover {
+    background: #ffb84d;
+}
+
+.buy-link.flipkart {
+    background: #2874f0;
+    color: white;
+}
+
+.buy-link.flipkart:hover {
+    background: #5c9bff;
+}
+
+.no-results {
+    padding: 40px;
+    text-align: center;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 16px;
+}
+
+@media (max-width: 768px) {
+    .advisor-modal {
+        padding: 24px;
+        height: 90vh;
+        overflow-y: auto;
+    }
+    .budget-display {
+        font-size: 2.5rem;
+    }
+}

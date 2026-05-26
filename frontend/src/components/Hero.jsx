@@ -9,7 +9,8 @@ import {
     Cpu,
     Gauge,
     ShieldCheck,
-    RadioTower
+    RadioTower,
+    Search
 } from 'lucide-react';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
@@ -20,7 +21,7 @@ const resolveProductImage = (src) => {
     return src;
 };
 
-const Hero = () => {
+const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
     const [dealOfDay, setDealOfDay] = useState(null);
     const [timeLeft, setTimeLeft] = useState({ hours: 14, minutes: 23, seconds: 59 });
 
@@ -75,6 +76,11 @@ const Hero = () => {
         }
     };
 
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+    };
+
     return (
         <section id="home" className="hero-section redesigned-hero">
             <div className="redesign-grid-bg"></div>
@@ -93,30 +99,44 @@ const Hero = () => {
             >
                 <div className="hero-text">
                     <motion.div variants={itemVariants} className="badge-wrapper">
-                        <span className="badge analyst-badge">LIVE SMARTPHONE COMMAND CENTER</span>
+                        <span className="badge analyst-badge">SMART TECH ADVISOR</span>
                     </motion.div>
 
                     <motion.h1 variants={itemVariants} className="premium-title">
-                        Discover Phones in a <br />
-                        <span className="text-gradient">Red 3D Arena</span>
+                        Find Your Perfect <br />
+                        <span className="text-gradient">Smartphone</span>
                     </motion.h1>
 
                     <motion.p variants={itemVariants} className="premium-subtitle">
-                        A cinematic buying experience with expert picks, animated comparisons, price intelligence, and deal shortcuts built for serious phone hunters.
+                        AI-assisted recommendations based on your budget, gaming needs, camera preferences, and daily usage. Stop browsing, start deciding.
                     </motion.p>
+                    
+                    <motion.div variants={itemVariants} className="hero-search-wrapper">
+                        <form onSubmit={handleSearchSubmit} className="hero-search-form">
+                            <Search className="search-icon-hero" size={20} />
+                            <input 
+                                type="text" 
+                                placeholder="Search by brand, model, or feature..." 
+                                className="hero-search-input"
+                                value={searchTerm || ''}
+                                onChange={(e) => onSearch && onSearch(e.target.value)}
+                            />
+                            <button type="submit" className="hero-search-submit">Search</button>
+                        </form>
+                    </motion.div>
 
                     <motion.div variants={itemVariants} className="hero-buttons">
                         <button
-                            className="primary-btn large jelly-btn"
-                            onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
+                            className="primary-btn large jelly-btn recommend-btn"
+                            onClick={onOpenAdvisor}
                         >
-                            Enter Store
+                            <Zap size={18} /> Recommend Me
                         </button>
                         <button
                             className="secondary-btn large jelly-btn"
-                            onClick={() => document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' })}
+                            onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
                         >
-                            See System
+                            Browse All
                         </button>
                     </motion.div>
 

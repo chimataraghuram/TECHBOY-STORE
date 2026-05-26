@@ -75,16 +75,31 @@ const ComparisonModal = ({ products, onClose }) => {
                         <div>Model</div>
                         <div>Price</div>
                         <div>Display</div>
-                        <div>RAM</div>
-                        <div>Verdict</div>
+                        <div>Processor / OS</div>
+                        <div>Camera</div>
+                        <div>Battery</div>
+                        <div>Value Score</div>
                         <div>Buy Now</div>
                     </div>
                     {products.map(p => {
                         const desc = p.description || '';
                         const amazonUrl = p.amazon_link || p.amazonLink;
                         const flipkartUrl = p.flipkart_link || p.flipkartLink;
-                        const displayVal = (() => { const m = desc.match(/Display:\s*([^|]+)/i); return m ? m[1].trim() : '—'; })();
-                        const ramVal = parseFromDesc(desc, 'RAM') || '—';
+                        
+                        const extractSpec = (key) => {
+                            const regex = new RegExp(`${key}:\\s*([^|]+)`, 'i');
+                            const match = desc.match(regex);
+                            return match ? match[1].trim() : '—';
+                        };
+
+                        const displayVal = extractSpec('Display') !== '—' ? extractSpec('Display') : (desc.match(/(\d+\.\d+"[^|]+)/) ? desc.match(/(\d+\.\d+"[^|]+)/)[1] : '—');
+                        const chipVal = extractSpec('Chip') !== '—' ? extractSpec('Chip') : extractSpec('OS');
+                        const cameraVal = extractSpec('Camera');
+                        const batteryVal = extractSpec('Battery') !== '—' ? extractSpec('Battery') : extractSpec('Charging');
+                        
+                        // Fake value score for the "Advisor" feel based on price tiers
+                        const valScore = p.price < 30000 ? '9.5/10' : p.price < 60000 ? '9.0/10' : '8.5/10';
+
                         const isWinner = winners.price?.includes(p.id) && winners.ram?.includes(p.id);
                         return (
                             <div key={p.id} className={`comparison-col ${isWinner ? 'winner-card' : ''}`}>
@@ -95,13 +110,11 @@ const ComparisonModal = ({ products, onClose }) => {
                                 <div className={`spec-val ${winners.price?.includes(p.id) ? 'winner' : ''}`}>
                                     Rs {p.price?.toLocaleString()}
                                 </div>
-                                <div className={`spec-val ${winners.refresh?.includes(p.id) ? 'winner' : ''}`}>
-                                    {displayVal}
-                                </div>
-                                <div className={`spec-val ${winners.ram?.includes(p.id) ? 'winner' : ''}`}>
-                                    {ramVal !== '—' ? `${ramVal} GB` : '—'}
-                                </div>
-                                <div className="spec-val smaller">{p.tag || 'Expert Selection'}</div>
+                                <div className="spec-val">{displayVal}</div>
+                                <div className="spec-val">{chipVal}</div>
+                                <div className="spec-val">{cameraVal}</div>
+                                <div className="spec-val">{batteryVal}</div>
+                                <div className="spec-val value-score-badge">{valScore}</div>
                                 <div className="spec-val buy-links-row">
                                     {amazonUrl && (
                                         <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="buy-link amazon-link">Amazon</a>
