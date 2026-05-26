@@ -20,8 +20,8 @@ const HighlightText = ({ text, highlight }) => {
 const getMappedTag = (tag = '') => {
     const t = tag.toLowerCase();
     if (t.includes('gaming')) return '🎮 Best Gaming';
-    if (t.includes('camera') || t.includes('photo')) return '📸 Camera Beast';
-    if (t.includes('battery') || t.includes('king') || t.includes('endurance')) return '🔋 Battery King';
+    if (t.includes('camera') || t.includes('photo')) return '📸 Camera King';
+    if (t.includes('battery') || t.includes('king') || t.includes('endurance')) return '🔋 Battery Beast';
     if (t.includes('value') || t.includes('budget')) return '💰 Value Pick';
     if (t.includes('ui') || t.includes('software')) return '✨ Best UI';
     return tag || '⭐ Premium Choice';
