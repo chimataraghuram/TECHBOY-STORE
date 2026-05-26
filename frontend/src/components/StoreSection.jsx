@@ -8,6 +8,18 @@ import localPhonesData from '../data/phones.json';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
+const ProductCardSkeleton = () => (
+    <div className="product-card skeleton-card">
+        <div className="skeleton-img-placeholder shimmer-bg"></div>
+        <div className="skeleton-info">
+            <div className="skeleton-line short shimmer-bg" style={{ marginBottom: '8px' }}></div>
+            <div className="skeleton-line long shimmer-bg" style={{ marginBottom: '16px', height: '20px' }}></div>
+            <div className="skeleton-line medium shimmer-bg" style={{ marginBottom: '10px' }}></div>
+            <div className="skeleton-line short shimmer-bg"></div>
+        </div>
+    </div>
+);
+
 const StoreSection = ({ searchTerm, onSearch }) => {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -23,7 +35,17 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     const [maxPrice, setMaxPrice] = useState(150000);
     const [sortBy, setSortBy] = useState("featured");
 
-    // ONE STABLE MOUNT EFFECT
+    // Debounced search term for grid filters (prevents laggy re-renders on keystroke)
+    const [debouncedSearch, setDebouncedSearch] = useState(searchTerm);
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedSearch(searchTerm);
+        }, 300);
+        return () => clearTimeout(handler);
+    }, [searchTerm]);
+
+    // One stable mount effect to load data
     useEffect(() => {
         let mounted = true;
         
@@ -45,7 +67,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                     }
                 }
             } catch (err) {
-                console.error("Fetch failed, falling back to local data", err);
+                console.warn("Fetch failed, falling back to local JSON database", err);
                 if (mounted) {
                     setProducts(localPhonesData);
                     const cats = [...new Set(localPhonesData.map(p => p.category))];
@@ -55,13 +77,16 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                     setMaxPrice(highPrice);
                 }
             } finally {
-                if (mounted) setLoading(false);
+                // Keep loader visible for a small window to make transition smooth
+                setTimeout(() => {
+                    if (mounted) setLoading(false);
+                }, 800);
             }
         };
         
         load();
         return () => { mounted = false; };
-    }, []); // FIXED: EMPTY ARRAY
+    }, []);
 
     // Auto-scroll when search becomes active
     useEffect(() => {
@@ -74,10 +99,10 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     }, [searchTerm]);
 
     const highestPrice = products.length > 0 ? Math.max(...products.map(p => p.price)) : 150000;
-    const availableBrands = [...new Set(products.map(p => p.brand).filter(b => b))];
+    const availableBrands = [...new Set(products.map(p => p.brand).filter(b => b))].sort();
 
-    // Advanced filtering logic
-    const term = (searchTerm || "").toLowerCase().trim();
+    // Advanced filtering logic using the debounced search term
+    const term = (debouncedSearch || "").toLowerCase().trim();
     let filteredProducts = [...products];
 
     // 1. Search & Category
@@ -118,13 +143,6 @@ const StoreSection = ({ searchTerm, onSearch }) => {
         });
     };
 
-    if (loading) return (
-        <div className="store-loading-container">
-            <div className="loader"></div>
-            <p>Scanning Tech Deals...</p>
-        </div>
-    );
-
     return (
         <section id="products" className="store-section">
             <div className="container">
@@ -138,14 +156,14 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                     <motion.h2 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
+                        transition={{ delay: 0.1 }}
                         viewport={{ once: true }}
                         className="section-title"
                     >Explore Expert <span className="text-gradient">Recommendations</span></motion.h2>
                     <motion.p 
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
-                        transition={{ delay: 0.4 }}
+                        transition={{ delay: 0.2 }}
                         viewport={{ once: true }}
                         className="section-subtitle"
                     >Categorized by budget and performance. We do the research, you get the best deal.</motion.p>
@@ -169,8 +187,8 @@ const StoreSection = ({ searchTerm, onSearch }) => {
 
                 {searchTerm && (
                     <div className="search-results-info">
-                        <h3>Showing {filteredProducts.length} results for "<span className="text-gradient">{searchTerm}</span>"</h3>
-                        {filteredProducts.length > 0 && <p>Found the best tech matches for your query.</p>}
+                        <h3>Showing {loading ? '...' : filteredProducts.length} results for "<span className="text-gradient">{searchTerm}</span>"</h3>
+                        {!loading && filteredProducts.length > 0 && <p>Found the best tech matches for your query.</p>}
                     </div>
                 )}
 
@@ -195,31 +213,37 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                     />
 
                     <div className="product-grid">
-                        {filteredProducts.map((product, idx) => (
-                        <ProductCard
-                            key={product.id || idx}
-                            index={idx}
-                            product={product}
-                            onCompare={handleCompare}
-                            onView={setActiveViewProduct}
-                            isComparing={!!compareList.find(p => p.id === product.id)}
-                            searchTerm={searchTerm}
-                        />
-                    ))}
-                    {filteredProducts.length === 0 && (
-                        <div className="no-results-premium glass-card">
-                            <div className="no-results-content">
-                                <span className="warning-icon">⚠️</span>
-                                <h3>No matches found</h3>
-                                <p>We couldn't find any products matching "{searchTerm}". Try a different category or name.</p>
-                                <button className="secondary-btn mini clear-results-btn" onClick={() => {
-                                    onSearch('');
-                                    window.scrollTo({top: 0, behavior: 'smooth'});
-                                }}>Try Again</button>
-                                <button className="jelly-btn mini" onClick={() => (onSearch(''), window.location.hash = '#products')}>Return to Home</button>
+                        {loading ? (
+                            [...Array(6)].map((_, idx) => (
+                                <ProductCardSkeleton key={idx} />
+                            ))
+                        ) : (
+                            filteredProducts.map((product, idx) => (
+                                <ProductCard
+                                    key={product.id || idx}
+                                    index={idx}
+                                    product={product}
+                                    onCompare={handleCompare}
+                                    onView={setActiveViewProduct}
+                                    isComparing={!!compareList.find(p => p.id === product.id)}
+                                    searchTerm={debouncedSearch}
+                                />
+                            ))
+                        )}
+                        {!loading && filteredProducts.length === 0 && (
+                            <div className="no-results-premium glass-card">
+                                <div className="no-results-content">
+                                    <span className="warning-icon">⚠️</span>
+                                    <h3>No matches found</h3>
+                                    <p>We couldn't find any products matching "{searchTerm}". Try a different category or name.</p>
+                                    <button className="secondary-btn mini clear-results-btn" onClick={() => {
+                                        onSearch('');
+                                        window.scrollTo({top: 0, behavior: 'smooth'});
+                                    }}>Try Again</button>
+                                    <button className="jelly-btn mini" onClick={() => (onSearch(''), window.location.hash = '#products')}>Return to Home</button>
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
                     </div>
                 </div>
 

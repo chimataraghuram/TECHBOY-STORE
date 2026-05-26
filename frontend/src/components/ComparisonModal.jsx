@@ -1,13 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
-// Parse a value from the description string, e.g. "RAM: 8GB" → 8
-const parseFromDesc = (description = '', key) => {
-    if (!description) return null;
-    const regex = new RegExp(`${key}[:\\s]+([\\w.]+)`, 'i');
-    const match = description.match(regex);
-    return match ? match[1] : null;
-};
+import { parseSpecs, calculateValueScore } from '../utils/specsParser';
+import { X, Award, Zap, ExternalLink } from 'lucide-react';
 
 const resolveImage = (src) => {
     if (!src) return '';
@@ -16,39 +10,63 @@ const resolveImage = (src) => {
 };
 
 const ComparisonModal = ({ products, onClose }) => {
-    const getWinner = (specType) => {
-        if (products.length < 2) return [];
+    // 1. Spec parsing & value scoring for compared products
+    const analyzedProducts = products.map(p => {
+        const specs = parseSpecs(p.description);
+        const valScore = calculateValueScore(p);
+        
+        // Extract numeric prices for comparison
+        const priceNum = typeof p.price === 'string' ? parseInt(p.price.replace(/[^\d]/g, '')) : (p.price || 0);
+        
+        // Extract numeric battery capacity
+        const batMatch = specs.battery.match(/(\d+)mah/i);
+        const batteryNum = batMatch ? parseInt(batMatch[1]) : 0;
 
-        const vals = products.map(p => {
+        // Extract numeric display refresh rate
+        const refMatch = specs.display.match(/(\d+)hz/i);
+        const refreshNum = refMatch ? parseInt(refMatch[1]) : 60;
+
+        return {
+            ...p,
+            parsedSpecs: specs,
+            valueScoreNum: parseFloat(valScore),
+            priceNum,
+            batteryNum,
+            refreshNum
+        };
+    });
+
+    // 2. Identify Winners dynamically
+    const getWinnerId = (key, type = 'max') => {
+        if (analyzedProducts.length < 2) return null;
+        
+        let targetId = null;
+        let targetVal = type === 'max' ? -Infinity : Infinity;
+
+        analyzedProducts.forEach(p => {
             let val = 0;
-            const desc = p.description || '';
-            if (specType === 'price') {
-                val = typeof p.price === 'string' ? parseInt(p.price.replace(/[^\d]/g, '')) : (p.price || 0);
+            if (key === 'price') val = p.priceNum;
+            else if (key === 'battery') val = p.batteryNum;
+            else if (key === 'refresh') val = p.refreshNum;
+            else if (key === 'value') val = p.valueScoreNum;
+
+            if (type === 'max' && val > targetVal) {
+                targetVal = val;
+                targetId = p.id;
+            } else if (type === 'min' && val < targetVal && val > 0) {
+                targetVal = val;
+                targetId = p.id;
             }
-            if (specType === 'ram') {
-                const ramStr = parseFromDesc(desc, 'RAM') || '0';
-                val = parseInt(ramStr) || 0;
-            }
-            if (specType === 'refresh') {
-                const match = desc.match(/(\d+)Hz/);
-                val = match ? parseInt(match[1]) : 60;
-            }
-            return { id: p.id, val };
         });
 
-        if (specType === 'price') {
-            const min = Math.min(...vals.map(v => v.val));
-            return vals.filter(v => v.val === min).map(v => v.id);
-        } else {
-            const max = Math.max(...vals.map(v => v.val));
-            return vals.filter(v => v.val === max).map(v => v.id);
-        }
+        return targetId;
     };
 
     const winners = {
-        price: getWinner('price'),
-        ram: getWinner('ram'),
-        refresh: getWinner('refresh')
+        price: getWinnerId('price', 'min'),
+        battery: getWinnerId('battery', 'max'),
+        refresh: getWinnerId('refresh', 'max'),
+        value: getWinnerId('value', 'max')
     };
 
     return (
@@ -62,77 +80,128 @@ const ComparisonModal = ({ products, onClose }) => {
             <motion.div 
                 className="comparison-content glass-card" 
                 onClick={e => e.stopPropagation()}
-                initial={{ scale: 0.9, y: 20 }}
+                initial={{ scale: 0.92, y: 15 }}
                 animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.9, y: 20 }}
+                exit={{ scale: 0.92, y: 15 }}
+                transition={{ type: 'spring', damping: 26, stiffness: 220 }}
             >
                 <div className="comparison-header">
-                    <h2>Smartphone Comparison</h2>
-                    <button className="close-btn" onClick={onClose}>&times;</button>
-                </div>
-                <div className="comparison-grid">
-                    <div className="comparison-labels">
-                        <div>Model</div>
-                        <div>Price</div>
-                        <div>Display</div>
-                        <div>Processor / OS</div>
-                        <div>Camera</div>
-                        <div>Battery</div>
-                        <div>Value Score</div>
-                        <div>Buy Now</div>
+                    <div className="comp-title-wrapper">
+                        <h2>Smartphone Spec Comparison</h2>
+                        <p>Comparing {analyzedProducts.length} devices side-by-side</p>
                     </div>
-                    {products.map(p => {
-                        const desc = p.description || '';
-                        const amazonUrl = p.amazon_link || p.amazonLink;
-                        const flipkartUrl = p.flipkart_link || p.flipkartLink;
-                        
-                        const extractSpec = (key) => {
-                            const regex = new RegExp(`${key}:\\s*([^|]+)`, 'i');
-                            const match = desc.match(regex);
-                            return match ? match[1].trim() : '—';
-                        };
-
-                        const displayVal = extractSpec('Display') !== '—' ? extractSpec('Display') : (desc.match(/(\d+\.\d+"[^|]+)/) ? desc.match(/(\d+\.\d+"[^|]+)/)[1] : '—');
-                        const chipVal = extractSpec('Chip') !== '—' ? extractSpec('Chip') : extractSpec('OS');
-                        const cameraVal = extractSpec('Camera');
-                        const batteryVal = extractSpec('Battery') !== '—' ? extractSpec('Battery') : extractSpec('Charging');
-                        
-                        // Fake value score for the "Advisor" feel based on price tiers
-                        const valScore = p.price < 30000 ? '9.5/10' : p.price < 60000 ? '9.0/10' : '8.5/10';
-
-                        const isWinner = winners.price?.includes(p.id) && winners.ram?.includes(p.id);
-                        return (
-                            <div key={p.id} className={`comparison-col ${isWinner ? 'winner-card' : ''}`}>
-                                <div className="col-header">
-                                    <img src={resolveImage(p.image)} alt={p.name} />
-                                    <h4>{p.name}</h4>
-                                </div>
-                                <div className={`spec-val ${winners.price?.includes(p.id) ? 'winner' : ''}`}>
-                                    Rs {p.price?.toLocaleString()}
-                                </div>
-                                <div className="spec-val">{displayVal}</div>
-                                <div className="spec-val">{chipVal}</div>
-                                <div className="spec-val">{cameraVal}</div>
-                                <div className="spec-val">{batteryVal}</div>
-                                <div className="spec-val value-score-badge">{valScore}</div>
-                                <div className="spec-val buy-links-row">
-                                    {amazonUrl && (
-                                        <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="buy-link amazon-link">Amazon</a>
-                                    )}
-                                    {flipkartUrl && (
-                                        <a href={flipkartUrl} target="_blank" rel="noopener noreferrer" className="buy-link flipkart-link">Flipkart</a>
-                                    )}
-                                </div>
-                            </div>
-                        );
-                    })}
+                    <button className="close-btn" onClick={onClose} aria-label="Close Comparison">
+                        <X size={20} />
+                    </button>
                 </div>
-                
+
+                <div className="comparison-scroll-wrapper">
+                    <div className="comparison-grid">
+                        {/* Row Labels Column */}
+                        <div className="comparison-labels">
+                            <div className="label-cell header-spacer">Model</div>
+                            <div className="label-cell">Price</div>
+                            <div className="label-cell">Performance / Chip</div>
+                            <div className="label-cell">Display & Refresh</div>
+                            <div className="label-cell">Camera Specs</div>
+                            <div className="label-cell">Battery Capacity</div>
+                            <div className="label-cell">Charging Wattage</div>
+                            <div className="label-cell">Advisor Value Score</div>
+                            <div className="label-cell actions-spacer">Get Best Deal</div>
+                        </div>
+
+                        {/* Product Columns */}
+                        {analyzedProducts.map(p => {
+                            const amazonUrl = p.amazon_link || p.amazonLink;
+                            const flipkartUrl = p.flipkart_link || p.flipkartLink;
+                            
+                            const isPriceWinner = winners.price === p.id;
+                            const isBatteryWinner = winners.battery === p.id;
+                            const isValueWinner = winners.value === p.id;
+
+                            return (
+                                <div key={p.id} className="comparison-col">
+                                    {/* Header cell */}
+                                    <div className="col-header">
+                                        <div className="comp-img-container">
+                                            <img src={resolveImage(p.image)} alt={p.name} />
+                                        </div>
+                                        <h4>{p.name}</h4>
+                                        <span className="comp-category">{p.category}</span>
+                                    </div>
+
+                                    {/* Price cell */}
+                                    <div className={`spec-val price-val-cell ${isPriceWinner ? 'winner-cell' : ''}`}>
+                                        <span className="mobile-only-label">Price:</span>
+                                        <span className="val-text">₹{p.price?.toLocaleString()}</span>
+                                        {isPriceWinner && <span className="winner-tag price-winner"><Award size={10} /> Budget King</span>}
+                                    </div>
+
+                                    {/* Chip cell */}
+                                    <div className="spec-val">
+                                        <span className="mobile-only-label">Performance:</span>
+                                        <span className="val-text">{p.parsedSpecs.chip}</span>
+                                    </div>
+
+                                    {/* Display cell */}
+                                    <div className="spec-val">
+                                        <span className="mobile-only-label">Display:</span>
+                                        <span className="val-text">{p.parsedSpecs.display}</span>
+                                    </div>
+
+                                    {/* Camera cell */}
+                                    <div className="spec-val">
+                                        <span className="mobile-only-label">Camera:</span>
+                                        <span className="val-text">{p.parsedSpecs.camera}</span>
+                                    </div>
+
+                                    {/* Battery cell */}
+                                    <div className={`spec-val ${isBatteryWinner ? 'winner-cell' : ''}`}>
+                                        <span className="mobile-only-label">Battery:</span>
+                                        <span className="val-text">{p.parsedSpecs.battery}</span>
+                                        {isBatteryWinner && <span className="winner-tag battery-winner"><Award size={10} /> Battery King</span>}
+                                    </div>
+
+                                    {/* Charging cell */}
+                                    <div className="spec-val">
+                                        <span className="mobile-only-label">Charging:</span>
+                                        <span className="val-text">{p.parsedSpecs.charging}</span>
+                                    </div>
+
+                                    {/* Value Score cell */}
+                                    <div className={`spec-val ${isValueWinner ? 'winner-cell' : ''}`}>
+                                        <span className="mobile-only-label">Value Score:</span>
+                                        <div className="value-score-badge-comp">
+                                            <Zap size={10} className="score-icon-comp" />
+                                            <strong>{p.valueScoreNum}/10</strong>
+                                        </div>
+                                        {isValueWinner && <span className="winner-tag value-winner"><Award size={10} /> Best Value</span>}
+                                    </div>
+
+                                    {/* Actions cell */}
+                                    <div className="spec-val buy-links-row-comp">
+                                        {amazonUrl && (
+                                            <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="buy-link-comp amazon">
+                                                Amazon <ExternalLink size={12} />
+                                            </a>
+                                        )}
+                                        {flipkartUrl && (
+                                            <a href={flipkartUrl} target="_blank" rel="noopener noreferrer" className="buy-link-comp flipkart">
+                                                Flipkart <ExternalLink size={12} />
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+
                 <div className="share-comparison-container">
-                    <h4>Share this Comparison</h4>
+                    <h4>Share comparison with friends</h4>
                     <div className="share-buttons-wrapper">
                         <a 
-                            href={`https://wa.me/?text=${encodeURIComponent(`Check out this comparison between ${products.map(p => p.name).join(' vs ')} on TechBoy Store! Which one is better? \n\nhttps://techboy-store.vercel.app/`)}`} 
+                            href={`https://wa.me/?text=${encodeURIComponent(`Check out this comparison between ${products.map(p => p.name).join(' vs ')} on TechBoy Store! \n\nhttps://techboy-store.vercel.app/`)}`} 
                             target="_blank" 
                             rel="noopener noreferrer"
                             className="share-btn whatsapp-btn"
@@ -140,7 +209,7 @@ const ComparisonModal = ({ products, onClose }) => {
                             WhatsApp
                         </a>
                         <a 
-                            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out this comparison between ${products.map(p => p.name).join(' vs ')} on TechBoy Store! Which one is better? \n\nhttps://techboy-store.vercel.app/`)}`} 
+                            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out this comparison between ${products.map(p => p.name).join(' vs ')} on TechBoy Store! \n\nhttps://techboy-store.vercel.app/`)}`} 
                             target="_blank" 
                             rel="noopener noreferrer"
                             className="share-btn x-btn"

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Bot, LogOut, X, Bookmark, Menu } from 'lucide-react';
-import logo from '../../images/logos/new-logo.jpg';
+const logo = null;
 import WatchlistModal from './WatchlistModal';
 
 const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
@@ -110,7 +110,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                     </button>
                     <div className="pill-wrapper logo-pill">
                         <a href="/" className="logo-container">
-                            <img src={logo} alt="TECHBOY STORE" className="logo-img" />
+                            {logo && <img src={logo} alt="TECHBOY STORE" className="logo-img" />}
                             <span className="logo-text jelly-text">TECHBOY STORE</span>
                         </a>
                     </div>

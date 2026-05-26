@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import heroImg from '../../images/hero_banners/hero-cyber.png';
+const heroImg = "https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=600&q=80";
 import {
     Zap,
     Diamond,

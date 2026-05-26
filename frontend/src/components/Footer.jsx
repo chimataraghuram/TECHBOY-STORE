@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../../images/logos/new-logo.jpg';
+const logo = null;
 
 const Footer = () => {
     return (
@@ -9,7 +9,7 @@ const Footer = () => {
                     {/* Left Column: About & Branding */}
                     <div className="footer-col about-platform">
                         <div className="footer-brand-header">
-                            <img src={logo} alt="TECHBOY STORE" className="footer-logo" />
+                            {logo && <img src={logo} alt="TECHBOY STORE" className="footer-logo" />}
                             <div className="brand-titles">
                                 <h3>TECHBOY STORE</h3>
                                 <span className="brand-tagline">INNOVATION ENGINE</span>

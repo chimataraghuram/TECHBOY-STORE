@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Cpu, Camera, Battery, Activity, Gamepad2, ChevronRight, Zap, Target } from 'lucide-react';
+import { X, Cpu, Camera, Battery, Activity, Gamepad2, ChevronRight, Zap, Target, Sliders, ChevronLeft } from 'lucide-react';
 import localPhonesData from '../data/phones.json';
+import { runRecommendationEngine } from '../utils/recommendationEngine';
 import './TechAdvisorModal.css';
+
+const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
 const resolveProductImage = (src) => {
     if (!src) return '';
@@ -14,10 +17,14 @@ const TechAdvisorModal = ({ onClose }) => {
     const [step, setStep] = useState(1);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [results, setResults] = useState([]);
+    const [phones, setPhones] = useState(localPhonesData);
     
     // Preferences
     const [budget, setBudget] = useState(30000);
-    const [usage, setUsage] = useState(''); // gaming, camera, battery, daily, performance
+    const [mainUsage, setMainUsage] = useState('daily'); // gaming, camera, battery, daily, performance
+    const [gamingPriority, setGamingPriority] = useState(2); // 1: Low, 2: Med, 3: High, 4: Ultra
+    const [cameraPriority, setCameraPriority] = useState(2);
+    const [batteryPriority, setBatteryPriority] = useState(2);
     const [brand, setBrand] = useState(''); // optional
 
     const USAGE_PROFILES = [
@@ -30,67 +37,49 @@ const TechAdvisorModal = ({ onClose }) => {
 
     const BRANDS = ['Apple', 'Samsung', 'OnePlus', 'iQOO', 'vivo', 'Realme', 'POCO', 'Google', 'Nothing', 'Xiaomi', 'Redmi', 'Tecno', 'Infinix'];
 
+    const PRIORITY_LEVELS = [
+        { value: 1, label: 'Low' },
+        { value: 2, label: 'Medium' },
+        { value: 3, label: 'High' },
+        { value: 4, label: 'Ultra' }
+    ];
+
+    // Try to fetch latest products from DB, fallback to local file
+    useEffect(() => {
+        let mounted = true;
+        const fetchPhones = async () => {
+            try {
+                const res = await fetch(`${API_BASE_URL}/products/`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const list = data.results || data;
+                    if (mounted && list && list.length > 0) {
+                        setPhones(list);
+                    }
+                }
+            } catch (err) {
+                console.warn('Advisor using local JSON fallback database', err);
+            }
+        };
+        fetchPhones();
+        return () => { mounted = false; };
+    }, []);
+
     const handleAnalyze = () => {
         setIsAnalyzing(true);
+        setStep(5);
         setTimeout(() => {
-            const matches = runRecommendationEngine();
+            const matches = runRecommendationEngine(phones, {
+                budget,
+                mainUsage,
+                gamingPriority,
+                cameraPriority,
+                batteryPriority,
+                brand
+            });
             setResults(matches);
             setIsAnalyzing(false);
-            setStep(4);
-        }, 2000);
-    };
-
-    const runRecommendationEngine = () => {
-        let scoredPhones = localPhonesData.map(phone => {
-            let score = 0;
-            let reason = '';
-            
-            // 1. Budget check
-            if (phone.price <= budget) {
-                score += 50; // Heavily weight being in budget
-            } else if (phone.price <= budget * 1.1) {
-                score += 20; // Slightly over budget
-            } else {
-                score -= 100; // Too expensive
-            }
-
-            // 2. Brand check
-            if (brand && phone.name.toLowerCase().includes(brand.toLowerCase())) {
-                score += 30;
-            }
-
-            // 3. Usage check (via tags and descriptions)
-            const desc = phone.description.toLowerCase();
-            const tag = phone.tag ? phone.tag.toLowerCase() : '';
-            
-            if (usage === 'gaming') {
-                if (tag.includes('gaming')) score += 40;
-                if (desc.includes('cooling') || desc.includes('vapor') || desc.includes('fps')) score += 20;
-                reason = 'Top-tier graphics performance and cooling in your budget.';
-            } else if (usage === 'camera') {
-                if (tag.includes('camera')) score += 40;
-                if (desc.includes('ois') || desc.includes('telephoto') || desc.includes('zeiss') || desc.includes('hasselblad')) score += 20;
-                reason = 'Exceptional optical performance and AI photography.';
-            } else if (usage === 'battery') {
-                if (desc.includes('6000mah') || desc.includes('6500mah')) score += 40;
-                if (desc.includes('100w') || desc.includes('120w')) score += 20;
-                reason = 'Incredible screen-on time and rapid charging capabilities.';
-            } else if (usage === 'performance') {
-                if (desc.includes('snapdragon 8') || desc.includes('dimensity 9')) score += 40;
-                if (desc.includes('lpddr5x')) score += 10;
-                reason = 'Raw processing power for heavy multitasking.';
-            } else if (usage === 'daily') {
-                if (tag.includes('all-round') || tag.includes('value') || tag.includes('ui')) score += 40;
-                if (desc.includes('updates') || desc.includes('os')) score += 20;
-                reason = 'A perfectly balanced phone for everyday reliability.';
-            }
-
-            return { ...phone, score, matchReason: reason };
-        });
-
-        // Filter out highly negative scores and sort
-        scoredPhones = scoredPhones.filter(p => p.score > 0).sort((a, b) => b.score - a.score);
-        return scoredPhones.slice(0, 3);
+        }, 2200);
     };
 
     return (
@@ -101,20 +90,45 @@ const TechAdvisorModal = ({ onClose }) => {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
             >
-                <button className="close-advisor" onClick={onClose}><X size={24} /></button>
+                <button className="close-advisor" onClick={onClose} aria-label="Close Advisor"><X size={22} /></button>
                 
                 <div className="advisor-header">
-                    <div className="advisor-badge"><Zap size={16} /> AI TECH ADVISOR</div>
+                    <div className="advisor-badge"><Zap size={14} /> AI TECH ADVISOR</div>
                     <h2>Find Your Perfect Match</h2>
                 </div>
 
                 <div className="advisor-content">
+                    {/* Step Indicators */}
+                    <div className="advisor-progress-bar">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                            <div 
+                                key={s} 
+                                className={`progress-step ${step >= s ? 'active' : ''} ${step === s ? 'current' : ''}`}
+                            >
+                                <span className="step-num">{s}</span>
+                            </div>
+                        ))}
+                    </div>
+
                     <AnimatePresence mode="wait">
                         {step === 1 && (
                             <motion.div key="step1" className="advisor-step" initial={{opacity:0, x:-20}} animate={{opacity:1, x:0}} exit={{opacity:0, x:20}}>
                                 <h3>What is your maximum budget?</h3>
                                 <div className="budget-slider-container">
-                                    <h1 className="budget-display">₹{budget.toLocaleString()}</h1>
+                                    <div className="budget-input-wrapper-modal">
+                                        <span className="currency-prefix">₹</span>
+                                        <input 
+                                            type="number"
+                                            value={budget}
+                                            onChange={(e) => {
+                                                const val = parseInt(e.target.value) || 0;
+                                                setBudget(val);
+                                            }}
+                                            className="budget-number-input"
+                                            min="8000"
+                                            max="200000"
+                                        />
+                                    </div>
                                     <input 
                                         type="range" 
                                         min="10000" 
@@ -125,26 +139,28 @@ const TechAdvisorModal = ({ onClose }) => {
                                         className="advisor-range-slider"
                                     />
                                     <div className="budget-presets">
-                                        <button onClick={() => setBudget(15000)}>15K</button>
-                                        <button onClick={() => setBudget(30000)}>30K</button>
-                                        <button onClick={() => setBudget(50000)}>50K</button>
-                                        <button onClick={() => setBudget(80000)}>80K</button>
-                                        <button onClick={() => setBudget(150000)}>Max</button>
+                                        <button className={`preset-btn ${budget === 15000 ? 'active' : ''}`} onClick={() => setBudget(15000)}>₹15K</button>
+                                        <button className={`preset-btn ${budget === 25000 ? 'active' : ''}`} onClick={() => setBudget(25000)}>₹25K</button>
+                                        <button className={`preset-btn ${budget === 40000 ? 'active' : ''}`} onClick={() => setBudget(40000)}>₹40K</button>
+                                        <button className={`preset-btn ${budget === 80000 ? 'active' : ''}`} onClick={() => setBudget(80000)}>₹80K</button>
+                                        <button className={`preset-btn ${budget === 150000 ? 'active' : ''}`} onClick={() => setBudget(150000)}>Flagship (150K)</button>
                                     </div>
                                 </div>
-                                <button className="advisor-next-btn primary-btn" onClick={() => setStep(2)}>Next Step <ChevronRight size={18} /></button>
+                                <button className="advisor-next-btn primary-btn" onClick={() => setStep(2)}>
+                                    Next Step <ChevronRight size={18} />
+                                </button>
                             </motion.div>
                         )}
 
                         {step === 2 && (
                             <motion.div key="step2" className="advisor-step" initial={{opacity:0, x:-20}} animate={{opacity:1, x:0}} exit={{opacity:0, x:20}}>
-                                <h3>What matters most to you?</h3>
+                                <h3>What is your primary phone usage?</h3>
                                 <div className="usage-grid">
                                     {USAGE_PROFILES.map(profile => (
                                         <div 
                                             key={profile.id}
-                                            className={`usage-card ${usage === profile.id ? 'active' : ''}`}
-                                            onClick={() => setUsage(profile.id)}
+                                            className={`usage-card ${mainUsage === profile.id ? 'active' : ''}`}
+                                            onClick={() => setMainUsage(profile.id)}
                                         >
                                             <div className="usage-icon">{profile.icon}</div>
                                             <h4>{profile.label}</h4>
@@ -153,15 +169,89 @@ const TechAdvisorModal = ({ onClose }) => {
                                     ))}
                                 </div>
                                 <div className="advisor-actions">
-                                    <button className="advisor-back-btn" onClick={() => setStep(1)}>Back</button>
-                                    <button className="advisor-next-btn primary-btn" disabled={!usage} onClick={() => setStep(3)}>Next Step <ChevronRight size={18} /></button>
+                                    <button className="advisor-back-btn" onClick={() => setStep(1)}><ChevronLeft size={18} /> Back</button>
+                                    <button className="advisor-next-btn primary-btn" onClick={() => setStep(3)}>Next Step <ChevronRight size={18} /></button>
                                 </div>
                             </motion.div>
                         )}
 
                         {step === 3 && (
                             <motion.div key="step3" className="advisor-step" initial={{opacity:0, x:-20}} animate={{opacity:1, x:0}} exit={{opacity:0, x:20}}>
-                                <h3>Any brand preference? <span className="optional-tag">(Optional)</span></h3>
+                                <h3>Tune your priority requirements</h3>
+                                <div className="priority-section-wrapper">
+                                    <div className="priority-selector-row">
+                                        <div className="priority-info">
+                                            <Gamepad2 size={20} className="gaming-icon-color" />
+                                            <div>
+                                                <h4>Gaming Priority</h4>
+                                                <p>GPU speed, high frame rate display, cooling capability</p>
+                                            </div>
+                                        </div>
+                                        <div className="discrete-chips">
+                                            {PRIORITY_LEVELS.map(lvl => (
+                                                <button 
+                                                    key={lvl.value}
+                                                    className={`discrete-chip ${gamingPriority === lvl.value ? 'active' : ''}`}
+                                                    onClick={() => setGamingPriority(lvl.value)}
+                                                >
+                                                    {lvl.label}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="priority-selector-row">
+                                        <div className="priority-info">
+                                            <Camera size={20} className="camera-icon-color" />
+                                            <div>
+                                                <h4>Camera Preference</h4>
+                                                <p>OIS stability, optical zoom, megapixels, low-light sensors</p>
+                                            </div>
+                                        </div>
+                                        <div className="discrete-chips">
+                                            {PRIORITY_LEVELS.map(lvl => (
+                                                <button 
+                                                    key={lvl.value}
+                                                    className={`discrete-chip ${cameraPriority === lvl.value ? 'active' : ''}`}
+                                                    onClick={() => setCameraPriority(lvl.value)}
+                                                >
+                                                    {lvl.label}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="priority-selector-row">
+                                        <div className="priority-info">
+                                            <Battery size={20} className="battery-icon-color" />
+                                            <div>
+                                                <h4>Battery & Fast Charging</h4>
+                                                <p>Large capacity (mAh), fast charger wattage (W)</p>
+                                            </div>
+                                        </div>
+                                        <div className="discrete-chips">
+                                            {PRIORITY_LEVELS.map(lvl => (
+                                                <button 
+                                                    key={lvl.value}
+                                                    className={`discrete-chip ${batteryPriority === lvl.value ? 'active' : ''}`}
+                                                    onClick={() => setBatteryPriority(lvl.value)}
+                                                >
+                                                    {lvl.label}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="advisor-actions">
+                                    <button className="advisor-back-btn" onClick={() => setStep(2)}><ChevronLeft size={18} /> Back</button>
+                                    <button className="advisor-next-btn primary-btn" onClick={() => setStep(4)}>Next Step <ChevronRight size={18} /></button>
+                                </div>
+                            </motion.div>
+                        )}
+
+                        {step === 4 && (
+                            <motion.div key="step4" className="advisor-step" initial={{opacity:0, x:-20}} animate={{opacity:1, x:0}} exit={{opacity:0, x:20}}>
+                                <h3>Select brand preferences <span className="optional-tag">(Optional)</span></h3>
                                 <div className="brand-chip-grid">
                                     {BRANDS.map(b => (
                                         <button 
@@ -174,46 +264,69 @@ const TechAdvisorModal = ({ onClose }) => {
                                     ))}
                                 </div>
                                 <div className="advisor-actions">
-                                    <button className="advisor-back-btn" onClick={() => setStep(2)}>Back</button>
+                                    <button className="advisor-back-btn" onClick={() => setStep(3)}><ChevronLeft size={18} /> Back</button>
                                     <button className="advisor-next-btn primary-btn recommend-btn" onClick={handleAnalyze}>
-                                        <Target size={18} /> Analyze & Recommend
+                                        <Target size={18} /> Match & Recommend
                                     </button>
                                 </div>
                             </motion.div>
                         )}
 
-                        {isAnalyzing && (
+                        {step === 5 && isAnalyzing && (
                             <motion.div key="analyzing" className="advisor-step analyzing-step" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
-                                <div className="scanner"></div>
-                                <h3>AI is matching your profile...</h3>
-                                <p>Scanning 50+ devices for the ultimate {usage} experience under ₹{budget.toLocaleString()}.</p>
+                                <div className="scanner-container">
+                                    <div className="scanner-circle"></div>
+                                    <div className="scanner-line"></div>
+                                </div>
+                                <h3>AI Matching Algorithm Running...</h3>
+                                <p className="scanning-txt">Analyzing 50+ devices for your personalized profile under ₹{budget.toLocaleString()}.</p>
                             </motion.div>
                         )}
 
-                        {step === 4 && !isAnalyzing && (
+                        {step === 5 && !isAnalyzing && (
                             <motion.div key="results" className="advisor-step results-step" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}}>
-                                <h3>Your Top Recommendations</h3>
+                                <h3>Your Tailored AI Recommendations</h3>
                                 <div className="results-grid">
                                     {results.length > 0 ? results.map((phone, index) => (
-                                        <div key={phone.id} className="result-card glass-card">
-                                            {index === 0 && <div className="top-match-badge">#1 Best Match</div>}
-                                            <img src={resolveProductImage(phone.image)} alt={phone.name} className="result-img" />
+                                        <div key={phone.id} className={`result-card glass-card ${index === 0 ? 'top-match' : ''}`}>
+                                            {index === 0 && <div className="top-match-badge">🥇 Recommended #1</div>}
+                                            {index === 1 && <div className="match-badge">🥈 Option #2</div>}
+                                            {index === 2 && <div className="match-badge">🥉 Option #3</div>}
+                                            <div className="result-img-container">
+                                                <img src={resolveProductImage(phone.image)} alt={phone.name} className="result-img" />
+                                            </div>
                                             <div className="result-info">
                                                 <h4>{phone.name}</h4>
-                                                <div className="result-price">₹{phone.price.toLocaleString()}</div>
+                                                <div className="result-price-row">
+                                                    <span className="price-label">Best Deal</span>
+                                                    <span className="price-val">₹{phone.price.toLocaleString()}</span>
+                                                </div>
+                                                
+                                                <div className="value-score-display-advisor">
+                                                    <span>Value Score:</span>
+                                                    <strong>{phone.valueScore}/10</strong>
+                                                </div>
+
                                                 <div className="result-reason">
                                                     <Zap size={14} className="reason-icon" />
-                                                    <p>{phone.matchReason || 'Highly rated in this price segment.'}</p>
+                                                    <div>
+                                                        <h5>Why Recommended:</h5>
+                                                        <p>{phone.matchReason}</p>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className="result-actions">
-                                                {phone.amazonLink && <a href={phone.amazonLink} target="_blank" rel="noreferrer" className="buy-link amazon">Amazon</a>}
-                                                {phone.flipkartLink && <a href={phone.flipkartLink} target="_blank" rel="noreferrer" className="buy-link flipkart">Flipkart</a>}
+                                                {phone.amazonLink && (
+                                                    <a href={phone.amazonLink} target="_blank" rel="noreferrer" className="buy-link amazon">Amazon</a>
+                                                )}
+                                                {phone.flipkartLink && (
+                                                    <a href={phone.flipkartLink} target="_blank" rel="noreferrer" className="buy-link flipkart">Flipkart</a>
+                                                )}
                                             </div>
                                         </div>
                                     )) : (
                                         <div className="no-results">
-                                            <p>No perfect matches found for this exact criteria. Try adjusting your budget or brand preference.</p>
+                                            <p>No perfect matches found for your criteria. Try increasing your budget or removing the brand filter.</p>
                                             <button className="primary-btn" onClick={() => setStep(1)}>Start Over</button>
                                         </div>
                                     )}
@@ -221,7 +334,7 @@ const TechAdvisorModal = ({ onClose }) => {
                                 {results.length > 0 && (
                                     <div className="advisor-actions">
                                         <button className="advisor-back-btn" onClick={() => setStep(1)}>Start Over</button>
-                                        <button className="primary-btn" onClick={onClose}>Close</button>
+                                        <button className="primary-btn" onClick={onClose}>Finish</button>
                                     </div>
                                 )}
                             </motion.div>

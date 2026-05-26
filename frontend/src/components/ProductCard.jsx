@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import balancedImg from '../../images/products/balanced-phone.png';
+const balancedImg = "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=300&q=80";
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
@@ -17,6 +17,38 @@ const HighlightText = ({ text, highlight }) => {
     );
 };
 
+const getMappedTag = (tag = '') => {
+    const t = tag.toLowerCase();
+    if (t.includes('gaming')) return '🎮 Best Gaming';
+    if (t.includes('camera') || t.includes('photo')) return '📸 Camera Beast';
+    if (t.includes('battery') || t.includes('king') || t.includes('endurance')) return '🔋 Battery King';
+    if (t.includes('value') || t.includes('budget')) return '💰 Value Pick';
+    if (t.includes('ui') || t.includes('software')) return '✨ Best UI';
+    return tag || '⭐ Premium Choice';
+};
+
+const getWhyRecommendedSnippet = (product) => {
+    const tag = (product.tag || '').toLowerCase();
+    const desc = (product.description || '').toLowerCase();
+    
+    if (tag.includes('gaming') || desc.includes('fps') || desc.includes('144hz')) {
+        return "Excellent gaming performance and cooling in this price range.";
+    }
+    if (tag.includes('camera') || desc.includes('ois') || desc.includes('telephoto')) {
+        return "Best camera stability and low-light quality under your budget.";
+    }
+    if (tag.includes('battery') || desc.includes('6000mah') || desc.includes('5500mah') || desc.includes('100w')) {
+        return "Strong battery optimization, high capacity, and fast charging.";
+    }
+    if (tag.includes('value') || tag.includes('pick') || desc.includes('value')) {
+        return "Outstanding value-for-money specifications in this segment.";
+    }
+    if (tag.includes('ui') || desc.includes('updates')) {
+        return "Smooth, bloatware-free user interface with long OS support.";
+    }
+    return "Balanced daily performance and highly reliable build quality.";
+};
+
 const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTerm }) => {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
@@ -24,20 +56,25 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
     const mouseXSpring = useSpring(x);
     const mouseYSpring = useSpring(y);
 
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"]);
 
     const [isSaved, setIsSaved] = React.useState(false);
     const [imgError, setImgError] = React.useState(false);
     const [imgLoaded, setImgLoaded] = React.useState(false);
+    const [isTouchDevice, setIsTouchDevice] = React.useState(false);
+
     const amazonUrl = product.amazon_link || product.amazonLink;
     const flipkartUrl = product.flipkart_link || product.flipkartLink;
 
+    React.useEffect(() => {
+        setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    }, []);
+
     const resolveImg = (src) => {
         if (!src) return balancedImg;
-        // Local public paths (start with /) need the Vite base URL prepended
         if (src.startsWith('/')) return `${import.meta.env.BASE_URL}${src.replace(/^\//, '')}`;
-        return src; // external URLs (http/https) pass through unchanged
+        return src;
     };
     const imageSrc = !imgError && product.image ? resolveImg(product.image) : balancedImg;
 
@@ -69,6 +106,7 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
     };
 
     const handleMouseMove = (e) => {
+        if (isTouchDevice) return;
         const rect = e.currentTarget.getBoundingClientRect();
         const mouseX = (e.clientX - rect.left) / rect.width - 0.5;
         const mouseY = (e.clientY - rect.top) / rect.height - 0.5;
@@ -93,24 +131,27 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
         }
     };
 
+    const mappedTag = getMappedTag(product.tag);
+    const whyRecommended = getWhyRecommendedSnippet(product);
+
     return (
         <motion.div
             className={`product-card glass-card ${isComparing ? 'comparing' : ''}`}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             style={{
-                rotateX,
-                rotateY,
+                rotateX: isTouchDevice ? 0 : rotateX,
+                rotateY: isTouchDevice ? 0 : rotateY,
                 transformStyle: "preserve-3d",
             }}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            transition={{ duration: 0.4, delay: index * 0.05 }}
             viewport={{ once: true }}
-            whileHover={{ scale: 1.02 }}
+            whileHover={isTouchDevice ? {} : { scale: 1.015 }}
         >
             <div className="product-card-header">
-                {product.tag && <span className="product-tag">{product.tag}</span>}
+                {product.tag && <span className="product-tag">{mappedTag}</span>}
                 <button 
                     className={`watchlist-btn ${isSaved ? 'saved' : ''}`}
                     onClick={handleSaveToWatchlist}
@@ -121,7 +162,7 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
                     </svg>
                 </button>
             </div>
-            <div className="product-image-wrapper" style={{ transform: "translateZ(50px)" }}>
+            <div className="product-image-wrapper" style={{ transform: "translateZ(30px)" }}>
                 {!imgLoaded && <div className="img-shimmer" />}
                 <img 
                     src={imageSrc}
@@ -132,7 +173,7 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
                     onError={() => { setImgError(true); setImgLoaded(true); }}
                 />
             </div>
-            <div className="product-info" style={{ transform: "translateZ(30px)" }}>
+            <div className="product-info" style={{ transform: "translateZ(20px)" }}>
                 <div className="product-card-top-row">
                     <span className="category-label">
                         <HighlightText text={product.category} highlight={searchTerm} />
@@ -148,7 +189,7 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
                 </h3>
 
                 <div className="product-actions-row">
-                    <button className="jelly-btn mini view-phone-btn" onClick={() => onView(product)}>View Phone</button>
+                    <button className="jelly-btn mini view-phone-btn" onClick={() => onView(product)}>View Details</button>
                     <button
                         className={`jelly-btn mini compare-btn ${isComparing ? 'active' : ''}`}
                         onClick={() => onCompare(product)}
@@ -167,10 +208,15 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
                     )}
                 </div>
 
+                <div className="why-recommended-snippet">
+                    <span className="why-recommended-title">💡 Why Recommended</span>
+                    <p className="why-recommended-text">{whyRecommended}</p>
+                </div>
+
                 <div className="product-meta">
                     <div className="price-info">
-                        <span className="price-label">Best Price @ Amazon</span>
-                        <span className="price">Rs {product.price?.toLocaleString()}</span>
+                        <span className="price-label">Best Price Online</span>
+                        <span className="price">₹{product.price?.toLocaleString()}</span>
                     </div>
                     <a 
                         href={amazonUrl || flipkartUrl || '#'} 

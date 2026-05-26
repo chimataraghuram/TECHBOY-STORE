@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import './IntroScreen.css';
 import { motion } from 'framer-motion';
-import introVideo from '../../images/techboy-intro.mp4';
+const introVideo = null;
 
 const IntroScreen = ({ onComplete }) => {
   const videoRef = useRef(null);
