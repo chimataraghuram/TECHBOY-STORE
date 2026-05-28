@@ -1,5 +1,5 @@
 import React from 'react';
-import CyberLogo from './CyberLogo';
+import logo from '../../images/logos/new-logo.jpg';
 
 const Footer = () => {
     return (
@@ -9,7 +9,7 @@ const Footer = () => {
                     {/* Left Column: About & Branding */}
                     <div className="footer-col about-platform">
                         <div className="footer-brand-header">
-                            <CyberLogo size={36} className="footer-logo" />
+                            <img src={logo} alt="TECHBOY STORE" className="footer-logo" style={{ width: 36, height: 36 }} />
                             <div className="brand-titles">
                                 <h3>TECHBOY STORE</h3>
                                 <span className="brand-tagline">INNOVATION ENGINE</span>

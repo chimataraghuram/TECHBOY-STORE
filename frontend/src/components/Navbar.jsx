@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Bot, LogOut, X, Bookmark, Menu } from 'lucide-react';
-import CyberLogo from './CyberLogo';
+import logo from '../../images/logos/new-logo.jpg';
 import WatchlistModal from './WatchlistModal';
 
 const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
@@ -110,7 +110,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                     </button>
                     <div className="pill-wrapper logo-pill">
                         <a href="/" className="logo-container">
-                            <CyberLogo size={32} className="logo-img" />
+                            <img src={logo} alt="TECHBOY STORE" className="logo-img" style={{ width: 32, height: 32 }} />
                             <span className="logo-text jelly-text">TECHBOY STORE</span>
                         </a>
                     </div>

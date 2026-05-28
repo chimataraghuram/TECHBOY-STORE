@@ -1,13 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import './IntroScreen.css';
 import { motion } from 'framer-motion';
-import CyberLogo from './CyberLogo';
+import introVideo from '../../images/techboy-intro.mp4';
 
 const IntroScreen = ({ onComplete }) => {
+  const videoRef = useRef(null);
+
   useEffect(() => {
-    // Cyber boot sequence simulation time
-    const introTimeout = setTimeout(onComplete, 3500);
-    return () => clearTimeout(introTimeout);
+    const video = videoRef.current;
+    if (video) {
+      video.play().catch(error => {
+        console.error("Video autoplay failed", error);
+        // Fallback in case autoplay is blocked
+        setTimeout(onComplete, 3000); 
+      });
+
+      video.addEventListener('ended', onComplete);
+      // Timeout fallback if video event doesn't trigger
+      const introTimeout = setTimeout(onComplete, 3500);
+      return () => {
+        video.removeEventListener('ended', onComplete);
+        clearTimeout(introTimeout);
+      };
+    }
   }, [onComplete]);
 
   return (
@@ -18,13 +33,14 @@ const IntroScreen = ({ onComplete }) => {
       transition={{ duration: 1 }}
     >
       <div className="intro-content">
-        {/* Code-based Animated HUD instead of missing video asset */}
-        <div className="intro-logo-wrapper">
-          <div className="scanner-line" />
-          <CyberLogo size={120} className="intro-cyber-logo" />
-          <div className="intro-ring-pulse" />
-        </div>
-
+        <video 
+          ref={videoRef}
+          className="intro-video"
+          src={introVideo}
+          muted
+          playsInline
+          autoPlay
+        />
         <motion.h1 
           className="intro-title jelly-text"
           initial={{ y: 20, opacity: 0 }}

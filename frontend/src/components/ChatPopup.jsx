@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import CyberLogo from './CyberLogo';
+import logo from '../../images/logos/new-logo.jpg';
 import localPhonesData from '../data/phones.json';
 
 const NVIDIA_API_KEY = import.meta.env.VITE_NVIDIA_API_KEY;
@@ -303,7 +303,7 @@ const ChatPopup = ({ isOpen, onClose }) => {
             <div className="chat-header">
                 <div className="chat-header-info">
                     <div className="chat-bot-logo">
-                        <CyberLogo size={24} />
+                        <img src={logo} alt="TECHBOY AI" style={{ width: 24, height: 24, borderRadius: '50%' }} />
                         <span className="ai-live-dot" />
                     </div>
                     <div className="chat-brand-info">
