@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 import RadarChart from './RadarChart';
 import PriceHistoryChart from './PriceHistoryChart';
+import { resolveProductImage } from '../utils/imageResolver';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
@@ -20,7 +21,7 @@ const QuickViewModal = ({ product, onClose }) => {
     const [isLoadingAi, setIsLoadingAi] = useState(false);
     const amazonUrl = product.amazon_link || product.amazonLink;
     const flipkartUrl = product.flipkart_link || product.flipkartLink;
-    const imageUrl = product.image?.startsWith('/') ? `${import.meta.env.BASE_URL}${product.image.replace(/^\//, '')}` : product.image;
+    const imageUrl = resolveProductImage(product.image, product.name);
 
     useEffect(() => {
         const fetchAiSummary = async () => {

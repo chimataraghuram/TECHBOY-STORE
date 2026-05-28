@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { resolveProductImage } from '../utils/imageResolver';
 const balancedImg = "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=300&q=80";
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
@@ -71,12 +72,7 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
         setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
     }, []);
 
-    const resolveImg = (src) => {
-        if (!src) return balancedImg;
-        if (src.startsWith('/')) return `${import.meta.env.BASE_URL}${src.replace(/^\//, '')}`;
-        return src;
-    };
-    const imageSrc = !imgError && product.image ? resolveImg(product.image) : balancedImg;
+    const imageSrc = !imgError && product.image ? resolveProductImage(product.image, product.name) : balancedImg;
 
     const handleSaveToWatchlist = async (e) => {
         e.stopPropagation();

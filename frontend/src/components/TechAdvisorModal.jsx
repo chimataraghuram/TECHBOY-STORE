@@ -5,13 +5,9 @@ import localPhonesData from '../data/phones.json';
 import { runRecommendationEngine } from '../utils/recommendationEngine';
 import './TechAdvisorModal.css';
 
-const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
+import { resolveProductImage } from '../utils/imageResolver';
 
-const resolveProductImage = (src) => {
-    if (!src) return '';
-    if (src.startsWith('/')) return `${import.meta.env.BASE_URL}${src.replace(/^\//, '')}`;
-    return src;
-};
+const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
 const TechAdvisorModal = ({ onClose }) => {
     const [step, setStep] = useState(1);
@@ -293,7 +289,7 @@ const TechAdvisorModal = ({ onClose }) => {
                                             {index === 1 && <div className="match-badge">🥈 Option #2</div>}
                                             {index === 2 && <div className="match-badge">🥉 Option #3</div>}
                                             <div className="result-img-container">
-                                                <img src={resolveProductImage(phone.image)} alt={phone.name} className="result-img" />
+                                                <img src={resolveProductImage(phone.image, phone.name)} alt={phone.name} className="result-img" />
                                             </div>
                                             <div className="result-info">
                                                 <h4>{phone.name}</h4>

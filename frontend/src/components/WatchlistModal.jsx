@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { resolveProductImage } from '../utils/imageResolver';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
-const resolveImage = (src) => {
-    if (!src) return '';
-    if (src.startsWith('/')) return `${import.meta.env.BASE_URL}${src.replace(/^\//, '')}`;
-    return src;
+const resolveImage = (src, name = '') => {
+    return resolveProductImage(src, name);
 };
 
 const WatchlistModal = ({ isOpen, onClose }) => {
@@ -85,7 +84,7 @@ const WatchlistModal = ({ isOpen, onClose }) => {
                             {watchlistItems.map(item => (
                                 <div key={item.id} className="watchlist-item glass" style={{ display: 'flex', padding: '12px', borderRadius: '12px', gap: '16px', position: 'relative' }}>
                                     <div className="watchlist-item-img" style={{ width: '80px', height: '80px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <img src={resolveImage(item.product_details.image)} alt={item.product_details.name} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} />
+                                        <img src={resolveImage(item.product_details.image, item.product_details.name)} alt={item.product_details.name} style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} />
                                     </div>
                                     <div className="watchlist-item-info" style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                         <h4 style={{ margin: '0 0 8px 0' }}>{item.product_details.name}</h4>

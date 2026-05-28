@@ -13,13 +13,9 @@ import {
     Search
 } from 'lucide-react';
 
-const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
+import { resolveProductImage } from '../utils/imageResolver';
 
-const resolveProductImage = (src) => {
-    if (!src) return '';
-    if (src.startsWith('/')) return `${import.meta.env.BASE_URL}${src.replace(/^\//, '')}`;
-    return src;
-};
+const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
 const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
     const [dealOfDay, setDealOfDay] = useState(null);
@@ -239,7 +235,7 @@ const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
                             </div>
                             <div className="deal-product-row">
                                 <div className="deal-img-container">
-                                    <img src={resolveProductImage(dealOfDay.image)} alt={dealOfDay.name} className="deal-product-img" />
+                                    <img src={resolveProductImage(dealOfDay.image, dealOfDay.name)} alt={dealOfDay.name} className="deal-product-img" />
                                 </div>
                                 <div className="deal-product-info">
                                     <h4 className="deal-product-title">{dealOfDay.name}</h4>

@@ -2,11 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { parseSpecs, calculateValueScore } from '../utils/specsParser';
 import { X, Award, Zap, ExternalLink } from 'lucide-react';
+import { resolveProductImage } from '../utils/imageResolver';
 
-const resolveImage = (src) => {
-    if (!src) return '';
-    if (src.startsWith('/')) return `${import.meta.env.BASE_URL}${src.replace(/^\//, '')}`;
-    return src;
+const resolveImage = (src, name = '') => {
+    return resolveProductImage(src, name);
 };
 
 const ComparisonModal = ({ products, onClose }) => {
@@ -124,7 +123,7 @@ const ComparisonModal = ({ products, onClose }) => {
                                     {/* Header cell */}
                                     <div className="col-header">
                                         <div className="comp-img-container">
-                                            <img src={resolveImage(p.image)} alt={p.name} />
+                                            <img src={resolveImage(p.image, p.name)} alt={p.name} />
                                         </div>
                                         <h4>{p.name}</h4>
                                         <span className="comp-category">{p.category}</span>
