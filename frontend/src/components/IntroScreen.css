@@ -19,22 +19,84 @@
   gap: 15px;
 }
 
-.intro-video {
-  width: 150px;
-  height: 150px;
+/* Cyber HUD Logo Wrapper */
+.intro-logo-wrapper {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 40px rgba(255, 42, 42, 0.5);
-  border: 2px solid #ff2a2a;
-  margin-bottom: 15px;
+  background: radial-gradient(circle, rgba(255, 0, 60, 0.08) 0%, transparent 70%);
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 0, 60, 0.25);
+  box-shadow: inset 0 0 25px rgba(255, 0, 60, 0.15), 0 0 35px rgba(255, 0, 60, 0.05);
+  overflow: hidden;
+}
+
+.intro-cyber-logo {
+  animation: logo-float 3.5s ease-in-out infinite;
+  z-index: 5;
+}
+
+/* Vertical red laser scanner */
+.scanner-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #ff003c, transparent);
+  box-shadow: 0 0 10px #ff003c, 0 0 20px rgba(255, 0, 60, 0.5);
+  z-index: 10;
+  animation: vertical-scan 2.5s linear infinite;
+}
+
+/* Pulsing radar ring */
+.intro-ring-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(255, 0, 60, 0.35);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0.85);
+  animation: ring-pulse-anim 2s infinite ease-out;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes logo-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes vertical-scan {
+  0% { top: -5%; }
+  50% { top: 105%; }
+  100% { top: -5%; }
+}
+
+@keyframes ring-pulse-anim {
+  0% {
+    transform: translate(-50%, -50%) scale(0.75);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.25);
+    opacity: 0;
+  }
 }
 
 .intro-title {
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: #ffffff;
   margin: 0;
-  text-shadow: 0 0 15px rgba(255, 42, 42, 0.7);
-  letter-spacing: 4px;
+  text-shadow: 0 0 15px rgba(255, 0, 60, 0.7);
+  letter-spacing: 5px;
+  font-weight: 800;
 }
 
 .intro-footer {
@@ -44,12 +106,12 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 3px;
-  background: linear-gradient(90deg, #ff8c42, #ff3296);
+  background: linear-gradient(90deg, #ff8c42, #ff003c);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: 0;
-  text-shadow: 0px 5px 15px rgba(255, 50, 150, 0.3);
+  text-shadow: 0px 5px 15px rgba(255, 0, 60, 0.3);
 }
 
 .intro-loading-dots {
@@ -65,8 +127,8 @@
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background: #ef4444; /* matching --accent-primary */
-  box-shadow: 0 0 12px rgba(239, 68, 68, 0.9);
+  background: #ff003c;
+  box-shadow: 0 0 12px rgba(255, 0, 60, 0.9);
   animation: intro-bounce 1.4s infinite ease-in-out both;
 }
 
@@ -76,12 +138,12 @@
 
 .intro-loading-dots span:nth-child(2) {
   animation-delay: -0.16s;
-  background: #ff6347; /* transition between red and orange */
+  background: #ff6347;
   box-shadow: 0 0 12px rgba(255, 99, 71, 0.9);
 }
 
 .intro-loading-dots span:nth-child(3) {
-  background: #f97316; /* matching --accent-secondary */
+  background: #f97316;
   box-shadow: 0 0 12px rgba(249, 115, 22, 0.9);
 }
 

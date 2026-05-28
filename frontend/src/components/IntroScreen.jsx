@@ -1,31 +1,13 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './IntroScreen.css';
 import { motion } from 'framer-motion';
-const introVideo = null;
+import CyberLogo from './CyberLogo';
 
 const IntroScreen = ({ onComplete }) => {
-  const videoRef = useRef(null);
-
   useEffect(() => {
-    const video = videoRef.current;
-    if (video) {
-      if (!introVideo) {
-        setTimeout(onComplete, 2000);
-        return;
-      }
-      video.play().catch(error => {
-        console.error("Video autoplay failed", error);
-        // Fallback in case autoplay is blocked by browser policies
-        setTimeout(onComplete, 3000); 
-      });
-
-      video.addEventListener('ended', onComplete);
-      const introTimeout = setTimeout(onComplete, 3200);
-      return () => {
-        video.removeEventListener('ended', onComplete);
-        clearTimeout(introTimeout);
-      };
-    }
+    // Cyber boot sequence simulation time
+    const introTimeout = setTimeout(onComplete, 3500);
+    return () => clearTimeout(introTimeout);
   }, [onComplete]);
 
   return (
@@ -36,14 +18,13 @@ const IntroScreen = ({ onComplete }) => {
       transition={{ duration: 1 }}
     >
       <div className="intro-content">
-        <video 
-          ref={videoRef}
-          className="intro-video"
-          src={introVideo}
-          muted
-          playsInline
-          autoPlay
-        />
+        {/* Code-based Animated HUD instead of missing video asset */}
+        <div className="intro-logo-wrapper">
+          <div className="scanner-line" />
+          <CyberLogo size={120} className="intro-cyber-logo" />
+          <div className="intro-ring-pulse" />
+        </div>
+
         <motion.h1 
           className="intro-title jelly-text"
           initial={{ y: 20, opacity: 0 }}

@@ -1,5 +1,5 @@
 import React from 'react';
-const logo = null;
+import CyberLogo from './CyberLogo';
 
 const Footer = () => {
     return (
@@ -9,7 +9,7 @@ const Footer = () => {
                     {/* Left Column: About & Branding */}
                     <div className="footer-col about-platform">
                         <div className="footer-brand-header">
-                            {logo && <img src={logo} alt="TECHBOY STORE" className="footer-logo" />}
+                            <CyberLogo size={36} className="footer-logo" />
                             <div className="brand-titles">
                                 <h3>TECHBOY STORE</h3>
                                 <span className="brand-tagline">INNOVATION ENGINE</span>
@@ -92,7 +92,7 @@ const Footer = () => {
                             <div className="dev-header">
                                 <span className="dev-badge">LEAD</span>
                                 <div className="dev-profile-pic">
-                                    <img src={logo} alt="Profile" />
+                                    <img src="https://github.com/chimataraghuram.png" alt="Chimata Raghuram" onError={(e) => { e.target.src = "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop&q=80"; }} />
                                 </div>
                             </div>
                             <h3>Chimata Raghuram</h3>
