@@ -29,15 +29,16 @@ function App() {
       </AnimatePresence>
 
       {!showIntro && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="app-container"
-        >
-          <ScrollProgressBar />
-          <ParticleBackground />
+        <>
           <Navbar onChatToggle={() => setIsChatOpen(!isChatOpen)} onSearch={setSearchTerm} searchTerm={searchTerm} />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            className="app-container"
+          >
+            <ScrollProgressBar />
+            <ParticleBackground />
           <main>
             <Hero 
               onOpenAdvisor={() => setIsAdvisorOpen(true)} 
@@ -52,7 +53,8 @@ function App() {
             </div>
           </main>
           <Footer />
-        </motion.div>
+          </motion.div>
+        </>
       )}
 
       {/* ── Chat Portal & Modals: rendered directly in <body> so position:fixed always works ── */}
