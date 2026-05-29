@@ -54,7 +54,7 @@ const HowItWorks = () => {
                     {/* Big Feature: The 4-Step Process */}
                     <motion.div 
                         custom={0} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={bentoVariants}
-                        className="bento-card glass-card bento-wide process-card"
+                        className="bento-card glass-card bento-pos-1 process-card"
                     >
                         <div className="bento-content">
                             <h3>The Buying Process</h3>
@@ -86,7 +86,7 @@ const HowItWorks = () => {
                     {/* Tall Feature: AI */}
                     <motion.div 
                         custom={1} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={bentoVariants}
-                        className="bento-card glass-card bento-tall ai-card"
+                        className="bento-card glass-card bento-pos-2 ai-card"
                     >
                         <Brain size={48} className="bento-icon pulse-icon" />
                         <div className="bento-content">
@@ -98,7 +98,7 @@ const HowItWorks = () => {
                     {/* Square: Instant Search */}
                     <motion.div 
                         custom={2} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={bentoVariants}
-                        className="bento-card glass-card"
+                        className="bento-card glass-card bento-pos-3"
                     >
                         <Search size={32} className="bento-icon" />
                         <div className="bento-content">
@@ -110,7 +110,7 @@ const HowItWorks = () => {
                     {/* Square: Verified Picks */}
                     <motion.div 
                         custom={3} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={bentoVariants}
-                        className="bento-card glass-card"
+                        className="bento-card glass-card bento-pos-4"
                     >
                         <ShieldCheck size={32} className="bento-icon" />
                         <div className="bento-content">
@@ -122,7 +122,7 @@ const HowItWorks = () => {
                     {/* Wide: Battery Focus */}
                     <motion.div 
                         custom={4} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={bentoVariants}
-                        className="bento-card glass-card bento-wide"
+                        className="bento-card glass-card bento-pos-5"
                         style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '24px' }}
                     >
                         <BatteryCharging size={48} className="bento-icon" style={{ margin: 0 }} />

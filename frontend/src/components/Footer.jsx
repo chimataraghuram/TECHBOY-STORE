@@ -3,7 +3,7 @@ import logo from '../../images/logos/new-logo.jpg';
 
 const Footer = () => {
     return (
-        <footer className="footer-section">
+        <footer id="footer" className="footer-section">
             <div className="container footer-container">
                 <div className="footer-grid">
                     {/* Left Column: About & Branding */}
