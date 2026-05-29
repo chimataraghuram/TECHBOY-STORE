@@ -6,8 +6,7 @@ import './redline.css'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import StoreSection from './components/StoreSection'
-import HowToUse from './components/HowToUse'
-import Features from './components/Features'
+import HowItWorks from './components/HowItWorks'
 import Footer from './components/Footer'
 import ChatPopup from './components/ChatPopup'
 import ParticleBackground from './components/ParticleBackground'
@@ -46,8 +45,7 @@ function App() {
               onSearch={setSearchTerm} 
             />
             <StoreSection searchTerm={searchTerm} onSearch={setSearchTerm} />
-            <HowToUse />
-            <Features />
+            <HowItWorks />
             <div className="container">
               <StatsStrip />
             </div>

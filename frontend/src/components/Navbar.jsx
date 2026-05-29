@@ -121,8 +121,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                         <div className="nav-links">
                             <a href="#home" className={`nav-link ${activeSection === 'home' ? 'active' : ''}`}>Home</a>
                             <a href="#products" className={`nav-link ${activeSection === 'products' ? 'active' : ''}`}>Products</a>
-                            <a href="#how-it-works" className={`nav-link ${activeSection === 'how-it-works' ? 'active' : ''}`}>How it Works</a>
-                            <a href="#features" className={`nav-link ${activeSection === 'features' ? 'active' : ''}`}>Features</a>
+                            <a href="#how-it-works" className={`nav-link ${activeSection === 'how-it-works' ? 'active' : ''}`}>How It Works</a>
                         </div>
                         <div 
                             className={`search-bar ${scrolled && !isSearchExpanded ? 'collapsed' : ''}`}
@@ -169,8 +168,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                 <div className="nav-links mobile">
                                     <a href="#home" className={`nav-link ${activeSection === 'home' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Home</a>
                                     <a href="#products" className={`nav-link ${activeSection === 'products' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Products</a>
-                                    <a href="#how-it-works" className={`nav-link ${activeSection === 'how-it-works' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>How it Works</a>
-                                    <a href="#features" className={`nav-link ${activeSection === 'features' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Features</a>
+                                    <a href="#how-it-works" className={`nav-link ${activeSection === 'how-it-works' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>How It Works</a>
                                 </div>
                                 <div className="search-bar mobile">
                                     <Search size={18} className="search-icon" />
