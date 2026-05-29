@@ -15,6 +15,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('techboy_user') || 'null'));
     const [msg, setMsg] = useState('');
     const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
+    const [isSearchExpanded, setIsSearchExpanded] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
@@ -123,7 +124,16 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                             <a href="#how-it-works" className={`nav-link ${activeSection === 'how-it-works' ? 'active' : ''}`}>How it Works</a>
                             <a href="#features" className={`nav-link ${activeSection === 'features' ? 'active' : ''}`}>Features</a>
                         </div>
-                        <div className={`search-bar ${scrolled ? 'collapsed' : ''}`}>
+                        <div 
+                            className={`search-bar ${scrolled && !isSearchExpanded ? 'collapsed' : ''}`}
+                            onClick={() => {
+                                if (scrolled && !isSearchExpanded) {
+                                    setIsSearchExpanded(true);
+                                    // Focus input after expanding
+                                    setTimeout(() => document.querySelector('.search-input').focus(), 100);
+                                }
+                            }}
+                        >
                             <Search size={18} className="search-icon" />
                             <input
                                 type="text"
@@ -131,9 +141,16 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                 placeholder="Search gear..."
                                 value={searchTerm}
                                 onChange={handleSearchChange}
+                                onBlur={() => {
+                                    if (!searchTerm) setIsSearchExpanded(false);
+                                }}
                             />
-                            {searchTerm && !scrolled && (
-                                <button className="clear-search-btn" onClick={() => onSearch('')} title="Clear Search">
+                            {(searchTerm || (scrolled && isSearchExpanded)) && (
+                                <button className="clear-search-btn" onClick={(e) => {
+                                    e.stopPropagation();
+                                    onSearch('');
+                                    setIsSearchExpanded(false);
+                                }} title="Close Search">
                                     <X size={14} />
                                 </button>
                             )}
