@@ -154,49 +154,7 @@ const FilterSidebar = ({
                             <button className={`price-pill ${currentMin >= 50000 ? 'active' : ''}`} onClick={() => handleQuickPick(50000, maxLimit)}>Flagships</button>
                         </div>
 
-                        <div className="slider-wrapper">
-                            <div className="slider-track-bg"></div>
-                            <div 
-                                className="slider-track-fill" 
-                                style={{ 
-                                    left: `${minPercent}%`, 
-                                    width: `${maxPercent - minPercent}%` 
-                                }}
-                            ></div>
-                            
-                            <input 
-                                type="range" 
-                                className="neon-slider"
-                                min="0" 
-                                max={maxLimit} 
-                                step="1000"
-                                value={currentMin} 
-                                onChange={(e) => {
-                                    if (setMinPrice) {
-                                        const val = parseInt(e.target.value);
-                                        if (val <= currentMax) setMinPrice(val);
-                                    }
-                                }}
-                            />
-                            
-                            <input 
-                                type="range" 
-                                className="neon-slider"
-                                min="0" 
-                                max={maxLimit} 
-                                step="1000"
-                                value={currentMax} 
-                                onChange={(e) => {
-                                    const val = parseInt(e.target.value);
-                                    if (val >= currentMin) setMaxPrice(val);
-                                }}
-                            />
-                        </div>
-                        
-                        <div className="price-labels">
-                            <span>₹0</span>
-                            <span>₹{maxLimit.toLocaleString()}</span>
-                        </div>
+
                         
                         <div className="smart-hints">
                             <ul>
