@@ -34,6 +34,11 @@ html {
   isolation: isolate;
   min-height: 100vh;
   overflow-x: hidden;
+  z-index: 2;
+}
+
+.particle-canvas-global {
+  z-index: 1 !important;
 }
 
 .app-container::before {
