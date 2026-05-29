@@ -146,6 +146,14 @@ const FilterSidebar = ({
                             </div>
                         </div>
 
+                        <div className="price-quick-picks" style={{ marginTop: '16px', marginBottom: '8px' }}>
+                            <button className={`price-pill ${currentMax === 10000 ? 'active' : ''}`} onClick={() => handleQuickPick(0, 10000)}>10K</button>
+                            <button className={`price-pill ${currentMax === 20000 ? 'active' : ''}`} onClick={() => handleQuickPick(0, 20000)}>20K</button>
+                            <button className={`price-pill ${currentMax === 30000 ? 'active' : ''}`} onClick={() => handleQuickPick(0, 30000)}>30K</button>
+                            <button className={`price-pill ${currentMax === 50000 ? 'active' : ''}`} onClick={() => handleQuickPick(0, 50000)}>50K</button>
+                            <button className={`price-pill ${currentMin >= 50000 ? 'active' : ''}`} onClick={() => handleQuickPick(50000, maxLimit)}>Flagships</button>
+                        </div>
+
                         <div className="slider-wrapper">
                             <div className="slider-track-bg"></div>
                             <div 
@@ -188,14 +196,6 @@ const FilterSidebar = ({
                         <div className="price-labels">
                             <span>₹0</span>
                             <span>₹{maxLimit.toLocaleString()}</span>
-                        </div>
-                        
-                        <div className="price-quick-picks">
-                            <button className={`price-pill ${currentMax === 15000 ? 'active' : ''}`} onClick={() => handleQuickPick(0, 15000)}>Under 15K</button>
-                            <button className={`price-pill ${currentMax === 25000 ? 'active' : ''}`} onClick={() => handleQuickPick(0, 25000)}>Under 25K</button>
-                            <button className={`price-pill ${currentMax === 40000 ? 'active' : ''}`} onClick={() => handleQuickPick(0, 40000)}>Under 40K</button>
-                            <button className={`price-pill ${(currentMin >= 40000 && currentMax <= 80000 && currentMax !== maxLimit) ? 'active' : ''}`} onClick={() => handleQuickPick(40000, 80000)}>Premium</button>
-                            <button className={`price-pill ${currentMin >= 80000 ? 'active' : ''}`} onClick={() => handleQuickPick(80000, maxLimit)}>Flagship</button>
                         </div>
                         
                         <div className="smart-hints">
