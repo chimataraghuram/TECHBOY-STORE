@@ -154,7 +154,8 @@ html {
 .jelly-text,
 .logo-text {
   color: #fff !important;
-  font-size: 0.98rem !important;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
 }
 
 .nav-links {

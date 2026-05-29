@@ -110,7 +110,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                         {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
                     </button>
                     <a href="/" className="logo-container">
-                        <img src={logo} alt="TECHBOY STORE" className="logo-img" style={{ width: 32, height: 32 }} />
+                        <img src={logo} alt="TECHBOY STORE" className="logo-img" style={{ width: 42, height: 42 }} />
                         <span className="logo-text jelly-text">TECHBOY STORE</span>
                     </a>
                 </div>
