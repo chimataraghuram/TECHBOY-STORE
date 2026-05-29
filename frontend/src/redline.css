@@ -161,6 +161,20 @@ html {
   padding: 6px 14px;
   gap: 8px;
   border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.search-bar.collapsed {
+  padding: 6px 10px;
+  gap: 0;
+  cursor: pointer;
+  background: rgba(255, 31, 61, 0.1);
+  border-color: rgba(255, 31, 61, 0.2);
+}
+
+.search-bar.collapsed:hover {
+  background: rgba(255, 31, 61, 0.2);
 }
 
 .search-input {
@@ -170,6 +184,13 @@ html {
   width: 140px;
   font-size: 0.9rem;
   outline: none;
+  transition: width 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
+}
+
+.search-bar.collapsed .search-input {
+  width: 0px;
+  padding: 0;
+  opacity: 0;
 }
 
 .search-input::placeholder {

@@ -123,7 +123,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                             <a href="#how-it-works" className={`nav-link ${activeSection === 'how-it-works' ? 'active' : ''}`}>How it Works</a>
                             <a href="#features" className={`nav-link ${activeSection === 'features' ? 'active' : ''}`}>Features</a>
                         </div>
-                        <div className="search-bar">
+                        <div className={`search-bar ${scrolled ? 'collapsed' : ''}`}>
                             <Search size={18} className="search-icon" />
                             <input
                                 type="text"
@@ -132,7 +132,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                 value={searchTerm}
                                 onChange={handleSearchChange}
                             />
-                            {searchTerm && (
+                            {searchTerm && !scrolled && (
                                 <button className="clear-search-btn" onClick={() => onSearch('')} title="Clear Search">
                                     <X size={14} />
                                 </button>
