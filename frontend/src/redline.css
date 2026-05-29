@@ -1920,5 +1920,17 @@ html {
   }
 }
 
+/* ==============================================
+   LAYOUT TWEAKS: SPACING FIXES
+   ============================================== */
+.hero-section {
+  padding-bottom: 20px !important;
+  min-height: 85vh !important; /* Reduces the massive vertical gap caused by 100vh */
+}
+
+.store-section {
+  padding-top: 40px !important; /* Reduces the massive top padding */
+}
+
 
 
