@@ -30,8 +30,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
 
     useEffect(() => {
         const handleScroll = () => {
-            const scrollTop = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-            setScrolled(scrollTop > 50);
+            setScrolled(window.scrollY > 50);
         };
 
         const sections = ['home', 'how-it-works', 'products', 'features'];
