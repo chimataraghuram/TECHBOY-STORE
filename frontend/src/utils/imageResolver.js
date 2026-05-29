@@ -18,6 +18,12 @@ const IMAGES = {
 };
 
 export const resolveProductImage = (imgSrc, name = '') => {
+    // If it's a local path starting with "/", resolve and return it directly
+    if (imgSrc && imgSrc.startsWith('/')) {
+        const baseUrl = import.meta.env.BASE_URL || '/';
+        return `${baseUrl}${imgSrc.replace(/^\//, '')}`;
+    }
+
     const n = name.toLowerCase();
     const src = (imgSrc || '').toLowerCase();
 
