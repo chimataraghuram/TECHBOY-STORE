@@ -9,6 +9,7 @@ const ParticleBackground = () => {
         let animationFrameId;
         let nodes = [];
         let signals = [];
+        let ambientParticles = [];
 
         // Interactive mouse state
         let mouse = { x: null, y: null, targetX: null, targetY: null };
@@ -44,26 +45,26 @@ const ParticleBackground = () => {
             initNetwork();
         };
 
-        // Initialize Neural Network Nodes
+        // Initialize Neural Network Nodes & Ambient Particles
         const initNetwork = () => {
             nodes = [];
             signals = [];
+            ambientParticles = [];
             const isMobile = window.innerWidth < 768;
             const nodeCount = isMobile ? 32 : 68;
+            const ambientCount = isMobile ? 120 : 320;
 
+            // 1. Initialize Network Nodes
             for (let i = 0; i < nodeCount; i++) {
-                // z depth factor: 0.6 (distant/slower/dimmer) to 1.4 (foreground/faster/brighter)
                 const z = Math.random() * 0.8 + 0.6;
                 const radius = (Math.random() * 1.5 + 1) * (z * 0.8);
-                
-                // Assign a tech label to a subset of nodes
                 const hasLabel = Math.random() > 0.82;
                 const labelText = hasLabel ? techLabels[Math.floor(Math.random() * techLabels.length)] : '';
 
                 nodes.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
-                    baseX: 0, // Assigned inside loop based on initial x
+                    baseX: 0,
                     baseY: 0,
                     vx: (Math.random() - 0.5) * 0.18 * (z * 0.8),
                     vy: (Math.random() - 0.5) * 0.18 * (z * 0.8),
@@ -79,10 +80,37 @@ const ParticleBackground = () => {
                 });
             }
 
-            // Save initial coordinates as bases
             nodes.forEach(n => {
                 n.baseX = n.x;
                 n.baseY = n.y;
+            });
+
+            // 2. Initialize Ambient Dust Particles
+            for (let i = 0; i < ambientCount; i++) {
+                const z = Math.random() * 0.9 + 0.4;
+                const radius = (Math.random() * 0.9 + 0.3) * z;
+
+                ambientParticles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    baseX: 0,
+                    baseY: 0,
+                    vx: (Math.random() - 0.5) * 0.12 * z,
+                    vy: (Math.random() - 0.5) * 0.12 * z,
+                    offsetX: 0,
+                    offsetY: 0,
+                    radius: radius,
+                    z: z,
+                    color: Math.random() > 0.6 ? '#ffffff' : '#ff1f3d',
+                    opacity: (Math.random() * 0.14 + 0.06) * z,
+                    pulsePhase: Math.random() * Math.PI * 2,
+                    pulseSpeed: Math.random() * 0.015 + 0.005
+                });
+            }
+
+            ambientParticles.forEach(p => {
+                p.baseX = p.x;
+                p.baseY = p.y;
             });
         };
 
@@ -128,6 +156,41 @@ const ParticleBackground = () => {
             ctx.fill();
 
             ctx.globalCompositeOperation = 'source-over';
+
+            // Update and Draw Ambient Particles (Floating Dust Field)
+            ambientParticles.forEach(part => {
+                part.baseX += part.vx;
+                part.baseY += part.vy;
+
+                if (part.baseX < -10) part.baseX = canvas.width + 10;
+                if (part.baseX > canvas.width + 10) part.baseX = -10;
+                if (part.baseY < -10) part.baseY = canvas.height + 10;
+                if (part.baseY > canvas.height + 10) part.baseY = -10;
+
+                if (mouse.x !== null) {
+                    const targetOffsetX = (mouse.x - canvas.width / 2) * (part.z - 1) * 0.04;
+                    const targetOffsetY = (mouse.y - canvas.height / 2) * (part.z - 1) * 0.04;
+                    part.offsetX += (targetOffsetX - part.offsetX) * 0.05;
+                    part.offsetY += (targetOffsetY - part.offsetY) * 0.05;
+                } else {
+                    part.offsetX += (0 - part.offsetX) * 0.05;
+                    part.offsetY += (0 - part.offsetY) * 0.05;
+                }
+
+                part.x = part.baseX + part.offsetX;
+                part.y = part.baseY + part.offsetY;
+
+                part.pulsePhase += part.pulseSpeed;
+                const pulse = Math.sin(part.pulsePhase) * 0.03;
+                const currentOpacity = Math.max(0.01, part.opacity + pulse);
+
+                ctx.fillStyle = part.color === '#ffffff' 
+                    ? `rgba(255, 255, 255, ${currentOpacity})`
+                    : `rgba(255, 31, 61, ${currentOpacity})`;
+                ctx.beginPath();
+                ctx.arc(part.x, part.y, part.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
 
             // Interpolate mouse coordinates for buttery smooth parallax lag
             if (mouse.targetX !== null && mouse.targetY !== null) {
