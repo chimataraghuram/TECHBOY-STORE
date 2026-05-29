@@ -72,7 +72,7 @@ const ParticleBackground = () => {
                     radius: radius,
                     z: z,
                     color: Math.random() > 0.7 ? '#ffffff' : '#ff1f3d',
-                    opacity: (Math.random() * 0.15 + 0.08) * (z * 0.75),
+                    opacity: (Math.random() * 0.18 + 0.12) * (z * 0.8),
                     pulsePhase: Math.random() * Math.PI * 2,
                     pulseSpeed: Math.random() * 0.02 + 0.005,
                     labelText: labelText
@@ -99,6 +99,35 @@ const ParticleBackground = () => {
         // Animation Loop
         const animate = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw soft background glows (AI data nebula effect to make the background visible on all sections)
+            ctx.globalCompositeOperation = 'screen';
+            const gradient1 = ctx.createRadialGradient(canvas.width * 0.15, canvas.height * 0.25, 0, canvas.width * 0.15, canvas.height * 0.25, 360);
+            gradient1.addColorStop(0, 'rgba(255, 31, 61, 0.065)');
+            gradient1.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = gradient1;
+            ctx.beginPath();
+            ctx.arc(canvas.width * 0.15, canvas.height * 0.25, 360, 0, Math.PI * 2);
+            ctx.fill();
+
+            const gradient2 = ctx.createRadialGradient(canvas.width * 0.85, canvas.height * 0.7, 0, canvas.width * 0.85, canvas.height * 0.7, 440);
+            gradient2.addColorStop(0, 'rgba(255, 31, 61, 0.045)');
+            gradient2.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = gradient2;
+            ctx.beginPath();
+            ctx.arc(canvas.width * 0.85, canvas.height * 0.7, 440, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Faint secondary glow in center-left for balanced layout contrast
+            const gradient3 = ctx.createRadialGradient(canvas.width * 0.35, canvas.height * 0.75, 0, canvas.width * 0.35, canvas.height * 0.75, 280);
+            gradient3.addColorStop(0, 'rgba(255, 255, 255, 0.025)');
+            gradient3.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = gradient3;
+            ctx.beginPath();
+            ctx.arc(canvas.width * 0.35, canvas.height * 0.75, 280, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.globalCompositeOperation = 'source-over';
 
             // Interpolate mouse coordinates for buttery smooth parallax lag
             if (mouse.targetX !== null && mouse.targetY !== null) {
@@ -155,7 +184,7 @@ const ParticleBackground = () => {
                     const n2 = nodes[j];
                     const dist = getDistance(n1, n2);
                     if (dist < maxDistance) {
-                        const alpha = (1 - dist / maxDistance) * 0.09 * (n1.z * n2.z * 0.6);
+                        const alpha = (1 - dist / maxDistance) * 0.14 * (n1.z * n2.z * 0.65);
                         ctx.strokeStyle = n1.color === '#ffffff' && n2.color === '#ffffff' 
                             ? `rgba(255, 255, 255, ${alpha})`
                             : `rgba(255, 31, 61, ${alpha})`;
@@ -192,7 +221,7 @@ const ParticleBackground = () => {
                     const dy = mouse.y - node.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
                     if (dist < cursorRange) {
-                        const alpha = (1 - dist / cursorRange) * 0.08 * node.z;
+                        const alpha = (1 - dist / cursorRange) * 0.14 * node.z;
                         ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
                         ctx.beginPath();
                         ctx.moveTo(mouse.x, mouse.y);
@@ -200,7 +229,7 @@ const ParticleBackground = () => {
                         ctx.stroke();
 
                         // Temporarily raise opacity of interactive nodes
-                        node.interactiveGlow = (1 - dist / cursorRange) * 0.18;
+                        node.interactiveGlow = (1 - dist / cursorRange) * 0.28;
                     } else {
                         node.interactiveGlow = 0;
                     }

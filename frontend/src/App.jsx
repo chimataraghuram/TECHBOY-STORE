@@ -30,13 +30,13 @@ function App() {
       {!showIntro && (
         <>
           <Navbar onChatToggle={() => setIsChatOpen(!isChatOpen)} onSearch={setSearchTerm} searchTerm={searchTerm} />
+          <ParticleBackground />
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
             className="app-container"
           >
-            <ParticleBackground />
           <main>
             <Hero 
               onOpenAdvisor={() => setIsAdvisorOpen(true)} 
