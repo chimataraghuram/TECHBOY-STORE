@@ -108,44 +108,35 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                     >
                         {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
                     </button>
-                    <div className="pill-wrapper logo-pill">
-                        <a href="/" className="logo-container">
-                            <img src={logo} alt="TECHBOY STORE" className="logo-img" style={{ width: 32, height: 32 }} />
-                            <span className="logo-text jelly-text">TECHBOY STORE</span>
-                        </a>
-                    </div>
+                    <a href="/" className="logo-container">
+                        <img src={logo} alt="TECHBOY STORE" className="logo-img" style={{ width: 32, height: 32 }} />
+                        <span className="logo-text jelly-text">TECHBOY STORE</span>
+                    </a>
                 </div>
 
                 {/* NAVIGATION - CENTER */}
                 {!isMobile ? (
                     <div className="navbar-center">
-                        <div className="navbar-center-group">
-                            <div className="nav-links-pill">
-                                <div className="pill-wrapper nav-pills">
-                                    <a href="#home" className={`nav-pill-item ${activeSection === 'home' ? 'active' : ''}`}>Home</a>
-                                    <a href="#how-it-works" className={`nav-pill-item ${activeSection === 'how-it-works' ? 'active' : ''}`}>How it Works</a>
-                                    <a href="#products" className={`nav-pill-item ${activeSection === 'products' ? 'active' : ''}`}>Products</a>
-                                    <a href="#features" className={`nav-pill-item ${activeSection === 'features' ? 'active' : ''}`}>Features</a>
-                                </div>
-                            </div>
-
-                            <div className="pill-wrapper search-only-pill">
-                                <div className="search-pill">
-                                    <Search size={18} className="search-icon" />
-                                    <input
-                                        type="text"
-                                        className="pill-search-input"
-                                        placeholder="Search gear..."
-                                        value={searchTerm}
-                                        onChange={handleSearchChange}
-                                    />
-                                    {searchTerm && (
-                                        <button className="clear-search-btn" onClick={() => onSearch('')} title="Clear Search">
-                                            <X size={14} />
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
+                        <div className="nav-links">
+                            <a href="#home" className={`nav-link ${activeSection === 'home' ? 'active' : ''}`}>Home</a>
+                            <a href="#products" className={`nav-link ${activeSection === 'products' ? 'active' : ''}`}>Products</a>
+                            <a href="#how-it-works" className={`nav-link ${activeSection === 'how-it-works' ? 'active' : ''}`}>How it Works</a>
+                            <a href="#features" className={`nav-link ${activeSection === 'features' ? 'active' : ''}`}>Features</a>
+                        </div>
+                        <div className="search-bar">
+                            <Search size={18} className="search-icon" />
+                            <input
+                                type="text"
+                                className="search-input"
+                                placeholder="Search gear..."
+                                value={searchTerm}
+                                onChange={handleSearchChange}
+                            />
+                            {searchTerm && (
+                                <button className="clear-search-btn" onClick={() => onSearch('')} title="Clear Search">
+                                    <X size={14} />
+                                </button>
+                            )}
                         </div>
                     </div>
                 ) : (
@@ -158,33 +149,26 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                 transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                                 className="navbar-center active mobile-drawer"
                             >
-                                <div className="navbar-center-group">
-                                    <div className="nav-links-pill active">
-                                        <div className="pill-wrapper nav-pills">
-                                            <a href="#home" className={`nav-pill-item ${activeSection === 'home' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Home</a>
-                                            <a href="#how-it-works" className={`nav-pill-item ${activeSection === 'how-it-works' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>How it Works</a>
-                                            <a href="#products" className={`nav-pill-item ${activeSection === 'products' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Products</a>
-                                            <a href="#features" className={`nav-pill-item ${activeSection === 'features' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Features</a>
-                                        </div>
-                                    </div>
-
-                                    <div className="pill-wrapper search-only-pill">
-                                        <div className="search-pill">
-                                            <Search size={18} className="search-icon" />
-                                            <input
-                                                type="text"
-                                                className="pill-search-input"
-                                                placeholder="Search gear..."
-                                                value={searchTerm}
-                                                onChange={handleSearchChange}
-                                            />
-                                            {searchTerm && (
-                                                <button className="clear-search-btn" onClick={() => onSearch('')} title="Clear Search">
-                                                    <X size={14} />
-                                                </button>
-                                            )}
-                                        </div>
-                                    </div>
+                                <div className="nav-links mobile">
+                                    <a href="#home" className={`nav-link ${activeSection === 'home' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Home</a>
+                                    <a href="#products" className={`nav-link ${activeSection === 'products' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Products</a>
+                                    <a href="#how-it-works" className={`nav-link ${activeSection === 'how-it-works' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>How it Works</a>
+                                    <a href="#features" className={`nav-link ${activeSection === 'features' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Features</a>
+                                </div>
+                                <div className="search-bar mobile">
+                                    <Search size={18} className="search-icon" />
+                                    <input
+                                        type="text"
+                                        className="search-input"
+                                        placeholder="Search gear..."
+                                        value={searchTerm}
+                                        onChange={handleSearchChange}
+                                    />
+                                    {searchTerm && (
+                                        <button className="clear-search-btn" onClick={() => onSearch('')} title="Clear Search">
+                                            <X size={14} />
+                                        </button>
+                                    )}
                                 </div>
                             </motion.div>
                         )}
@@ -193,31 +177,23 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
 
                 {/* ACTIONS - RIGHT */}
                 <div className="navbar-right">
-                    <div className="navbar-right-group" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-
-                        <div className="pill-wrapper ai-only-pill">
-                            <button onClick={onChatToggle} className="ai-pill-btn-standalone">
-                                <Bot size={18} className="ai-pill-icon" />
-                                <span className="ai-pill-text">TECHBOY AI</span>
+                    <button onClick={onChatToggle} className="ai-pill-btn-standalone">
+                        <Bot size={18} className="ai-pill-icon" />
+                        <span className="ai-pill-text">TECHBOY AI</span>
+                    </button>
+                    {user ? (
+                        <div className="user-info-capsule">
+                            <span className="user-name-text">{user.username}</span>
+                            <button className="auth-icon-btn action-btn text-gradient" onClick={() => setIsWatchlistOpen(true)} title="Watchlist" style={{ marginRight: '8px' }}>
+                                <Bookmark size={18} />
+                            </button>
+                            <button className="auth-icon-btn logout-btn" onClick={logout} title="Logout">
+                                <LogOut size={16} />
                             </button>
                         </div>
-
-                        <div className="pill-wrapper user-pill">
-                            {user ? (
-                                <div className="user-info-capsule">
-                                    <span className="user-name-text">{user.username}</span>
-                                    <button className="auth-icon-btn action-btn text-gradient" onClick={() => setIsWatchlistOpen(true)} title="Watchlist" style={{ marginRight: '8px' }}>
-                                        <Bookmark size={18} />
-                                    </button>
-                                    <button className="auth-icon-btn logout-btn" onClick={logout} title="Logout">
-                                        <LogOut size={16} />
-                                    </button>
-                                </div>
-                            ) : (
-                                <button className="pill-auth-btn glow-red" onClick={() => setAuthModal('login')}>SIGN IN</button>
-                            )}
-                        </div>
-                    </div>
+                    ) : (
+                        <button className="pill-auth-btn" onClick={() => setAuthModal('login')}>SIGN IN</button>
+                    )}
                 </div>
             </div>
 
