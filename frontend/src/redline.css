@@ -91,6 +91,8 @@ html {
 }
 
 .navbar {
+  position: fixed !important;
+  z-index: 9999 !important;
   top: 20px !important;
   padding: 0 40px !important;
   display: flex !important;
