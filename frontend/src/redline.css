@@ -2107,5 +2107,19 @@ html {
   transform: translateY(-2px) !important;
 }
 
+/* ==============================================
+   GLOBAL PILL-SHAPED CONTAINERS/BUTTONS
+   ============================================== */
+.primary-btn, 
+.secondary-btn, 
+.jelly-btn, 
+.explore-source-btn, 
+.dev-btn, 
+.watchlist-btn,
+.price-glow-input,
+.search-input {
+  border-radius: 9999px !important;
+}
+
 
 
