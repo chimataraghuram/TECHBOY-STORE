@@ -11,7 +11,7 @@ import Footer from './components/Footer'
 import ChatPopup from './components/ChatPopup'
 import ParticleBackground from './components/ParticleBackground'
 import IntroScreen from './components/IntroScreen'
-import { ScrollProgressBar, StatsStrip } from './components/AnimationEngine'
+import { StatsStrip } from './components/AnimationEngine'
 
 const TechAdvisorModal = lazy(() => import('./components/TechAdvisorModal'))
 
@@ -36,7 +36,6 @@ function App() {
             transition={{ duration: 1 }}
             className="app-container"
           >
-            <ScrollProgressBar />
             <ParticleBackground />
           <main>
             <Hero 
