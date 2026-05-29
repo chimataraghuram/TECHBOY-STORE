@@ -101,14 +101,11 @@ html {
 }
 
 .navbar.scrolled {
-  top: 0 !important;
-  padding-top: 15px !important;
-  padding-bottom: 15px !important;
-  background: rgba(10, 2, 3, 0.85) !important;
-  backdrop-filter: blur(24px) !important;
-  -webkit-backdrop-filter: blur(24px) !important;
-  border-bottom: 1px solid rgba(255, 31, 61, 0.2) !important;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6) !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
 .navbar-content {
