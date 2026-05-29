@@ -127,18 +127,9 @@ const Footer = () => {
                 </div>
 
                 {/* Bottom Strip */}
-                <div className="footer-bottom-strip">
-                    <div className="copyright-info">
-                        <span>© 2026 TECHBOY STORE</span>
-                        <div className="v-divider"></div>
-                        <span>ENGINEERED BY <strong className="red-glow">TECHBOY RAGHU</strong> ❤️</span>
-                    </div>
-                    
-                    <div className="tech-stack">
-                        <span>REACT</span>
-                        <span>VITE</span>
-                        <span>DJANGO REST</span>
-                        <span>NEON CSS</span>
+                <div className="footer-bottom-strip" style={{ justifyContent: 'center' }}>
+                    <div className="cooked-text" style={{ color: '#94a3b8', fontSize: '0.95rem', letterSpacing: '2px', fontWeight: '600', textAlign: 'center' }}>
+                        COOKED BY <strong className="red-glow">RAGHU</strong> ❤️
                     </div>
                 </div>
             </div>
