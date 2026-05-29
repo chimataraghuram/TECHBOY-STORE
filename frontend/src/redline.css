@@ -219,7 +219,7 @@ html {
 
 .redesigned-hero {
   min-height: 100vh !important;
-  padding-top: 142px !important;
+  padding-top: 90px !important;
   perspective: 1400px;
 }
 
@@ -925,7 +925,7 @@ html {
   }
 
   .redesigned-hero {
-    padding-top: 118px !important;
+    padding-top: 80px !important;
   }
 
   .premium-title,
