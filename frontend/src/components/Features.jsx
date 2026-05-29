@@ -29,7 +29,7 @@ const Features = () => {
     return (
         <section id="features" className="features-section">
             <div className="container">
-                <div className="section-header">
+                <div className="section-header text-center">
                     <motion.span
                         initial={{ opacity: 0, y: 14 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -39,8 +39,8 @@ const Features = () => {
                         REDLINE FEATURES
                     </motion.span>
                     <motion.h2
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
                         className="section-title"
@@ -48,11 +48,12 @@ const Features = () => {
                         Why Choose <span className="text-gradient">TECHBOY</span>
                     </motion.h2>
                     <motion.p
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                         viewport={{ once: true }}
                         className="section-subtitle"
+                        style={{ margin: '0 auto' }}
                     >
                         A sharper way to explore phones: visual, fast, animated, and built around decisions.
                     </motion.p>

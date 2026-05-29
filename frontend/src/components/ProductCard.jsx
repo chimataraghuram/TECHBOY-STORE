@@ -28,27 +28,7 @@ const getMappedTag = (tag = '') => {
     return tag || '⭐ Premium Choice';
 };
 
-const getWhyRecommendedSnippet = (product) => {
-    const tag = (product.tag || '').toLowerCase();
-    const desc = (product.description || '').toLowerCase();
-    
-    if (tag.includes('gaming') || desc.includes('fps') || desc.includes('144hz')) {
-        return "Excellent gaming performance and cooling in this price range.";
-    }
-    if (tag.includes('camera') || desc.includes('ois') || desc.includes('telephoto')) {
-        return "Best camera stability and low-light quality under your budget.";
-    }
-    if (tag.includes('battery') || desc.includes('6000mah') || desc.includes('5500mah') || desc.includes('100w')) {
-        return "Strong battery optimization, high capacity, and fast charging.";
-    }
-    if (tag.includes('value') || tag.includes('pick') || desc.includes('value')) {
-        return "Outstanding value-for-money specifications in this segment.";
-    }
-    if (tag.includes('ui') || desc.includes('updates')) {
-        return "Smooth, bloatware-free user interface with long OS support.";
-    }
-    return "Balanced daily performance and highly reliable build quality.";
-};
+
 
 const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTerm }) => {
     const x = useMotionValue(0);
@@ -128,7 +108,6 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
     };
 
     const mappedTag = getMappedTag(product.tag);
-    const whyRecommended = getWhyRecommendedSnippet(product);
 
     return (
         <motion.div
@@ -137,8 +116,7 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
             onMouseLeave={handleMouseLeave}
             style={{
                 rotateX: isTouchDevice ? 0 : rotateX,
-                rotateY: isTouchDevice ? 0 : rotateY,
-                transformStyle: "preserve-3d",
+                rotateY: isTouchDevice ? 0 : rotateY
             }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -158,7 +136,7 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
                     </svg>
                 </button>
             </div>
-            <div className="product-image-wrapper" style={{ transform: "translateZ(30px)" }}>
+            <div className="product-image-wrapper">
                 {!imgLoaded && <div className="img-shimmer" />}
                 <img 
                     src={imageSrc}
@@ -169,7 +147,7 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
                     onError={() => { setImgError(true); setImgLoaded(true); }}
                 />
             </div>
-            <div className="product-info" style={{ transform: "translateZ(20px)" }}>
+            <div className="product-info">
                 <div className="product-card-top-row">
                     <span className="category-label">
                         <HighlightText text={product.category} highlight={searchTerm} />
@@ -184,48 +162,41 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
                     <HighlightText text={product.name} highlight={searchTerm} />
                 </h3>
 
-                <div className="product-actions-row">
-                    <button className="jelly-btn mini view-phone-btn" onClick={() => onView(product)}>View Details</button>
-                    <button
-                        className={`jelly-btn mini compare-btn ${isComparing ? 'active' : ''}`}
-                        onClick={() => onCompare(product)}
-                    >
-                        {isComparing ? 'Selected' : 'Compare'}
-                    </button>
-                </div>
-
                 <div className="smart-snippet">
                     {product.description && (
-                        <ul className="spec-list-mini">
-                            {product.description.split('|').slice(0, 3).map((spec, idx) => (
-                                <li key={idx}>✓ {spec.trim()}</li>
-                            ))}
-                        </ul>
+                        <p className="spec-list-mini" style={{ margin: 0, padding: 0 }}>
+                            {product.description.split('|')[0].trim()}
+                        </p>
                     )}
-                </div>
-
-                <div className="why-recommended-snippet">
-                    <span className="why-recommended-title">💡 Why Recommended</span>
-                    <p className="why-recommended-text">{whyRecommended}</p>
                 </div>
 
                 <div className="product-meta">
                     <div className="price-info">
-                        <span className="price-label">Best Price Online</span>
                         <span className="price">₹{product.price?.toLocaleString()}</span>
                     </div>
-                    <a 
-                        href={amazonUrl || flipkartUrl || '#'} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="get-deal-btn" 
-                        title="Get Best Deal"
-                        onClick={() => handleTrackClick('amazon')}
-                    >
-                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
-                    </a>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                        <button
+                            className="icon-btn"
+                            title={isComparing ? 'Remove from Compare' : 'Add to Compare'}
+                            onClick={(e) => { e.stopPropagation(); onCompare(product); }}
+                            style={{ 
+                                padding: '8px', 
+                                background: isComparing ? 'rgba(255, 31, 61, 0.2)' : 'rgba(255, 255, 255, 0.05)',
+                                color: isComparing ? 'var(--accent-primary)' : 'white'
+                            }}
+                        >
+                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                        </button>
+                        <button 
+                            className="primary-btn mini" 
+                            style={{ padding: '8px 16px', borderRadius: '12px' }}
+                            onClick={(e) => { e.stopPropagation(); onView(product); }}
+                        >
+                            View
+                        </button>
+                    </div>
                 </div>
             </div>
         </motion.div>

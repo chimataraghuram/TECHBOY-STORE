@@ -61,7 +61,7 @@ const HowToUse = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
                         viewport={{ once: true }}
-                        className="premium-title"
+                        className="section-title"
                     >
                         How to Find Your <span className="text-gradient">Perfect Phone</span>
                     </motion.h2>
@@ -70,7 +70,7 @@ const HowToUse = () => {
                         whileInView={{ opacity: 1 }}
                         transition={{ delay: 0.4 }}
                         viewport={{ once: true }}
-                        className="premium-subtitle"
+                        className="section-subtitle"
                         style={{ margin: '0 auto' }}
                     >
                         Four animated steps from search to checkout.

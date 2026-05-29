@@ -107,19 +107,7 @@ const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
                         AI-assisted recommendations based on your budget, gaming needs, camera preferences, and daily usage. Stop browsing, start deciding.
                     </motion.p>
                     
-                    <motion.div variants={itemVariants} className="hero-search-wrapper">
-                        <form onSubmit={handleSearchSubmit} className="hero-search-form">
-                            <Search className="search-icon-hero" size={20} />
-                            <input 
-                                type="text" 
-                                placeholder="Search by brand, model, or feature..." 
-                                className="hero-search-input"
-                                value={searchTerm || ''}
-                                onChange={(e) => onSearch && onSearch(e.target.value)}
-                            />
-                            <button type="submit" className="hero-search-submit">Search</button>
-                        </form>
-                    </motion.div>
+
 
                     <motion.div variants={itemVariants} className="hero-buttons">
                         <button
@@ -190,14 +178,8 @@ const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
                         <motion.div className="float-icon icon-1" animate={{ y: [0, -15, 0], x: [0, 5, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}>
                             <Zap size={24} fill="var(--accent-primary)" stroke="var(--accent-primary)" />
                         </motion.div>
-                        <motion.div className="float-icon icon-2" animate={{ y: [0, -25, 0], x: [0, -5, 0] }} transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}>
-                            <Diamond size={24} fill="var(--accent-secondary)" stroke="var(--accent-secondary)" />
-                        </motion.div>
                         <motion.div className="float-icon icon-3" animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}>
                             <Smartphone size={24} fill="var(--accent-primary)" stroke="var(--accent-primary)" />
-                        </motion.div>
-                        <motion.div className="float-icon icon-4" animate={{ y: [0, -18, 0], rotate: [0, -8, 0] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}>
-                            <ShieldCheck size={24} stroke="var(--accent-secondary)" />
                         </motion.div>
                         <motion.div className="float-icon icon-5" animate={{ y: [0, -16, 0], x: [0, 8, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}>
                             <RadioTower size={24} stroke="var(--accent-primary)" />

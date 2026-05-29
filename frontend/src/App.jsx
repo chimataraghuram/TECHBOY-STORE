@@ -12,7 +12,7 @@ import Footer from './components/Footer'
 import ChatPopup from './components/ChatPopup'
 import ParticleBackground from './components/ParticleBackground'
 import IntroScreen from './components/IntroScreen'
-import { ScrollProgressBar, CursorTrail, StatsStrip } from './components/AnimationEngine'
+import { ScrollProgressBar, StatsStrip } from './components/AnimationEngine'
 
 const TechAdvisorModal = lazy(() => import('./components/TechAdvisorModal'))
 
@@ -36,7 +36,6 @@ function App() {
           className="app-container"
         >
           <ScrollProgressBar />
-          <CursorTrail />
           <ParticleBackground />
           <Navbar onChatToggle={() => setIsChatOpen(!isChatOpen)} onSearch={setSearchTerm} searchTerm={searchTerm} />
           <main>
@@ -45,12 +44,12 @@ function App() {
               searchTerm={searchTerm} 
               onSearch={setSearchTerm} 
             />
+            <StoreSection searchTerm={searchTerm} onSearch={setSearchTerm} />
+            <HowToUse />
+            <Features />
             <div className="container">
               <StatsStrip />
             </div>
-            <HowToUse />
-            <StoreSection searchTerm={searchTerm} onSearch={setSearchTerm} />
-            <Features />
           </main>
           <Footer />
         </motion.div>
