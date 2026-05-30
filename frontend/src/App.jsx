@@ -3,6 +3,7 @@ import React, { useState, Suspense, lazy } from 'react'
 import { createPortal } from 'react-dom'
 import './App.css'
 import './redline.css'
+import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import StoreSection from './components/StoreSection'
@@ -23,7 +24,7 @@ function App() {
   const [showIntro, setShowIntro] = useState(true);
 
   return (
-    <>
+    <AuthProvider>
       <AnimatePresence>
         {showIntro && <IntroScreen key="intro" onComplete={() => setShowIntro(false)} />}
       </AnimatePresence>
@@ -70,7 +71,7 @@ function App() {
         </AnimatePresence>,
         document.body
       )}
-    </>
+    </AuthProvider>
   )
 }
 

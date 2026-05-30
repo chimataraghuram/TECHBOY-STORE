@@ -7,6 +7,10 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
+import firebase_admin
+from firebase_admin import credentials, auth as firebase_auth
+from django.conf import settings
+import uuid
 from rest_framework import filters
 from rest_framework.decorators import action
 from django.db.models import Count
@@ -29,6 +33,19 @@ from .serializers import (
 
 User = get_user_model()
 
+# Initialize Firebase Admin
+try:
+    if not firebase_admin._apps:
+        # We try to load the credential from the path in settings
+        cred_path = getattr(settings, 'FIREBASE_SERVICE_ACCOUNT_PATH', None)
+        if cred_path and os.path.exists(cred_path):
+            cred = credentials.Certificate(cred_path)
+            firebase_admin.initialize_app(cred)
+        else:
+            print("Firebase service account file not found. Google Auth will fail.")
+except Exception as e:
+    print(f"Failed to initialize Firebase: {e}")
+
 # --- Auth Views ---
 
 class RegisterView(APIView):
@@ -45,6 +62,62 @@ class RegisterView(APIView):
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
+class GoogleAuthView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        id_token = request.data.get('token')
+        if not id_token:
+            return Response({"error": "No token provided"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if not firebase_admin._apps:
+            return Response({"error": "Firebase admin not initialized. Please configure credentials on the server."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        try:
+            # Verify the token against the Firebase Admin SDK
+            decoded_token = firebase_auth.verify_id_token(id_token)
+            uid = decoded_token.get('uid')
+            email = decoded_token.get('email')
+            name = decoded_token.get('name', 'User')
+            picture = decoded_token.get('picture', '')
+
+            if not email:
+                return Response({"error": "Google account has no email"}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Check if user already exists
+            user, created = User.objects.get_or_create(email=email, defaults={
+                'username': email.split('@')[0] + '_' + str(uuid.uuid4())[:8],
+                'firebase_uid': uid,
+                'display_name': name,
+                'profile_picture': picture
+            })
+
+            # If user exists but fields are empty, update them
+            if not created:
+                updated = False
+                if not user.firebase_uid:
+                    user.firebase_uid = uid
+                    updated = True
+                if not user.display_name:
+                    user.display_name = name
+                    updated = True
+                if not user.profile_picture:
+                    user.profile_picture = picture
+                    updated = True
+                if updated:
+                    user.save()
+
+            # Issue our own JWT token
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                "token": str(refresh.access_token),
+                "user": UserSerializer(user).data
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_401_UNAUTHORIZED)
+
 
 class ProfileView(APIView):
     permission_classes = [IsAuthenticated]

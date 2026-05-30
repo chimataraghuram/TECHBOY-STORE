@@ -1,0 +1,213 @@
+.auth-dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-trigger-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 14px 6px 6px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.profile-trigger-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 15px rgba(255, 0, 102, 0.2);
+}
+
+.profile-img-wrapper {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile-ring {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: linear-gradient(135deg, #ff0066, #ff00ff) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  animation: rotateRing 4s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes rotateRing {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.profile-name {
+  color: white;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.chevron-icon {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.7rem;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 260px;
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 1000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 0, 102, 0.1);
+  background: rgba(15, 15, 20, 0.85);
+  backdrop-filter: blur(20px);
+  padding: 10px 0;
+}
+
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+}
+
+.dropdown-header-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 0, 102, 0.5);
+}
+
+.dropdown-user-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.dropdown-full-name {
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-email {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 10px 0;
+}
+
+.dropdown-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.dropdown-icon {
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.dropdown-item:hover .dropdown-icon {
+  color: #ff0066;
+}
+
+.dropdown-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, #ff0066, #ff00ff);
+  transform: scaleY(0);
+  transition: transform 0.2s ease;
+  transform-origin: center;
+}
+
+.dropdown-item:hover::before {
+  transform: scaleY(1);
+}
+
+.logout-action {
+  color: #ff4444;
+}
+
+.logout-action .dropdown-icon {
+  color: #ff4444;
+}
+
+.logout-action:hover {
+  background: rgba(255, 68, 68, 0.1);
+  color: #ff6666;
+}
+
+.logout-action:hover .dropdown-icon {
+  color: #ff6666;
+}
+
+.logout-action::before {
+  background: #ff4444;
+}
+
+@media (max-width: 768px) {
+  .dropdown-menu {
+    position: fixed;
+    top: auto;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    width: auto;
+  }
+}

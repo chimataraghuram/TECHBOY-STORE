@@ -3,6 +3,7 @@ from rest_framework.routers import DefaultRouter
 from .views import (
     RegisterView, 
     CustomTokenObtainPairView, 
+    GoogleAuthView,
     ProfileView,
     ProductViewSet,
     CompareAPIView,
@@ -24,6 +25,7 @@ urlpatterns = [
     # Auth Endpoints
     path('auth/register/', RegisterView.as_view(), name='register'),
     path('auth/login/', CustomTokenObtainPairView.as_view(), name='login'),
+    path('auth/google/', GoogleAuthView.as_view(), name='google-auth'),
     path('auth/profile/', ProfileView.as_view(), name='profile'),
     
     # Feature Endpoints

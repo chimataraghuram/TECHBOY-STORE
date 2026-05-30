@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, Bot, LogOut, X, Bookmark, Menu } from 'lucide-react';
+import { Search, Bot, X, Menu } from 'lucide-react';
 import logo from '../../images/logos/new-logo.jpg';
 import WatchlistModal from './WatchlistModal';
+import { useAuth } from '../context/AuthContext';
+import AuthDropdown from './AuthDropdown';
 
 const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
     const [scrolled, setScrolled] = useState(false);
@@ -10,10 +12,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
     const [activeSection, setActiveSection] = useState('home');
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-    const [authModal, setAuthModal] = useState(null); // 'login' or 'register'
-    const [authData, setAuthData] = useState({ username: '', password: '', email: '' });
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('techboy_user') || 'null'));
-    const [msg, setMsg] = useState('');
+    const { user, loginWithGoogle } = useAuth();
     const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
     const [isSearchExpanded, setIsSearchExpanded] = useState(false);
 
@@ -62,37 +61,6 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
 
     const handleSearchChange = (e) => {
         onSearch(e.target.value);
-    };
-
-    const handleAuth = async (e) => {
-        e.preventDefault();
-        setMsg('');
-        const endpoint = authModal === 'login' ? 'login/' : 'register/';
-        try {
-            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api'}/auth/${endpoint}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(authData)
-            });
-            const data = await res.json();
-            if (res.ok) {
-                localStorage.setItem('techboy_token', data.token);
-                localStorage.setItem('techboy_user', JSON.stringify(data.user));
-                setUser(data.user);
-                setAuthModal(null);
-            } else {
-                const detail = data.detail || data.error || data.username?.[0] || data.email?.[0] || data.password?.[0] || data.non_field_errors?.[0];
-                setMsg(detail || 'Authentication failed');
-            }
-        } catch {
-            setMsg('Server error. Make sure backend is running.');
-        }
-    };
-
-    const logout = () => {
-        localStorage.removeItem('techboy_token');
-        localStorage.removeItem('techboy_user');
-        setUser(null);
     };
 
     return (
@@ -201,64 +169,13 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                         <span className="ai-pill-text">TECHBOY AI</span>
                     </button>
                     {user ? (
-                        <div className="user-info-capsule">
-                            <span className="user-name-text">{user.username}</span>
-                            <button className="auth-icon-btn action-btn text-gradient" onClick={() => setIsWatchlistOpen(true)} title="Watchlist" style={{ marginRight: '8px' }}>
-                                <Bookmark size={18} />
-                            </button>
-                            <button className="auth-icon-btn logout-btn" onClick={logout} title="Logout">
-                                <LogOut size={16} />
-                            </button>
-                        </div>
+                        <AuthDropdown onWatchlistClick={() => setIsWatchlistOpen(true)} />
                     ) : (
-                        <button className="pill-auth-btn" onClick={() => setAuthModal('login')}>SIGN IN</button>
+                        <button className="pill-auth-btn" onClick={loginWithGoogle}>SIGN UP</button>
                     )}
                 </div>
             </div>
 
-            {authModal && (
-                <div className="auth-overlay glass" onClick={() => setAuthModal(null)}>
-                    <div className="auth-modal glass-card" onClick={e => e.stopPropagation()}>
-                        <button className="close-btn" onClick={() => setAuthModal(null)}>&times;</button>
-                        <h2>{authModal === 'login' ? 'Welcome Back' : 'Join TechBoy'}</h2>
-                        <form onSubmit={handleAuth}>
-                            {authModal === 'register' && (
-                                <input 
-                                    type="email" 
-                                    placeholder="Email" 
-                                    required 
-                                    className="glass-input"
-                                    onChange={e => setAuthData({...authData, email: e.target.value})}
-                                />
-                            )}
-                            <input 
-                                type="text" 
-                                placeholder="Username" 
-                                required 
-                                className="glass-input"
-                                onChange={e => setAuthData({...authData, username: e.target.value})}
-                            />
-                            <input 
-                                type="password" 
-                                placeholder="Password" 
-                                required 
-                                className="glass-input"
-                                onChange={e => setAuthData({...authData, password: e.target.value})}
-                            />
-                            {msg && <p className="auth-error">{msg}</p>}
-                            <button type="submit" className="primary-btn full-width">
-                                {authModal === 'login' ? 'Login' : 'Create Account'}
-                            </button>
-                        </form>
-                        <p className="auth-toggle">
-                            {authModal === 'login' ? "Don't have an account? " : "Already have an account? "}
-                            <span onClick={() => setAuthModal(authModal === 'login' ? 'register' : 'login')}>
-                                {authModal === 'login' ? 'Sign Up' : 'Login'}
-                            </span>
-                        </p>
-                    </div>
-                </div>
-            )}
             
             <WatchlistModal isOpen={isWatchlistOpen} onClose={() => setIsWatchlistOpen(false)} />
         </nav>
