@@ -32,7 +32,7 @@ function App() {
       {!showIntro && (
         <>
           <Navbar onChatToggle={() => setIsChatOpen(!isChatOpen)} onSearch={setSearchTerm} searchTerm={searchTerm} />
-          <ParticleBackground />
+          {createPortal(<ParticleBackground />, document.body)}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
