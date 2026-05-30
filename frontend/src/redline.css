@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --redline-bg: #050202;
   --redline-panel: rgba(18, 4, 5, 0.78);
   --redline-border: rgba(255, 31, 61, 0.24);
@@ -936,7 +936,7 @@ html {
 
 .footer,
 .footer-section {
-  background: linear-gradient(180deg, transparent, rgba(15, 2, 4, 0.76)) !important;
+  background: transparent !important; backdrop-filter: none !important;
   border-top: 1px solid rgba(255, 31, 61, 0.16) !important;
 }
 
@@ -1621,7 +1621,7 @@ html {
    ============================================== */
 .footer-section {
   border-top: 1px solid rgba(255, 31, 61, 0.15) !important;
-  background: radial-gradient(circle at 50% 0%, rgba(255, 31, 61, 0.03) 0%, rgba(10, 2, 3, 0.78) 100%) !important;
+  background: transparent !important; backdrop-filter: none !important;
   padding: 80px 0 20px 0 !important;
   margin-top: 60px !important;
 }

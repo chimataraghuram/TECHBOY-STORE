@@ -1496,7 +1496,7 @@
 
 .features-section {
   padding: 120px 0;
-  background: rgba(0, 0, 0, 0.2);
+  background: transparent !important; backdrop-filter: none !important;
 }
 
 .features-grid {
@@ -2388,8 +2388,8 @@
 /* How To Use Section */
 .how-to-section {
   padding: 120px 0;
-  background: rgba(10, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
+  background: transparent !important;
+  backdrop-filter: none !important;
 }
 
 .steps-grid {
@@ -2742,7 +2742,7 @@ section {
 
 /* Footer & Information Structure */
 .footer-section {
-  background: rgba(10, 10, 15, 0.4); backdrop-filter: blur(8px);
+  background: transparent !important; backdrop-filter: none !important;
   border-top: 1px solid rgba(255, 31, 61, 0.1);
   padding: 80px 0 30px;
   position: relative;
