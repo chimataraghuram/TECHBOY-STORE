@@ -33,14 +33,16 @@ const IntroScreen = ({ onComplete }) => {
       transition={{ duration: 1 }}
     >
       <div className="intro-content">
-        <video 
-          ref={videoRef}
-          className="intro-video"
-          src={introVideo}
-          muted
-          playsInline
-          autoPlay
-        />
+        <div className="intro-video-wrapper">
+          <video 
+            ref={videoRef}
+            className="intro-video"
+            src={introVideo}
+            muted
+            playsInline
+            autoPlay
+          />
+        </div>
         <motion.h1 
           className="intro-title jelly-text"
           initial={{ y: 20, opacity: 0 }}

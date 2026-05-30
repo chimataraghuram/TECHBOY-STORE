@@ -2346,10 +2346,6 @@ html {
 
 /* Pre-scroll states for observed sections/containers */
 section:not(.redesigned-hero), 
-.product-card, 
-.bento-card, 
-.tbt-trending-card, 
-.tbt-drop-card, 
 .footer-section, 
 .stats-strip-container {
   opacity: 0;

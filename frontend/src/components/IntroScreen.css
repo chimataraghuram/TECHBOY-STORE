@@ -19,14 +19,23 @@
   gap: 15px;
 }
 
-.intro-video {
+.intro-video-wrapper {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 40px rgba(255, 0, 60, 0.6);
   border: 2px solid #ff003c;
+  box-shadow: 0 0 40px rgba(255, 0, 60, 0.6);
+  overflow: hidden;
   margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.intro-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .intro-title {

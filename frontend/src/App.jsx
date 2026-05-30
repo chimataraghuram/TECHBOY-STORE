@@ -42,7 +42,7 @@ function App() {
     }, observerOptions);
 
     const elementsToAnimate = document.querySelectorAll(
-      'section, .product-card, .bento-card, .tbt-trending-card, .tbt-drop-card, .footer-section, .stats-strip-container'
+      'section, .footer-section, .stats-strip-container'
     );
     elementsToAnimate.forEach(el => observer.observe(el));
 
