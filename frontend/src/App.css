@@ -1,4 +1,4 @@
-.navbar {
+ï»¿.navbar {
   position: fixed;
   top: 15px;
   left: 0;
@@ -751,7 +751,7 @@
 
   0%,
   100% {
-    transform: translateY(0);
+    transform: none;
   }
 
   50% {
@@ -1369,7 +1369,7 @@
 }
 
 .product-card:hover .quick-view-btn {
-  transform: translateY(0);
+  transform: none;
 }
 
 .quick-view-btn:hover {
@@ -1717,7 +1717,7 @@
   }
 
   to {
-    transform: translateY(0);
+    transform: none;
     opacity: 1;
   }
 }
@@ -2160,7 +2160,7 @@
 
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: none;
     }
   }
 
@@ -2286,7 +2286,7 @@
 
   0%,
   100% {
-    transform: translateY(0);
+    transform: none;
   }
 
   50% {
@@ -2536,7 +2536,7 @@ section {
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }
 
@@ -2609,7 +2609,7 @@ section {
 
   0%,
   100% {
-    transform: translateY(0);
+    transform: none;
   }
 
   50% {
@@ -2742,7 +2742,7 @@ section {
 
 /* Footer & Information Structure */
 .footer-section {
-  background: #0a0a0f;
+  background: rgba(10, 10, 15, 0.4); backdrop-filter: blur(8px);
   border-top: 1px solid rgba(255, 31, 61, 0.1);
   padding: 80px 0 30px;
   position: relative;
@@ -3690,7 +3690,7 @@ html {
 /* -- Page reveal on load -- */
 @keyframes page-reveal {
   from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: none; }
 }
 #root {
   animation: page-reveal 0.6s ease-out both;
@@ -3729,7 +3729,7 @@ html {
 .typing .dot:nth-child(2) { animation-delay: 0.2s; }
 .typing .dot:nth-child(3) { animation-delay: 0.4s; }
 @keyframes bounce-dot {
-  0%, 80%, 100% { transform: translateY(0); }
+  0%, 80%, 100% { transform: none; }
   40%            { transform: translateY(-8px); }
 }
 
@@ -3750,7 +3750,7 @@ html {
 }
 
 /* -------------------------------------------------------
-   TECHBOY STORE — COMPLETE RESPONSIVE SYSTEM
+   TECHBOY STORE ï¿½ COMPLETE RESPONSIVE SYSTEM
    Breakpoints: 480 | 640 | 768 | 1024 | 1280
 ------------------------------------------------------- */
 
@@ -3948,7 +3948,7 @@ html {
   .cursor-trail-dot { display: none; }
 }
 
-/* -- Touch devices — remove hover effects -- */
+/* -- Touch devices ï¿½ remove hover effects -- */
 @media (hover: none) {
   .glass-card:hover { transform: none; box-shadow: none; }
   .jelly-btn:hover { transform: none; }
@@ -4028,7 +4028,7 @@ img { max-width: 100%; height: auto; }
     color: var(--accent-primary);
   }
 
-  /* Search inside mobile menu — full width */
+  /* Search inside mobile menu ï¿½ full width */
   .navbar-center.active .search-only-pill {
     width: 100%;
     border-radius: 14px;
