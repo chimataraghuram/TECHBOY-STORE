@@ -36,13 +36,22 @@ User = get_user_model()
 # Initialize Firebase Admin
 try:
     if not firebase_admin._apps:
-        # We try to load the credential from the path in settings
-        cred_path = getattr(settings, 'FIREBASE_SERVICE_ACCOUNT_PATH', None)
-        if cred_path and os.path.exists(cred_path):
-            cred = credentials.Certificate(cred_path)
+        import json
+        
+        # 1. Try to load from raw JSON string (for production/Render)
+        cred_json = os.environ.get('FIREBASE_SERVICE_ACCOUNT_JSON')
+        if cred_json:
+            cred_dict = json.loads(cred_json)
+            cred = credentials.Certificate(cred_dict)
             firebase_admin.initialize_app(cred)
         else:
-            print("Firebase service account file not found. Google Auth will fail.")
+            # 2. Try to load from local file path
+            cred_path = getattr(settings, 'FIREBASE_SERVICE_ACCOUNT_PATH', None)
+            if cred_path and os.path.exists(cred_path):
+                cred = credentials.Certificate(cred_path)
+                firebase_admin.initialize_app(cred)
+            else:
+                print("Firebase service account credentials not found. Google Auth will fail.")
 except Exception as e:
     print(f"Failed to initialize Firebase: {e}")
 
