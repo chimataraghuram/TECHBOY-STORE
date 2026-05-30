@@ -21,7 +21,7 @@ export const ScrollProgressBar = () => {
 };
 
 /* ── Count-Up Number ── */
-export const CountUp = ({ end, duration = 1800, suffix = '' }) => {
+export const CountUp = ({ end, duration = 1800, prefix = '', suffix = '', decimals = 0 }) => {
     const [count, setCount] = useState(0);
     const ref = useRef(null);
     const started = useRef(false);
@@ -35,17 +35,23 @@ export const CountUp = ({ end, duration = 1800, suffix = '' }) => {
                     const elapsed = now - startTime;
                     const progress = Math.min(elapsed / duration, 1);
                     const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-                    setCount(Math.floor(eased * end));
+                    const val = eased * end;
+                    setCount(decimals > 0 ? parseFloat(val.toFixed(decimals)) : Math.floor(val));
                     if (progress < 1) requestAnimationFrame(animate);
                 };
                 requestAnimationFrame(animate);
             }
-        }, { threshold: 0.5 });
+        }, { threshold: 0.1 });
         if (ref.current) observer.observe(ref.current);
         return () => observer.disconnect();
-    }, [end, duration]);
+    }, [end, duration, decimals]);
 
-    return <span ref={ref}>{count}{suffix}</span>;
+    const formatValue = (v) => {
+        if (decimals > 0) return v.toFixed(decimals);
+        return v.toLocaleString('en-IN');
+    };
+
+    return <span ref={ref}>{prefix}{formatValue(count)}{suffix}</span>;
 };
 
 /* ── Glowing Cursor Trail (desktop only) ── */

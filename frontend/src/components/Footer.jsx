@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../../images/logos/new-logo.jpg';
+import { CountUp } from './AnimationEngine';
 
 const Footer = () => {
     return (
@@ -32,7 +33,7 @@ const Footer = () => {
                         <div className="market-cards">
                             <div className="market-card">
                                 <h6>BUDGET KINGS</h6>
-                                <span>Under ₹15,000</span>
+                                <span>Under <CountUp end={15000} prefix="₹" /></span>
                             </div>
                             <div className="market-card">
                                 <h6>FLAGSHIP KILLERS</h6>
@@ -58,23 +59,23 @@ const Footer = () => {
 
                         <div className="guide-steps">
                             <div className="guide-step">
-                                <div className="step-num">1</div>
+                                <div className="step-num"><CountUp end={1} /></div>
                                 <div className="step-content">
-                                    <h6>1. EXPLORE DEALS</h6>
+                                    <h6><CountUp end={1} />. EXPLORE DEALS</h6>
                                     <p>Enter any keyword (e.g., '120Hz', 'OLED') into the search bar. We instantly pull matching deals from multiple platforms.</p>
                                 </div>
                             </div>
                             <div className="guide-step">
-                                <div className="step-num">2</div>
+                                <div className="step-num"><CountUp end={2} /></div>
                                 <div className="step-content">
-                                    <h6>2. COMPARE SPECS</h6>
+                                    <h6><CountUp end={2} />. COMPARE SPECS</h6>
                                     <p>Not sure what to buy? Use our comparison modal to browse real-time specs and top-starred performance indices.</p>
                                 </div>
                             </div>
                             <div className="guide-step">
-                                <div className="step-num">3</div>
+                                <div className="step-num"><CountUp end={3} /></div>
                                 <div className="step-content">
-                                    <h6>3. GET THE BEST PRICE</h6>
+                                    <h6><CountUp end={3} />. GET THE BEST PRICE</h6>
                                     <p>Click 'Get Deal' to bookmark interesting projects to your personal dashboard. Use TECHBOY AI to summarize price history.</p>
                                 </div>
                             </div>

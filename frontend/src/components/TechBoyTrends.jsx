@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { CountUp } from './AnimationEngine';
 import {
   Flame, TrendingDown,
   Eye, Zap, ChevronUp
@@ -121,12 +122,12 @@ const TechBoyTrends = () => (
                       transition={{ duration: 1.1, ease: 'easeOut', delay: 0.2 }}
                     />
                   </div>
-                  <span className="tbt-pop-val">{phone.popularity}%</span>
+                  <span className="tbt-pop-val"><CountUp end={phone.popularity} suffix="%" /></span>
                 </div>
 
                 <div className="tbt-t-stats">
-                  <span className="tbt-views"><Eye size={12} /> {phone.views} views</span>
-                  <span className="tbt-rise"><ChevronUp size={12} /> {phone.rise}</span>
+                  <span className="tbt-views"><Eye size={12} /> <CountUp end={parseFloat(phone.views)} suffix="K" /> views</span>
+                  <span className="tbt-rise"><ChevronUp size={12} /> <CountUp end={parseFloat(phone.rise.replace('+', ''))} prefix="+" suffix="%" /></span>
                 </div>
               </div>
             </TrendsCard>
@@ -148,7 +149,7 @@ const TechBoyTrends = () => (
           {priceDrops.map(phone => (
             <TrendsCard key={phone.id} variants={cardVariant} className="tbt-drop-card glass-card">
               {/* pct badge */}
-              <div className="tbt-drop-pct-badge">↓ {phone.pct}%</div>
+              <div className="tbt-drop-pct-badge">↓ <CountUp end={phone.pct} suffix="%" /></div>
 
               <div className="tbt-drop-img-wrap">
                 <img src={phone.image} alt={phone.name} className="tbt-drop-img" onError={onImgErr2} />
@@ -158,11 +159,11 @@ const TechBoyTrends = () => (
                 <p className="tbt-drop-name">{phone.name}</p>
                 <p className="tbt-drop-sub">{phone.sub}</p>
                 <div className="tbt-price-row">
-                  <span className="tbt-price-now">{fmt(phone.current)}</span>
-                  <span className="tbt-price-was">{fmt(phone.prev)}</span>
+                  <span className="tbt-price-now"><CountUp end={phone.current} prefix="₹" /></span>
+                  <span className="tbt-price-was"><CountUp end={phone.prev} prefix="₹" /></span>
                 </div>
                 <div className="tbt-savings-tag">
-                  <Zap size={12} /> Save {fmt(phone.savings)}
+                  <Zap size={12} /> Save <CountUp end={phone.savings} prefix="₹" />
                 </div>
               </div>
             </TrendsCard>

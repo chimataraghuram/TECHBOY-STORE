@@ -4,6 +4,7 @@ import { X, Cpu, Camera, Battery, Activity, Gamepad2, ChevronRight, Zap, Target,
 import localPhonesData from '../data/phones.json';
 import { runRecommendationEngine } from '../utils/recommendationEngine';
 import './TechAdvisorModal.css';
+import { CountUp } from './AnimationEngine';
 
 import { resolveProductImage } from '../utils/imageResolver';
 
@@ -275,7 +276,7 @@ const TechAdvisorModal = ({ onClose }) => {
                                     <div className="scanner-line"></div>
                                 </div>
                                 <h3>AI Matching Algorithm Running...</h3>
-                                <p className="scanning-txt">Analyzing 50+ devices for your personalized profile under ₹{budget.toLocaleString()}.</p>
+                                <p className="scanning-txt">Analyzing 50+ devices for your personalized profile under <CountUp end={budget} prefix="₹" />.</p>
                             </motion.div>
                         )}
 
@@ -295,12 +296,12 @@ const TechAdvisorModal = ({ onClose }) => {
                                                 <h4>{phone.name}</h4>
                                                 <div className="result-price-row">
                                                     <span className="price-label">Best Deal</span>
-                                                    <span className="price-val">₹{phone.price.toLocaleString()}</span>
+                                                    <span className="price-val"><CountUp end={phone.price} prefix="₹" /></span>
                                                 </div>
                                                 
                                                 <div className="value-score-display-advisor">
                                                     <span>Value Score:</span>
-                                                    <strong>{phone.valueScore}/10</strong>
+                                                    <strong><CountUp end={parseFloat(phone.valueScore)} decimals={1} />/10</strong>
                                                 </div>
 
                                                 <div className="result-reason">

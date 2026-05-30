@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Search, Brain, ShieldCheck, BatteryCharging, ArrowRight } from 'lucide-react';
+import { CountUp } from './AnimationEngine';
 
 const BentoCard = ({ className, custom, children, style, variants, initial, whileInView, viewport }) => {
     const [theme, setTheme] = React.useState('default');
@@ -86,22 +87,22 @@ const HowItWorks = () => {
                             <p>We've simplified smartphone shopping into four easy steps.</p>
                             <div className="process-steps">
                                 <div className="p-step">
-                                    <div className="p-dot">1</div>
+                                    <div className="p-dot"><CountUp end={1} /></div>
                                     <span>Set Budget</span>
                                 </div>
                                 <ArrowRight className="p-arrow" size={16} />
                                 <div className="p-step">
-                                    <div className="p-dot">2</div>
+                                    <div className="p-dot"><CountUp end={2} /></div>
                                     <span>Compare</span>
                                 </div>
                                 <ArrowRight className="p-arrow" size={16} />
                                 <div className="p-step">
-                                    <div className="p-dot">3</div>
+                                    <div className="p-dot"><CountUp end={3} /></div>
                                     <span>AI Verdict</span>
                                 </div>
                                 <ArrowRight className="p-arrow" size={16} />
                                 <div className="p-step">
-                                    <div className="p-dot">4</div>
+                                    <div className="p-dot"><CountUp end={4} /></div>
                                     <span>Best Deal</span>
                                 </div>
                             </div>

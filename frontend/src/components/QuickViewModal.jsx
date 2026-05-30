@@ -4,6 +4,7 @@ import { Sparkles } from 'lucide-react';
 import RadarChart from './RadarChart';
 import PriceHistoryChart from './PriceHistoryChart';
 import { resolveProductImage } from '../utils/imageResolver';
+import { CountUp } from './AnimationEngine';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
@@ -104,7 +105,7 @@ const QuickViewModal = ({ product, onClose }) => {
                         <span className="category-label">{product.category}</span>
                         <h2 className="modal-title">{product.name}</h2>
                         <div className="modal-price-row">
-                            <span className="price-tag-big">Rs {product.price?.toLocaleString()}</span>
+                            <span className="price-tag-big"><CountUp end={product.price || 0} prefix="Rs " /></span>
                             <span className="store-tag">Lowest @ Amazon</span>
                         </div>
 

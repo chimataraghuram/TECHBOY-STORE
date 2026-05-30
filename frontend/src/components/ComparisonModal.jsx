@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { parseSpecs, calculateValueScore } from '../utils/specsParser';
 import { X, Award, Zap, ExternalLink } from 'lucide-react';
 import { resolveProductImage } from '../utils/imageResolver';
+import { CountUp } from './AnimationEngine';
 
 const resolveImage = (src, name = '') => {
     return resolveProductImage(src, name);
@@ -132,7 +133,7 @@ const ComparisonModal = ({ products, onClose }) => {
                                     {/* Price cell */}
                                     <div className={`spec-val price-val-cell ${isPriceWinner ? 'winner-cell' : ''}`}>
                                         <span className="mobile-only-label">Price:</span>
-                                        <span className="val-text">₹{p.price?.toLocaleString()}</span>
+                                        <span className="val-text"><CountUp end={p.price || 0} prefix="₹" /></span>
                                         {isPriceWinner && <span className="winner-tag price-winner"><Award size={10} /> Budget King</span>}
                                     </div>
 
@@ -172,7 +173,7 @@ const ComparisonModal = ({ products, onClose }) => {
                                         <span className="mobile-only-label">Value Score:</span>
                                         <div className="value-score-badge-comp">
                                             <Zap size={10} className="score-icon-comp" />
-                                            <strong>{p.valueScoreNum}/10</strong>
+                                            <strong><CountUp end={p.valueScoreNum} decimals={1} />/10</strong>
                                         </div>
                                         {isValueWinner && <span className="winner-tag value-winner"><Award size={10} /> Best Value</span>}
                                     </div>

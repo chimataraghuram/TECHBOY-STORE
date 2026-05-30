@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 
 import { resolveProductImage } from '../utils/imageResolver';
+import { CountUp } from './AnimationEngine';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
@@ -126,7 +127,7 @@ const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
 
                     <motion.div variants={itemVariants} className="trust-badges">
                         <div className="trust-item">
-                            <span>5.0</span>
+                            <span><CountUp end={5.0} decimals={1} /></span>
                             <p>Expert-curated picks</p>
                         </div>
                         <div className="trust-item">
@@ -165,7 +166,7 @@ const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
                         <div className="hero-hud-card hud-card-top">
                             <Cpu size={16} />
                             <span>Performance Rank</span>
-                            <strong>98</strong>
+                            <strong><CountUp end={98} /></strong>
                         </div>
                         <div className="hero-hud-card hud-card-bottom">
                             <Gauge size={16} />
@@ -222,8 +223,8 @@ const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
                                 <div className="deal-product-info">
                                     <h4 className="deal-product-title">{dealOfDay.name}</h4>
                                     <div className="deal-price-wrapper">
-                                        <span className="deal-price-old">Rs {(dealOfDay.price * 1.2).toLocaleString()}</span>
-                                        <span className="deal-price-new">Rs {dealOfDay.price.toLocaleString()}</span>
+                                        <span className="deal-price-old"><CountUp end={dealOfDay.price * 1.2} prefix="Rs " /></span>
+                                        <span className="deal-price-new"><CountUp end={dealOfDay.price} prefix="Rs " /></span>
                                     </div>
                                 </div>
                             </div>
