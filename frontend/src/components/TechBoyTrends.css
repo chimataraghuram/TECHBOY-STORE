@@ -1,0 +1,636 @@
+/* =========================================================
+   TechBoy Trends  —  Complete Premium CSS
+   ========================================================= */
+
+/* ── Section Shell ── */
+.tbt-section {
+  position: relative;
+  padding: 110px 0 130px !important;
+  overflow: hidden;
+}
+
+/* subtle top border gradient */
+.tbt-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 10%; right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 31, 61, 0.5) 30%,
+    rgba(255, 130, 60, 0.4) 50%,
+    rgba(255, 31, 61, 0.5) 70%,
+    transparent);
+}
+
+/* ambient glow blobs */
+.tbt-bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+.tbt-blob-1 {
+  width: 600px; height: 400px;
+  top: 5%; left: -8%;
+  background: rgba(255, 31, 61, 0.07);
+}
+.tbt-blob-2 {
+  width: 500px; height: 350px;
+  bottom: 5%; right: -6%;
+  background: rgba(255, 100, 40, 0.05);
+}
+
+/* all direct children relative to blob */
+.tbt-section > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Module Wrapper ── */
+.tbt-module {
+  margin-bottom: 80px;
+}
+.tbt-module-last {
+  margin-bottom: 0;
+}
+
+/* ── Module Heading ── */
+.tbt-module-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.tbt-micon { flex-shrink: 0; }
+.tbt-micon.red    { color: #ff1f3d; }
+.tbt-micon.green  { color: #2ed573; }
+.tbt-micon.orange { color: #ff9f43; }
+.tbt-micon.gold   { color: #f9ca24; }
+
+.tbt-module-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* pills */
+.tbt-live-pill {
+  margin-left: 6px;
+  padding: 3px 10px;
+  background: rgba(255, 31, 61, 0.15);
+  border: 1px solid rgba(255, 31, 61, 0.4);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #ff1f3d;
+  letter-spacing: 0.06em;
+  animation: tbt-pulse-dot 2s ease-in-out infinite;
+}
+.tbt-updated-pill {
+  margin-left: 6px;
+  padding: 3px 10px;
+  background: rgba(46, 213, 115, 0.1);
+  border: 1px solid rgba(46, 213, 115, 0.3);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #2ed573;
+}
+.tbt-curator-pill {
+  margin-left: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  background: rgba(249, 202, 36, 0.1);
+  border: 1px solid rgba(249, 202, 36, 0.3);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #f9ca24;
+}
+
+@keyframes tbt-pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ═══════════════════════════════════════════
+   MODULE 1 — Trending Grid
+═══════════════════════════════════════════ */
+.tbt-trending-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.tbt-trending-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 20px 20px !important;
+  border-radius: 20px !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 31, 61, 0.12), transparent 55%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.025), rgba(10, 2, 3, 0.88)) !important;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s;
+}
+.tbt-trending-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(255, 31, 61, 0.45) !important;
+}
+
+.tbt-rank {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.02em;
+}
+
+.tbt-t-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+.tbt-badge-red   { background: rgba(255,31,61,0.18); border: 1px solid rgba(255,31,61,0.5); color: #ff6b81; }
+.tbt-badge-green { background: rgba(46,213,115,0.15); border: 1px solid rgba(46,213,115,0.4); color: #2ed573; }
+.tbt-badge-white { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.7); }
+
+.tbt-t-img-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  margin-bottom: 16px;
+}
+.tbt-t-img {
+  max-height: 130px;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 24px rgba(0,0,0,0.55));
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tbt-trending-card:hover .tbt-t-img {
+  transform: scale(1.09) translateY(-5px);
+}
+
+.tbt-t-info { margin-top: auto; }
+.tbt-t-name {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+.tbt-t-sub {
+  font-size: 0.74rem;
+  color: rgba(185, 165, 168, 0.8);
+  margin-bottom: 12px;
+}
+
+/* Popularity bar */
+.tbt-pop-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.tbt-pop-bar {
+  flex: 1;
+  height: 5px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.tbt-pop-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff1f3d, #ff6b81);
+  border-radius: 999px;
+}
+.tbt-pop-val {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.tbt-t-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tbt-views, .tbt-rise {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+.tbt-views { color: rgba(185,165,168,0.8); }
+.tbt-rise  { color: #2ed573; }
+
+/* ═══════════════════════════════════════════
+   MODULE 2 — Price Drops
+═══════════════════════════════════════════ */
+.tbt-drops-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.tbt-drop-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 18px 20px !important;
+  border-radius: 20px !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(46, 213, 115, 0.08), transparent 50%),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.025), rgba(10, 2, 3, 0.88)) !important;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+}
+.tbt-drop-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(46, 213, 115, 0.35) !important;
+}
+
+.tbt-drop-pct-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(46, 213, 115, 0.15);
+  border: 1px solid rgba(46, 213, 115, 0.4);
+  color: #2ed573;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.tbt-drop-img-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 140px;
+  margin-bottom: 14px;
+}
+.tbt-drop-img {
+  max-height: 120px;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tbt-drop-card:hover .tbt-drop-img { transform: scale(1.07) translateY(-4px); }
+
+.tbt-drop-info { margin-top: auto; }
+.tbt-drop-name {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 3px;
+}
+.tbt-drop-sub {
+  font-size: 0.72rem;
+  color: rgba(185,165,168,0.75);
+  margin-bottom: 10px;
+}
+.tbt-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.tbt-price-now {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #2ed573;
+}
+.tbt-price-was {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(185,165,168,0.6);
+  text-decoration: line-through;
+}
+.tbt-savings-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  background: rgba(46, 213, 115, 0.08);
+  border: 1px dashed rgba(46, 213, 115, 0.3);
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #2ed573;
+}
+
+/* ═══════════════════════════════════════════
+   MODULE 3 — Comparisons
+═══════════════════════════════════════════ */
+.tbt-comp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.tbt-comp-card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px !important;
+  border-radius: 20px !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 159, 67, 0.08), transparent 55%),
+    linear-gradient(160deg, rgba(255,255,255,0.025), rgba(10,2,3,0.88)) !important;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.tbt-comp-card:hover { transform: translateY(-6px); }
+
+.tbt-comp-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  background: rgba(255, 159, 67, 0.12);
+  border: 1px solid rgba(255, 159, 67, 0.3);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: #ff9f43;
+  letter-spacing: 0.05em;
+  margin-bottom: 20px;
+  align-self: flex-start;
+}
+
+.tbt-comp-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.tbt-comp-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.tbt-comp-img-ring {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.tbt-comp-card:hover .tbt-comp-img-ring { border-color: rgba(255, 159, 67, 0.35); }
+
+.tbt-comp-img {
+  max-height: 65px;
+  max-width: 65px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+}
+.tbt-comp-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.tbt-vs-wrap { flex-shrink: 0; }
+.tbt-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, #ff1f3d, #8b0000);
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: #fff;
+  box-shadow: 0 0 18px rgba(255, 31, 61, 0.4);
+}
+
+.tbt-comp-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 14px;
+  margin-top: auto;
+}
+.tbt-comp-sessions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  color: rgba(185,165,168,0.8);
+}
+.tbt-comp-cta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #ff9f43;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: gap 0.2s;
+}
+.tbt-comp-cta:hover { gap: 8px; }
+
+/* ═══════════════════════════════════════════
+   MODULE 4 — TechBoy Picks
+═══════════════════════════════════════════ */
+.tbt-picks-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.tbt-pick-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 28px 22px !important;
+  border-radius: 20px !important;
+  background: linear-gradient(160deg, rgba(255,255,255,0.025), rgba(10,2,3,0.88)) !important;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tbt-pick-card:hover { transform: translateY(-6px); }
+
+/* color top bar */
+.tbt-pick-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 20px 20px 0 0;
+  opacity: 0.85;
+}
+.tbt-pick-teal::before   { background: linear-gradient(90deg, #00cec9, #00b894); }
+.tbt-pick-orange::before { background: linear-gradient(90deg, #ff9f43, #e17055); }
+.tbt-pick-violet::before { background: linear-gradient(90deg, #a29bfe, #6c5ce7); }
+.tbt-pick-gold::before   { background: linear-gradient(90deg, #f9ca24, #f0932b); }
+
+.tbt-pick-num {
+  font-size: 3rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.04);
+  line-height: 1;
+  position: absolute;
+  bottom: 14px;
+  right: 16px;
+  letter-spacing: -0.03em;
+}
+
+.tbt-pick-range {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.45);
+  text-transform: uppercase;
+}
+.tbt-pick-teal   .tbt-pick-range { color: #00cec9; }
+.tbt-pick-orange .tbt-pick-range { color: #ff9f43; }
+.tbt-pick-violet .tbt-pick-range { color: #a29bfe; }
+.tbt-pick-gold   .tbt-pick-range { color: #f9ca24; }
+
+.tbt-pick-name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  line-height: 1.3;
+}
+.tbt-pick-tag {
+  font-size: 0.78rem;
+  color: rgba(185,165,168,0.8);
+  line-height: 1.4;
+  flex: 1;
+}
+.tbt-pick-price {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #fff;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ═══════════════════════════════════════════
+   MODULE 5 — Community Stats
+═══════════════════════════════════════════ */
+.tbt-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.tbt-stat-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 26px 22px !important;
+  border-radius: 20px !important;
+  background: linear-gradient(160deg, rgba(255,255,255,0.025), rgba(10,2,3,0.88)) !important;
+  border-left: 2px solid var(--stat-color, #ff1f3d) !important;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tbt-stat-card:hover { transform: translateY(-5px); }
+
+.tbt-stat-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 0% 50%, color-mix(in srgb, var(--stat-color, #ff1f3d) 10%, transparent), transparent 60%);
+  pointer-events: none;
+}
+
+.tbt-stat-icon-wrap {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--stat-color, #ff1f3d) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--stat-color, #ff1f3d) 30%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.tbt-stat-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: rgba(185,165,168,0.7);
+  text-transform: uppercase;
+  margin: 0;
+}
+.tbt-stat-value {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  line-height: 1.2;
+}
+.tbt-stat-metric {
+  font-size: 0.78rem;
+  color: rgba(185,165,168,0.75);
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+
+@media (max-width: 1200px) {
+  .tbt-trending-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 960px) {
+  .tbt-trending-grid  { grid-template-columns: repeat(2, 1fr); }
+  .tbt-drops-grid     { grid-template-columns: repeat(2, 1fr); }
+  .tbt-comp-grid      { grid-template-columns: 1fr; }
+  .tbt-picks-grid     { grid-template-columns: repeat(2, 1fr); }
+  .tbt-stats-grid     { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .tbt-section { padding: 70px 0 90px !important; }
+  .tbt-trending-grid  { grid-template-columns: 1fr; }
+  .tbt-drops-grid     { grid-template-columns: 1fr; }
+  .tbt-picks-grid     { grid-template-columns: 1fr; }
+  .tbt-stats-grid     { grid-template-columns: 1fr; }
+  .tbt-module         { margin-bottom: 56px; }
+}

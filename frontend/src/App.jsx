@@ -6,6 +6,7 @@ import './redline.css'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import StoreSection from './components/StoreSection'
+import TechBoyTrends from './components/TechBoyTrends'
 import HowItWorks from './components/HowItWorks'
 import Footer from './components/Footer'
 import ChatPopup from './components/ChatPopup'
@@ -44,6 +45,7 @@ function App() {
               onSearch={setSearchTerm} 
             />
             <StoreSection searchTerm={searchTerm} onSearch={setSearchTerm} />
+            <TechBoyTrends />
             <HowItWorks />
             <div className="container">
               <StatsStrip />

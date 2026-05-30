@@ -33,7 +33,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
             setScrolled(window.scrollY > 50);
         };
 
-        const sections = ['home', 'how-it-works', 'products', 'features'];
+        const sections = ['home', 'how-it-works', 'products', 'trends', 'features'];
         const observerOptions = {
             root: null,
             rootMargin: '-50% 0px -50% 0px', // Trigger when section is in middle of screen
@@ -121,6 +121,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                         <div className="nav-links">
                             <a href="#home" className={`nav-link ${activeSection === 'home' ? 'active' : ''}`}>Home</a>
                             <a href="#products" className={`nav-link ${activeSection === 'products' ? 'active' : ''}`}>Products</a>
+                            <a href="#trends" className={`nav-link ${activeSection === 'trends' ? 'active' : ''}`}>Trends 🔥</a>
                             <a href="#how-it-works" className={`nav-link ${activeSection === 'how-it-works' ? 'active' : ''}`}>How It Works</a>
                             <a href="#footer" className={`nav-link ${activeSection === 'footer' ? 'active' : ''}`}>Contact</a>
                         </div>
@@ -169,6 +170,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                 <div className="nav-links mobile">
                                     <a href="#home" className={`nav-link ${activeSection === 'home' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Home</a>
                                     <a href="#products" className={`nav-link ${activeSection === 'products' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Products</a>
+                                    <a href="#trends" className={`nav-link ${activeSection === 'trends' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Trends 🔥</a>
                                     <a href="#how-it-works" className={`nav-link ${activeSection === 'how-it-works' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>How It Works</a>
                                     <a href="#footer" className={`nav-link ${activeSection === 'footer' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Contact</a>
                                 </div>
