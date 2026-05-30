@@ -41,9 +41,26 @@ const onImgErr2 = (e) => { e.target.src = fallback2; };
 const sectionVariant = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.08 } } };
 const cardVariant = { hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } } };
 
-/* ═══════════════════════════════════════════════════════════════
-   COMPONENT
-═══════════════════════════════════════════════════════════════ */
+const TrendsCard = ({ className, children, variants }) => {
+  const [theme, setTheme] = React.useState('default');
+  const cycleTheme = (e) => {
+    if (e.target.closest('button, a, input, select')) return;
+    const themes = ['default', 'cyberpunk', 'matrix', 'aurum', 'nebula', 'inferno'];
+    const next = themes[(themes.indexOf(theme) + 1) % themes.length];
+    setTheme(next);
+  };
+
+  return (
+    <motion.div
+      variants={variants}
+      className={`${className} ${theme !== 'default' ? `theme-${theme}` : ''}`}
+      onClick={cycleTheme}
+      style={{ cursor: 'pointer' }}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 const TechBoyTrends = () => (
   <section id="trends" className="tbt-section">
@@ -79,7 +96,7 @@ const TechBoyTrends = () => (
 
         <motion.div className="tbt-trending-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
           {trendingPhones.map(phone => (
-            <motion.div key={phone.id} variants={cardVariant} className="tbt-trending-card glass-card">
+            <TrendsCard key={phone.id} variants={cardVariant} className="tbt-trending-card glass-card">
               {/* rank */}
               <span className="tbt-rank">#{phone.rank}</span>
               {/* badge */}
@@ -112,7 +129,7 @@ const TechBoyTrends = () => (
                   <span className="tbt-rise"><ChevronUp size={12} /> {phone.rise}</span>
                 </div>
               </div>
-            </motion.div>
+            </TrendsCard>
           ))}
         </motion.div>
       </div>
@@ -129,7 +146,7 @@ const TechBoyTrends = () => (
 
         <motion.div className="tbt-drops-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
           {priceDrops.map(phone => (
-            <motion.div key={phone.id} variants={cardVariant} className="tbt-drop-card glass-card">
+            <TrendsCard key={phone.id} variants={cardVariant} className="tbt-drop-card glass-card">
               {/* pct badge */}
               <div className="tbt-drop-pct-badge">↓ {phone.pct}%</div>
 
@@ -148,7 +165,7 @@ const TechBoyTrends = () => (
                   <Zap size={12} /> Save {fmt(phone.savings)}
                 </div>
               </div>
-            </motion.div>
+            </TrendsCard>
           ))}
         </motion.div>
       </div>

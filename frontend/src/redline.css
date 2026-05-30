@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --redline-bg: #050202;
   --redline-panel: rgba(18, 4, 5, 0.78);
   --redline-border: rgba(255, 31, 61, 0.24);
@@ -2125,6 +2125,155 @@ html {
 .price-glow-input,
 .search-input {
   border-radius: 9999px !important;
+}
+
+/* ==============================================
+   DYNAMIC INTERACTIVE CONTAINER THEMES & ANIMATIONS
+   ============================================== */
+
+/* 1. Cyberpunk Neon Theme (Cyan Glow & Glitch) */
+.theme-cyberpunk {
+  --theme-accent: #00f3ff;
+  --theme-glow: rgba(0, 243, 255, 0.45);
+  border-color: var(--theme-accent) !important;
+  box-shadow: 0 0 25px var(--theme-glow), inset 0 0 15px rgba(0, 243, 255, 0.15) !important;
+  background: 
+    linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(160deg, rgba(0, 243, 255, 0.05) 0%, rgba(5, 10, 15, 0.95) 100%) !important;
+  background-size: 20px 20px, 20px 20px, 100% 100% !important;
+  animation: cyber-glitch-drift 3s infinite alternate ease-in-out !important;
+}
+
+@keyframes cyber-glitch-drift {
+  0% { transform: translateY(0) skewX(0deg); }
+  45% { transform: translateY(-4px) skewX(0.5deg); }
+  50% { transform: translateY(-4px) skewX(-1deg); filter: hue-rotate(10deg); }
+  55% { transform: translateY(-4px) skewX(0deg); }
+  100% { transform: translateY(-8px) skewX(0deg); }
+}
+
+/* 2. Matrix Code Theme (Green Pulsing Glow) */
+.theme-matrix {
+  --theme-accent: #39ff14;
+  --theme-glow: rgba(57, 255, 20, 0.4);
+  border-color: var(--theme-accent) !important;
+  box-shadow: 0 0 22px var(--theme-glow), inset 0 0 12px rgba(57, 255, 20, 0.1) !important;
+  background: 
+    radial-gradient(circle at 50% 0%, rgba(57, 255, 20, 0.1), transparent 50%),
+    linear-gradient(160deg, rgba(0, 0, 0, 0.9), rgba(5, 15, 5, 0.98)) !important;
+  animation: matrix-pulse 2s infinite alternate ease-in-out !important;
+}
+
+@keyframes matrix-pulse {
+  0% { transform: scale(1); filter: brightness(1); }
+  100% { transform: scale(1.015); filter: brightness(1.15) drop-shadow(0 0 8px var(--theme-glow)); }
+}
+
+/* 3. Aurum Gold Theme (Golden Luxury Float) */
+.theme-aurum {
+  --theme-accent: #ffd700;
+  --theme-glow: rgba(255, 215, 0, 0.35);
+  border-color: var(--theme-accent) !important;
+  box-shadow: 0 0 28px var(--theme-glow), inset 0 0 14px rgba(255, 215, 0, 0.12) !important;
+  background: 
+    linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(20, 15, 5, 0.96) 100%) !important;
+  animation: aurum-float 5s infinite ease-in-out !important;
+}
+
+@keyframes aurum-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(0.5deg); }
+}
+
+/* 4. Cosmic Nebula Theme (Deep Space Breath) */
+.theme-nebula {
+  --theme-accent: #b026ff;
+  --theme-glow: rgba(176, 38, 255, 0.45);
+  border-color: var(--theme-accent) !important;
+  box-shadow: 0 0 30px var(--theme-glow), inset 0 0 18px rgba(176, 38, 255, 0.15) !important;
+  background: 
+    radial-gradient(circle at 80% 20%, rgba(176, 38, 255, 0.15), transparent 60%),
+    linear-gradient(160deg, rgba(15, 5, 20, 0.98), rgba(5, 2, 8, 0.99)) !important;
+  animation: nebula-breath 4s infinite alternate ease-in-out !important;
+}
+
+@keyframes nebula-breath {
+  0% { transform: scale(1); filter: hue-rotate(0deg); }
+  100% { transform: scale(1.02) translateY(-6px); filter: hue-rotate(45deg); }
+}
+
+/* 5. Inferno Flare Theme (Fiery Warming Pulse) */
+.theme-inferno {
+  --theme-accent: #ff4500;
+  --theme-glow: rgba(255, 69, 0, 0.5);
+  border-color: var(--theme-accent) !important;
+  box-shadow: 0 0 24px var(--theme-glow), inset 0 0 10px rgba(255, 69, 0, 0.1) !important;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 69, 0, 0.12), transparent 50%),
+    linear-gradient(160deg, rgba(15, 2, 2, 0.96), rgba(5, 1, 1, 0.98)) !important;
+  animation: inferno-flare 2.5s infinite alternate ease-in-out !important;
+}
+
+@keyframes inferno-flare {
+  0% { transform: translateY(0); box-shadow: 0 0 15px rgba(255, 69, 0, 0.35); }
+  100% { transform: translateY(-5px); box-shadow: 0 0 32px rgba(255, 69, 0, 0.65); }
+}
+
+/* Theme variable overrides for nested texts, tags and prices */
+.theme-cyberpunk h3, .theme-cyberpunk p, .theme-cyberpunk span:not(.product-rating-badge), .theme-cyberpunk li { color: #d0f8ff !important; }
+.theme-cyberpunk .product-tag, .theme-cyberpunk .category-label, .theme-cyberpunk .bento-icon, .theme-cyberpunk .tbt-micon, .theme-cyberpunk .p-dot {
+  background: rgba(0, 243, 255, 0.15) !important;
+  border-color: rgba(0, 243, 255, 0.4) !important;
+  color: #00f3ff !important;
+}
+.theme-cyberpunk .price, .theme-cyberpunk .product-title, .theme-cyberpunk .tbt-module-title, .theme-cyberpunk .tbt-price-now, .theme-cyberpunk h3 {
+  color: #00f3ff !important;
+  text-shadow: 0 0 8px rgba(0, 243, 255, 0.4) !important;
+}
+
+.theme-matrix h3, .theme-matrix p, .theme-matrix span:not(.product-rating-badge), .theme-matrix li { color: #d8ffd0 !important; }
+.theme-matrix .product-tag, .theme-matrix .category-label, .theme-matrix .bento-icon, .theme-matrix .tbt-micon, .theme-matrix .p-dot {
+  background: rgba(57, 255, 20, 0.15) !important;
+  border-color: rgba(57, 255, 20, 0.4) !important;
+  color: #39ff14 !important;
+}
+.theme-matrix .price, .theme-matrix .product-title, .theme-matrix .tbt-module-title, .theme-matrix .tbt-price-now, .theme-matrix h3 {
+  color: #39ff14 !important;
+  text-shadow: 0 0 8px rgba(57, 255, 20, 0.4) !important;
+}
+
+.theme-aurum h3, .theme-aurum p, .theme-aurum span:not(.product-rating-badge), .theme-aurum li { color: #fffdf0 !important; }
+.theme-aurum .product-tag, .theme-aurum .category-label, .theme-aurum .bento-icon, .theme-aurum .tbt-micon, .theme-aurum .p-dot {
+  background: rgba(255, 215, 0, 0.15) !important;
+  border-color: rgba(255, 215, 0, 0.4) !important;
+  color: #ffd700 !important;
+}
+.theme-aurum .price, .theme-aurum .product-title, .theme-aurum .tbt-module-title, .theme-aurum .tbt-price-now, .theme-aurum h3 {
+  color: #ffd700 !important;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.4) !important;
+}
+
+.theme-nebula h3, .theme-nebula p, .theme-nebula span:not(.product-rating-badge), .theme-nebula li { color: #fbf0ff !important; }
+.theme-nebula .product-tag, .theme-nebula .category-label, .theme-nebula .bento-icon, .theme-nebula .tbt-micon, .theme-nebula .p-dot {
+  background: rgba(176, 38, 255, 0.15) !important;
+  border-color: rgba(176, 38, 255, 0.4) !important;
+  color: #b026ff !important;
+}
+.theme-nebula .price, .theme-nebula .product-title, .theme-nebula .tbt-module-title, .theme-nebula .tbt-price-now, .theme-nebula h3 {
+  color: #b026ff !important;
+  text-shadow: 0 0 8px rgba(176, 38, 255, 0.4) !important;
+}
+
+.theme-inferno h3, .theme-inferno p, .theme-inferno span:not(.product-rating-badge), .theme-inferno li { color: #fff5f0 !important; }
+.theme-inferno .product-tag, .theme-inferno .category-label, .theme-inferno .bento-icon, .theme-inferno .tbt-micon, .theme-inferno .p-dot {
+  background: rgba(255, 69, 0, 0.15) !important;
+  border-color: rgba(255, 69, 0, 0.4) !important;
+  color: #ff4500 !important;
+}
+.theme-inferno .price, .theme-inferno .product-title, .theme-inferno .tbt-module-title, .theme-inferno .tbt-price-now, .theme-inferno h3 {
+  color: #ff4500 !important;
+  text-shadow: 0 0 8px rgba(255, 69, 0, 0.4) !important;
 }
 
 

@@ -2,6 +2,31 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Search, Brain, ShieldCheck, BatteryCharging, ArrowRight } from 'lucide-react';
 
+const BentoCard = ({ className, custom, children, style, variants, initial, whileInView, viewport }) => {
+    const [theme, setTheme] = React.useState('default');
+    const cycleTheme = (e) => {
+        if (e.target.closest('button, a, input, select')) return;
+        const themes = ['default', 'cyberpunk', 'matrix', 'aurum', 'nebula', 'inferno'];
+        const next = themes[(themes.indexOf(theme) + 1) % themes.length];
+        setTheme(next);
+    };
+    
+    return (
+        <motion.div
+            custom={custom}
+            initial={initial}
+            whileInView={whileInView}
+            viewport={viewport}
+            variants={variants}
+            className={`${className} ${theme !== 'default' ? `theme-${theme}` : ''}`}
+            onClick={cycleTheme}
+            style={{ ...style, cursor: 'pointer' }}
+        >
+            {children}
+        </motion.div>
+    );
+};
+
 const HowItWorks = () => {
     const bentoVariants = {
         hidden: { opacity: 0, y: 30, scale: 0.95 },
@@ -52,7 +77,7 @@ const HowItWorks = () => {
 
                 <div className="bento-grid">
                     {/* Big Feature: The 4-Step Process */}
-                    <motion.div 
+                    <BentoCard 
                         custom={0} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={bentoVariants}
                         className="bento-card glass-card bento-pos-1 process-card"
                     >
@@ -81,10 +106,10 @@ const HowItWorks = () => {
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
+                    </BentoCard>
 
                     {/* Tall Feature: AI */}
-                    <motion.div 
+                    <BentoCard 
                         custom={1} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={bentoVariants}
                         className="bento-card glass-card bento-pos-2 ai-card"
                     >
@@ -93,10 +118,10 @@ const HowItWorks = () => {
                             <h3>AI Verdicts</h3>
                             <p>Instantly know if a phone is right for you. Our AI reads the specs and gives you a straight answer—no jargon.</p>
                         </div>
-                    </motion.div>
+                    </BentoCard>
 
                     {/* Square: Instant Search */}
-                    <motion.div 
+                    <BentoCard 
                         custom={2} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={bentoVariants}
                         className="bento-card glass-card bento-pos-3"
                     >
@@ -105,10 +130,10 @@ const HowItWorks = () => {
                             <h3>Instant Search</h3>
                             <p>Filter exactly what you want in milliseconds.</p>
                         </div>
-                    </motion.div>
+                    </BentoCard>
 
                     {/* Square: Verified Picks */}
-                    <motion.div 
+                    <BentoCard 
                         custom={3} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={bentoVariants}
                         className="bento-card glass-card bento-pos-4"
                     >
@@ -117,10 +142,10 @@ const HowItWorks = () => {
                             <h3>Verified Picks</h3>
                             <p>Only the best phones make it to the store.</p>
                         </div>
-                    </motion.div>
+                    </BentoCard>
 
                     {/* Wide: Battery Focus */}
-                    <motion.div 
+                    <BentoCard 
                         custom={4} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={bentoVariants}
                         className="bento-card glass-card bento-pos-5"
                         style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '24px' }}
@@ -130,7 +155,7 @@ const HowItWorks = () => {
                             <h3>Battery & Performance Signals</h3>
                             <p>Spot the gaming champions and battery beasts at a glance with our custom tech-signals.</p>
                         </div>
-                    </motion.div>
+                    </BentoCard>
 
                 </div>
             </div>

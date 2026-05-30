@@ -44,6 +44,13 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
     const [imgError, setImgError] = React.useState(false);
     const [imgLoaded, setImgLoaded] = React.useState(false);
     const [isTouchDevice, setIsTouchDevice] = React.useState(false);
+    const [cardTheme, setCardTheme] = React.useState('default');
+
+    const cycleTheme = () => {
+        const themes = ['default', 'cyberpunk', 'matrix', 'aurum', 'nebula', 'inferno'];
+        const next = themes[(themes.indexOf(cardTheme) + 1) % themes.length];
+        setCardTheme(next);
+    };
 
     const amazonUrl = product.amazon_link || product.amazonLink;
     const flipkartUrl = product.flipkart_link || product.flipkartLink;
@@ -111,13 +118,15 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
 
     return (
         <motion.div
-            className={`product-card glass-card ${isComparing ? 'comparing' : ''}`}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
+            className={`product-card glass-card ${isComparing ? 'comparing' : ''} ${cardTheme !== 'default' ? `theme-${cardTheme}` : ''}`}
+            onClick={cycleTheme}
             style={{
                 rotateX: isTouchDevice ? 0 : rotateX,
-                rotateY: isTouchDevice ? 0 : rotateY
+                rotateY: isTouchDevice ? 0 : rotateY,
+                cursor: 'pointer'
             }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: index * 0.05 }}
