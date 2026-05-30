@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {} from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { User, Bookmark, LogOut, Settings, History, Heart } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './AuthDropdown.css';

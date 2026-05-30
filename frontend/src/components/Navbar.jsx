@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {} from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Search, Bot, X, Menu, Bell, Trash2 } from 'lucide-react';
 import logo from '../../images/logos/new-logo.jpg';
 import WatchlistModal from './WatchlistModal';

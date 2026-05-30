@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import './IntroScreen.css';
-import {} from 'framer-motion';
+import { m } from 'framer-motion';
 import introVideo from '../../images/techboy-intro.mp4';
 
 const IntroScreen = ({ onComplete }) => {

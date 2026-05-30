@@ -1,5 +1,5 @@
 import React from 'react';
-import {} from 'framer-motion';
+import { m } from 'framer-motion';
 import { parseSpecs, calculateValueScore } from '../utils/specsParser';
 import { X, Award, Zap, ExternalLink } from 'lucide-react';
 import { resolveProductImage } from '../utils/imageResolver';

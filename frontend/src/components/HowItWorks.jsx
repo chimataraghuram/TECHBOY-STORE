@@ -1,5 +1,5 @@
 import React from 'react';
-import {} from 'framer-motion';
+import { m } from 'framer-motion';
 import { Search, Brain, ShieldCheck, BatteryCharging, ArrowRight } from 'lucide-react';
 import { CountUp } from './AnimationEngine';
 

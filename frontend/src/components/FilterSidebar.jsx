@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {} from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Filter, X } from 'lucide-react';
 import './FilterSidebar.css';
 

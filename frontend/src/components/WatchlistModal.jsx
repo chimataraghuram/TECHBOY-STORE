@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {} from 'framer-motion';
+import { m } from 'framer-motion';
 import { resolveProductImage } from '../utils/imageResolver';
 import { CountUp } from './AnimationEngine';
 

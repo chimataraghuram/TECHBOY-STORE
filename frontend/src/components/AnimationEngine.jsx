@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import {} from 'framer-motion';
+import { m, useScroll, useSpring } from 'framer-motion';
 
 /* ── Scroll Progress Bar ── */
 export const ScrollProgressBar = () => {

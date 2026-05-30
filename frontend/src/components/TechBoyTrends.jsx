@@ -1,5 +1,5 @@
 import React from 'react';
-import {} from 'framer-motion';
+import { m } from 'framer-motion';
 import { CountUp } from './AnimationEngine';
 import {
   Flame, TrendingDown,

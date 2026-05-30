@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {} from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { X, Cpu, Camera, Battery, Activity, Gamepad2, ChevronRight, Zap, Target, Sliders, ChevronLeft } from 'lucide-react';
 import localPhonesData from '../data/phones.json';
 import { runRecommendationEngine } from '../utils/recommendationEngine';
