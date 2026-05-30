@@ -23,6 +23,32 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [showIntro, setShowIntro] = useState(true);
 
+  React.useEffect(() => {
+    if (showIntro) return;
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px 0px -100px 0px',
+      threshold: 0.05
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    const elementsToAnimate = document.querySelectorAll(
+      'section, .product-card, .bento-card, .tbt-trending-card, .tbt-drop-card, .footer-section, .stats-strip-container'
+    );
+    elementsToAnimate.forEach(el => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [showIntro]);
+
   return (
     <AuthProvider>
       <AnimatePresence>

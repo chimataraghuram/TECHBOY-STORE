@@ -2340,5 +2340,162 @@ html {
   text-shadow: 0 0 8px rgba(255, 69, 0, 0.4) !important;
 }
 
+/* ==============================================
+   GLOBAL SCROLL REVEAL & INTERACTIVE MICRO-ANIMATIONS
+   ============================================== */
+
+/* Pre-scroll states for observed sections/containers */
+section:not(.redesigned-hero), 
+.product-card, 
+.bento-card, 
+.tbt-trending-card, 
+.tbt-drop-card, 
+.footer-section, 
+.stats-strip-container {
+  opacity: 0;
+  transform: translateY(35px) scale(0.98);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Animate-in class applied by IntersectionObserver */
+.animate-in {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+/* Smooth hovering micro-animations for cards (containers) once they are in view */
+.product-card,
+.bento-card,
+.tbt-trending-card,
+.tbt-drop-card {
+  transition: 
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+    box-shadow 0.4s ease, 
+    border-color 0.4s ease,
+    background 0.4s ease !important;
+}
+
+/* Subtle ambient pulse on hover */
+.product-card:hover,
+.bento-card:hover,
+.tbt-trending-card:hover,
+.tbt-drop-card:hover {
+  transform: translateY(-8px) scale(1.015) !important;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.6),
+    0 0 20px rgba(255, 31, 61, 0.18),
+    inset 0 0 10px rgba(255, 31, 61, 0.05) !important;
+  border-color: rgba(255, 31, 61, 0.4) !important;
+}
+
+/* Dynamic glow indicators on tags */
+.product-tag, .analyst-badge, .badge, .tbt-t-badge {
+  animation: badge-glow-pulse 3s infinite alternate ease-in-out;
+}
+
+@keyframes badge-glow-pulse {
+  0% { box-shadow: 0 0 5px rgba(255, 31, 61, 0.1); }
+  100% { box-shadow: 0 0 15px rgba(255, 31, 61, 0.35); }
+}
+
+/* ──────────────── Button Animations ──────────────── */
+.primary-btn, 
+.secondary-btn, 
+.jelly-btn, 
+.explore-source-btn, 
+.dev-btn, 
+.watchlist-btn,
+.ai-pill-btn-standalone,
+.pill-auth-btn,
+.get-deal-btn,
+button:not(.close-btn) {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer;
+}
+
+/* Shimmer/shine swipe effect on hover */
+.primary-btn::after, 
+.secondary-btn::after, 
+.jelly-btn::after, 
+.ai-pill-btn-standalone::after, 
+.pill-auth-btn::after,
+.get-deal-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  transform: skewX(-25deg);
+  transition: 0.8s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.primary-btn:hover::after, 
+.secondary-btn:hover::after, 
+.jelly-btn:hover::after, 
+.ai-pill-btn-standalone:hover::after, 
+.pill-auth-btn:hover::after,
+.get-deal-btn:hover::after {
+  left: 200%;
+}
+
+/* Interactive click feedback (scale down) */
+.primary-btn:active, 
+.secondary-btn:active, 
+.jelly-btn:active, 
+.ai-pill-btn-standalone:active, 
+.pill-auth-btn:active,
+.get-deal-btn:active,
+button:not(.close-btn):active {
+  transform: scale(0.95) !important;
+  transition: transform 0.1s !important;
+}
+
+/* Custom Hover scales */
+.primary-btn:hover, 
+.jelly-btn:hover,
+.pill-auth-btn:hover {
+  transform: translateY(-2px) scale(1.05) !important;
+  box-shadow: 0 10px 25px rgba(255, 31, 61, 0.4), 0 0 12px rgba(255, 122, 0, 0.2) !important;
+}
+
+.secondary-btn:hover {
+  transform: translateY(-2px) scale(1.04) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+}
+
+.ai-pill-btn-standalone:hover {
+  transform: translateY(-2px) scale(1.04) !important;
+  box-shadow: 0 0 15px rgba(255, 31, 61, 0.25) !important;
+  border-color: rgba(255, 31, 61, 0.6) !important;
+}
+
+.watchlist-btn:hover {
+  transform: scale(1.15) rotate(5deg) !important;
+}
+
+/* Ambient glow pulses for key focus items */
+.ai-pill-btn-standalone {
+  animation: ai-btn-pulse 4s infinite alternate ease-in-out;
+}
+
+@keyframes ai-btn-pulse {
+  0% { border-color: rgba(255, 31, 61, 0.3); }
+  100% { border-color: rgba(255, 31, 61, 0.7); box-shadow: 0 0 12px rgba(255, 31, 61, 0.2); }
+}
+
+/* Floating animation on static images or illustrations inside cards */
+.tbt-t-img,
+.tbt-drop-img,
+.product-real-img {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
 
 
