@@ -98,45 +98,70 @@ html {
 .navbar {
   position: fixed !important;
   z-index: 9999 !important;
-  top: 20px !important;
-  padding: 0 40px !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  padding: 18px 24px !important;
   display: flex !important;
   justify-content: center !important;
-  width: 100%;
+  pointer-events: none; /* Let clicks pass through empty space */
+  transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .navbar.scrolled {
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
+  padding: 10px 24px !important;
 }
 
 .navbar-content {
+  position: relative !important;
   width: 100% !important;
-  max-width: 1800px;
+  max-width: 1400px;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  pointer-events: none; /* Let clicks pass through empty space */
+  pointer-events: auto !important; /* Enable clicks on the floating nav bar */
+  background: rgba(10, 2, 4, 0.65) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 31, 61, 0.15) !important;
+  border-radius: 24px !important;
+  padding: 12px 32px !important;
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.6), 
+    0 0 0 1px rgba(255, 255, 255, 0.02),
+    0 0 20px rgba(255, 31, 61, 0.05) !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.navbar.scrolled .navbar-content {
+  background: rgba(8, 1, 2, 0.85) !important;
+  border-color: rgba(255, 31, 61, 0.3) !important;
+  border-radius: 20px !important;
+  padding: 8px 24px !important;
+  box-shadow: 
+    0 16px 45px rgba(0, 0, 0, 0.75), 
+    0 0 28px rgba(255, 31, 61, 0.18) !important;
 }
 
 .navbar-left, .navbar-right {
   pointer-events: auto; /* Re-enable clicks */
+  display: flex;
+  align-items: center;
 }
 
 .navbar-center {
   pointer-events: auto;
   display: flex;
   align-items: center;
-  background: rgba(10, 2, 3, 0.75) !important;
-  backdrop-filter: blur(16px) !important;
-  border: 1px solid rgba(255, 31, 61, 0.2) !important;
-  border-radius: 99px !important;
-  padding: 12px 32px !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
-  gap: 20px;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  gap: 32px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .navbar-left {
@@ -152,15 +177,25 @@ html {
 }
 
 .logo-img {
+  width: 50px !important;
+  height: 50px !important;
   border-color: rgba(255, 255, 255, 0.28) !important;
   box-shadow: 0 0 0 4px rgba(255, 31, 61, 0.14), 0 0 28px rgba(255, 31, 61, 0.42) !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-.jelly-text,
+.navbar.scrolled .logo-img {
+  width: 40px !important;
+  height: 40px !important;
+  box-shadow: 0 0 0 3px rgba(255, 31, 61, 0.1), 0 0 18px rgba(255, 31, 61, 0.3) !important;
+}
+
 .logo-text {
-  color: #fff !important;
-  font-size: 0.92rem !important;
-  font-weight: 700 !important;
+  transition: font-size 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.navbar.scrolled .logo-text {
+  font-size: 0.85rem !important;
 }
 
 .nav-links {
@@ -176,6 +211,10 @@ html {
   text-decoration: none;
   transition: all 0.3s ease;
   position: relative;
+}
+
+.navbar.scrolled .nav-link {
+  font-size: 0.95rem !important;
 }
 
 .nav-link:hover,
@@ -974,8 +1013,33 @@ html {
 }
 
 @media (max-width: 768px) {
+  .navbar {
+    padding: 12px 16px !important;
+  }
   .navbar-content {
-    grid-template-columns: auto 1fr auto !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    padding: 8px 16px !important;
+    border-radius: 18px !important;
+    height: 64px !important;
+  }
+  .navbar-center.active.mobile-drawer {
+    position: absolute !important;
+    top: calc(100% + 8px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    background: rgba(10, 2, 4, 0.96) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    border: 1px solid rgba(255, 31, 61, 0.25) !important;
+    border-radius: 18px !important;
+    padding: 24px !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8) !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
   }
 
   .logo-text {
