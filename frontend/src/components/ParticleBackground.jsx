@@ -1,23 +1,12 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import Particles, { initParticlesEngine } from "@tsparticles/react";
+import React, { useMemo } from 'react';
+import Particles, { ParticlesProvider } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
 const ParticleBackground = () => {
-    const [init, setInit] = useState(false);
-
-    useEffect(() => {
-        initParticlesEngine(async (engine) => {
-            // loadSlim is much lighter than loadFull and has everything we need for lines and circles
-            await loadSlim(engine);
-        }).then(() => {
-            setInit(true);
-        });
-    }, []);
-
     const options = useMemo(() => ({
         fullScreen: { 
             enable: true, 
-            zIndex: 1 // Match the previous custom canvas z-index
+            zIndex: 1 
         }, 
         background: {
             color: {
@@ -99,14 +88,14 @@ const ParticleBackground = () => {
         detectRetina: true,
     }), []);
 
-    if (!init) return null;
-
     return (
-        <Particles
-            id="tsparticles"
-            options={options}
-            className="particle-canvas-global"
-        />
+        <ParticlesProvider init={async (engine) => await loadSlim(engine)}>
+            <Particles
+                id="tsparticles"
+                options={options}
+                className="particle-canvas-global"
+            />
+        </ParticlesProvider>
     );
 };
 
