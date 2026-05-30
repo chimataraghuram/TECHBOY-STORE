@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 const heroImg = "https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=600&q=80";
 import {
     Zap,
@@ -88,29 +88,29 @@ const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
                 <div className="glow glow-2"></div>
             </div>
 
-            <motion.div
+            <m.div
                 className="container hero-content"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
             >
                 <div className="hero-text">
-                    <motion.div variants={itemVariants} className="badge-wrapper">
+                    <m.div variants={itemVariants} className="badge-wrapper">
                         <span className="badge analyst-badge">SMART TECH ADVISOR</span>
-                    </motion.div>
+                    </m.div>
 
-                    <motion.h1 variants={itemVariants} className="premium-title">
+                    <m.h1 variants={itemVariants} className="premium-title">
                         Find Your Perfect <br />
                         <span className="text-gradient">Smartphone</span>
-                    </motion.h1>
+                    </m.h1>
 
-                    <motion.p variants={itemVariants} className="premium-subtitle">
+                    <m.p variants={itemVariants} className="premium-subtitle">
                         AI-assisted recommendations based on your budget, gaming needs, camera preferences, and daily usage. Stop browsing, start deciding.
-                    </motion.p>
+                    </m.p>
                     
 
 
-                    <motion.div variants={itemVariants} className="hero-buttons">
+                    <m.div variants={itemVariants} className="hero-buttons">
                         <button
                             className="primary-btn large jelly-btn recommend-btn"
                             onClick={onOpenAdvisor}
@@ -123,9 +123,9 @@ const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
                         >
                             Browse All
                         </button>
-                    </motion.div>
+                    </m.div>
 
-                    <motion.div variants={itemVariants} className="trust-badges">
+                    <m.div variants={itemVariants} className="trust-badges">
                         <div className="trust-item">
                             <span><CountUp end={5.0} decimals={1} /></span>
                             <p>Expert-curated picks</p>
@@ -134,16 +134,16 @@ const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
                             <span>AI</span>
                             <p>Instant buying verdicts</p>
                         </div>
-                    </motion.div>
+                    </m.div>
                 </div>
 
-                <motion.div
+                <m.div
                     className="hero-visual-wrapper"
                     initial={{ opacity: 0, scale: 0.84, rotateY: -10 }}
                     animate={{ opacity: 1, scale: 1, rotateY: 0 }}
                     transition={{ duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
                 >
-                    <motion.div
+                    <m.div
                         className="hero-main-visual glass-card hero-device-stage"
                         animate={{ y: [0, -12, 0], rotateZ: [0, 0.8, 0] }}
                         transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
@@ -173,22 +173,22 @@ const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
                             <span>Deal Score</span>
                             <strong>Hot</strong>
                         </div>
-                    </motion.div>
+                    </m.div>
 
                     <div className="floating-elements">
-                        <motion.div className="float-icon icon-1" animate={{ y: [0, -15, 0], x: [0, 5, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}>
+                        <m.div className="float-icon icon-1" animate={{ y: [0, -15, 0], x: [0, 5, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}>
                             <Zap size={24} fill="var(--accent-primary)" stroke="var(--accent-primary)" />
-                        </motion.div>
-                        <motion.div className="float-icon icon-3" animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}>
+                        </m.div>
+                        <m.div className="float-icon icon-3" animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}>
                             <Smartphone size={24} fill="var(--accent-primary)" stroke="var(--accent-primary)" />
-                        </motion.div>
-                        <motion.div className="float-icon icon-5" animate={{ y: [0, -16, 0], x: [0, 8, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}>
+                        </m.div>
+                        <m.div className="float-icon icon-5" animate={{ y: [0, -16, 0], x: [0, 8, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}>
                             <RadioTower size={24} stroke="var(--accent-primary)" />
-                        </motion.div>
+                        </m.div>
                     </div>
 
                     {dealOfDay && (
-                        <motion.div
+                        <m.div
                             className="deal-of-day-card glass-card tech-deal-card"
                             initial={{ opacity: 0, x: 50, scale: 0.9 }}
                             animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -228,10 +228,10 @@ const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
                                     </div>
                                 </div>
                             </div>
-                        </motion.div>
+                        </m.div>
                     )}
-                </motion.div>
-            </motion.div>
+                </m.div>
+            </m.div>
         </section>
     );
 };

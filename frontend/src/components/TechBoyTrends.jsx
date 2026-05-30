@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import {} from 'framer-motion';
 import { CountUp } from './AnimationEngine';
 import {
   Flame, TrendingDown,
@@ -52,14 +52,14 @@ const TrendsCard = ({ className, children, variants }) => {
   };
 
   return (
-    <motion.div
+    <m.div
       variants={variants}
       className={`${className} ${theme !== 'default' ? `theme-${theme}` : ''}`}
       onClick={cycleTheme}
       style={{ cursor: 'pointer' }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 };
 
@@ -74,15 +74,15 @@ const TechBoyTrends = () => (
 
       {/* ── Section Header ── */}
       <div className="section-header text-center">
-        <motion.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="badge analyst-badge">
+        <m.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="badge analyst-badge">
           MARKET PULSE
-        </motion.span>
-        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} viewport={{ once: true }} className="section-title">
+        </m.span>
+        <m.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} viewport={{ once: true }} className="section-title">
           TechBoy <span className="text-gradient">Trends</span> 🔥
-        </motion.h2>
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.2 }} viewport={{ once: true }} className="section-subtitle">
+        </m.h2>
+        <m.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.2 }} viewport={{ once: true }} className="section-subtitle">
           Live insights on what the smartphone world is buzzing about right now
-        </motion.p>
+        </m.p>
       </div>
 
       {/* ══════════════════════════════════════════════════
@@ -95,7 +95,7 @@ const TechBoyTrends = () => (
           <span className="tbt-live-pill">● LIVE</span>
         </div>
 
-        <motion.div className="tbt-trending-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
+        <m.div className="tbt-trending-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
           {trendingPhones.map(phone => (
             <TrendsCard key={phone.id} variants={cardVariant} className="tbt-trending-card glass-card">
               {/* rank */}
@@ -114,7 +114,7 @@ const TechBoyTrends = () => (
                 {/* Popularity bar */}
                 <div className="tbt-pop-row">
                   <div className="tbt-pop-bar">
-                    <motion.div
+                    <m.div
                       className="tbt-pop-fill"
                       initial={{ width: 0 }}
                       whileInView={{ width: `${phone.popularity}%` }}
@@ -132,7 +132,7 @@ const TechBoyTrends = () => (
               </div>
             </TrendsCard>
           ))}
-        </motion.div>
+        </m.div>
       </div>
 
       {/* ══════════════════════════════════════════════════
@@ -145,7 +145,7 @@ const TechBoyTrends = () => (
           <span className="tbt-updated-pill">Updated today</span>
         </div>
 
-        <motion.div className="tbt-drops-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
+        <m.div className="tbt-drops-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
           {priceDrops.map(phone => (
             <TrendsCard key={phone.id} variants={cardVariant} className="tbt-drop-card glass-card">
               {/* pct badge */}
@@ -168,7 +168,7 @@ const TechBoyTrends = () => (
               </div>
             </TrendsCard>
           ))}
-        </motion.div>
+        </m.div>
       </div>
 
 

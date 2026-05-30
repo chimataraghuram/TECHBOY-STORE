@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, LazyMotion, domAnimation, AnimatePresence } from 'framer-motion'
 import React, { useState, Suspense, lazy } from 'react'
 import { createPortal } from 'react-dom'
 import './App.css'
@@ -7,13 +7,14 @@ import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import StoreSection from './components/StoreSection'
-import TechBoyTrends from './components/TechBoyTrends'
-import HowItWorks from './components/HowItWorks'
-import Footer from './components/Footer'
 import ChatPopup from './components/ChatPopup'
 import ParticleBackground from './components/ParticleBackground'
 import IntroScreen from './components/IntroScreen'
 import { StatsStrip } from './components/AnimationEngine'
+
+const TechBoyTrends = lazy(() => import('./components/TechBoyTrends'))
+const HowItWorks = lazy(() => import('./components/HowItWorks'))
+const Footer = lazy(() => import('./components/Footer'))
 
 const TechAdvisorModal = lazy(() => import('./components/TechAdvisorModal'))
 
@@ -51,6 +52,7 @@ function App() {
 
   return (
     <AuthProvider>
+      <LazyMotion features={domAnimation}>
       <AnimatePresence>
         {showIntro && <IntroScreen key="intro" onComplete={() => setShowIntro(false)} />}
       </AnimatePresence>
@@ -59,7 +61,7 @@ function App() {
         <>
           <Navbar onChatToggle={() => setIsChatOpen(!isChatOpen)} onSearch={setSearchTerm} searchTerm={searchTerm} />
           {createPortal(<ParticleBackground />, document.body)}
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
@@ -72,14 +74,21 @@ function App() {
               onSearch={setSearchTerm} 
             />
             <StoreSection searchTerm={searchTerm} onSearch={setSearchTerm} />
-            <TechBoyTrends />
-            <HowItWorks />
+            
+            <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '300px', margin: '40px 0', borderRadius: '16px'}}></div>}>
+              <TechBoyTrends />
+              <HowItWorks />
+            </Suspense>
+
             <div className="container">
               <StatsStrip />
             </div>
           </main>
-          <Footer />
-          </motion.div>
+          
+          <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '200px'}}></div>}>
+            <Footer />
+          </Suspense>
+          </m.div>
         </>
       )}
 
@@ -97,6 +106,7 @@ function App() {
         </AnimatePresence>,
         document.body
       )}
+      </LazyMotion>
     </AuthProvider>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import {} from 'framer-motion';
 import { Search, Brain, ShieldCheck, BatteryCharging, ArrowRight } from 'lucide-react';
 import { CountUp } from './AnimationEngine';
 
@@ -13,7 +13,7 @@ const BentoCard = ({ className, custom, children, style, variants, initial, whil
     };
     
     return (
-        <motion.div
+        <m.div
             custom={custom}
             initial={initial}
             whileInView={whileInView}
@@ -24,7 +24,7 @@ const BentoCard = ({ className, custom, children, style, variants, initial, whil
             style={{ ...style, cursor: 'pointer' }}
         >
             {children}
-        </motion.div>
+        </m.div>
     );
 };
 
@@ -47,15 +47,15 @@ const HowItWorks = () => {
         <section id="how-it-works" className="bento-section">
             <div className="container">
                 <div className="section-header text-center">
-                    <motion.span
+                    <m.span
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true }}
                         className="badge analyst-badge"
                     >
                         THE PLATFORM
-                    </motion.span>
-                    <motion.h2
+                    </m.span>
+                    <m.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
@@ -63,8 +63,8 @@ const HowItWorks = () => {
                         className="section-title"
                     >
                         How It <span className="text-gradient">Works</span>
-                    </motion.h2>
-                    <motion.p
+                    </m.h2>
+                    <m.p
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         transition={{ delay: 0.2 }}
@@ -73,7 +73,7 @@ const HowItWorks = () => {
                         style={{ margin: '0 auto' }}
                     >
                         Everything you need to find the perfect smartphone, packed into one seamless experience.
-                    </motion.p>
+                    </m.p>
                 </div>
 
                 <div className="bento-grid">

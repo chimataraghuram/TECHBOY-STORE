@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { m, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { resolveProductImage } from '../utils/imageResolver';
 import { CountUp } from './AnimationEngine';
 const balancedImg = "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=300&q=80";
@@ -118,7 +118,7 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
     const mappedTag = getMappedTag(product.tag);
 
     return (
-        <motion.div
+        <m.div
             className={`product-card glass-card ${isComparing ? 'comparing' : ''} ${cardTheme !== 'default' ? `theme-${cardTheme}` : ''}`}
             onClick={cycleTheme}
             style={{
@@ -209,7 +209,7 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
                     </div>
                 </div>
             </div>
-        </motion.div>
+        </m.div>
     );
 };
 

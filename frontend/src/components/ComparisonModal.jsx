@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import {} from 'framer-motion';
 import { parseSpecs, calculateValueScore } from '../utils/specsParser';
 import { X, Award, Zap, ExternalLink } from 'lucide-react';
 import { resolveProductImage } from '../utils/imageResolver';
@@ -70,14 +70,14 @@ const ComparisonModal = ({ products, onClose }) => {
     };
 
     return (
-        <motion.div 
+        <m.div 
             className="comparison-overlay" 
             onClick={onClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
         >
-            <motion.div 
+            <m.div 
                 className="comparison-content glass-card" 
                 onClick={e => e.stopPropagation()}
                 initial={{ scale: 0.92, y: 15 }}
@@ -218,8 +218,8 @@ const ComparisonModal = ({ products, onClose }) => {
                         </a>
                     </div>
                 </div>
-            </motion.div>
-        </motion.div>
+            </m.div>
+        </m.div>
     );
 };
 

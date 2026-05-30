@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import {} from 'framer-motion';
 import { X, Cpu, Camera, Battery, Activity, Gamepad2, ChevronRight, Zap, Target, Sliders, ChevronLeft } from 'lucide-react';
 import localPhonesData from '../data/phones.json';
 import { runRecommendationEngine } from '../utils/recommendationEngine';
@@ -81,7 +81,7 @@ const TechAdvisorModal = ({ onClose }) => {
 
     return (
         <div className="advisor-overlay">
-            <motion.div 
+            <m.div 
                 className="advisor-modal glass-card"
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -109,7 +109,7 @@ const TechAdvisorModal = ({ onClose }) => {
 
                     <AnimatePresence mode="wait">
                         {step === 1 && (
-                            <motion.div key="step1" className="advisor-step" initial={{opacity:0, x:-20}} animate={{opacity:1, x:0}} exit={{opacity:0, x:20}}>
+                            <m.div key="step1" className="advisor-step" initial={{opacity:0, x:-20}} animate={{opacity:1, x:0}} exit={{opacity:0, x:20}}>
                                 <h3>What is your maximum budget?</h3>
                                 <div className="budget-slider-container">
                                     <div className="budget-input-wrapper-modal">
@@ -146,11 +146,11 @@ const TechAdvisorModal = ({ onClose }) => {
                                 <button className="advisor-next-btn primary-btn" onClick={() => setStep(2)}>
                                     Next Step <ChevronRight size={18} />
                                 </button>
-                            </motion.div>
+                            </m.div>
                         )}
 
                         {step === 2 && (
-                            <motion.div key="step2" className="advisor-step" initial={{opacity:0, x:-20}} animate={{opacity:1, x:0}} exit={{opacity:0, x:20}}>
+                            <m.div key="step2" className="advisor-step" initial={{opacity:0, x:-20}} animate={{opacity:1, x:0}} exit={{opacity:0, x:20}}>
                                 <h3>What is your primary phone usage?</h3>
                                 <div className="usage-grid">
                                     {USAGE_PROFILES.map(profile => (
@@ -169,11 +169,11 @@ const TechAdvisorModal = ({ onClose }) => {
                                     <button className="advisor-back-btn" onClick={() => setStep(1)}><ChevronLeft size={18} /> Back</button>
                                     <button className="advisor-next-btn primary-btn" onClick={() => setStep(3)}>Next Step <ChevronRight size={18} /></button>
                                 </div>
-                            </motion.div>
+                            </m.div>
                         )}
 
                         {step === 3 && (
-                            <motion.div key="step3" className="advisor-step" initial={{opacity:0, x:-20}} animate={{opacity:1, x:0}} exit={{opacity:0, x:20}}>
+                            <m.div key="step3" className="advisor-step" initial={{opacity:0, x:-20}} animate={{opacity:1, x:0}} exit={{opacity:0, x:20}}>
                                 <h3>Tune your priority requirements</h3>
                                 <div className="priority-section-wrapper">
                                     <div className="priority-selector-row">
@@ -243,11 +243,11 @@ const TechAdvisorModal = ({ onClose }) => {
                                     <button className="advisor-back-btn" onClick={() => setStep(2)}><ChevronLeft size={18} /> Back</button>
                                     <button className="advisor-next-btn primary-btn" onClick={() => setStep(4)}>Next Step <ChevronRight size={18} /></button>
                                 </div>
-                            </motion.div>
+                            </m.div>
                         )}
 
                         {step === 4 && (
-                            <motion.div key="step4" className="advisor-step" initial={{opacity:0, x:-20}} animate={{opacity:1, x:0}} exit={{opacity:0, x:20}}>
+                            <m.div key="step4" className="advisor-step" initial={{opacity:0, x:-20}} animate={{opacity:1, x:0}} exit={{opacity:0, x:20}}>
                                 <h3>Select brand preferences <span className="optional-tag">(Optional)</span></h3>
                                 <div className="brand-chip-grid">
                                     {BRANDS.map(b => (
@@ -266,22 +266,22 @@ const TechAdvisorModal = ({ onClose }) => {
                                         <Target size={18} /> Match & Recommend
                                     </button>
                                 </div>
-                            </motion.div>
+                            </m.div>
                         )}
 
                         {step === 5 && isAnalyzing && (
-                            <motion.div key="analyzing" className="advisor-step analyzing-step" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
+                            <m.div key="analyzing" className="advisor-step analyzing-step" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}>
                                 <div className="scanner-container">
                                     <div className="scanner-circle"></div>
                                     <div className="scanner-line"></div>
                                 </div>
                                 <h3>AI Matching Algorithm Running...</h3>
                                 <p className="scanning-txt">Analyzing 50+ devices for your personalized profile under <CountUp end={budget} prefix="₹" />.</p>
-                            </motion.div>
+                            </m.div>
                         )}
 
                         {step === 5 && !isAnalyzing && (
-                            <motion.div key="results" className="advisor-step results-step" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}}>
+                            <m.div key="results" className="advisor-step results-step" initial={{opacity:0, y:20}} animate={{opacity:1, y:0}}>
                                 <h3>Your Tailored AI Recommendations</h3>
                                 <div className="results-grid">
                                     {results.length > 0 ? results.map((phone, index) => (
@@ -334,11 +334,11 @@ const TechAdvisorModal = ({ onClose }) => {
                                         <button className="primary-btn" onClick={onClose}>Finish</button>
                                     </div>
                                 )}
-                            </motion.div>
+                            </m.div>
                         )}
                     </AnimatePresence>
                 </div>
-            </motion.div>
+            </m.div>
         </div>
     );
 };

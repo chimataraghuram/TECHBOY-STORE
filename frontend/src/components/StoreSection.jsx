@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { m, AnimatePresence } from 'framer-motion';
 import ProductCard from './ProductCard';
 import ComparisonModal from './ComparisonModal';
 import QuickViewModal from './QuickViewModal';
@@ -22,6 +22,7 @@ const ProductCardSkeleton = () => (
 
 const StoreSection = ({ searchTerm, onSearch }) => {
     const [products, setProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedRange, setSelectedRange] = useState("");
@@ -101,38 +102,33 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     const highestPrice = products.length > 0 ? Math.max(...products.map(p => p.price)) : 150000;
     const availableBrands = [...new Set(products.map(p => p.brand).filter(b => b))].sort();
 
-    // Advanced filtering logic using the debounced search term
-    const term = (debouncedSearch || "").toLowerCase().trim();
-    let filteredProducts = [...products];
+    const workerRef = useRef(null);
 
-    // 1. Search & Category
-    if (term) {
-        filteredProducts = filteredProducts.filter(p => 
-            p.name.toLowerCase().includes(term) || 
-            p.category.toLowerCase().includes(term) ||
-            (p.tag && p.tag.toLowerCase().includes(term)) ||
-            (p.description && p.description.toLowerCase().includes(term))
-        );
-    } else if (selectedRange) {
-        filteredProducts = filteredProducts.filter(p => p.category === selectedRange);
-    }
+    // Initialize Web Worker
+    useEffect(() => {
+        workerRef.current = new Worker(new URL('../workers/filter.worker.js', import.meta.url), { type: 'module' });
+        workerRef.current.onmessage = (e) => {
+            setFilteredProducts(e.data.filteredProducts || []);
+        };
+        return () => workerRef.current.terminate();
+    }, []);
 
-    // 2. Brands
-    if (selectedBrands.length > 0) {
-        filteredProducts = filteredProducts.filter(p => p.brand && selectedBrands.includes(p.brand));
-    }
-
-    // 3. Price
-    filteredProducts = filteredProducts.filter(p => p.price >= minPrice && p.price <= maxPrice);
-
-    // 4. Sort
-    if (sortBy === 'price_asc') {
-        filteredProducts.sort((a, b) => a.price - b.price);
-    } else if (sortBy === 'price_desc') {
-        filteredProducts.sort((a, b) => b.price - a.price);
-    } else if (sortBy === 'rating') {
-        filteredProducts.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-    }
+    // Dispatch to Web Worker on dependencies change
+    useEffect(() => {
+        if (workerRef.current && products.length > 0) {
+            workerRef.current.postMessage({
+                products, 
+                debouncedSearch, 
+                selectedRange, 
+                selectedBrands, 
+                minPrice, 
+                maxPrice, 
+                sortBy
+            });
+        } else if (products.length === 0) {
+            setFilteredProducts([]);
+        }
+    }, [products, debouncedSearch, selectedRange, selectedBrands, minPrice, maxPrice, sortBy]);
 
     const handleCompare = (product) => {
         setCompareList(prev => {
@@ -147,26 +143,26 @@ const StoreSection = ({ searchTerm, onSearch }) => {
         <section id="products" className="store-section">
             <div className="container">
                 <div className="section-header text-center">
-                    <motion.span 
+                    <m.span 
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true }}
                         className="badge analyst-badge"
-                    >TECHBOY ANALYST PICK</motion.span>
-                    <motion.h2 
+                    >TECHBOY ANALYST PICK</m.span>
+                    <m.h2 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
                         viewport={{ once: true }}
                         className="section-title"
-                    >Explore Expert <span className="text-gradient">Recommendations</span></motion.h2>
-                    <motion.p 
+                    >Explore Expert <span className="text-gradient">Recommendations</span></m.h2>
+                    <m.p 
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         transition={{ delay: 0.2 }}
                         viewport={{ once: true }}
                         className="section-subtitle"
-                    >Categorized by budget and performance. We do the research, you get the best deal.</motion.p>
+                    >Categorized by budget and performance. We do the research, you get the best deal.</m.p>
                 </div>
 
                 {!searchTerm && (
@@ -249,7 +245,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
 
                 <AnimatePresence>
                     {compareList.length > 0 && (
-                        <motion.div 
+                        <m.div 
                             initial={{ y: 100, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: 100, opacity: 0 }}
@@ -262,7 +258,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                                 <button className="clear-btn" onClick={() => setCompareList([])}>Clear</button>
                                 <button className="primary-btn" onClick={() => setIsCompModalOpen(true)}>Compare Now</button>
                             </div>
-                        </motion.div>
+                        </m.div>
                     )}
                 </AnimatePresence>
 

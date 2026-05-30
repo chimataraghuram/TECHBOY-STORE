@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import {} from 'framer-motion';
 
 /* ── Scroll Progress Bar ── */
 export const ScrollProgressBar = () => {
@@ -12,7 +12,7 @@ export const ScrollProgressBar = () => {
 
     return (
         <div className="scroll-progress-track">
-            <motion.div 
+            <m.div 
                 className="scroll-progress-bar" 
                 style={{ scaleX, transformOrigin: '0%' }} 
             />

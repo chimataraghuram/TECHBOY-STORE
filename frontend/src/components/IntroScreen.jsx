@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import './IntroScreen.css';
-import { motion } from 'framer-motion';
+import {} from 'framer-motion';
 import introVideo from '../../images/techboy-intro.mp4';
 
 const IntroScreen = ({ onComplete }) => {
@@ -26,7 +26,7 @@ const IntroScreen = ({ onComplete }) => {
   }, [onComplete]);
 
   return (
-    <motion.div 
+    <m.div 
       className="intro-container"
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -43,16 +43,16 @@ const IntroScreen = ({ onComplete }) => {
             autoPlay
           />
         </div>
-        <motion.h1 
+        <m.h1 
           className="intro-title jelly-text"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.8 }}
         >
           TECHBOY STORE
-        </motion.h1>
+        </m.h1>
 
-        <motion.div 
+        <m.div 
           className="intro-loading-dots"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -61,18 +61,18 @@ const IntroScreen = ({ onComplete }) => {
           <span></span>
           <span></span>
           <span></span>
-        </motion.div>
+        </m.div>
       </div>
 
-      <motion.p
+      <m.p
         className="intro-footer"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.6, duration: 0.8 }}
       >
         COOKED BY RAGHU❤️
-      </motion.p>
-    </motion.div>
+      </m.p>
+    </m.div>
   );
 };
 

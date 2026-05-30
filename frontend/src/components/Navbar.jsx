@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import {} from 'framer-motion';
 import { Search, Bot, X, Menu, Bell, Trash2 } from 'lucide-react';
 import logo from '../../images/logos/new-logo.jpg';
 import WatchlistModal from './WatchlistModal';
@@ -199,7 +199,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                 ) : (
                     <AnimatePresence>
                         {isMenuOpen && (
-                            <motion.div 
+                            <m.div 
                                 initial={{ opacity: 0, y: -20, scale: 0.95 }}
                                 animate={{ opacity: 1, y: 0, scale: 1 }}
                                 exit={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -228,7 +228,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                         </button>
                                     )}
                                 </div>
-                            </motion.div>
+                            </m.div>
                         )}
                     </AnimatePresence>
                 )}
@@ -259,7 +259,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
 
                         <AnimatePresence>
                             {isAlertsOpen && (
-                                <motion.div 
+                                <m.div 
                                     className="alerts-dropdown"
                                     initial={{ opacity: 0, y: 15, scale: 0.95 }}
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -366,7 +366,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                             )}
                                         </div>
                                     )}
-                                </motion.div>
+                                </m.div>
                             )}
                         </AnimatePresence>
                     </div>

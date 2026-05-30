@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import {} from 'framer-motion';
 import { resolveProductImage } from '../utils/imageResolver';
 import { CountUp } from './AnimationEngine';
 
@@ -63,7 +63,7 @@ const WatchlistModal = ({ isOpen, onClose }) => {
 
     return (
         <div className="modal-overlay" onClick={onClose} style={{ zIndex: 1000 }}>
-            <motion.div 
+            <m.div 
                 className="modal-content glass-card watchlist-modal"
                 onClick={e => e.stopPropagation()}
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -100,7 +100,7 @@ const WatchlistModal = ({ isOpen, onClose }) => {
                         </div>
                     )}
                 </div>
-            </motion.div>
+            </m.div>
         </div>
     );
 };

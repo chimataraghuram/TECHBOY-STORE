@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import {} from 'framer-motion';
 import { Filter, X } from 'lucide-react';
 import './FilterSidebar.css';
 
@@ -208,7 +208,7 @@ const FilterSidebar = ({
                     {isOpen && (
                         <>
                             {/* Backdrop Blur Overlay */}
-                            <motion.div 
+                            <m.div 
                                 className="filter-drawer-overlay"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
@@ -217,7 +217,7 @@ const FilterSidebar = ({
                             />
 
                             {/* Sliding Sidebar Panel */}
-                            <motion.aside 
+                            <m.aside 
                                 className="filter-sidebar-drawer glass-card"
                                 initial={{ x: '-100%' }}
                                 animate={{ x: 0 }}
@@ -225,7 +225,7 @@ const FilterSidebar = ({
                                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                             >
                                 {sidebarContent}
-                            </motion.aside>
+                            </m.aside>
                         </>
                     )}
                 </AnimatePresence>

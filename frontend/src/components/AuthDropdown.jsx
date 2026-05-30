@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import {} from 'framer-motion';
 import { User, Bookmark, LogOut, Settings, History, Heart } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './AuthDropdown.css';
@@ -38,18 +38,18 @@ const AuthDropdown = ({ onWatchlistClick }) => {
           <div className="profile-ring"></div>
         </div>
         <span className="profile-name">{displayName}</span>
-        <motion.span 
+        <m.span 
           className="chevron-icon"
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
         >
           ▼
-        </motion.span>
+        </m.span>
       </button>
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
+          <m.div 
             className="dropdown-menu glass-panel"
             initial={{ opacity: 0, y: -10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -99,7 +99,7 @@ const AuthDropdown = ({ onWatchlistClick }) => {
                 <span>Logout</span>
               </button>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>
