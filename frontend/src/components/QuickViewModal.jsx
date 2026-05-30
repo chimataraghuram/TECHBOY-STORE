@@ -30,8 +30,12 @@ const QuickViewModal = ({ product, onClose }) => {
     useEffect(() => {
         const fetchAiSummary = async () => {
             setIsLoadingAi(true);
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000);
+            
             try {
-                const res = await fetch(`${API_BASE_URL}/products/${product.id}/ai_summary/`);
+                const res = await fetch(`${API_BASE_URL}/products/${product.id}/ai_summary/`, { signal: controller.signal });
+                clearTimeout(timeoutId);
                 if (res.ok) {
                     const data = await res.json();
                     setAiSummary(data.summary || buildLocalSummary(product));

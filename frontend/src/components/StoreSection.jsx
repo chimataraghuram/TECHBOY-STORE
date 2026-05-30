@@ -51,16 +51,20 @@ const StoreSection = ({ searchTerm, onSearch }) => {
         let mounted = true;
         
         const load = async () => {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 3000);
+            
             try {
-                const res = await fetch(`${API_BASE_URL}/products/`);
+                const res = await fetch(`${API_BASE_URL}/products/`, { signal: controller.signal });
+                clearTimeout(timeoutId);
                 const data = await res.json();
                 if (mounted) {
                     const productsList = data.results || data;
                     if (productsList && productsList.length > 0) {
                         setProducts(productsList);
-                        const cats = [...new Set(productsList.map(p => p.category))];
+                        const cats = ["All", ...new Set(productsList.map(p => p.category))];
                         setCategories(cats);
-                        if (cats.length > 0) setSelectedRange(cats[0]);
+                        setSelectedRange("All");
                         const highPrice = Math.max(...productsList.map(p => p.price));
                         setMaxPrice(highPrice);
                     } else {
@@ -71,9 +75,9 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                 console.warn("Fetch failed, falling back to local JSON database", err);
                 if (mounted) {
                     setProducts(localPhonesData);
-                    const cats = [...new Set(localPhonesData.map(p => p.category))];
+                    const cats = ["All", ...new Set(localPhonesData.map(p => p.category))];
                     setCategories(cats);
-                    if (cats.length > 0) setSelectedRange(cats[0]);
+                    setSelectedRange("All");
                     const highPrice = Math.max(...localPhonesData.map(p => p.price));
                     setMaxPrice(highPrice);
                 }

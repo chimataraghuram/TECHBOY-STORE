@@ -12,7 +12,7 @@ self.onmessage = function(e) {
             (p.tag && p.tag.toLowerCase().includes(term)) ||
             (p.description && p.description.toLowerCase().includes(term))
         );
-    } else if (selectedRange) {
+    } else if (selectedRange && selectedRange !== "All") {
         filteredProducts = filteredProducts.filter(p => p.category === selectedRange);
     }
 
