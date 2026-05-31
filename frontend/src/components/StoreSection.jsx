@@ -111,32 +111,92 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     const availableBrands = [...new Set(products.map(p => p.brand).filter(b => b))].sort();
 
     const workerRef = useRef(null);
+    const [workerSupported, setWorkerSupported] = useState(true);
 
     // Initialize Web Worker
     useEffect(() => {
-        workerRef.current = new Worker(new URL('../workers/filter.worker.js', import.meta.url), { type: 'module' });
-        workerRef.current.onmessage = (e) => {
-            setFilteredProducts(e.data.filteredProducts || []);
+        try {
+            workerRef.current = new Worker(new URL('../workers/filter.worker.js', import.meta.url), { type: 'module' });
+            workerRef.current.onmessage = (e) => {
+                setFilteredProducts(e.data.filteredProducts || []);
+            };
+        } catch (err) {
+            console.warn("Web Worker is not supported in this browser environment. Falling back to main-thread filtering.", err);
+            setWorkerSupported(false);
+        }
+        return () => {
+            if (workerRef.current) {
+                workerRef.current.terminate();
+            }
         };
-        return () => workerRef.current.terminate();
     }, []);
 
-    // Dispatch to Web Worker on dependencies change
-    useEffect(() => {
-        if (workerRef.current && products.length > 0) {
-            workerRef.current.postMessage({
-                products, 
-                debouncedSearch, 
-                selectedRange, 
-                selectedBrands, 
-                minPrice, 
-                maxPrice, 
-                sortBy
-            });
-        } else if (products.length === 0) {
-            setFilteredProducts([]);
+    // Local filtering fallback logic (exact match of worker logic)
+    const localFilterProducts = (payload) => {
+        const { products, debouncedSearch, selectedRange, selectedBrands, minPrice, maxPrice, sortBy } = payload;
+        let filtered = [...(products || [])];
+        const term = (debouncedSearch || "").toLowerCase().trim();
+
+        if (term) {
+            filtered = filtered.filter(p => 
+                (p.name && p.name.toLowerCase().includes(term)) || 
+                (p.category && p.category.toLowerCase().includes(term)) ||
+                (p.tag && p.tag.toLowerCase().includes(term)) ||
+                (p.description && p.description.toLowerCase().includes(term))
+            );
+        } else if (selectedRange && selectedRange !== "All") {
+            filtered = filtered.filter(p => p.category === selectedRange);
         }
-    }, [products, debouncedSearch, selectedRange, selectedBrands, minPrice, maxPrice, sortBy]);
+
+        if (selectedBrands && selectedBrands.length > 0) {
+            filtered = filtered.filter(p => p.brand && selectedBrands.includes(p.brand));
+        }
+
+        if (minPrice !== undefined && maxPrice !== undefined) {
+            filtered = filtered.filter(p => p.price >= minPrice && p.price <= maxPrice);
+        }
+
+        if (sortBy === 'price_asc') {
+            filtered.sort((a, b) => a.price - b.price);
+        } else if (sortBy === 'price_desc') {
+            filtered.sort((a, b) => b.price - a.price);
+        } else if (sortBy === 'rating') {
+            filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+        }
+
+        return filtered;
+    };
+
+    // Dispatch to Web Worker or run local filtering fallback
+    useEffect(() => {
+        if (products.length === 0) {
+            setFilteredProducts([]);
+            return;
+        }
+
+        const payload = {
+            products, 
+            debouncedSearch, 
+            selectedRange, 
+            selectedBrands, 
+            minPrice, 
+            maxPrice, 
+            sortBy
+        };
+
+        if (workerSupported && workerRef.current) {
+            try {
+                workerRef.current.postMessage(payload);
+            } catch (err) {
+                console.warn("Failed to communicate with Web Worker. Falling back to local filtering.", err);
+                const localResult = localFilterProducts(payload);
+                setFilteredProducts(localResult);
+            }
+        } else {
+            const localResult = localFilterProducts(payload);
+            setFilteredProducts(localResult);
+        }
+    }, [products, debouncedSearch, selectedRange, selectedBrands, minPrice, maxPrice, sortBy, workerSupported]);
 
     const handleCompare = (product) => {
         setCompareList(prev => {
