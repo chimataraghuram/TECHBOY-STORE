@@ -67,13 +67,11 @@ const TrendsCard = ({ id, className, children, variants }) => {
 const TechBoyTrends = () => {
   return (
   <section id="trends" className="tbt-section">
-
     {/* ambient background */}
     <div className="tbt-bg-blob tbt-blob-1" />
     <div className="tbt-bg-blob tbt-blob-2" />
 
     <div className="container">
-
       {/* ── Section Header ── */}
       <div className="section-header text-center">
         <m.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="badge analyst-badge">
@@ -87,103 +85,45 @@ const TechBoyTrends = () => {
         </m.p>
       </div>
 
-      {/* ══════════════════════════════════════════════════
-          MODULE 1 — Trending Phones
-      ══════════════════════════════════════════════════ */}
       <div className="tbt-module">
-        <div className="tbt-module-heading">
-          <Flame size={22} className="tbt-micon red" />
-          <h3 className="tbt-module-title">Trending Phones</h3>
-          <span className="tbt-live-pill">● LIVE</span>
-        </div>
-
-        <m.div className="tbt-trending-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
-          {trendingPhones.map(phone => (
-            <TrendsCard key={phone.id} variants={cardVariant} className="tbt-trending-card glass-card">
-              {/* rank */}
-              <span className="tbt-rank">#{phone.rank}</span>
-              {/* badge */}
-              <span className={`tbt-t-badge tbt-badge-${phone.badge === 'RISING' ? 'green' : phone.badge === 'VIRAL' ? 'red' : 'white'}`}>{phone.badge}</span>
-
-              <div className="tbt-t-img-wrap">
-                <img src={phone.image} alt={phone.name} className="tbt-t-img" onError={onImgErr} />
-              </div>
-
-              <div className="tbt-t-info">
-                <p className="tbt-t-name">{phone.name}</p>
-                <p className="tbt-t-sub">{phone.sub}</p>
-
-                {/* Popularity bar */}
-                <div className="tbt-pop-row">
-                  <div className="tbt-pop-bar">
-                    <m.div
-                      className="tbt-pop-fill"
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${phone.popularity}%` }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1.1, ease: 'easeOut', delay: 0.2 }}
-                    />
-                  </div>
-                  <span className="tbt-pop-val">{phone.popularity}%</span>
-                </div>
-
-                <div className="tbt-t-info-stats" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '12px', fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)' }}>
-                  <span className="tbt-views" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Eye size={12} /> {phone.views} views</span>
-                  <span className="tbt-rise" style={{ display: 'flex', alignItems: 'center', gap: '2px', color: '#00f2fe' }}><ChevronUp size={12} /> {phone.rise}</span>
-                </div>
-              </div>
-            </TrendsCard>
-          ))}
-        </m.div>
-      </div>
-
-      {/* ══════════════════════════════════════════════════
-          MODULE 2 & 3 — Price Drops & Live Alerts
-      ══════════════════════════════════════════════════ */}
-      <div className="tbt-module tbt-module-last">
         <div className="tbt-module-heading" style={{ marginBottom: '24px' }}>
           <Bell size={22} className="tbt-micon red" />
-          <h3 className="tbt-module-title">Price Drops & Live Alerts</h3>
-          <span className="tbt-live-pill">● LATEST ALERTS</span>
+          <h3 className="tbt-module-title">Trending Market Alerts</h3>
+          <span className="tbt-live-pill">● LIVE ALERTS</span>
         </div>
 
-        <m.div className="tbt-drops-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }} style={{ marginBottom: '20px' }}>
-          {priceDrops.map(phone => (
-            <TrendsCard key={phone.id} variants={cardVariant} className="tbt-drop-card glass-card">
+        <m.div className="tbt-drops-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
+          {CURRENT_LIVE_ALERTS.map(phone => (
+            <TrendsCard key={phone.id} variants={cardVariant} className="tbt-drop-card glass-card" style={{ border: '1px solid #16a34a', boxShadow: '0 0 15px rgba(22, 163, 74, 0.15)', display: 'flex', flexDirection: 'column' }}>
               {/* pct badge */}
-              <div className="tbt-drop-pct-badge">↓ {phone.pct}%</div>
-
-              <div className="tbt-drop-img-wrap">
-                <img src={phone.image} alt={phone.name} className="tbt-drop-img" onError={onImgErr2} />
+              <div className="tbt-drop-pct-badge" style={{ position: 'absolute', top: '12px', right: '12px', background: 'rgba(22, 163, 74, 0.2)', color: '#4ade80', padding: '4px 10px', borderRadius: '12px', fontSize: '13px', fontWeight: 'bold', zIndex: 10 }}>
+                ↓ {phone.pct}%
               </div>
 
-              <div className="tbt-drop-info">
-                <p className="tbt-drop-name">{phone.name}</p>
-                <p className="tbt-drop-sub">{phone.sub}</p>
-                <div className="tbt-price-row">
-                  <span className="tbt-price-now">₹{phone.current.toLocaleString('en-IN')}</span>
-                  <span className="tbt-price-was">₹{phone.prev.toLocaleString('en-IN')}</span>
-                </div>
-                <div className="tbt-savings-tag">
-                  <Zap size={12} /> Save ₹{phone.savings.toLocaleString('en-IN')}
-                </div>
+              <div className="tbt-drop-img-wrap" style={{ textAlign: 'center', margin: '20px 0', height: '180px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <img src={phone.image} alt={phone.name} className="tbt-drop-img" style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} onError={onImgErr} />
               </div>
-            </TrendsCard>
-          ))}
-        </m.div>
 
-        <m.div className="tbt-alerts-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
-          {CURRENT_LIVE_ALERTS.map(alert => (
-            <TrendsCard key={alert.id} id={`trend-alert-${alert.id}`} variants={cardVariant} className="tbt-alert-card notification-item unread" style={{ borderRadius: '12px', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
-              <div className="notif-icon-wrapper" style={{ overflow: 'hidden', padding: 0, background: 'transparent', border: 'none' }}>
-                <img src={alert.image} alt="alert" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }} onError={onImgErr} />
-              </div>
-              <div className="notif-content">
-                <div className="notif-title-row">
-                  <h5 style={{ margin: 0, fontSize: '14px', color: '#fff', fontWeight: 600 }}>{alert.title}</h5>
-                  <span className="notif-time">{alert.time}</span>
+              <div className="tbt-drop-info" style={{ textAlign: 'left', padding: '0 16px 16px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                <h3 style={{ margin: '0 0 4px 0', color: '#fff', fontSize: '20px', fontWeight: 'bold' }}>{phone.name}</h3>
+                <p style={{ margin: '0 0 16px 0', color: '#a0aabf', fontSize: '14px' }}>{phone.specs}</p>
+                
+                <div style={{ flexGrow: 1 }} />
+                
+                <div className="tbt-price-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                  <span className="tbt-price-now" style={{ color: '#4ade80', fontSize: '22px', fontWeight: 'bold' }}>₹{phone.current.toLocaleString('en-IN')}</span>
+                  <span className="tbt-price-was" style={{ color: '#64748b', fontSize: '15px', textDecoration: 'line-through' }}>₹{phone.prev.toLocaleString('en-IN')}</span>
                 </div>
-                <p style={{ margin: 0, fontSize: '13px', color: '#a0aabf' }}>{alert.desc}</p>
+                
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                  <div className="tbt-savings-tag" style={{ background: 'rgba(22, 163, 74, 0.15)', color: '#4ade80', border: '1px solid rgba(22, 163, 74, 0.3)', padding: '4px 10px', borderRadius: '6px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 600 }}>
+                    <Zap size={14} /> Save ₹{phone.savings.toLocaleString('en-IN')}
+                  </div>
+                </div>
+
+                <a href={phone.buyLink} target="_blank" rel="noreferrer" style={{ display: 'block', width: '100%', padding: '12px 0', textAlign: 'center', background: '#16a34a', color: '#fff', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none', transition: 'all 0.2s ease', cursor: 'pointer' }} onMouseOver={e => { e.target.style.background = '#15803d'; e.target.style.transform = 'translateY(-2px)'; }} onMouseOut={e => { e.target.style.background = '#16a34a'; e.target.style.transform = 'translateY(0)'; }}>
+                  BUY NOW
+                </a>
               </div>
             </TrendsCard>
           ))}

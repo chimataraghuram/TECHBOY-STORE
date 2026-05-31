@@ -5,32 +5,6 @@ import { Bell, TrendingDown, Rocket, Flame, Star, Scale, TrendingUp, Cpu, Batter
 import '../redline.css'; // Make sure styles are pulled in
 
 export const PREDEFINED_NOTIFICATIONS = [
-    // Price Drops (1-6)
-    { id: 1, type: 'price_drop', icon: TrendingDown, title: 'Price Drop Alert', desc: 'iQOO Neo 10 price dropped by ₹2,000', time: 'Just now', unread: true },
-    { id: 2, type: 'price_drop', icon: TrendingDown, title: 'Price Drop Alert', desc: 'Nothing Phone (3a) now available at a lower price', time: '15 mins ago', unread: true },
-    { id: 3, type: 'price_drop', icon: TrendingDown, title: 'Major Discount', desc: 'Poco F Series received a major discount this week', time: '1 hour ago', unread: true },
-    { id: 4, type: 'price_drop', icon: TrendingDown, title: 'Price Reduced', desc: 'Samsung Galaxy A Series price reduced', time: '3 hours ago', unread: true },
-    { id: 5, type: 'price_drop', icon: TrendingDown, title: 'Price Cut', desc: 'Motorola Edge Series now available below previous pricing', time: '4 hours ago', unread: true },
-    { id: 6, type: 'price_drop', icon: TrendingDown, title: 'Special Price Cut', desc: 'Realme GT Series received a special price cut', time: '5 hours ago', unread: true },
-    
-    // New Launches (7-12)
-    { id: 7, type: 'launch', icon: Rocket, title: 'New Launch', desc: 'New Nothing smartphone officially launched', time: '20 mins ago', unread: true },
-    { id: 8, type: 'launch', icon: Rocket, title: 'Device Announced', desc: 'Latest Samsung Galaxy device announced', time: '2 hours ago', unread: true },
-    { id: 9, type: 'launch', icon: Rocket, title: 'New Market Entry', desc: 'New Poco smartphone added to the market', time: '4 hours ago', unread: true },
-    { id: 10, type: 'launch', icon: Rocket, title: 'Device Launched', desc: 'Motorola launched a new mid-range device', time: '6 hours ago', unread: true },
-    { id: 11, type: 'launch', icon: Rocket, title: 'New Introduction', desc: 'Realme introduced a new performance-focused smartphone', time: '8 hours ago', unread: true },
-    { id: 12, type: 'launch', icon: Rocket, title: 'Device Unveiled', desc: 'Vivo unveiled a new camera-centric smartphone', time: 'Yesterday', unread: true },
-    
-    // Trending Phones (13-18)
-    { id: 13, type: 'trending', icon: Flame, title: 'Trending Now', desc: 'iQOO Neo 10 is trending among gamers', time: '10 mins ago', unread: true },
-    { id: 14, type: 'trending', icon: Flame, title: 'Most Viewed', desc: 'Poco F Series is one of the most viewed phones this week', time: '30 mins ago', unread: true },
-    { id: 15, type: 'trending', icon: Flame, title: 'Community Trend', desc: 'Nothing Phone is trending across the community', time: '1 hour ago', unread: true },
-    { id: 16, type: 'trending', icon: Flame, title: 'Gaining Popularity', desc: 'Samsung Galaxy devices are gaining popularity', time: '2 hours ago', unread: true },
-    { id: 17, type: 'trending', icon: Flame, title: 'Trending List', desc: 'Motorola Edge Series is trending in value-for-money rankings', time: '5 hours ago', unread: true },
-    { id: 18, type: 'trending', icon: Flame, title: 'Performance Trend', desc: 'Realme GT Series is trending among performance users', time: 'Yesterday', unread: true },
-    
-    // TechBoy Picks (19-24)
-    { id: 19, type: 'pick', icon: Star, title: 'TechBoy Pick', desc: 'TechBoy Pick updated for Best Gaming Phone Under ₹25K', time: 'Just now', unread: true },
     { id: 20, type: 'pick', icon: Star, title: 'TechBoy Pick', desc: 'TechBoy Pick updated for Best Camera Phone Under ₹30K', time: '2 hours ago', unread: true },
     { id: 21, type: 'pick', icon: Star, title: 'TechBoy Pick', desc: 'TechBoy Pick updated for Best Battery Phone', time: '3 hours ago', unread: true },
     { id: 22, type: 'pick', icon: Star, title: 'TechBoy Pick', desc: 'TechBoy Pick updated for Best Student Smartphone', time: '6 hours ago', unread: true },
