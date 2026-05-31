@@ -2112,9 +2112,10 @@ html {
    LAYOUT TWEAKS: SPACING FIXES
    ============================================== */
 .hero-section {
-  padding-top: 60px !important;
+  align-items: flex-start !important;
+  padding-top: 140px !important; /* Fixed distance from top (navbar is ~80px) */
   padding-bottom: 20px !important;
-  min-height: 100vh !important;
+  min-height: 100vh !important; 
 }
 
 .store-section {
