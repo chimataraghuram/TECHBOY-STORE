@@ -114,13 +114,30 @@ const NotificationSystem = () => {
         }
     };
     
-    const handleNotificationClick = () => {
+    const handleNotificationClick = (notifId) => {
         // Close dropdown
         setIsOpen(false);
-        // Navigate/Scroll to Trends
-        const trendsSection = document.getElementById('trends');
-        if (trendsSection) {
-            trendsSection.scrollIntoView({ behavior: 'smooth' });
+        // Navigate/Scroll to specific alert in Trends
+        const targetAlert = document.getElementById(`trend-alert-${notifId}`);
+        if (targetAlert) {
+            targetAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Temporary highlight effect
+            const originalShadow = targetAlert.style.boxShadow;
+            const originalBorder = targetAlert.style.borderColor;
+            targetAlert.style.transition = 'all 0.3s ease-out';
+            targetAlert.style.boxShadow = '0 0 30px rgba(255, 50, 50, 0.8)';
+            targetAlert.style.borderColor = 'rgba(255, 50, 50, 0.9)';
+            
+            setTimeout(() => {
+                targetAlert.style.boxShadow = originalShadow;
+                targetAlert.style.borderColor = originalBorder;
+            }, 2000);
+        } else {
+            // Fallback to trends section
+            const trendsSection = document.getElementById('trends');
+            if (trendsSection) {
+                trendsSection.scrollIntoView({ behavior: 'smooth' });
+            }
         }
     };
 
@@ -145,7 +162,7 @@ const NotificationSystem = () => {
                         animate={{ opacity: 1, x: 0, scale: 1 }}
                         exit={{ opacity: 0, x: 50, scale: 0.9 }}
                         transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                        onClick={handleNotificationClick}
+                        onClick={() => handleNotificationClick(toastNotification.id)}
                     >
                         <div className="toast-icon-wrapper">
                             <toastNotification.icon size={20} />
@@ -185,7 +202,7 @@ const NotificationSystem = () => {
                                     <div 
                                         key={notif.id} 
                                         className={`notification-item ${notif.unread ? 'unread' : ''}`}
-                                        onClick={handleNotificationClick}
+                                        onClick={() => handleNotificationClick(notif.id)}
                                         style={{ cursor: 'pointer' }}
                                     >
                                         <div className="notif-icon-wrapper">

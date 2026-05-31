@@ -42,7 +42,7 @@ const onImgErr2 = (e) => { e.target.src = fallback2; };
 const sectionVariant = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.08 } } };
 const cardVariant = { hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } } };
 
-const TrendsCard = ({ className, children, variants }) => {
+const TrendsCard = ({ id, className, children, variants }) => {
   const [theme, setTheme] = React.useState('default');
   const cycleTheme = (e) => {
     if (e.target.closest('button, a, input, select')) return;
@@ -53,6 +53,7 @@ const TrendsCard = ({ className, children, variants }) => {
 
   return (
     <m.div
+      id={id}
       variants={variants}
       className={`${className} ${theme !== 'default' ? `theme-${theme}` : ''}`}
       onClick={cycleTheme}
@@ -184,7 +185,7 @@ const TechBoyTrends = () => (
 
         <m.div className="tbt-alerts-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
           {PREDEFINED_NOTIFICATIONS.map(alert => (
-            <TrendsCard key={alert.id} variants={cardVariant} className="tbt-alert-card glass-card">
+            <TrendsCard key={alert.id} id={`trend-alert-${alert.id}`} variants={cardVariant} className="tbt-alert-card glass-card">
               <div className="tbt-alert-icon-wrap" style={{ color: alert.type === 'price_drop' ? '#00f2fe' : alert.type === 'trending' ? '#ff3333' : '#ffb347' }}>
                 <alert.icon size={20} />
               </div>
