@@ -107,7 +107,7 @@ html {
   left: 0 !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  padding: 28px 48px !important;
+  padding: 20px 24px !important;
   display: flex !important;
   justify-content: center !important;
   pointer-events: none;
@@ -119,15 +119,15 @@ html {
   box-sizing: border-box !important;
   max-width: 1520px;
   margin: 0 auto !important;
-  display: flex !important;
-  justify-content: space-between !important;
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center !important;
-  gap: 20px !important;
+  gap: 16px !important;
   pointer-events: none !important; /* Enable clicks on children only */
   background: transparent !important;
   border: none !important;
   border-radius: 0 !important;
-  padding: 0 16px !important;
+  padding: 0 8px !important;
   box-shadow: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
