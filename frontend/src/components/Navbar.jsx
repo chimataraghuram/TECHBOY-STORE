@@ -27,7 +27,7 @@ const scrollToSection = (sectionId) => {
 const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 1100);
 
     const { user, loginWithGoogle } = useAuth();
     const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
@@ -103,8 +103,8 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
 
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth < 1024);
-            if (window.innerWidth >= 1024) {
+            setIsMobile(window.innerWidth < 1100);
+            if (window.innerWidth >= 1100) {
                 setIsMenuOpen(false);
             }
         };

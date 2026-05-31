@@ -646,8 +646,8 @@ html {
 
 .hero-phone-3d {
   position: relative;
-  width: 62%;
-  height: 82%;
+  width: 280px;
+  height: 580px;
   transform-style: preserve-3d;
   transform: rotateY(-8deg) rotateX(3deg) translateZ(42px);
   animation: phoneFloat3d 5.8s ease-in-out infinite;
@@ -1060,6 +1060,10 @@ html {
 }
 
 @media (max-width: 1100px) {
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
   .hero-content {
     grid-template-columns: 1fr !important;
     gap: 46px !important;
