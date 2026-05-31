@@ -185,16 +185,16 @@ const TechBoyTrends = () => (
 
         <m.div className="tbt-alerts-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
           {PREDEFINED_NOTIFICATIONS.map(alert => (
-            <TrendsCard key={alert.id} id={`trend-alert-${alert.id}`} variants={cardVariant} className="tbt-alert-card glass-card">
-              <div className="tbt-alert-icon-wrap" style={{ color: alert.type === 'price_drop' ? '#00f2fe' : alert.type === 'trending' ? '#ff3333' : '#ffb347' }}>
-                <alert.icon size={20} />
+            <TrendsCard key={alert.id} id={`trend-alert-${alert.id}`} variants={cardVariant} className="tbt-alert-card notification-item unread" style={{ borderRadius: '12px', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
+              <div className="notif-icon-wrapper" style={{ color: alert.type === 'price_drop' ? '#00f2fe' : alert.type === 'trending' ? '#ff3333' : '#ffb347' }}>
+                <alert.icon size={18} />
               </div>
-              <div className="tbt-alert-content">
-                <div className="tbt-alert-header">
-                  <h4>{alert.title}</h4>
-                  <span className="tbt-alert-time">{alert.time}</span>
+              <div className="notif-content">
+                <div className="notif-title-row">
+                  <h5 style={{ margin: 0, fontSize: '14px', color: '#fff', fontWeight: 600 }}>{alert.title}</h5>
+                  <span className="notif-time">{alert.time}</span>
                 </div>
-                <p className="tbt-alert-desc">{alert.desc}</p>
+                <p style={{ margin: 0, fontSize: '13px', color: '#a0aabf' }}>{alert.desc}</p>
               </div>
             </TrendsCard>
           ))}
