@@ -4,36 +4,47 @@ import { Bell, TrendingDown, Rocket, Flame, Star, Scale, TrendingUp, Cpu, Batter
 import '../redline.css'; // Make sure styles are pulled in
 
 const PREDEFINED_NOTIFICATIONS = [
-    // Price Drops
-    { id: 1, type: 'price_drop', icon: TrendingDown, title: 'Price Drop Alert', desc: 'iQOO Neo 10 just dropped by ₹2,000.', time: '2 mins ago', unread: true },
-    { id: 2, type: 'price_drop', icon: TrendingDown, title: 'Massive Discount', desc: 'Poco F Series is now officially under ₹25K.', time: '1 hour ago', unread: true },
-    { id: 3, type: 'price_drop', icon: TrendingDown, title: 'Steal Deal', desc: 'Nothing Phone (3a) discount available for next 24 hours.', time: '3 hours ago', unread: true },
-    { id: 4, type: 'price_drop', icon: TrendingDown, title: 'Price Cut', desc: 'Samsung Galaxy S24 Ultra sees a ₹5,000 price drop.', time: '5 hours ago', unread: true },
-    { id: 5, type: 'price_drop', icon: TrendingDown, title: 'Flash Sale', desc: 'Realme GT 7 Pro flash sale begins in 10 minutes.', time: 'Just now', unread: true },
-    // New Launches
-    { id: 6, type: 'launch', icon: Rocket, title: 'New Launch', desc: 'The new Nothing Phone has officially launched.', time: '45 mins ago', unread: true },
-    { id: 7, type: 'launch', icon: Rocket, title: 'Series Announced', desc: 'Samsung Galaxy S25 series specs leaked.', time: '2 hours ago', unread: true },
-    { id: 8, type: 'launch', icon: Rocket, title: 'Device Revealed', desc: 'New Poco X8 Pro Max revealed in global event.', time: 'Yesterday', unread: true },
-    { id: 9, type: 'launch', icon: Rocket, title: 'Coming Soon', desc: 'OnePlus 14 early teasers just dropped.', time: '4 hours ago', unread: true },
-    { id: 10, type: 'launch', icon: Rocket, title: 'Launch Event', desc: 'Apple announces upcoming September event.', time: '1 day ago', unread: true },
-    // Trending Phones
-    { id: 11, type: 'trending', icon: Flame, title: 'Trending This Week', desc: 'iQOO Neo 10 is dominating our trending charts.', time: '12 mins ago', unread: true },
-    { id: 12, type: 'trending', icon: Flame, title: 'Most Viewed', desc: 'Most viewed gaming phone leaderboard updated.', time: '3 hours ago', unread: true },
-    { id: 13, type: 'trending', icon: Camera, title: 'Camera Rankings', desc: 'Top camera phone rankings have shifted.', time: '5 hours ago', unread: true },
-    { id: 14, type: 'trending', icon: Flame, title: 'Hot Device', desc: 'Redmi Note 14 Pro+ is gaining massive traction.', time: '10 hours ago', unread: true },
-    { id: 15, type: 'trending', icon: Battery, title: 'Battery Beasts', desc: 'New endurance test results are in.', time: 'Yesterday', unread: true },
-    // TechBoy Picks
-    { id: 16, type: 'pick', icon: Star, title: 'TechBoy Pick', desc: 'Best phone under ₹20K guide updated.', time: '30 mins ago', unread: true },
-    { id: 17, type: 'pick', icon: Star, title: 'Value Champion', desc: 'New value-for-money recommendation published.', time: '2 hours ago', unread: true },
-    { id: 18, type: 'pick', icon: Star, title: 'Gaming List Updated', desc: 'Top gaming phones for BGMI refreshed.', time: '6 hours ago', unread: true },
-    { id: 19, type: 'pick', icon: Cpu, title: 'Performance King', desc: 'Our AI has selected the new raw performance king.', time: '1 day ago', unread: true },
-    { id: 20, type: 'pick', icon: Star, title: 'Premium Tier', desc: 'Best ultra-premium smartphone list updated.', time: '2 days ago', unread: true },
-    // Comparisons
-    { id: 21, type: 'compare', icon: Scale, title: 'Popular Compare', desc: 'iPhone 15 vs S24 comparison just went live.', time: '15 mins ago', unread: true },
-    { id: 22, type: 'compare', icon: Scale, title: 'New Insights', desc: 'Deep dive comparison: Pixel 9 Pro vs iPhone 16 Pro.', time: '1 hour ago', unread: true },
-    { id: 23, type: 'compare', icon: TrendingUp, title: 'Market Shift', desc: 'Most compared phones data updated for this month.', time: '4 hours ago', unread: true },
-    { id: 24, type: 'compare', icon: Scale, title: 'Processor Battle', desc: 'Snapdragon 8 Gen 4 vs A18 Pro benchmark analysis.', time: '8 hours ago', unread: true },
-    { id: 25, type: 'compare', icon: Scale, title: 'Mid-Range Kings', desc: 'Poco vs iQOO: The ultimate mid-range comparison.', time: 'Yesterday', unread: true }
+    // Price Drops (1-6)
+    { id: 1, type: 'price_drop', icon: TrendingDown, title: 'Price Drop Alert', desc: 'iQOO Neo 10 price dropped by ₹2,000', time: 'Just now', unread: true },
+    { id: 2, type: 'price_drop', icon: TrendingDown, title: 'Price Drop Alert', desc: 'Nothing Phone (3a) now available at a lower price', time: '15 mins ago', unread: true },
+    { id: 3, type: 'price_drop', icon: TrendingDown, title: 'Major Discount', desc: 'Poco F Series received a major discount this week', time: '1 hour ago', unread: true },
+    { id: 4, type: 'price_drop', icon: TrendingDown, title: 'Price Reduced', desc: 'Samsung Galaxy A Series price reduced', time: '3 hours ago', unread: true },
+    { id: 5, type: 'price_drop', icon: TrendingDown, title: 'Price Cut', desc: 'Motorola Edge Series now available below previous pricing', time: '4 hours ago', unread: true },
+    { id: 6, type: 'price_drop', icon: TrendingDown, title: 'Special Price Cut', desc: 'Realme GT Series received a special price cut', time: '5 hours ago', unread: true },
+    
+    // New Launches (7-12)
+    { id: 7, type: 'launch', icon: Rocket, title: 'New Launch', desc: 'New Nothing smartphone officially launched', time: '20 mins ago', unread: true },
+    { id: 8, type: 'launch', icon: Rocket, title: 'Device Announced', desc: 'Latest Samsung Galaxy device announced', time: '2 hours ago', unread: true },
+    { id: 9, type: 'launch', icon: Rocket, title: 'New Market Entry', desc: 'New Poco smartphone added to the market', time: '4 hours ago', unread: true },
+    { id: 10, type: 'launch', icon: Rocket, title: 'Device Launched', desc: 'Motorola launched a new mid-range device', time: '6 hours ago', unread: true },
+    { id: 11, type: 'launch', icon: Rocket, title: 'New Introduction', desc: 'Realme introduced a new performance-focused smartphone', time: '8 hours ago', unread: true },
+    { id: 12, type: 'launch', icon: Rocket, title: 'Device Unveiled', desc: 'Vivo unveiled a new camera-centric smartphone', time: 'Yesterday', unread: true },
+    
+    // Trending Phones (13-18)
+    { id: 13, type: 'trending', icon: Flame, title: 'Trending Now', desc: 'iQOO Neo 10 is trending among gamers', time: '10 mins ago', unread: true },
+    { id: 14, type: 'trending', icon: Flame, title: 'Most Viewed', desc: 'Poco F Series is one of the most viewed phones this week', time: '30 mins ago', unread: true },
+    { id: 15, type: 'trending', icon: Flame, title: 'Community Trend', desc: 'Nothing Phone is trending across the community', time: '1 hour ago', unread: true },
+    { id: 16, type: 'trending', icon: Flame, title: 'Gaining Popularity', desc: 'Samsung Galaxy devices are gaining popularity', time: '2 hours ago', unread: true },
+    { id: 17, type: 'trending', icon: Flame, title: 'Trending List', desc: 'Motorola Edge Series is trending in value-for-money rankings', time: '5 hours ago', unread: true },
+    { id: 18, type: 'trending', icon: Flame, title: 'Performance Trend', desc: 'Realme GT Series is trending among performance users', time: 'Yesterday', unread: true },
+    
+    // TechBoy Picks (19-24)
+    { id: 19, type: 'pick', icon: Star, title: 'TechBoy Pick', desc: 'TechBoy Pick updated for Best Gaming Phone Under ₹25K', time: 'Just now', unread: true },
+    { id: 20, type: 'pick', icon: Star, title: 'TechBoy Pick', desc: 'TechBoy Pick updated for Best Camera Phone Under ₹30K', time: '2 hours ago', unread: true },
+    { id: 21, type: 'pick', icon: Star, title: 'TechBoy Pick', desc: 'TechBoy Pick updated for Best Battery Phone', time: '3 hours ago', unread: true },
+    { id: 22, type: 'pick', icon: Star, title: 'TechBoy Pick', desc: 'TechBoy Pick updated for Best Student Smartphone', time: '6 hours ago', unread: true },
+    { id: 23, type: 'pick', icon: Star, title: 'TechBoy Pick', desc: 'TechBoy Pick updated for Best Value-for-Money Device', time: '12 hours ago', unread: true },
+    { id: 24, type: 'pick', icon: Star, title: 'TechBoy Pick', desc: 'TechBoy Pick updated for Premium Flagship Recommendation', time: 'Yesterday', unread: true },
+    
+    // Popular Comparisons (25-27)
+    { id: 25, type: 'compare', icon: Scale, title: 'Comparisons', desc: 'Most Compared Phones updated this week', time: '45 mins ago', unread: true },
+    { id: 26, type: 'compare', icon: Scale, title: 'Trending Matchup', desc: 'Nothing Phone vs iQOO Neo comparison is trending', time: '1.5 hours ago', unread: true },
+    { id: 27, type: 'compare', icon: Scale, title: 'Popular Compare', desc: 'Poco F Series vs Realme GT comparison gaining attention', time: '3 hours ago', unread: true },
+    
+    // Market Updates (28-30)
+    { id: 28, type: 'market', icon: TrendingUp, title: 'Market Rankings', desc: 'Smartphone market rankings updated', time: 'Just now', unread: true },
+    { id: 29, type: 'market', icon: TrendingUp, title: 'Leaderboard', desc: 'Gaming smartphone leaderboard refreshed', time: '5 hours ago', unread: true },
+    { id: 30, type: 'market', icon: TrendingUp, title: 'Camera Rankings', desc: 'Top camera smartphone rankings updated', time: '12 hours ago', unread: true }
 ];
 
 const NotificationSystem = () => {
@@ -46,8 +57,8 @@ const NotificationSystem = () => {
     // Initial load and rotation logic
     useEffect(() => {
         const rotateNotifications = () => {
-            // Pick 3 to 5 random notifications
-            const count = Math.floor(Math.random() * 3) + 3; // 3, 4, or 5
+            // Pick exactly 2 random notifications
+            const count = 2;
             const shuffled = [...PREDEFINED_NOTIFICATIONS].sort(() => 0.5 - Math.random());
             const selected = shuffled.slice(0, count);
             
