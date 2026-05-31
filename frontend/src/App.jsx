@@ -42,12 +42,28 @@ function App() {
       });
     }, observerOptions);
 
-    const elementsToAnimate = document.querySelectorAll(
-      'section, .footer-section, .stats-strip-container'
-    );
-    elementsToAnimate.forEach(el => observer.observe(el));
+    const observeElements = () => {
+      const elementsToAnimate = document.querySelectorAll(
+        'section:not([data-observed]), .footer-section:not([data-observed]), .stats-strip-container:not([data-observed])'
+      );
+      elementsToAnimate.forEach(el => {
+        el.setAttribute('data-observed', 'true');
+        observer.observe(el);
+      });
+    };
 
-    return () => observer.disconnect();
+    observeElements();
+
+    const mutationObserver = new MutationObserver(() => {
+      observeElements();
+    });
+    
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
   }, [showIntro]);
 
   return (
