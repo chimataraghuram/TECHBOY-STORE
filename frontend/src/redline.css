@@ -2391,9 +2391,8 @@ html {
    ============================================== */
 
 /* Pre-scroll states for observed sections/containers */
-section:not(.redesigned-hero), 
-.footer-section, 
-.stats-strip-container {
+.footer-section:not(.animate-in), 
+.stats-strip-container:not(.animate-in) {
   opacity: 0;
   transform: translateY(35px) scale(0.98);
   transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1) !important;

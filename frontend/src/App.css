@@ -1,4 +1,4 @@
-﻿.navbar {
+.navbar {
   position: fixed;
   top: 15px;
   left: 0;
@@ -2524,10 +2524,6 @@
 
 
 /* Entrance Animations */
-section {
-  animation: fade-in 1.2s ease-out;
-}
-
 @keyframes fade-in {
   from {
     opacity: 0;
