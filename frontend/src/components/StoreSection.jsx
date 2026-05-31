@@ -31,7 +31,6 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     const [activeViewProduct, setActiveViewProduct] = useState(null);
     const [displayLimit, setDisplayLimit] = useState(12);
     const [shuffleSeed, setShuffleSeed] = useState(0);
-    const [allFilterRandomized, setAllFilterRandomized] = useState([]);
 
     // Advanced Filtering States
     const [selectedBrands, setSelectedBrands] = useState([]);
@@ -116,11 +115,14 @@ const StoreSection = ({ searchTerm, onSearch }) => {
 
     const isPureAll = selectedRange === "All" && !searchTerm && selectedBrands.length === 0 && minPrice === 0 && maxPrice === highestPrice;
 
-    useEffect(() => {
+    const allFilterRandomized = React.useMemo(() => {
         if (isPureAll && filteredProducts.length > 0) {
+            // Using a seeded approach or just random based on shuffleSeed
+            // Math.random() works well enough here since we want completely new ones
             const shuffled = [...filteredProducts].sort(() => 0.5 - Math.random());
-            setAllFilterRandomized(shuffled.slice(0, 10));
+            return shuffled.slice(0, 10);
         }
+        return [];
     }, [filteredProducts, shuffleSeed, isPureAll]);
 
     const handleCategoryClick = (range) => {
@@ -230,7 +232,16 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     };
 
     return (
-        <section id="products" className="store-section">
+        <m.section 
+            id="products" 
+            className="store-section"
+            onViewportEnter={() => {
+                if (isPureAll) {
+                    setShuffleSeed(prev => prev + 1);
+                }
+            }}
+            viewport={{ once: false, margin: "-100px" }}
+        >
             <div className="container">
                 <div className="section-header text-center">
                     <m.span 
@@ -372,7 +383,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                     )}
                 </AnimatePresence>
             </div>
-        </section>
+        </m.section>
     );
 };
 
