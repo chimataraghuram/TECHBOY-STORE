@@ -136,6 +136,8 @@ html {
   pointer-events: auto !important;
   display: flex;
   align-items: center;
+  flex: 0 0 auto !important;
+  width: max-content !important;
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 31, 61, 0.05) 38%, rgba(8, 1, 2, 0.82) 100%) !important;
   backdrop-filter: blur(24px) saturate(1.35) !important;
   -webkit-backdrop-filter: blur(24px) saturate(1.35) !important;
