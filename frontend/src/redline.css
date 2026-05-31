@@ -3235,3 +3235,71 @@ button:not(.close-btn):active {
   margin-top: 4px;
   white-space: nowrap;
 }
+
+
+/* ==========================================================================
+   NOTIFICATION ICON ANIMATIONS
+   ========================================================================== */
+
+/* Price Drop */
+.notif-icon-wrapper.type-price_drop svg {
+  animation: bounceDown 2s infinite ease-in-out;
+}
+@keyframes bounceDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+/* Launch */
+.notif-icon-wrapper.type-launch svg {
+  animation: floatUp 2s infinite ease-in-out;
+}
+@keyframes floatUp {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* Trending */
+.notif-icon-wrapper.type-trending svg {
+  animation: flickerFlame 1.5s infinite alternate;
+}
+@keyframes flickerFlame {
+  0% { transform: scale(1) rotate(-5deg); opacity: 0.8; }
+  100% { transform: scale(1.15) rotate(5deg); opacity: 1; filter: drop-shadow(0 0 5px rgba(255,51,51,0.6)); }
+}
+
+/* Pick */
+.notif-icon-wrapper.type-pick svg {
+  animation: pulseStar 2s infinite;
+}
+@keyframes pulseStar {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(255,179,71,0.3)); }
+  50% { transform: scale(1.2); filter: drop-shadow(0 0 8px rgba(255,179,71,0.8)); }
+}
+
+/* Compare */
+.notif-icon-wrapper.type-compare svg {
+  animation: scaleRock 2.5s infinite ease-in-out;
+}
+@keyframes scaleRock {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(12deg); }
+  75% { transform: rotate(-12deg); }
+}
+
+/* Update */
+.notif-icon-wrapper.type-update svg {
+  animation: pulseCpu 2s infinite ease-in-out;
+}
+@keyframes pulseCpu {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 6px rgba(0,242,254,0.6)); }
+}
+
+/* Toast Animations */
+.toast-icon-wrapper.type-price_drop svg { animation: bounceDown 2s infinite ease-in-out; }
+.toast-icon-wrapper.type-launch svg { animation: floatUp 2s infinite ease-in-out; }
+.toast-icon-wrapper.type-trending svg { animation: flickerFlame 1.5s infinite alternate; }
+.toast-icon-wrapper.type-pick svg { animation: pulseStar 2s infinite; }
+.toast-icon-wrapper.type-compare svg { animation: scaleRock 2.5s infinite ease-in-out; }
+.toast-icon-wrapper.type-update svg { animation: pulseCpu 2s infinite ease-in-out; }

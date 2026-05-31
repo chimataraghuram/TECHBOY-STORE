@@ -186,7 +186,7 @@ const TechBoyTrends = () => (
         <m.div className="tbt-alerts-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
           {PREDEFINED_NOTIFICATIONS.map(alert => (
             <TrendsCard key={alert.id} id={`trend-alert-${alert.id}`} variants={cardVariant} className="tbt-alert-card notification-item unread" style={{ borderRadius: '12px', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
-              <div className="notif-icon-wrapper" style={{ color: alert.type === 'price_drop' ? '#00f2fe' : alert.type === 'trending' ? '#ff3333' : '#ffb347' }}>
+              <div className={`notif-icon-wrapper type-${alert.type}`} style={{ color: alert.type === 'price_drop' ? '#00f2fe' : alert.type === 'trending' ? '#ff3333' : '#ffb347' }}>
                 <alert.icon size={18} />
               </div>
               <div className="notif-content">

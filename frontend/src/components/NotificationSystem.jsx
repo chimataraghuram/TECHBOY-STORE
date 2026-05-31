@@ -166,7 +166,7 @@ const NotificationSystem = () => {
                             transition={{ type: "spring", stiffness: 200, damping: 20 }}
                             onClick={() => handleNotificationClick(toastNotification.id)}
                         >
-                            <div className="toast-icon-wrapper">
+                            <div className={`toast-icon-wrapper type-${toastNotification.type}`}>
                                 <toastNotification.icon size={20} />
                             </div>
                             <div className="toast-content">
@@ -209,7 +209,7 @@ const NotificationSystem = () => {
                                         onClick={() => handleNotificationClick(notif.id)}
                                         style={{ cursor: 'pointer' }}
                                     >
-                                        <div className="notif-icon-wrapper">
+                                        <div className={`notif-icon-wrapper type-${notif.type}`}>
                                             <notif.icon size={16} />
                                         </div>
                                         <div className="notif-content">
