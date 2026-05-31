@@ -2113,7 +2113,7 @@ html {
    ============================================== */
 .hero-section {
   align-items: flex-start !important;
-  padding-top: 110px !important; /* Reduced to bring content closer to navbar */
+  padding-top: 90px !important; /* Brought extremely close to navbar */
   padding-bottom: 20px !important;
   min-height: 100vh !important; 
 }
