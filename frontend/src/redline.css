@@ -120,19 +120,14 @@ html {
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
   align-items: center !important;
   gap: 28px !important;
-  pointer-events: auto !important;
-  padding: 16px 32px !important;
-  min-height: 76px;
-  border-radius: 28px !important;
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 31, 61, 0.05) 38%, rgba(8, 1, 2, 0.82) 100%) !important;
-  border: 1px solid rgba(255, 31, 61, 0.18) !important;
-  backdrop-filter: blur(24px) saturate(1.35) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(1.35) !important;
-  box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.55),
-    0 0 40px rgba(255, 31, 61, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  pointer-events: none !important; /* Enable clicks on children only */
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 16px !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 .navbar-left,
@@ -141,13 +136,16 @@ html {
   pointer-events: auto !important;
   display: flex;
   align-items: center;
-  background: transparent !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  border: none !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-  box-shadow: none !important;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 31, 61, 0.05) 38%, rgba(8, 1, 2, 0.82) 100%) !important;
+  backdrop-filter: blur(24px) saturate(1.35) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.35) !important;
+  border: 1px solid rgba(255, 31, 61, 0.18) !important;
+  border-radius: 28px !important;
+  padding: 8px 16px !important;
+  box-shadow: 
+    0 24px 60px rgba(0, 0, 0, 0.55),
+    0 0 40px rgba(255, 31, 61, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
 }
 
 .navbar-left {
@@ -163,6 +161,7 @@ html {
 .navbar-center {
   justify-self: center;
   gap: 18px;
+  padding: 10px 24px !important;
 }
 
 .logo-container {
@@ -1105,9 +1104,13 @@ html {
     justify-content: space-between !important;
     grid-template-columns: unset !important;
     gap: 12px !important;
-    padding: 10px 14px !important;
+    padding: 0 10px !important;
     min-height: 58px !important;
-    border-radius: 18px !important;
+  }
+  
+  .navbar-left, .navbar-right {
+    padding: 6px 12px !important;
+    border-radius: 20px !important;
   }
 
   .mobile-menu-toggle {
@@ -2889,8 +2892,8 @@ button:not(.close-btn):active {
 
   .navbar-content {
     gap: 16px !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
   .nav-link {
