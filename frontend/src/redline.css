@@ -116,10 +116,10 @@ html {
   position: relative !important;
   width: 100% !important;
   max-width: 1520px;
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
+  display: flex !important;
+  justify-content: space-between !important;
   align-items: center !important;
-  gap: 28px !important;
+  gap: 20px !important;
   pointer-events: none !important; /* Enable clicks on children only */
   background: transparent !important;
   border: none !important;
