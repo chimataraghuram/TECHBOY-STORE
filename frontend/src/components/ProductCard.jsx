@@ -179,28 +179,28 @@ const ProductCard = ({ product, onCompare, isComparing, onView, onPriceAlert, in
                     )}
                 </div>
 
-                <div className="product-meta" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '12px' }}>
+                <div className="product-meta" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '12px', position: 'relative', zIndex: 90, pointerEvents: 'auto' }}>
                     <div className="price-info" style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <span className="price">₹{(product.price || 0).toLocaleString('en-IN')}</span>
                     </div>
-                    <div style={{ display: 'flex', gap: '6px', width: '100%' }}>
+                    <div style={{ display: 'flex', gap: '6px', width: '100%', position: 'relative', zIndex: 100, pointerEvents: 'auto' }}>
                         <button 
                             className="primary-btn mini" 
-                            style={{ flex: 1, padding: '8px 4px', borderRadius: '10px', background: 'linear-gradient(135deg, #2563eb, #3b82f6)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', border: 'none', color: 'white' }}
+                            style={{ flex: 1, padding: '8px 4px', borderRadius: '10px', background: 'linear-gradient(135deg, #2563eb, #3b82f6)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', border: 'none', color: 'white', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer' }}
                             onClick={(e) => { e.stopPropagation(); onPriceAlert && onPriceAlert(product); }}
                         >
                             🔔 Alert
                         </button>
                         <button
                             className="primary-btn mini"
-                            style={{ flex: 1, padding: '8px 4px', borderRadius: '10px', background: isComparing ? 'rgba(255, 31, 61, 0.2)' : 'rgba(255, 255, 255, 0.1)', color: isComparing ? 'var(--accent-primary)' : 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', border: '1px solid rgba(255,255,255,0.1)' }}
+                            style={{ flex: 1, padding: '8px 4px', borderRadius: '10px', background: isComparing ? 'rgba(255, 31, 61, 0.2)' : 'rgba(255, 255, 255, 0.1)', color: isComparing ? 'var(--accent-primary)' : 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', border: '1px solid rgba(255,255,255,0.1)', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer' }}
                             onClick={(e) => { e.stopPropagation(); onCompare && onCompare(product); }}
                         >
                             ⚔️ VS
                         </button>
                         <button 
                             className="primary-btn mini" 
-                            style={{ flex: 1, padding: '8px 4px', borderRadius: '10px', fontSize: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            style={{ flex: 1, padding: '8px 4px', borderRadius: '10px', fontSize: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer' }}
                             onClick={(e) => { e.stopPropagation(); onView && onView(product); }}
                         >
                             View
