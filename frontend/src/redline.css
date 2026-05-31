@@ -69,7 +69,6 @@ html {
 }
 
 .glass-card,
-.pill-wrapper,
 .filter-sidebar,
 .filter-sidebar-drawer,
 .comparison-content,
@@ -2113,9 +2112,8 @@ html {
    LAYOUT TWEAKS: SPACING FIXES
    ============================================== */
 .hero-section {
-  padding-top: 85px !important;
   padding-bottom: 20px !important;
-  min-height: 85vh !important; /* Reduces the massive vertical gap caused by 100vh */
+  min-height: 100vh !important;
 }
 
 .store-section {
