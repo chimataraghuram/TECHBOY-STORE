@@ -72,14 +72,14 @@ const AuthDropdown = ({ onWatchlistClick }) => {
                 <span>My Profile</span>
               </button>
               
-              <button className="dropdown-item" onClick={() => { setIsOpen(false); onWatchlistClick && onWatchlistClick(); }}>
-                <Bookmark size={16} className="dropdown-icon" />
-                <span>Saved Phones</span>
-              </button>
-
               <button className="dropdown-item">
                 <Heart size={16} className="dropdown-icon" />
                 <span>Wishlist</span>
+              </button>
+
+              <button className="dropdown-item" onClick={() => { setIsOpen(false); onWatchlistClick && onWatchlistClick(); }}>
+                <Bookmark size={16} className="dropdown-icon" />
+                <span>Saved Phones</span>
               </button>
               
               <button className="dropdown-item">

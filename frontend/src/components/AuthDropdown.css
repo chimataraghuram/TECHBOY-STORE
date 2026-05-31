@@ -45,7 +45,7 @@
   bottom: -2px;
   border-radius: 50%;
   border: 2px solid transparent;
-  background: linear-gradient(135deg, #ff0066, #ff00ff) border-box;
+  background: linear-gradient(135deg, #ff1f3d, #e60023) border-box;
   -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
@@ -78,7 +78,7 @@
   overflow: hidden;
   z-index: 1000;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 0, 102, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 31, 61, 0.15);
   background: rgba(15, 15, 20, 0.85);
   backdrop-filter: blur(20px);
   padding: 10px 0;
@@ -96,7 +96,7 @@
   height: 44px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid rgba(255, 0, 102, 0.5);
+  border: 2px solid rgba(255, 31, 61, 0.5);
 }
 
 .dropdown-user-info {
@@ -160,7 +160,7 @@
 }
 
 .dropdown-item:hover .dropdown-icon {
-  color: #ff0066;
+  color: #ff1f3d;
 }
 
 .dropdown-item::before {
@@ -170,7 +170,7 @@
   top: 0;
   bottom: 0;
   width: 3px;
-  background: linear-gradient(to bottom, #ff0066, #ff00ff);
+  background: linear-gradient(to bottom, #ff1f3d, #e60023);
   transform: scaleY(0);
   transition: transform 0.2s ease;
   transform-origin: center;

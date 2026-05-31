@@ -16,7 +16,6 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
 
     const { user, loginWithGoogle } = useAuth();
     const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
-    const [isSearchExpanded, setIsSearchExpanded] = useState(false);
 
     // Alerts state
     const [isAlertsOpen, setIsAlertsOpen] = useState(false);
@@ -103,10 +102,10 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
             setScrolled(window.scrollY > 50);
         };
 
-        const sections = ['home', 'how-it-works', 'products', 'trends', 'features'];
+        const sections = ['home', 'products', 'trends', 'how-it-works', 'footer'];
         const observerOptions = {
             root: null,
-            rootMargin: '-50% 0px -50% 0px', // Trigger when section is in middle of screen
+            rootMargin: '-40% 0px -40% 0px', // More balanced threshold for active tracking
             threshold: 0
         };
 
@@ -148,7 +147,10 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                     >
                         {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
                     </button>
-                    <a href="/" className="logo-container">
+                    <a href="/" className="logo-container" onClick={(e) => {
+                        e.preventDefault();
+                        document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
+                    }}>
                         <img src={logo} alt="TECHBOY STORE" className="logo-img" style={{ width: 54, height: 54 }} />
                         <span className="logo-text jelly-text">TECHBOY STORE</span>
                     </a>
@@ -158,22 +160,37 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                 {!isMobile ? (
                     <div className="navbar-center">
                         <div className="nav-links">
-                            <a href="#home" className={`nav-link ${activeSection === 'home' ? 'active' : ''}`}>Home</a>
-                            <a href="#products" className={`nav-link ${activeSection === 'products' ? 'active' : ''}`}>Products</a>
-                            <a href="#trends" className={`nav-link ${activeSection === 'trends' ? 'active' : ''}`}>Trends 🔥</a>
-                            <a href="#how-it-works" className={`nav-link ${activeSection === 'how-it-works' ? 'active' : ''}`}>How It Works</a>
-                            <a href="#footer" className={`nav-link ${activeSection === 'footer' ? 'active' : ''}`}>Contact</a>
+                            {['home', 'products', 'trends', 'how-it-works', 'footer'].map(sec => {
+                                const isActive = activeSection === sec;
+                                let label = 'Home';
+                                if (sec === 'products') label = 'Products';
+                                else if (sec === 'trends') label = 'Trends 🔥';
+                                else if (sec === 'how-it-works') label = 'How It Works';
+                                else if (sec === 'footer') label = 'Contact';
+
+                                return (
+                                    <a 
+                                        key={sec}
+                                        href={`#${sec}`} 
+                                        className={`nav-link ${isActive ? 'active' : ''}`}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            document.getElementById(sec)?.scrollIntoView({ behavior: 'smooth' });
+                                        }}
+                                    >
+                                        {label}
+                                        {isActive && (
+                                            <m.span 
+                                                layoutId="activeNavIndicator" 
+                                                className="nav-active-indicator"
+                                                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                            />
+                                        )}
+                                    </a>
+                                );
+                            })}
                         </div>
-                        <div 
-                            className={`search-bar ${scrolled && !isSearchExpanded ? 'collapsed' : ''}`}
-                            onClick={() => {
-                                if (scrolled && !isSearchExpanded) {
-                                    setIsSearchExpanded(true);
-                                    // Focus input after expanding
-                                    setTimeout(() => document.querySelector('.search-input').focus(), 100);
-                                }
-                            }}
-                        >
+                        <div className="search-bar">
                             <Search size={18} className="search-icon" />
                             <input
                                 type="text"
@@ -181,16 +198,12 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                 placeholder="Search gear..."
                                 value={searchTerm}
                                 onChange={handleSearchChange}
-                                onBlur={() => {
-                                    if (!searchTerm) setIsSearchExpanded(false);
-                                }}
                             />
-                            {(searchTerm || (scrolled && isSearchExpanded)) && (
+                            {searchTerm && (
                                 <button className="clear-search-btn" onClick={(e) => {
                                     e.stopPropagation();
                                     onSearch('');
-                                    setIsSearchExpanded(false);
-                                }} title="Close Search">
+                                }} title="Clear Search">
                                     <X size={14} />
                                 </button>
                             )}
@@ -207,11 +220,29 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                 className="navbar-center active mobile-drawer"
                             >
                                 <div className="nav-links mobile">
-                                    <a href="#home" className={`nav-link ${activeSection === 'home' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Home</a>
-                                    <a href="#products" className={`nav-link ${activeSection === 'products' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Products</a>
-                                    <a href="#trends" className={`nav-link ${activeSection === 'trends' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Trends 🔥</a>
-                                    <a href="#how-it-works" className={`nav-link ${activeSection === 'how-it-works' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>How It Works</a>
-                                    <a href="#footer" className={`nav-link ${activeSection === 'footer' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>Contact</a>
+                                    {['home', 'products', 'trends', 'how-it-works', 'footer'].map(sec => {
+                                        const isActive = activeSection === sec;
+                                        let label = 'Home';
+                                        if (sec === 'products') label = 'Products';
+                                        else if (sec === 'trends') label = 'Trends 🔥';
+                                        else if (sec === 'how-it-works') label = 'How It Works';
+                                        else if (sec === 'footer') label = 'Contact';
+
+                                        return (
+                                            <a 
+                                                key={sec}
+                                                href={`#${sec}`} 
+                                                className={`nav-link ${isActive ? 'active' : ''}`} 
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    setIsMenuOpen(false);
+                                                    document.getElementById(sec)?.scrollIntoView({ behavior: 'smooth' });
+                                                }}
+                                            >
+                                                {label}
+                                            </a>
+                                        );
+                                    })}
                                 </div>
                                 <div className="search-bar mobile">
                                     <Search size={18} className="search-icon" />

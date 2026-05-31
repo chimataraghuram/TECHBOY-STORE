@@ -101,15 +101,15 @@ html {
   top: 0 !important;
   left: 0 !important;
   width: 100% !important;
-  padding: 18px 24px !important;
+  padding: 24px 32px !important;
   display: flex !important;
   justify-content: center !important;
   pointer-events: none; /* Let clicks pass through empty space */
-  transition: padding 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: padding 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .navbar.scrolled {
-  padding: 10px 24px !important;
+  padding: 12px 32px !important;
 }
 
 .navbar-content {
@@ -120,27 +120,27 @@ html {
   align-items: center !important;
   justify-content: space-between !important;
   pointer-events: auto !important; /* Enable clicks on the floating nav bar */
-  background: rgba(10, 2, 4, 0.65) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border: 1px solid rgba(255, 31, 61, 0.15) !important;
-  border-radius: 24px !important;
-  padding: 12px 32px !important;
+  background: rgba(10, 2, 4, 0.45) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 31, 61, 0.12) !important;
+  border-radius: 32px !important;
+  padding: 14px 36px !important;
   box-shadow: 
-    0 12px 40px rgba(0, 0, 0, 0.6), 
-    0 0 0 1px rgba(255, 255, 255, 0.02),
-    0 0 20px rgba(255, 31, 61, 0.05) !important;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    0 20px 50px rgba(0, 0, 0, 0.7), 
+    0 0 30px rgba(255, 31, 61, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .navbar.scrolled .navbar-content {
-  background: rgba(8, 1, 2, 0.85) !important;
-  border-color: rgba(255, 31, 61, 0.3) !important;
+  background: rgba(8, 1, 2, 0.75) !important;
+  border-color: rgba(255, 31, 61, 0.25) !important;
   border-radius: 20px !important;
   padding: 8px 24px !important;
   box-shadow: 
-    0 16px 45px rgba(0, 0, 0, 0.75), 
-    0 0 28px rgba(255, 31, 61, 0.18) !important;
+    0 16px 45px rgba(0, 0, 0, 0.85), 
+    0 0 35px rgba(255, 31, 61, 0.15) !important;
 }
 
 .navbar-left, .navbar-right {
@@ -161,7 +161,7 @@ html {
   padding: 0 !important;
   box-shadow: none !important;
   gap: 32px;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .navbar-left {
@@ -179,23 +179,30 @@ html {
 .logo-img {
   width: 50px !important;
   height: 50px !important;
-  border-color: rgba(255, 255, 255, 0.28) !important;
-  box-shadow: 0 0 0 4px rgba(255, 31, 61, 0.14), 0 0 28px rgba(255, 31, 61, 0.42) !important;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 31, 61, 0.2) !important;
+  box-shadow: 0 0 20px rgba(255, 31, 61, 0.2) !important;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .navbar.scrolled .logo-img {
-  width: 40px !important;
-  height: 40px !important;
-  box-shadow: 0 0 0 3px rgba(255, 31, 61, 0.1), 0 0 18px rgba(255, 31, 61, 0.3) !important;
+  width: 38px !important;
+  height: 38px !important;
+  box-shadow: 0 0 15px rgba(255, 31, 61, 0.3) !important;
 }
 
 .logo-text {
-  transition: font-size 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  font-size: 1.15rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #ffffff 40%, #ff1f3d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: font-size 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .navbar.scrolled .logo-text {
-  font-size: 0.85rem !important;
+  font-size: 0.95rem !important;
 }
 
 .nav-links {
@@ -205,11 +212,12 @@ html {
 }
 
 .nav-link {
-  color: #d8c9cc !important;
+  color: rgba(216, 201, 204, 0.6) !important;
   font-size: 1.05rem;
   font-weight: 500;
   text-decoration: none;
-  transition: all 0.3s ease;
+  padding: 8px 12px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
   position: relative;
 }
 
@@ -217,68 +225,106 @@ html {
   font-size: 0.95rem !important;
 }
 
-.nav-link:hover,
-.nav-link.active {
+.nav-link:hover {
   color: #fff !important;
-  text-shadow: 0 0 12px rgba(255, 31, 61, 0.8);
+  text-shadow: 0 0 10px rgba(255, 31, 61, 0.3);
 }
 
-/* Active indicator dot */
-.nav-link.active::after {
-  content: '';
+.nav-link.active {
+  color: #fff !important;
+  text-shadow: 0 0 12px rgba(255, 31, 61, 0.8) !important;
+}
+
+/* Animated active indicator line */
+.nav-active-indicator {
   position: absolute;
-  bottom: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
+  bottom: -4px;
+  left: 12px;
+  right: 12px;
+  height: 2px;
   background: var(--redline-red);
-  box-shadow: 0 0 10px var(--redline-red);
+  border-radius: 2px;
+  box-shadow: 
+    0 0 12px var(--redline-red),
+    0 0 4px var(--redline-red);
+  pointer-events: none;
 }
 
 .search-bar {
   display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  padding: 6px 14px;
-  gap: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 24px;
+  padding: 8px 16px;
+  gap: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
+  width: 180px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
 }
 
-.search-bar.collapsed {
-  padding: 6px 10px;
-  gap: 0;
-  cursor: pointer;
-  background: rgba(255, 31, 61, 0.1);
-  border-color: rgba(255, 31, 61, 0.2);
+.search-bar:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 31, 61, 0.25);
 }
 
-.search-bar.collapsed:hover {
-  background: rgba(255, 31, 61, 0.2);
+.search-bar:focus-within {
+  width: 240px !important;
+  background: rgba(10, 2, 4, 0.8) !important;
+  border-color: rgba(255, 31, 61, 0.6) !important;
+  box-shadow: 
+    0 0 25px rgba(255, 31, 61, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+.navbar.scrolled .search-bar:not(:focus-within) {
+  padding: 6px 12px;
+  width: 140px;
+  background: rgba(255, 31, 61, 0.05);
+  border-color: rgba(255, 31, 61, 0.15);
 }
 
 .search-input {
   background: transparent;
   border: none;
   color: #fff;
-  width: 140px;
-  font-size: 0.9rem;
+  width: 100%;
+  font-size: 0.92rem;
   outline: none;
-  transition: width 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
-}
-
-.search-bar.collapsed .search-input {
-  width: 0px;
-  padding: 0;
-  opacity: 0;
+  transition: all 0.3s ease;
 }
 
 .search-input::placeholder {
-  color: #91777c;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.search-icon {
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.3s ease;
+}
+
+.search-bar:focus-within .search-icon {
+  color: var(--redline-red);
+  filter: drop-shadow(0 0 5px var(--redline-red));
+}
+
+.clear-search-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.clear-search-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .navbar-right {
