@@ -1,5 +1,5 @@
 import React from 'react';
-import { m } from 'framer-motion';
+import { motion as m, AnimatePresence } from 'framer-motion';
 import {
   Flame, TrendingDown,
   Eye, Zap, ChevronUp, Bell
@@ -25,8 +25,6 @@ const priceDrops = [
   { id: 4, name: 'vivo V70 FE', sub: 'Dimensity 7300', image: '/images/phones/vivo-v70-fe.jpg', current: 37088, prev: 42999, savings: 5911, pct: 13 },
 ];
 
-
-
 /* ─────────────────────────── HELPERS ─────────────────────────── */
 
 const fmt = (n) => `₹${n.toLocaleString('en-IN')}`;
@@ -42,7 +40,7 @@ const onImgErr2 = (e) => { e.target.src = fallback2; };
 const sectionVariant = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.08 } } };
 const cardVariant = { hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } } };
 
-const TrendsCard = ({ id, className, children, variants }) => {
+const TrendsCard = ({ id, className, children, variants, initial, whileInView, viewport, exit, transition, style }) => {
   const [theme, setTheme] = React.useState('default');
   const cycleTheme = (e) => {
     if (e.target.closest('button, a, input, select')) return;
@@ -55,9 +53,14 @@ const TrendsCard = ({ id, className, children, variants }) => {
     <m.div
       id={id}
       variants={variants}
+      initial={initial}
+      whileInView={whileInView}
+      viewport={viewport}
+      exit={exit}
+      transition={transition}
       className={`${className} ${theme !== 'default' ? `theme-${theme}` : ''}`}
       onClick={cycleTheme}
-      style={{ cursor: 'pointer' }}
+      style={{ cursor: 'pointer', ...style }}
     >
       {children}
     </m.div>
@@ -93,9 +96,20 @@ const TechBoyTrends = () => {
           <span className="tbt-live-pill">● LIVE ALERTS</span>
         </div>
 
-        <m.div className="tbt-drops-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
-          {liveAlerts.map(phone => (
-            <TrendsCard key={phone.id} id={`trend-alert-${phone.id}`} variants={cardVariant} className="tbt-drop-card glass-card" style={{ border: '1px solid #16a34a', boxShadow: '0 0 15px rgba(22, 163, 74, 0.15)', display: 'flex', flexDirection: 'column' }}>
+        <div className="tbt-drops-grid">
+          <AnimatePresence mode="popLayout">
+            {liveAlerts.map((phone, i) => (
+              <TrendsCard 
+                key={phone.id} 
+                id={`trend-alert-${phone.id}`} 
+                initial={{ opacity: 0, scale: 0.9, y: 20 }} 
+                whileInView={{ opacity: 1, scale: 1, y: 0 }} 
+                viewport={{ once: true, margin: '-40px' }}
+                exit={{ opacity: 0, scale: 0.8, y: -20 }}
+                transition={{ duration: 0.4, delay: (i % 3) * 0.1 }}
+                className="tbt-drop-card glass-card" 
+                style={{ border: '1px solid #16a34a', boxShadow: '0 0 15px rgba(22, 163, 74, 0.15)', display: 'flex', flexDirection: 'column' }}
+              >
               {/* rank badge */}
               <div className="tbt-rank-badge" style={{ position: 'absolute', top: '12px', left: '12px', background: 'linear-gradient(45deg, #16a34a, #15803d)', color: '#fff', padding: '4px 10px', borderRadius: '12px', fontSize: '13px', fontWeight: 'bold', zIndex: 10, border: '1px solid #4ade80' }}>
                 🔥 #{phone.rank} HIGHEST DISCOUNT
@@ -130,9 +144,10 @@ const TechBoyTrends = () => {
                   BUY NOW
                 </a>
               </div>
-            </TrendsCard>
-          ))}
-        </m.div>
+              </TrendsCard>
+            ))}
+          </AnimatePresence>
+        </div>
       </div>
 
     </div>
