@@ -116,6 +116,7 @@ html {
   position: relative !important;
   width: 100% !important;
   max-width: 1520px;
+  margin: 0 auto !important;
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
@@ -136,7 +137,6 @@ html {
   pointer-events: auto !important;
   display: flex;
   align-items: center;
-  flex: 0 1 auto !important; /* Allow shrinking if space is tight */
   background: linear-gradient(135deg, rgba(31, 10, 14, 0.95), rgba(18, 5, 8, 0.98)) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
@@ -150,17 +150,23 @@ html {
 .navbar-left {
   justify-self: start;
   gap: 12px;
+  flex: 0 1 20% !important;
+  justify-content: flex-start;
 }
 
 .navbar-right {
   justify-self: end;
-  gap: 14px;
+  gap: 8px; /* Reduced excessive spacing */
+  flex: 0 1 25% !important;
+  justify-content: flex-end;
 }
 
 .navbar-center {
   justify-self: center;
-  gap: 18px;
-  padding: 10px 24px !important;
+  gap: 14px; /* Slightly reduced gap */
+  padding: 10px 18px !important;
+  flex: 0 1 55% !important;
+  justify-content: center;
 }
 
 .logo-container {
@@ -255,13 +261,14 @@ html {
   gap: 10px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
-  width: 220px;
-  min-width: 36px;
+  width: 100%;
+  max-width: 220px;
+  min-width: 140px;
   height: 40px;
   cursor: text;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
   transition:
-    width 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    max-width 0.5s cubic-bezier(0.16, 1, 0.3, 1),
     background 0.4s cubic-bezier(0.16, 1, 0.3, 1),
     border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
@@ -273,7 +280,7 @@ html {
 }
 
 .search-bar:focus-within {
-  width: 240px !important;
+  max-width: 240px !important;
   background: rgba(10, 2, 4, 0.85) !important;
   border-color: rgba(255, 31, 61, 0.55) !important;
   box-shadow:
