@@ -137,6 +137,7 @@ html {
   pointer-events: auto !important;
   display: flex;
   align-items: center;
+  flex: 0 1 auto !important;
   background: linear-gradient(135deg, rgba(31, 10, 14, 0.95), rgba(18, 5, 8, 0.98)) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;
@@ -150,23 +151,17 @@ html {
 .navbar-left {
   justify-self: start;
   gap: 12px;
-  flex: 0 1 20% !important;
-  justify-content: flex-start;
 }
 
 .navbar-right {
   justify-self: end;
   gap: 8px; /* Reduced excessive spacing */
-  flex: 0 1 25% !important;
-  justify-content: flex-end;
 }
 
 .navbar-center {
   justify-self: center;
   gap: 14px; /* Slightly reduced gap */
   padding: 10px 18px !important;
-  flex: 0 1 55% !important;
-  justify-content: center;
 }
 
 .logo-container {
@@ -1075,6 +1070,7 @@ html {
     grid-template-columns: 1fr !important;
     gap: 46px !important;
     text-align: center;
+    justify-items: center !important;
   }
 
   .premium-subtitle {

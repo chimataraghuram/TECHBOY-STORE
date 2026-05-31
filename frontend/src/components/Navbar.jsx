@@ -162,67 +162,71 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
 
             <div className="navbar-content">
                 {/* LOGO AREA - LEFT */}
-                <div className="navbar-left">
-                    <button 
-                        className="mobile-menu-toggle" 
-                        onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        aria-label="Toggle menu"
-                        aria-expanded={isMenuOpen}
-                    >
-                        {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
-                    </button>
-                    <a href="/" className="logo-container" onClick={(e) => {
-                        e.preventDefault();
-                        scrollToSection('home');
-                    }}>
-                        <img src={logo} alt="TECHBOY STORE" className="logo-img" />
-                        <span className="logo-text jelly-text">TECHBOY STORE</span>
-                    </a>
+                <div className="navbar-left-container" style={{ flex: '2', display: 'flex', justifyContent: 'flex-start', minWidth: 'max-content' }}>
+                    <div className="navbar-left pill-wrapper">
+                        <button 
+                            className="mobile-menu-toggle" 
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            aria-label="Toggle menu"
+                            aria-expanded={isMenuOpen}
+                        >
+                            {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+                        </button>
+                        <a href="/" className="logo-container" onClick={(e) => {
+                            e.preventDefault();
+                            scrollToSection('home');
+                        }}>
+                            <img src={logo} alt="TECHBOY STORE" className="logo-img" />
+                            <span className="logo-text jelly-text">TECHBOY STORE</span>
+                        </a>
+                    </div>
                 </div>
 
                 {/* NAVIGATION - CENTER */}
                 {!isMobile ? (
-                    <div className="navbar-center">
-                        <div className="nav-links">
-                            {NAV_SECTIONS.map(sec => {
-                                const isActive = activeSection === sec;
-                                let label = 'Home';
-                                if (sec === 'products') label = 'Products';
-                                else if (sec === 'trends') label = 'Trends 🔥';
-                                else if (sec === 'how-it-works') label = 'How It Works';
-                                else if (sec === 'footer') label = 'Contact';
+                    <div className="navbar-center-container" style={{ flex: '5.5', display: 'flex', justifyContent: 'center' }}>
+                        <div className="navbar-center pill-wrapper">
+                            <div className="nav-links">
+                                {NAV_SECTIONS.map(sec => {
+                                    const isActive = activeSection === sec;
+                                    let label = 'Home';
+                                    if (sec === 'products') label = 'Products';
+                                    else if (sec === 'trends') label = 'Trends 🔥';
+                                    else if (sec === 'how-it-works') label = 'How It Works';
+                                    else if (sec === 'footer') label = 'Contact';
 
-                                return (
-                                    <a 
-                                        key={sec}
-                                        href={`#${sec}`} 
-                                        className={`nav-link ${isActive ? 'active' : ''}`}
-                                        onClick={(e) => handleNavClick(e, sec)}
-                                    >
-                                        {label}
-                                    </a>
-                                );
-                            })}
-                        </div>
-                        <div className="nav-divider" aria-hidden="true"></div>
-                        <div className="search-bar" role="search">
-                            <Search size={18} className="search-icon" />
-                            <input
-                                type="text"
-                                className="search-input"
-                                placeholder="Search gear..."
-                                value={searchTerm}
-                                onChange={handleSearchChange}
-                                aria-label="Search products"
-                            />
-                            {searchTerm && (
-                                <button className="clear-search-btn" onClick={(e) => {
-                                    e.stopPropagation();
-                                    onSearch('');
-                                }} title="Clear Search">
-                                    <X size={14} />
-                                </button>
-                            )}
+                                    return (
+                                        <a 
+                                            key={sec}
+                                            href={`#${sec}`} 
+                                            className={`nav-link ${isActive ? 'active' : ''}`}
+                                            onClick={(e) => handleNavClick(e, sec)}
+                                        >
+                                            {label}
+                                        </a>
+                                    );
+                                })}
+                            </div>
+                            <div className="nav-divider" aria-hidden="true"></div>
+                            <div className="search-bar" role="search">
+                                <Search size={18} className="search-icon" />
+                                <input
+                                    type="text"
+                                    className="search-input"
+                                    placeholder="Search gear..."
+                                    value={searchTerm}
+                                    onChange={handleSearchChange}
+                                    aria-label="Search products"
+                                />
+                                {searchTerm && (
+                                    <button className="clear-search-btn" onClick={(e) => {
+                                        e.stopPropagation();
+                                        onSearch('');
+                                    }} title="Clear Search">
+                                        <X size={14} />
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     </div>
                 ) : (
@@ -280,28 +284,29 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                 )}
 
                 {/* ACTIONS - RIGHT */}
-                <div className="navbar-right">
-                    <button onClick={onChatToggle} className="ai-pill-btn-standalone">
-                        <Bot size={18} className="ai-pill-icon" />
-                        <span className="ai-pill-text">TECHBOY AI</span>
-                    </button>
-
-                    {/* Notification Bell Container */}
-                    <div className="navbar-notification-container">
-                        <button 
-                            className="bell-btn" 
-                            onClick={() => {
-                                setIsAlertsOpen(!isAlertsOpen);
-                                if (!isAlertsOpen) fetchAlerts();
-                            }}
-                            title="Price Alerts"
-                            aria-label="Price Alerts"
-                        >
-                            <Bell size={18} />
-                            {triggeredAlerts.length > 0 && (
-                                <span className="bell-badge">{triggeredAlerts.length}</span>
-                            )}
+                <div className="navbar-right-container" style={{ flex: '2.5', display: 'flex', justifyContent: 'flex-end', minWidth: 'max-content' }}>
+                    <div className="navbar-right pill-wrapper">
+                        <button onClick={onChatToggle} className="ai-pill-btn-standalone">
+                            <Bot size={18} className="ai-pill-icon" />
+                            <span className="ai-pill-text">TECHBOY AI</span>
                         </button>
+
+                        {/* Notification Bell Container */}
+                        <div className="navbar-notification-container">
+                            <button 
+                                className="bell-btn" 
+                                onClick={() => {
+                                    setIsAlertsOpen(!isAlertsOpen);
+                                    if (!isAlertsOpen) fetchAlerts();
+                                }}
+                                title="Price Alerts"
+                                aria-label="Price Alerts"
+                            >
+                                <Bell size={18} />
+                                {triggeredAlerts.length > 0 && (
+                                    <span className="bell-badge">{triggeredAlerts.length}</span>
+                                )}
+                            </button>
 
                         <AnimatePresence>
                             {isAlertsOpen && (
@@ -422,6 +427,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                     ) : (
                         <button className="pill-auth-btn" onClick={loginWithGoogle}>SIGN UP</button>
                     )}
+                    </div>
                 </div>
             </div>
 
