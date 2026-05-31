@@ -138,16 +138,16 @@ const TechBoyTrends = () => {
       </div>
 
       {/* ══════════════════════════════════════════════════
-          MODULE 2 — Price Drops
+          MODULE 2 & 3 — Price Drops & Live Alerts
       ══════════════════════════════════════════════════ */}
       <div className="tbt-module tbt-module-last">
-        <div className="tbt-module-heading">
-          <TrendingDown size={22} className="tbt-micon green" />
-          <h3 className="tbt-module-title">Price Drops</h3>
-          <span className="tbt-updated-pill">Updated today</span>
+        <div className="tbt-module-heading" style={{ marginBottom: '24px' }}>
+          <Bell size={22} className="tbt-micon red" />
+          <h3 className="tbt-module-title">Price Drops & Live Alerts</h3>
+          <span className="tbt-live-pill">● LATEST ALERTS</span>
         </div>
 
-        <m.div className="tbt-drops-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
+        <m.div className="tbt-drops-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }} style={{ marginBottom: '20px' }}>
           {priceDrops.map(phone => (
             <TrendsCard key={phone.id} variants={cardVariant} className="tbt-drop-card glass-card">
               {/* pct badge */}
@@ -171,18 +171,6 @@ const TechBoyTrends = () => {
             </TrendsCard>
           ))}
         </m.div>
-      </div>
-
-
-      {/* ══════════════════════════════════════════════════
-          MODULE 3 — Live Market Alerts
-      ══════════════════════════════════════════════════ */}
-      <div className="tbt-module">
-        <div className="tbt-module-heading" style={{ marginBottom: '24px' }}>
-          <Bell size={22} className="tbt-micon red" />
-          <h3 className="tbt-module-title">Live Market Alerts</h3>
-          <span className="tbt-live-pill">● LATEST ALERTS</span>
-        </div>
 
         <m.div className="tbt-alerts-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
           {CURRENT_LIVE_ALERTS.map(alert => (
