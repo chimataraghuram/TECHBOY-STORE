@@ -3303,3 +3303,8 @@ button:not(.close-btn):active {
 .toast-icon-wrapper.type-pick svg { animation: pulseStar 2s infinite; }
 .toast-icon-wrapper.type-compare svg { animation: scaleRock 2.5s infinite ease-in-out; }
 .toast-icon-wrapper.type-update svg { animation: pulseCpu 2s infinite ease-in-out; }
+
+
+.has-unread-alerts { animation: unreadShake 2s infinite ease-in-out; box-shadow: 0 0 15px rgba(255,0,0,0.6), inset 0 0 10px rgba(255,0,0,0.2) !important; border: 1px solid rgba(255,0,0,0.5) !important; }
+.has-unread-alerts .bell-icon { color: #ff3333 !important; filter: drop-shadow(0 0 5px rgba(255,0,0,0.8)); }
+@keyframes unreadShake { 0%, 100% { transform: rotate(0deg) scale(1); } 10%, 30%, 50%, 70%, 90% { transform: rotate(-8deg) scale(1.1); } 20%, 40%, 60%, 80% { transform: rotate(8deg) scale(1.1); } }

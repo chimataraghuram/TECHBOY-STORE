@@ -622,13 +622,13 @@ const NotificationSystem = () => {
     return (
         <div className="navbar-notification-container" ref={panelRef}>
             <button 
-                className={`bell-btn premium-bell ${isVibrating ? 'vibrating-big' : ''}`} 
+                className={`bell-btn premium-bell ${hasUnread ? 'has-unread-alerts' : ''} ${isVibrating ? 'vibrating-big' : ''}`} 
                 onClick={togglePanel}
                 title="TechBoy Updates"
                 aria-label="TechBoy Updates"
             >
-                <Bell size={18} className={isVibrating ? 'bell-icon-glow' : ''} />
-                {hasUnread && <span className="bell-pulse-dot big-pulse"></span>}
+                <Bell size={18} className={`bell-icon ${isVibrating ? 'bell-icon-glow' : ''}`} />
+                {hasUnread && <span className="bell-pulse-dot big-pulse" style={{ background: '#ff3333', boxShadow: '0 0 12px #ff3333' }}></span>}
             </button>
 
             {/* BIG TOAST ALERT */}
