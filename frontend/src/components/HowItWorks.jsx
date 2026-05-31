@@ -82,27 +82,27 @@ const HowItWorks = () => {
                         className="bento-card glass-card bento-pos-1 process-card"
                     >
                         <div className="bento-content">
-                            <h3>The Buying Process</h3>
-                            <p>We've simplified smartphone shopping into four easy steps.</p>
+                            <h3>The Smart-Buying Framework</h3>
+                            <p>We've simplified smartphone shopping into four seamless steps.</p>
                             <div className="process-steps">
                                 <div className="p-step">
                                     <div className="p-dot">1</div>
-                                    <span>Set Budget</span>
+                                    <span>Analyze Needs</span>
                                 </div>
                                 <ArrowRight className="p-arrow" size={16} />
                                 <div className="p-step">
                                     <div className="p-dot">2</div>
-                                    <span>Compare</span>
+                                    <span>AI Processing</span>
                                 </div>
                                 <ArrowRight className="p-arrow" size={16} />
                                 <div className="p-step">
                                     <div className="p-dot">3</div>
-                                    <span>AI Verdict</span>
+                                    <span>Data Match</span>
                                 </div>
                                 <ArrowRight className="p-arrow" size={16} />
                                 <div className="p-step">
                                     <div className="p-dot">4</div>
-                                    <span>Best Deal</span>
+                                    <span>Perfect Device</span>
                                 </div>
                             </div>
                         </div>
@@ -115,8 +115,8 @@ const HowItWorks = () => {
                     >
                         <Brain size={48} className="bento-icon pulse-icon" />
                         <div className="bento-content">
-                            <h3>AI Verdicts</h3>
-                            <p>Instantly know if a phone is right for you. Our AI reads the specs and gives you a straight answer—no jargon.</p>
+                            <h3>TechBoy AI Advisor</h3>
+                            <p>Skip the spec-sheet fatigue. Our AI instantly translates complex hardware data into clear, personalized buying verdicts.</p>
                         </div>
                     </BentoCard>
 
@@ -127,8 +127,8 @@ const HowItWorks = () => {
                     >
                         <Search size={32} className="bento-icon" />
                         <div className="bento-content">
-                            <h3>Instant Search</h3>
-                            <p>Filter exactly what you want in milliseconds.</p>
+                            <h3>Millisecond Queries</h3>
+                            <p>Blazing fast, real-time filtering across our entire smartphone database.</p>
                         </div>
                     </BentoCard>
 
@@ -139,8 +139,8 @@ const HowItWorks = () => {
                     >
                         <ShieldCheck size={32} className="bento-icon" />
                         <div className="bento-content">
-                            <h3>Verified Picks</h3>
-                            <p>Only the best phones make it to the store.</p>
+                            <h3>Enthusiast Approved</h3>
+                            <p>Zero bloat. We only curate devices that meet strict performance and value standards.</p>
                         </div>
                     </BentoCard>
 
@@ -152,8 +152,8 @@ const HowItWorks = () => {
                     >
                         <BatteryCharging size={48} className="bento-icon" style={{ margin: 0 }} />
                         <div className="bento-content">
-                            <h3>Battery & Performance Signals</h3>
-                            <p>Spot the gaming champions and battery beasts at a glance with our custom tech-signals.</p>
+                            <h3>Geek-Level Insights</h3>
+                            <p>Dive deep into custom performance metrics, thermal scores, and battery endurance ratings.</p>
                         </div>
                     </BentoCard>
 
