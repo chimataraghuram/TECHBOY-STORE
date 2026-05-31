@@ -179,17 +179,11 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                         }}
                                     >
                                         {label}
-                                        {isActive && (
-                                            <m.span 
-                                                layoutId="activeNavIndicator" 
-                                                className="nav-active-indicator"
-                                                transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                                            />
-                                        )}
                                     </a>
                                 );
                             })}
                         </div>
+                        <div className="nav-divider"></div>
                         <div className="search-bar">
                             <Search size={18} className="search-icon" />
                             <input
