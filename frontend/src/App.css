@@ -69,7 +69,7 @@
   border-radius: 50px;
   display: flex;
   align-items: center;
-  padding: 8px 16px;
+  padding: 6px 14px;
   transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }

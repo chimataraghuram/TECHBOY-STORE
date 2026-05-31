@@ -107,7 +107,7 @@ html {
   left: 0 !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  padding: 20px 24px !important;
+  padding: 12px 24px !important;
   display: flex !important;
   justify-content: center !important;
   pointer-events: none;
