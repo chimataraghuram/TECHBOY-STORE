@@ -89,7 +89,6 @@ function App() {
               searchTerm={searchTerm} 
               onSearch={setSearchTerm} 
             />
-            {/* 
             <StoreSection searchTerm={searchTerm} onSearch={setSearchTerm} />
             
             <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '300px', margin: '40px 0', borderRadius: '16px'}}></div>}>
@@ -100,7 +99,6 @@ function App() {
             <div className="container">
               <StatsStrip />
             </div>
-            */}
           </main>
           
           <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '200px'}}></div>}>
