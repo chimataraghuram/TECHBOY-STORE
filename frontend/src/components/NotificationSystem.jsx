@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { m, AnimatePresence } from 'framer-motion';
 import { Bell, TrendingDown, Rocket, Flame, Star, Scale, TrendingUp, Cpu, Battery, Camera } from 'lucide-react';
 import '../redline.css'; // Make sure styles are pulled in
@@ -154,29 +155,32 @@ const NotificationSystem = () => {
             </button>
 
             {/* BIG TOAST ALERT */}
-            <AnimatePresence>
-                {toastNotification && (
-                    <m.div
-                        className="notification-toast glass-card"
-                        initial={{ opacity: 0, x: 50, scale: 0.9 }}
-                        animate={{ opacity: 1, x: 0, scale: 1 }}
-                        exit={{ opacity: 0, x: 50, scale: 0.9 }}
-                        transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                        onClick={() => handleNotificationClick(toastNotification.id)}
-                    >
-                        <div className="toast-icon-wrapper">
-                            <toastNotification.icon size={20} />
-                        </div>
-                        <div className="toast-content">
-                            <h4>{toastNotification.title}</h4>
-                            <p>{toastNotification.desc}</p>
-                        </div>
-                        <div className="toast-action">
-                            <span>View Trends ➔</span>
-                        </div>
-                    </m.div>
-                )}
-            </AnimatePresence>
+            {typeof document !== 'undefined' && createPortal(
+                <AnimatePresence>
+                    {toastNotification && (
+                        <m.div
+                            className="notification-toast glass-card"
+                            initial={{ opacity: 0, x: 50, scale: 0.9 }}
+                            animate={{ opacity: 1, x: 0, scale: 1 }}
+                            exit={{ opacity: 0, x: 50, scale: 0.9 }}
+                            transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                            onClick={() => handleNotificationClick(toastNotification.id)}
+                        >
+                            <div className="toast-icon-wrapper">
+                                <toastNotification.icon size={20} />
+                            </div>
+                            <div className="toast-content">
+                                <h4>{toastNotification.title}</h4>
+                                <p>{toastNotification.desc}</p>
+                            </div>
+                            <div className="toast-action">
+                                <span>View Trends ➔</span>
+                            </div>
+                        </m.div>
+                    )}
+                </AnimatePresence>,
+                document.body
+            )}
 
             <AnimatePresence>
                 {isOpen && (
