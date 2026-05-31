@@ -4,7 +4,7 @@ import {
   Flame, TrendingDown,
   Eye, Zap, ChevronUp, Bell
 } from 'lucide-react';
-import { PREDEFINED_NOTIFICATIONS } from './NotificationSystem';
+import { PREDEFINED_NOTIFICATIONS, CURRENT_LIVE_ALERTS } from './NotificationSystem';
 import './TechBoyTrends.css';
 
 /* ─────────────────────────── DATA ─────────────────────────── */
@@ -65,28 +65,6 @@ const TrendsCard = ({ id, className, children, variants }) => {
 };
 
 const TechBoyTrends = () => {
-  const [randomAlerts, setRandomAlerts] = React.useState([]);
-
-  React.useEffect(() => {
-    // Pick 9 random alerts on mount (refresh)
-    const shuffled = [...PREDEFINED_NOTIFICATIONS].sort(() => 0.5 - Math.random());
-    setRandomAlerts(shuffled.slice(0, 9));
-  }, []);
-
-  const getAlertImage = (text) => {
-    const t = text.toLowerCase();
-    if (t.includes('iqoo neo')) return '/images/phones/iqoo-neo-10r.jpg';
-    if (t.includes('iqoo')) return '/images/phones/iqoo-13-5g.jpg';
-    if (t.includes('nothing')) return '/images/phones/nothing-phone-3a.jpg';
-    if (t.includes('poco')) return '/images/phones/poco-f7-5g.jpg';
-    if (t.includes('samsung') || t.includes('galaxy')) return '/images/phones/samsung-galaxy-s26-ultra.jpg';
-    if (t.includes('motorola') || t.includes('edge')) return '/images/phones/google-pixel-9-pro.jpg'; 
-    if (t.includes('realme')) return '/images/phones/realme-gt7-pro.jpg';
-    if (t.includes('vivo')) return '/images/phones/vivo-v70-fe.jpg';
-    if (t.includes('oneplus')) return '/images/phones/oneplus-13.jpg';
-    return '/images/phones/apple-iphone-17-pro.jpg';
-  };
-
   return (
   <section id="trends" className="tbt-section">
 
@@ -207,10 +185,10 @@ const TechBoyTrends = () => {
         </div>
 
         <m.div className="tbt-alerts-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
-          {randomAlerts.map(alert => (
+          {CURRENT_LIVE_ALERTS.map(alert => (
             <TrendsCard key={alert.id} id={`trend-alert-${alert.id}`} variants={cardVariant} className="tbt-alert-card notification-item unread" style={{ borderRadius: '12px', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
               <div className="notif-icon-wrapper" style={{ overflow: 'hidden', padding: 0, background: 'transparent', border: 'none' }}>
-                <img src={getAlertImage(alert.title + ' ' + alert.desc)} alt="alert" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }} onError={onImgErr} />
+                <img src={alert.image} alt="alert" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }} onError={onImgErr} />
               </div>
               <div className="notif-content">
                 <div className="notif-title-row">

@@ -48,6 +48,28 @@ export const PREDEFINED_NOTIFICATIONS = [
     { id: 30, type: 'market', icon: TrendingUp, title: 'Camera Rankings', desc: 'Top camera smartphone rankings updated', time: '12 hours ago', unread: true }
 ];
 
+export const getAlertImage = (text) => {
+    const t = text.toLowerCase();
+    if (t.includes('iqoo neo')) return '/images/phones/iqoo-neo-10r.jpg';
+    if (t.includes('iqoo')) return '/images/phones/iqoo-13-5g.jpg';
+    if (t.includes('nothing')) return '/images/phones/nothing-phone-3a.jpg';
+    if (t.includes('poco')) return '/images/phones/poco-f7-5g.jpg';
+    if (t.includes('samsung') || t.includes('galaxy')) return '/images/phones/samsung-galaxy-s26-ultra.jpg';
+    if (t.includes('motorola') || t.includes('edge')) return '/images/phones/google-pixel-9-pro.jpg'; 
+    if (t.includes('realme')) return '/images/phones/realme-gt7-pro.jpg';
+    if (t.includes('vivo')) return '/images/phones/vivo-v70-fe.jpg';
+    if (t.includes('oneplus')) return '/images/phones/oneplus-13.jpg';
+    return '/images/phones/apple-iphone-17-pro.jpg';
+};
+
+export const CURRENT_LIVE_ALERTS = [...PREDEFINED_NOTIFICATIONS]
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 9)
+    .map(alert => ({
+        ...alert,
+        image: getAlertImage(alert.title + ' ' + alert.desc)
+    }));
+
 const NotificationSystem = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [activeNotifications, setActiveNotifications] = useState([]);
@@ -58,40 +80,22 @@ const NotificationSystem = () => {
 
     // Initial load and rotation logic
     useEffect(() => {
-        let isFirstLoad = true;
-
-        const rotateNotifications = () => {
-            // Pick exactly 2 random notifications
-            const count = 2;
-            const shuffled = [...PREDEFINED_NOTIFICATIONS].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, count);
-            
-            setActiveNotifications(selected);
-            setHasUnread(true);
-            
+        setActiveNotifications(CURRENT_LIVE_ALERTS);
+        setHasUnread(true);
+        
+        // Delay initial animation slightly so user notices it
+        const initTimeout = setTimeout(() => {
             // Trigger bell vibration - Big Animation
             setIsVibrating(true);
             setTimeout(() => setIsVibrating(false), 2500); // Vibrate for 2.5 seconds
             
-            // Trigger Toast Alert (only if not first load, or maybe even on first load)
-            setToastNotification(selected[0]); // Show the first one as a toast
+            // Trigger Toast Alert
+            setToastNotification(CURRENT_LIVE_ALERTS[0]); // Show the first one as a toast
             setTimeout(() => setToastNotification(null), 6000); // Hide toast after 6 seconds
-            
-            isFirstLoad = false;
-        };
-
-        // Delay initial rotation slightly so user notices it
-        const initTimeout = setTimeout(() => {
-            rotateNotifications();
         }, 3000);
-
-        // Rotate every 45-60 seconds to simulate a live platform
-        const intervalTime = Math.floor(Math.random() * 15000) + 45000;
-        const interval = setInterval(rotateNotifications, intervalTime);
 
         return () => {
             clearTimeout(initTimeout);
-            clearInterval(interval);
         };
     }, []);
 
@@ -166,8 +170,8 @@ const NotificationSystem = () => {
                             transition={{ type: "spring", stiffness: 200, damping: 20 }}
                             onClick={() => handleNotificationClick(toastNotification.id)}
                         >
-                            <div className={`toast-icon-wrapper type-${toastNotification.type}`}>
-                                <toastNotification.icon size={20} />
+                            <div className="toast-icon-wrapper" style={{ overflow: 'hidden', padding: 0, background: 'transparent', border: 'none', width: '40px', height: '40px', flexShrink: 0 }}>
+                                <img src={toastNotification.image} alt="alert" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} onError={(e) => { e.target.src = '/images/phones/apple-iphone-17-pro.jpg'; }} />
                             </div>
                             <div className="toast-content">
                                 <h4>{toastNotification.title}</h4>
@@ -209,8 +213,8 @@ const NotificationSystem = () => {
                                         onClick={() => handleNotificationClick(notif.id)}
                                         style={{ cursor: 'pointer' }}
                                     >
-                                        <div className={`notif-icon-wrapper type-${notif.type}`}>
-                                            <notif.icon size={16} />
+                                        <div className="notif-icon-wrapper" style={{ overflow: 'hidden', padding: 0, background: 'transparent', border: 'none' }}>
+                                            <img src={notif.image} alt="alert" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }} onError={(e) => { e.target.src = '/images/phones/apple-iphone-17-pro.jpg'; }} />
                                         </div>
                                         <div className="notif-content">
                                             <div className="notif-title-row">
