@@ -29,6 +29,9 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     const [compareList, setCompareList] = useState([]);
     const [isCompModalOpen, setIsCompModalOpen] = useState(false);
     const [activeViewProduct, setActiveViewProduct] = useState(null);
+    const [displayLimit, setDisplayLimit] = useState(12);
+    const [shuffleSeed, setShuffleSeed] = useState(0);
+    const [allFilterRandomized, setAllFilterRandomized] = useState([]);
 
     // Advanced Filtering States
     const [selectedBrands, setSelectedBrands] = useState([]);
@@ -42,6 +45,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedSearch(searchTerm);
+            setDisplayLimit(12); // Reset limit on search
         }, 300);
         return () => clearTimeout(handler);
     }, [searchTerm]);
@@ -110,6 +114,22 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     const highestPrice = products.length > 0 ? Math.max(...products.map(p => p.price)) : 150000;
     const availableBrands = [...new Set(products.map(p => p.brand).filter(b => b))].sort();
 
+    const isPureAll = selectedRange === "All" && !searchTerm && selectedBrands.length === 0 && minPrice === 0 && maxPrice === highestPrice;
+
+    useEffect(() => {
+        if (isPureAll && filteredProducts.length > 0) {
+            const shuffled = [...filteredProducts].sort(() => 0.5 - Math.random());
+            setAllFilterRandomized(shuffled.slice(0, 10));
+        }
+    }, [filteredProducts, shuffleSeed, isPureAll]);
+
+    const handleCategoryClick = (range) => {
+        if (range === "All") {
+            setShuffleSeed(prev => prev + 1);
+        }
+        setSelectedRange(range);
+    };
+
     const workerRef = useRef(null);
     const [workerSupported, setWorkerSupported] = useState(true);
 
@@ -119,6 +139,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
             workerRef.current = new Worker(new URL('../workers/filter.worker.js', import.meta.url), { type: 'module' });
             workerRef.current.onmessage = (e) => {
                 setFilteredProducts(e.data.filteredProducts || []);
+                setDisplayLimit(12);
             };
         } catch (err) {
             console.warn("Web Worker is not supported in this browser environment. Falling back to main-thread filtering.", err);
@@ -195,6 +216,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
         } else {
             const localResult = localFilterProducts(payload);
             setFilteredProducts(localResult);
+            setDisplayLimit(12); // Reset limit on local fallback filtering
         }
     }, [products, debouncedSearch, selectedRange, selectedBrands, minPrice, maxPrice, sortBy, workerSupported]);
 
@@ -240,7 +262,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                                 <button
                                     key={range}
                                     className={`price-tab ${selectedRange === range ? 'active' : ''}`}
-                                    onClick={() => setSelectedRange(range)}
+                                    onClick={() => handleCategoryClick(range)}
                                 >
                                     {range}
                                 </button>
@@ -282,10 +304,10 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                                 <ProductCardSkeleton key={idx} />
                             ))
                         ) : (
-                            filteredProducts.map((product, idx) => (
+                            (isPureAll ? allFilterRandomized : filteredProducts.slice(0, displayLimit)).map((product, idx) => (
                                 <ProductCard
                                     key={product.id || idx}
-                                    index={idx}
+                                    index={idx % 12}
                                     product={product}
                                     onCompare={handleCompare}
                                     onView={setActiveViewProduct}
@@ -293,6 +315,14 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                                     searchTerm={debouncedSearch}
                                 />
                             ))
+                        )}
+                        
+                        {!loading && !isPureAll && displayLimit < filteredProducts.length && (
+                            <div style={{ gridColumn: '1 / -1', textAlign: 'center', marginTop: '20px' }}>
+                                <button className="primary-btn" onClick={() => setDisplayLimit(prev => prev + 12)}>
+                                    Load More
+                                </button>
+                            </div>
                         )}
                         {!loading && filteredProducts.length === 0 && (
                             <div className="no-results-premium glass-card">
