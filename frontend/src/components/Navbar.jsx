@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { Search, Bot, X, Menu, Bell, Trash2 } from 'lucide-react';
 import logo from '../../images/logos/new-logo.jpg';
@@ -8,12 +8,24 @@ import AuthDropdown from './AuthDropdown';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
+const NAV_SECTIONS = ['home', 'products', 'trends', 'how-it-works', 'footer'];
+
+const getNavbarScrollOffset = () => {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return 120;
+    return navbar.getBoundingClientRect().bottom + 12;
+};
+
+const scrollToSection = (sectionId) => {
+    const target = document.getElementById(sectionId);
+    if (!target) return;
+
+    const top = target.getBoundingClientRect().top + window.scrollY - getNavbarScrollOffset();
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+};
+
 const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
-    const [scrolled, setScrolled] = useState(false);
-    const [searchExpanded, setSearchExpanded] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const searchInputRef = useRef(null);
-    const searchBarRef = useRef(null);
     const [activeSection, setActiveSection] = useState('home');
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -101,72 +113,52 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
     }, []);
 
     useEffect(() => {
-        if (!scrolled) setSearchExpanded(false);
-    }, [scrolled]);
+        let ticking = false;
 
-    useEffect(() => {
-        if (!searchExpanded) return;
-        const closeSearch = (e) => {
-            if (searchBarRef.current && !searchBarRef.current.contains(e.target)) {
-                setSearchExpanded(false);
+        const updateActiveSection = () => {
+            const offset = getNavbarScrollOffset();
+            let current = NAV_SECTIONS[0];
+
+            for (const id of NAV_SECTIONS) {
+                const el = document.getElementById(id);
+                if (!el) continue;
+                if (el.getBoundingClientRect().top <= offset) {
+                    current = id;
+                }
+            }
+
+            setActiveSection(current);
+            ticking = false;
+        };
+
+        const onScroll = () => {
+            if (!ticking) {
+                ticking = true;
+                requestAnimationFrame(updateActiveSection);
             }
         };
-        document.addEventListener('mousedown', closeSearch);
-        return () => document.removeEventListener('mousedown', closeSearch);
-    }, [searchExpanded]);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 40);
-        };
+        updateActiveSection();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', updateActiveSection, { passive: true });
 
-        const sections = ['home', 'products', 'trends', 'how-it-works', 'footer'];
-        const observerOptions = {
-            root: null,
-            rootMargin: '-40% 0px -40% 0px', // More balanced threshold for active tracking
-            threshold: 0
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setActiveSection(entry.target.id);
-                }
-            });
-        }, observerOptions);
-
-        sections.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) observer.observe(el);
-        });
-
-        window.addEventListener('scroll', handleScroll);
-        handleScroll();
         return () => {
-            window.removeEventListener('scroll', handleScroll);
-            observer.disconnect();
+            window.removeEventListener('scroll', onScroll);
+            window.removeEventListener('resize', updateActiveSection);
         };
+    }, []);
+
+    const handleNavClick = useCallback((e, sectionId) => {
+        e.preventDefault();
+        scrollToSection(sectionId);
     }, []);
 
     const handleSearchChange = (e) => {
         onSearch(e.target.value);
     };
 
-    const handleSearchBarClick = () => {
-        if (scrolled && !searchExpanded) {
-            setSearchExpanded(true);
-            requestAnimationFrame(() => searchInputRef.current?.focus());
-        }
-    };
-
-    const searchBarClassName = [
-        'search-bar',
-        scrolled && !searchExpanded && 'search-collapsed',
-        searchExpanded && 'search-expanded',
-    ].filter(Boolean).join(' ');
-
     return (
-        <nav className={`navbar ${scrolled ? 'scrolled' : 'navbar-hero'}`} aria-label="Main navigation">
+        <nav className="navbar" aria-label="Main navigation">
 
             <div className="navbar-content">
                 {/* LOGO AREA - LEFT */}
@@ -181,7 +173,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                     </button>
                     <a href="/" className="logo-container" onClick={(e) => {
                         e.preventDefault();
-                        document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
+                        scrollToSection('home');
                     }}>
                         <img src={logo} alt="TECHBOY STORE" className="logo-img" />
                         <span className="logo-text jelly-text">TECHBOY STORE</span>
@@ -192,7 +184,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                 {!isMobile ? (
                     <div className="navbar-center">
                         <div className="nav-links">
-                            {['home', 'products', 'trends', 'how-it-works', 'footer'].map(sec => {
+                            {NAV_SECTIONS.map(sec => {
                                 const isActive = activeSection === sec;
                                 let label = 'Home';
                                 if (sec === 'products') label = 'Products';
@@ -205,10 +197,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                         key={sec}
                                         href={`#${sec}`} 
                                         className={`nav-link ${isActive ? 'active' : ''}`}
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            document.getElementById(sec)?.scrollIntoView({ behavior: 'smooth' });
-                                        }}
+                                        onClick={(e) => handleNavClick(e, sec)}
                                     >
                                         {label}
                                     </a>
@@ -216,21 +205,14 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                             })}
                         </div>
                         <div className="nav-divider" aria-hidden="true"></div>
-                        <div
-                            ref={searchBarRef}
-                            className={searchBarClassName}
-                            onClick={handleSearchBarClick}
-                            role="search"
-                        >
+                        <div className="search-bar" role="search">
                             <Search size={18} className="search-icon" />
                             <input
-                                ref={searchInputRef}
                                 type="text"
                                 className="search-input"
                                 placeholder="Search gear..."
                                 value={searchTerm}
                                 onChange={handleSearchChange}
-                                onFocus={() => scrolled && setSearchExpanded(true)}
                                 aria-label="Search products"
                             />
                             {searchTerm && (
@@ -254,7 +236,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                 className="navbar-center active mobile-drawer"
                             >
                                 <div className="nav-links mobile">
-                                    {['home', 'products', 'trends', 'how-it-works', 'footer'].map(sec => {
+                                    {NAV_SECTIONS.map(sec => {
                                         const isActive = activeSection === sec;
                                         let label = 'Home';
                                         if (sec === 'products') label = 'Products';
@@ -268,9 +250,8 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                                 href={`#${sec}`} 
                                                 className={`nav-link ${isActive ? 'active' : ''}`} 
                                                 onClick={(e) => {
-                                                    e.preventDefault();
                                                     setIsMenuOpen(false);
-                                                    document.getElementById(sec)?.scrollIntoView({ behavior: 'smooth' });
+                                                    handleNavClick(e, sec);
                                                 }}
                                             >
                                                 {label}
