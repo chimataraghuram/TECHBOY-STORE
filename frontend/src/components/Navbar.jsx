@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
-import { Search, Bot, X, Menu, Bell, Trash2 } from 'lucide-react';
+import { Search, Bot, X, Menu } from 'lucide-react';
 import logo from '../../images/logos/new-logo.jpg';
 import WatchlistModal from './WatchlistModal';
 import { useAuth } from '../context/AuthContext';
 import AuthDropdown from './AuthDropdown';
+import NotificationSystem from './NotificationSystem';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
@@ -32,74 +33,6 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
     const { user, loginWithGoogle } = useAuth();
     const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
 
-    // Alerts state
-    const [isAlertsOpen, setIsAlertsOpen] = useState(false);
-    const [alerts, setAlerts] = useState([]);
-    const [loadingAlerts, setLoadingAlerts] = useState(false);
-
-    const fetchAlerts = async () => {
-        const token = localStorage.getItem('techboy_token');
-        if (!token) return;
-        setLoadingAlerts(true);
-        try {
-            const res = await fetch(`${API_BASE_URL}/alerts/`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            if (res.ok) {
-                const data = await res.json();
-                setAlerts(data.results || data);
-            }
-        } catch (err) {
-            console.error("Failed to fetch alerts", err);
-        } finally {
-            setLoadingAlerts(false);
-        }
-    };
-
-    useEffect(() => {
-        if (user) {
-            fetchAlerts();
-            const interval = setInterval(fetchAlerts, 30000);
-            return () => clearInterval(interval);
-        } else {
-            setAlerts([]);
-        }
-    }, [user]);
-
-    useEffect(() => {
-        if (!isAlertsOpen) return;
-        const closeDropdown = (e) => {
-            if (!e.target.closest('.navbar-notification-container')) {
-                setIsAlertsOpen(false);
-            }
-        };
-        document.addEventListener('click', closeDropdown);
-        return () => document.removeEventListener('click', closeDropdown);
-    }, [isAlertsOpen]);
-
-    const handleDeleteAlert = async (alertId, e) => {
-        e.stopPropagation();
-        const token = localStorage.getItem('techboy_token');
-        if (!token) return;
-        try {
-            const res = await fetch(`${API_BASE_URL}/alerts/${alertId}/`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-            if (res.ok) {
-                setAlerts(prev => prev.filter(a => a.id !== alertId));
-            }
-        } catch (err) {
-            console.error("Failed to delete alert", err);
-        }
-    };
-
-    const triggeredAlerts = alerts.filter(a => !a.is_active);
-    const activeAlerts = alerts.filter(a => a.is_active);
 
     useEffect(() => {
         const handleResize = () => {
@@ -291,36 +224,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                             <span className="ai-pill-text">TECHBOY AI</span>
                         </button>
 
-                        {/* Notification Bell Container */}
-                        <div className="navbar-notification-container">
-                            <button 
-                                className="bell-btn" 
-                                onClick={() => {
-                                    setIsAlertsOpen(!isAlertsOpen);
-                                    if (!isAlertsOpen) fetchAlerts();
-                                }}
-                                title="Price Alerts"
-                                aria-label="Price Alerts"
-                            >
-                                <Bell size={18} />
-                                {triggeredAlerts.length > 0 && (
-                                    <span className="bell-badge">{triggeredAlerts.length}</span>
-                                )}
-                            </button>
-
-                        <AnimatePresence>
-                            {isAlertsOpen && (
-                                <m.div 
-                                    className="alerts-dropdown"
-                                    initial={{ opacity: 0, y: 15, scale: 0.95 }}
-                                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                                    exit={{ opacity: 0, y: 15, scale: 0.95 }}
-                                    transition={{ duration: 0.25, ease: 'easeOut' }}
-                                >
-                                    <div className="alerts-dropdown-header">
-                                        <h4>Price Alerts</h4>
-                                        <button className="clear-alerts-btn" onClick={() => setIsAlertsOpen(false)}>Close</button>
-                                    </div>
+                        <NotificationSystem />
 
                                     {!user ? (
                                         <div className="alerts-login-prompt">
