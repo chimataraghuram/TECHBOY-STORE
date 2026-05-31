@@ -3751,7 +3751,7 @@ html {
   /* Layout */
   .container { padding: 0 16px; }
   .hero-section { padding-top: 100px; padding-bottom: 40px; min-height: auto; }
-  .hero-content { flex-direction: column; text-align: center; padding-top: 0; gap: 32px; }
+  .hero-content { display: flex; flex-direction: column; text-align: center; padding-top: 0; gap: 32px; }
   .hero-text { max-width: 100%; }
   .hero-buttons { justify-content: center; flex-wrap: wrap; gap: 12px; }
   .hero-visual-wrapper { justify-content: center; width: 100%; }

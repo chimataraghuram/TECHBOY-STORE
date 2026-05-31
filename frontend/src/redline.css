@@ -516,10 +516,10 @@ html {
 
 
 .hero-content {
-  display: grid !important;
-  grid-template-columns: minmax(0, 0.88fr) minmax(380px, 0.95fr) !important;
-  align-items: center !important;
-  gap: 34px !important;
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(380px, 0.95fr);
+  align-items: center;
+  gap: 34px;
   overflow: visible;
 }
 
