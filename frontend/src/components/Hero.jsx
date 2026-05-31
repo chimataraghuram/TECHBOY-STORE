@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { m } from 'framer-motion';
-const heroImg = "https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=600&q=80";
+
+const heroImages = [
+    "https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=600&q=80",
+    "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
+    "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&w=600&q=80",
+    "https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=600&q=80",
+    "https://images.unsplash.com/photo-1598327105666-5b89351cb31b?auto=format&fit=crop&w=600&q=80"
+];
+
 import {
     Zap,
     Diamond,
@@ -20,8 +28,13 @@ const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000
 const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
     const [dealOfDay, setDealOfDay] = useState(null);
     const [timeLeft, setTimeLeft] = useState({ hours: 14, minutes: 23, seconds: 59 });
+    const [currentImage, setCurrentImage] = useState(heroImages[0]);
 
     useEffect(() => {
+        // Pick a random image on mount to keep it fresh
+        const randomIndex = Math.floor(Math.random() * heroImages.length);
+        setCurrentImage(heroImages[randomIndex]);
+
         const fetchDeal = async () => {
             try {
                 const res = await fetch(`${API_BASE_URL}/products/deal_of_the_day/`);
@@ -156,7 +169,7 @@ const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
                         <div className="hero-phone-3d">
                             <div className="phone-side phone-side-left"></div>
                             <div className="phone-face">
-                                <img src={heroImg} alt="TECHBOY red 3D phone showcase" className="hero-img" />
+                                <img src={currentImage} alt="TECHBOY red 3D phone showcase" className="hero-img" />
                                 <div className="phone-screen-scan"></div>
                             </div>
                             <div className="phone-side phone-side-right"></div>

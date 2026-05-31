@@ -649,8 +649,8 @@ html {
 
 .hero-phone-3d {
   position: relative;
-  width: 280px;
-  height: 580px;
+  width: 220px;
+  height: 460px;
   transform-style: preserve-3d;
   transform: rotateY(-8deg) rotateX(3deg) translateZ(42px);
   animation: phoneFloat3d 5.8s ease-in-out infinite;
