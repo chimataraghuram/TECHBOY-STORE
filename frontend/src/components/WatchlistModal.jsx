@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { m } from 'framer-motion';
 import { resolveProductImage } from '../utils/imageResolver';
-import { CountUp } from './AnimationEngine';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
@@ -89,7 +88,7 @@ const WatchlistModal = ({ isOpen, onClose }) => {
                                     </div>
                                     <div className="watchlist-item-info" style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                         <h4 style={{ margin: '0 0 8px 0' }}>{item.product_details.name}</h4>
-                                        <span className="price text-gradient" style={{ fontWeight: 'bold', marginBottom: '8px' }}><CountUp end={item.product_details.price || 0} prefix="Rs " /></span>
+                                        <span className="price text-gradient" style={{ fontWeight: 'bold', marginBottom: '8px' }}>Rs {(item.product_details.price || 0).toLocaleString('en-IN')}</span>
                                         <a href={item.product_details.amazon_link || item.product_details.amazonLink || '#'} target="_blank" rel="noopener noreferrer" className="jelly-btn" style={{ padding: '6px 12px', fontSize: '12px', alignSelf: 'flex-start' }}>Get Deal</a>
                                     </div>
                                     <button className="remove-btn" onClick={() => handleRemove(item.id)} title="Remove" style={{ position: 'absolute', top: '8px', right: '8px', background: 'rgba(255,0,0,0.2)', border: 'none', color: 'white', borderRadius: '50%', width: '24px', height: '24px', cursor: 'pointer' }}>

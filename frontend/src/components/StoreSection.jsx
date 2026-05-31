@@ -84,13 +84,17 @@ const StoreSection = ({ searchTerm, onSearch }) => {
             } finally {
                 // Keep loader visible for a small window to make transition smooth
                 setTimeout(() => {
-                    if (mounted) setLoading(false);
+                    if (mounted) {
+                        setLoading(false);
+                    }
                 }, 800);
             }
         };
         
         load();
-        return () => { mounted = false; };
+        return () => { 
+            mounted = false; 
+        };
     }, []);
 
     // Auto-scroll when search becomes active

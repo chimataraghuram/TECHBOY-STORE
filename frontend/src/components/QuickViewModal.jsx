@@ -4,7 +4,6 @@ import { Sparkles } from 'lucide-react';
 import RadarChart from './RadarChart';
 import PriceHistoryChart from './PriceHistoryChart';
 import { resolveProductImage } from '../utils/imageResolver';
-import { CountUp } from './AnimationEngine';
 
 const ThreeDViewer = lazy(() => import('./ThreeDViewer'));
 
@@ -133,7 +132,7 @@ const QuickViewModal = ({ product, onClose }) => {
                         <span className="category-label">{product.category}</span>
                         <h2 className="modal-title">{product.name}</h2>
                         <div className="modal-price-row">
-                            <span className="price-tag-big"><CountUp end={product.price || 0} prefix="Rs " /></span>
+                            <span className="price-tag-big">Rs {(product.price || 0).toLocaleString('en-IN')}</span>
                             <span className="store-tag">Lowest @ Amazon</span>
                         </div>
 

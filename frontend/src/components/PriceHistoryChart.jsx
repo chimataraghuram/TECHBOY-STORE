@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
-import { CountUp } from './AnimationEngine';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
@@ -91,7 +90,7 @@ const PriceHistoryChart = ({ productId, currentPrice }) => {
                     </AreaChart>
                 </ResponsiveContainer>
             </div>
-            <p className="chart-footer-text">Lowest price in 30 days: <CountUp end={Math.min(...data.map(d => d.price))} prefix="₹" /></p>
+            <p className="chart-footer-text">Lowest price in 30 days: ₹{Math.min(...data.map(d => d.price)).toLocaleString('en-IN')}</p>
         </div>
     );
 };

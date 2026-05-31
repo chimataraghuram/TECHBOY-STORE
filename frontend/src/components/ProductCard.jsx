@@ -1,7 +1,6 @@
 import React from 'react';
 import { m, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { resolveProductImage } from '../utils/imageResolver';
-import { CountUp } from './AnimationEngine';
 const balancedImg = "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=300&q=80";
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
@@ -164,7 +163,7 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
                     </span>
                     {product.rating && (
                         <span className="product-rating-badge">
-                            ★ <CountUp end={parseFloat(product.rating)} decimals={1} />
+                            ★ {parseFloat(product.rating).toFixed(1)}
                         </span>
                     )}
                 </div>
@@ -182,7 +181,7 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
 
                 <div className="product-meta">
                     <div className="price-info">
-                        <span className="price"><CountUp end={product.price || 0} prefix="₹" /></span>
+                        <span className="price">₹{(product.price || 0).toLocaleString('en-IN')}</span>
                     </div>
                     <div style={{ display: 'flex', gap: '8px' }}>
                         <button

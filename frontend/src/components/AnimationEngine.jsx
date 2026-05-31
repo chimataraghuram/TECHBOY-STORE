@@ -21,29 +21,63 @@ export const ScrollProgressBar = () => {
 };
 
 /* ── Count-Up Number ── */
-export const CountUp = ({ end, duration = 1800, prefix = '', suffix = '', decimals = 0 }) => {
-    const [count, setCount] = useState(0);
+export const CountUp = ({ end, duration = 1200, prefix = '', suffix = '', decimals = 0 }) => {
+    const [count, setCount] = useState(end); // Default to final value for robustness
     const ref = useRef(null);
     const started = useRef(false);
 
     useEffect(() => {
-        const observer = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting && !started.current) {
-                started.current = true;
-                const startTime = performance.now();
-                const animate = (now) => {
-                    const elapsed = now - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-                    const val = eased * end;
-                    setCount(decimals > 0 ? parseFloat(val.toFixed(decimals)) : Math.floor(val));
-                    if (progress < 1) requestAnimationFrame(animate);
-                };
-                requestAnimationFrame(animate);
+        setCount(0); // Start at 0 on mount
+        started.current = false;
+
+        let rafId;
+        let fallbackTimeout;
+
+        const startAnimation = () => {
+            if (started.current) return;
+            started.current = true;
+            if (fallbackTimeout) clearTimeout(fallbackTimeout);
+
+            const startTime = performance.now();
+            const animate = (now) => {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+                const val = eased * end;
+                setCount(decimals > 0 ? parseFloat(val.toFixed(decimals)) : Math.floor(val));
+                if (progress < 1) {
+                    rafId = requestAnimationFrame(animate);
+                }
+            };
+            rafId = requestAnimationFrame(animate);
+        };
+
+        // Fallback safety timeout: if observer hasn't fired in 1200ms, start animation anyway
+        fallbackTimeout = setTimeout(() => {
+            if (!started.current) {
+                startAnimation();
             }
-        }, { threshold: 0.1 });
+        }, 1200);
+
+        if (!window.IntersectionObserver) {
+            startAnimation();
+            return;
+        }
+
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                startAnimation();
+                observer.disconnect();
+            }
+        }, { threshold: 0.05 });
+
         if (ref.current) observer.observe(ref.current);
-        return () => observer.disconnect();
+
+        return () => {
+            if (rafId) cancelAnimationFrame(rafId);
+            if (fallbackTimeout) clearTimeout(fallbackTimeout);
+            observer.disconnect();
+        };
     }, [end, duration, decimals]);
 
     const formatValue = (v) => {
