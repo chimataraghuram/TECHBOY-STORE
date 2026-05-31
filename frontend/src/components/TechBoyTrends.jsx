@@ -95,7 +95,7 @@ const TechBoyTrends = () => {
 
         <m.div className="tbt-drops-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
           {liveAlerts.map(phone => (
-            <TrendsCard key={phone.id} variants={cardVariant} className="tbt-drop-card glass-card" style={{ border: '1px solid #16a34a', boxShadow: '0 0 15px rgba(22, 163, 74, 0.15)', display: 'flex', flexDirection: 'column' }}>
+            <TrendsCard key={phone.id} id={`trend-alert-${phone.id}`} variants={cardVariant} className="tbt-drop-card glass-card" style={{ border: '1px solid #16a34a', boxShadow: '0 0 15px rgba(22, 163, 74, 0.15)', display: 'flex', flexDirection: 'column' }}>
               {/* rank badge */}
               <div className="tbt-rank-badge" style={{ position: 'absolute', top: '12px', left: '12px', background: 'linear-gradient(45deg, #16a34a, #15803d)', color: '#fff', padding: '4px 10px', borderRadius: '12px', fontSize: '13px', fontWeight: 'bold', zIndex: 10, border: '1px solid #4ade80' }}>
                 🔥 #{phone.rank} HIGHEST DISCOUNT
