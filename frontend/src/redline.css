@@ -2112,6 +2112,7 @@ html {
    LAYOUT TWEAKS: SPACING FIXES
    ============================================== */
 .hero-section {
+  padding-top: 60px !important;
   padding-bottom: 20px !important;
   min-height: 100vh !important;
 }
