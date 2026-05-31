@@ -30,7 +30,7 @@ const getMappedTag = (tag = '') => {
 
 
 
-const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTerm }) => {
+const ProductCard = ({ product, onCompare, isComparing, onView, onPriceAlert, index, searchTerm }) => {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
