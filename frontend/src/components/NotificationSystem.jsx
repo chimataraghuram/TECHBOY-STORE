@@ -3,7 +3,7 @@ import { m, AnimatePresence } from 'framer-motion';
 import { Bell, TrendingDown, Rocket, Flame, Star, Scale, TrendingUp, Cpu, Battery, Camera } from 'lucide-react';
 import '../redline.css'; // Make sure styles are pulled in
 
-const PREDEFINED_NOTIFICATIONS = [
+export const PREDEFINED_NOTIFICATIONS = [
     // Price Drops (1-6)
     { id: 1, type: 'price_drop', icon: TrendingDown, title: 'Price Drop Alert', desc: 'iQOO Neo 10 price dropped by ₹2,000', time: 'Just now', unread: true },
     { id: 2, type: 'price_drop', icon: TrendingDown, title: 'Price Drop Alert', desc: 'Nothing Phone (3a) now available at a lower price', time: '15 mins ago', unread: true },
@@ -52,10 +52,13 @@ const NotificationSystem = () => {
     const [activeNotifications, setActiveNotifications] = useState([]);
     const [hasUnread, setHasUnread] = useState(false);
     const [isVibrating, setIsVibrating] = useState(false);
+    const [toastNotification, setToastNotification] = useState(null);
     const panelRef = useRef(null);
 
     // Initial load and rotation logic
     useEffect(() => {
+        let isFirstLoad = true;
+
         const rotateNotifications = () => {
             // Pick exactly 2 random notifications
             const count = 2;
@@ -65,18 +68,30 @@ const NotificationSystem = () => {
             setActiveNotifications(selected);
             setHasUnread(true);
             
-            // Trigger bell vibration
+            // Trigger bell vibration - Big Animation
             setIsVibrating(true);
-            setTimeout(() => setIsVibrating(false), 2000); // Vibrate for 2 seconds then stop
+            setTimeout(() => setIsVibrating(false), 2500); // Vibrate for 2.5 seconds
+            
+            // Trigger Toast Alert (only if not first load, or maybe even on first load)
+            setToastNotification(selected[0]); // Show the first one as a toast
+            setTimeout(() => setToastNotification(null), 6000); // Hide toast after 6 seconds
+            
+            isFirstLoad = false;
         };
 
-        rotateNotifications(); // Initial load
+        // Delay initial rotation slightly so user notices it
+        const initTimeout = setTimeout(() => {
+            rotateNotifications();
+        }, 3000);
 
         // Rotate every 45-60 seconds to simulate a live platform
         const intervalTime = Math.floor(Math.random() * 15000) + 45000;
         const interval = setInterval(rotateNotifications, intervalTime);
 
-        return () => clearInterval(interval);
+        return () => {
+            clearTimeout(initTimeout);
+            clearInterval(interval);
+        };
     }, []);
 
     // Close panel when clicking outside
@@ -98,18 +113,53 @@ const NotificationSystem = () => {
             setActiveNotifications(prev => prev.map(n => ({ ...n, unread: false })));
         }
     };
+    
+    const handleNotificationClick = () => {
+        // Close dropdown
+        setIsOpen(false);
+        // Navigate/Scroll to Trends
+        const trendsSection = document.getElementById('trends');
+        if (trendsSection) {
+            trendsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     return (
         <div className="navbar-notification-container" ref={panelRef}>
             <button 
-                className={`bell-btn premium-bell ${isVibrating ? 'vibrating' : ''}`} 
+                className={`bell-btn premium-bell ${isVibrating ? 'vibrating-big' : ''}`} 
                 onClick={togglePanel}
                 title="TechBoy Updates"
                 aria-label="TechBoy Updates"
             >
-                <Bell size={18} />
-                {hasUnread && <span className="bell-pulse-dot"></span>}
+                <Bell size={18} className={isVibrating ? 'bell-icon-glow' : ''} />
+                {hasUnread && <span className="bell-pulse-dot big-pulse"></span>}
             </button>
+
+            {/* BIG TOAST ALERT */}
+            <AnimatePresence>
+                {toastNotification && (
+                    <m.div
+                        className="notification-toast glass-card"
+                        initial={{ opacity: 0, x: 50, scale: 0.9 }}
+                        animate={{ opacity: 1, x: 0, scale: 1 }}
+                        exit={{ opacity: 0, x: 50, scale: 0.9 }}
+                        transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                        onClick={handleNotificationClick}
+                    >
+                        <div className="toast-icon-wrapper">
+                            <toastNotification.icon size={20} />
+                        </div>
+                        <div className="toast-content">
+                            <h4>{toastNotification.title}</h4>
+                            <p>{toastNotification.desc}</p>
+                        </div>
+                        <div className="toast-action">
+                            <span>View Trends ➔</span>
+                        </div>
+                    </m.div>
+                )}
+            </AnimatePresence>
 
             <AnimatePresence>
                 {isOpen && (
@@ -132,7 +182,12 @@ const NotificationSystem = () => {
                                 </div>
                             ) : (
                                 activeNotifications.map((notif) => (
-                                    <div key={notif.id} className={`notification-item ${notif.unread ? 'unread' : ''}`}>
+                                    <div 
+                                        key={notif.id} 
+                                        className={`notification-item ${notif.unread ? 'unread' : ''}`}
+                                        onClick={handleNotificationClick}
+                                        style={{ cursor: 'pointer' }}
+                                    >
                                         <div className="notif-icon-wrapper">
                                             <notif.icon size={16} />
                                         </div>

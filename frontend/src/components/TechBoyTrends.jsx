@@ -2,8 +2,9 @@ import React from 'react';
 import { m } from 'framer-motion';
 import {
   Flame, TrendingDown,
-  Eye, Zap, ChevronUp
+  Eye, Zap, ChevronUp, Bell
 } from 'lucide-react';
+import { PREDEFINED_NOTIFICATIONS } from './NotificationSystem';
 import './TechBoyTrends.css';
 
 /* ─────────────────────────── DATA ─────────────────────────── */
@@ -171,6 +172,33 @@ const TechBoyTrends = () => (
       </div>
 
 
+      {/* ══════════════════════════════════════════════════
+          MODULE 3 — Live Market Alerts
+      ══════════════════════════════════════════════════ */}
+      <div className="tbt-module">
+        <div className="tbt-module-heading" style={{ marginBottom: '24px' }}>
+          <Bell size={22} className="tbt-micon red" />
+          <h3 className="tbt-module-title">Live Market Alerts</h3>
+          <span className="tbt-live-pill">● ALL 30 ALERTS</span>
+        </div>
+
+        <m.div className="tbt-alerts-grid" variants={sectionVariant} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-80px' }}>
+          {PREDEFINED_NOTIFICATIONS.map(alert => (
+            <TrendsCard key={alert.id} variants={cardVariant} className="tbt-alert-card glass-card">
+              <div className="tbt-alert-icon-wrap" style={{ color: alert.type === 'price_drop' ? '#00f2fe' : alert.type === 'trending' ? '#ff3333' : '#ffb347' }}>
+                <alert.icon size={20} />
+              </div>
+              <div className="tbt-alert-content">
+                <div className="tbt-alert-header">
+                  <h4>{alert.title}</h4>
+                  <span className="tbt-alert-time">{alert.time}</span>
+                </div>
+                <p className="tbt-alert-desc">{alert.desc}</p>
+              </div>
+            </TrendsCard>
+          ))}
+        </m.div>
+      </div>
 
     </div>
   </section>

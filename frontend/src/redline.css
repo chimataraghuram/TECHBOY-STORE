@@ -3132,3 +3132,106 @@ button:not(.close-btn):active {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
+
+
+/* ==========================================================================
+   BIG NOTIFICATION TOAST & BELL ANIMATION
+   ========================================================================== */
+
+@keyframes big-ring {
+  0% { transform: rotate(0); }
+  10% { transform: rotate(30deg); }
+  20% { transform: rotate(-25deg); }
+  30% { transform: rotate(20deg); }
+  40% { transform: rotate(-15deg); }
+  50% { transform: rotate(10deg); }
+  60% { transform: rotate(-5deg); }
+  70% { transform: rotate(0); }
+  100% { transform: rotate(0); }
+}
+
+@keyframes bell-glow {
+  0% { filter: drop-shadow(0 0 4px rgba(255, 60, 60, 0)); color: inherit; }
+  20% { filter: drop-shadow(0 0 12px rgba(255, 60, 60, 1)); color: #ff3333; }
+  80% { filter: drop-shadow(0 0 12px rgba(255, 60, 60, 1)); color: #ff3333; }
+  100% { filter: drop-shadow(0 0 4px rgba(255, 60, 60, 0)); color: inherit; }
+}
+
+.vibrating-big svg {
+  animation: big-ring 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) 3;
+}
+
+.bell-icon-glow {
+  animation: bell-glow 2.5s ease-in-out;
+}
+
+.big-pulse {
+  width: 10px !important;
+  height: 10px !important;
+  right: -2px !important;
+  top: -2px !important;
+  box-shadow: 0 0 10px #ff3333 !important;
+}
+
+/* Toast Alert Popup */
+.notification-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 340px;
+  background: rgba(15, 15, 20, 0.85) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 60, 60, 0.3) !important;
+  box-shadow: 0 8px 32px rgba(255, 30, 30, 0.2), 0 0 15px rgba(255, 60, 60, 0.1) inset;
+  border-radius: 12px;
+  padding: 16px;
+  z-index: 99999;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.notification-toast:hover {
+  background: rgba(25, 20, 25, 0.95) !important;
+  border-color: rgba(255, 60, 60, 0.6) !important;
+}
+
+.notification-toast .toast-icon-wrapper {
+  background: rgba(255, 60, 60, 0.15);
+  padding: 10px;
+  border-radius: 50%;
+  color: #ff4a4a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-toast .toast-content {
+  flex: 1;
+}
+
+.notification-toast h4 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.notification-toast p {
+  margin: 0;
+  font-size: 12px;
+  color: #a0aabf;
+  line-height: 1.4;
+}
+
+.notification-toast .toast-action {
+  font-size: 11px;
+  font-weight: 600;
+  color: #ff4a4a;
+  align-self: flex-end;
+  margin-top: 4px;
+  white-space: nowrap;
+}
