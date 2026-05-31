@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { m } from 'framer-motion';
 
 const heroImages = [
-    "https://images.unsplash.com/photo-1616348436168-de43ad0db179?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1556656793-08538906a9f8?auto=format&fit=crop&w=600&q=80",
-    "https://images.unsplash.com/photo-1598327105666-5b89351cb31b?auto=format&fit=crop&w=600&q=80"
+    "/images/phones/apple-iphone-16-pro-max.jpg",
+    "/images/phones/google-pixel-9-pro.jpg",
+    "/images/phones/samsung-galaxy-s26-ultra.jpg",
+    "/images/phones/nothing-phone-3a.jpg",
+    "/images/phones/oneplus-13.jpg"
 ];
 
 import {
