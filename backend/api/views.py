@@ -266,10 +266,16 @@ class PriceHistoryViewSet(viewsets.ReadOnlyModelViewSet):
 
 class PriceAlertViewSet(viewsets.ModelViewSet):
     serializer_class = PriceAlertSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     
     def get_queryset(self):
-        return PriceAlert.objects.filter(user=self.request.user)
+        if self.request.user.is_authenticated:
+            return PriceAlert.objects.filter(user=self.request.user)
+        return PriceAlert.objects.none()
+
+    def perform_create(self, serializer):
+        user = self.request.user if self.request.user.is_authenticated else None
+        serializer.save(user=user)
 
 class WatchlistViewSet(viewsets.ModelViewSet):
     serializer_class = WatchlistSerializer

@@ -183,25 +183,25 @@ const ProductCard = ({ product, onCompare, isComparing, onView, index, searchTer
                     <div className="price-info">
                         <span className="price">₹{(product.price || 0).toLocaleString('en-IN')}</span>
                     </div>
-                    <div style={{ display: 'flex', gap: '8px' }}>
-                        <button
-                            className="icon-btn"
-                            title={isComparing ? 'Remove from Compare' : 'Add to Compare'}
-                            onClick={(e) => { e.stopPropagation(); onCompare(product); }}
-                            style={{ 
-                                padding: '8px', 
-                                background: isComparing ? 'rgba(255, 31, 61, 0.2)' : 'rgba(255, 255, 255, 0.05)',
-                                color: isComparing ? 'var(--accent-primary)' : 'white'
-                            }}
+                    <div style={{ display: 'flex', gap: '6px', marginTop: '12px' }}>
+                        <button 
+                            className="primary-btn mini" 
+                            style={{ flex: 1, padding: '6px', borderRadius: '10px', background: 'linear-gradient(135deg, #2563eb, #3b82f6)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', border: 'none' }}
+                            onClick={(e) => { e.stopPropagation(); onPriceAlert && onPriceAlert(product); }}
                         >
-                            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                            </svg>
+                            🔔 Alert
+                        </button>
+                        <button
+                            className="primary-btn mini"
+                            style={{ flex: 1, padding: '6px', borderRadius: '10px', background: isComparing ? 'rgba(255, 31, 61, 0.2)' : 'rgba(255, 255, 255, 0.1)', color: isComparing ? 'var(--accent-primary)' : 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', border: '1px solid rgba(255,255,255,0.05)' }}
+                            onClick={(e) => { e.stopPropagation(); onCompare && onCompare(product); }}
+                        >
+                            ⚔️ Compare
                         </button>
                         <button 
                             className="primary-btn mini" 
-                            style={{ padding: '8px 16px', borderRadius: '12px' }}
-                            onClick={(e) => { e.stopPropagation(); onView(product); }}
+                            style={{ padding: '6px 12px', borderRadius: '10px', fontSize: '12px' }}
+                            onClick={(e) => { e.stopPropagation(); onView && onView(product); }}
                         >
                             View
                         </button>

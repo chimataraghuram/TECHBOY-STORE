@@ -48,14 +48,23 @@ class PriceHistory(models.Model):
         return f"{self.product.name} - ₹{self.price} @ {self.timestamp}"
 
 class PriceAlert(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='alerts')
+    ALERT_TYPES = [
+        ('ANY', 'Any Change'),
+        ('TARGET', 'Target Price')
+    ]
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='alerts', null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    target_price = models.IntegerField()
+    product_name = models.CharField(max_length=255, null=True, blank=True)
+    current_price = models.IntegerField(null=True, blank=True)
+    alert_type = models.CharField(max_length=50, choices=ALERT_TYPES, default='ANY')
+    target_price = models.IntegerField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.product.name} @ ₹{self.target_price}"
+        ident = self.email if self.email else (self.user.username if self.user else 'Unknown')
+        return f"{ident} - {self.product.name} ({self.alert_type})"
 
 class Watchlist(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='watchlist')

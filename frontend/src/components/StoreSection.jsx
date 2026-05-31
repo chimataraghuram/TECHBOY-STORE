@@ -4,6 +4,8 @@ import ProductCard from './ProductCard';
 import ComparisonModal from './ComparisonModal';
 import QuickViewModal from './QuickViewModal';
 import FilterSidebar from './FilterSidebar';
+import PriceAlertModal from './PriceAlertModal';
+import { useAuth } from '../context/AuthContext';
 import localPhonesData from '../data/phones.json';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
@@ -29,8 +31,11 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     const [compareList, setCompareList] = useState([]);
     const [isCompModalOpen, setIsCompModalOpen] = useState(false);
     const [activeViewProduct, setActiveViewProduct] = useState(null);
+    const [priceAlertProduct, setPriceAlertProduct] = useState(null);
     const [displayLimit, setDisplayLimit] = useState(12);
     const [shuffleSeed, setShuffleSeed] = useState(0);
+
+    const { user } = useAuth();
 
     // Advanced Filtering States
     const [selectedBrands, setSelectedBrands] = useState([]);
@@ -316,13 +321,14 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                             ))
                         ) : (
                             (isPureAll ? allFilterRandomized : filteredProducts.slice(0, displayLimit)).map((product, idx) => (
-                                <ProductCard
-                                    key={product.id || idx}
-                                    index={idx % 12}
-                                    product={product}
+                                <ProductCard 
+                                    key={product.id} 
+                                    product={product} 
                                     onCompare={handleCompare}
-                                    onView={setActiveViewProduct}
-                                    isComparing={!!compareList.find(p => p.id === product.id)}
+                                    onView={() => setActiveViewProduct(product)}
+                                    onPriceAlert={(p) => setPriceAlertProduct(p)}
+                                    isComparing={compareList.some(p => p.id === product.id)}
+                                    index={idx}
                                     searchTerm={debouncedSearch}
                                 />
                             ))
@@ -382,6 +388,13 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                         <QuickViewModal product={activeViewProduct} onClose={() => setActiveViewProduct(null)} />
                     )}
                 </AnimatePresence>
+
+                <PriceAlertModal
+                    isOpen={!!priceAlertProduct}
+                    onClose={() => setPriceAlertProduct(null)}
+                    product={priceAlertProduct}
+                    user={user}
+                />
             </div>
         </m.section>
     );

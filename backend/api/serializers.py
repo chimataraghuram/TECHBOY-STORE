@@ -65,13 +65,12 @@ class PriceHistorySerializer(serializers.ModelSerializer):
         fields = ['id', 'product', 'price', 'timestamp']
 
 class PriceAlertSerializer(serializers.ModelSerializer):
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    product_name = serializers.ReadOnlyField(source='product.name')
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
     product_details = ProductSerializer(source='product', read_only=True)
 
     class Meta:
         model = PriceAlert
-        fields = ['id', 'user', 'product', 'product_name', 'product_details', 'target_price', 'is_active', 'created_at']
+        fields = ['id', 'user', 'email', 'product', 'product_name', 'current_price', 'alert_type', 'product_details', 'target_price', 'is_active', 'created_at']
 
 class WatchlistSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
