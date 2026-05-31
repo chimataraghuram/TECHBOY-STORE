@@ -162,7 +162,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
 
             <div className="navbar-content">
                 {/* LOGO AREA - LEFT */}
-                <div className="navbar-left-container" style={{ flex: '2', display: 'flex', justifyContent: 'flex-start', minWidth: 'max-content' }}>
+                <div className="navbar-left-container" style={{ flex: '2', display: 'flex', justifyContent: 'flex-start' }}>
                     <div className="navbar-left pill-wrapper">
                         <button 
                             className="mobile-menu-toggle" 
@@ -284,7 +284,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                 )}
 
                 {/* ACTIONS - RIGHT */}
-                <div className="navbar-right-container" style={{ flex: '2.5', display: 'flex', justifyContent: 'flex-end', minWidth: 'max-content' }}>
+                <div className="navbar-right-container" style={{ flex: '2.5', display: 'flex', justifyContent: 'flex-end' }}>
                     <div className="navbar-right pill-wrapper">
                         <button onClick={onChatToggle} className="ai-pill-btn-standalone">
                             <Bot size={18} className="ai-pill-icon" />
