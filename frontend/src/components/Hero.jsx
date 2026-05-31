@@ -137,16 +137,7 @@ const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
                         </button>
                     </m.div>
 
-                    <m.div variants={itemVariants} className="trust-badges">
-                        <div className="trust-item">
-                            <span>5.0</span>
-                            <p>Expert-curated picks</p>
-                        </div>
-                        <div className="trust-item">
-                            <span>AI</span>
-                            <p>Instant buying verdicts</p>
-                        </div>
-                    </m.div>
+
                 </div>
 
                 <m.div
