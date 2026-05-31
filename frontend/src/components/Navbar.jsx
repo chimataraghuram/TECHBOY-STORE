@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { Search, Bot, X, Menu, Bell, Trash2 } from 'lucide-react';
 import logo from '../../images/logos/new-logo.jpg';
@@ -10,7 +10,10 @@ const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000
 
 const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
     const [scrolled, setScrolled] = useState(false);
+    const [searchExpanded, setSearchExpanded] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const searchInputRef = useRef(null);
+    const searchBarRef = useRef(null);
     const [activeSection, setActiveSection] = useState('home');
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
@@ -98,8 +101,23 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
     }, []);
 
     useEffect(() => {
+        if (!scrolled) setSearchExpanded(false);
+    }, [scrolled]);
+
+    useEffect(() => {
+        if (!searchExpanded) return;
+        const closeSearch = (e) => {
+            if (searchBarRef.current && !searchBarRef.current.contains(e.target)) {
+                setSearchExpanded(false);
+            }
+        };
+        document.addEventListener('mousedown', closeSearch);
+        return () => document.removeEventListener('mousedown', closeSearch);
+    }, [searchExpanded]);
+
+    useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
+            setScrolled(window.scrollY > 40);
         };
 
         const sections = ['home', 'products', 'trends', 'how-it-works', 'footer'];
@@ -123,6 +141,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
         });
 
         window.addEventListener('scroll', handleScroll);
+        handleScroll();
         return () => {
             window.removeEventListener('scroll', handleScroll);
             observer.disconnect();
@@ -133,8 +152,21 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
         onSearch(e.target.value);
     };
 
+    const handleSearchBarClick = () => {
+        if (scrolled && !searchExpanded) {
+            setSearchExpanded(true);
+            requestAnimationFrame(() => searchInputRef.current?.focus());
+        }
+    };
+
+    const searchBarClassName = [
+        'search-bar',
+        scrolled && !searchExpanded && 'search-collapsed',
+        searchExpanded && 'search-expanded',
+    ].filter(Boolean).join(' ');
+
     return (
-        <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+        <nav className={`navbar ${scrolled ? 'scrolled' : 'navbar-hero'}`} aria-label="Main navigation">
 
             <div className="navbar-content">
                 {/* LOGO AREA - LEFT */}
@@ -151,7 +183,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                         e.preventDefault();
                         document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
                     }}>
-                        <img src={logo} alt="TECHBOY STORE" className="logo-img" style={{ width: 54, height: 54 }} />
+                        <img src={logo} alt="TECHBOY STORE" className="logo-img" />
                         <span className="logo-text jelly-text">TECHBOY STORE</span>
                     </a>
                 </div>
@@ -183,15 +215,23 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                 );
                             })}
                         </div>
-                        <div className="nav-divider"></div>
-                        <div className="search-bar">
+                        <div className="nav-divider" aria-hidden="true"></div>
+                        <div
+                            ref={searchBarRef}
+                            className={searchBarClassName}
+                            onClick={handleSearchBarClick}
+                            role="search"
+                        >
                             <Search size={18} className="search-icon" />
                             <input
+                                ref={searchInputRef}
                                 type="text"
                                 className="search-input"
                                 placeholder="Search gear..."
                                 value={searchTerm}
                                 onChange={handleSearchChange}
+                                onFocus={() => scrolled && setSearchExpanded(true)}
+                                aria-label="Search products"
                             />
                             {searchTerm && (
                                 <button className="clear-search-btn" onClick={(e) => {

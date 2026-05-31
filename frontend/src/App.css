@@ -1,13 +1,5 @@
 .navbar {
-  position: fixed;
-  top: 15px;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  transition: all 0.3s ease;
-  padding: 0;
-  display: flex;
-  justify-content: center;
+  /* Dual-state styles live in redline.css */
 }
 
 
@@ -21,15 +13,7 @@
 }
 
 .navbar-content {
-  display: grid !important;
-  grid-template-columns: minmax(300px, 1fr) auto minmax(300px, 1fr) !important;
-  align-items: center;
-  gap: 32px; /* Increased gap */
-  width: 96% !important;
-  max-width: 1600px !important;
-  margin: 0 auto !important;
-  padding: 0 20px;
-  position: relative;
+  /* Dual-state grid shell lives in redline.css */
 }
 
 .navbar-left {
@@ -4195,14 +4179,6 @@ img { max-width: 100%; height: auto; }
    ========================================================================== */
 
 /* --- Navbar Glass & Mobile Drawer --- */
-.navbar.scrolled {
-  background: var(--bg-glass-strong);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1px solid rgba(255, 42, 42, 0.15);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 42, 42, 0.05);
-}
-
 .mobile-drawer {
   position: fixed !important;
   top: 80px !important;
