@@ -517,7 +517,33 @@ export const PREDEFINED_NOTIFICATIONS = [
   }
 ];
 
-export const CURRENT_LIVE_ALERTS = [...PREDEFINED_NOTIFICATIONS];
+export let current9 = [];
+let listeners = [];
+
+export const refreshAlerts = () => {
+    const shuffled = [...PREDEFINED_NOTIFICATIONS].sort(() => 0.5 - Math.random());
+    const selected9 = shuffled.slice(0, 9);
+    selected9.sort((a, b) => b.pct - a.pct); // highest discount first
+    current9 = selected9.map((item, index) => ({
+        ...item,
+        rank: index + 1
+    }));
+    listeners.forEach(l => l([...current9]));
+};
+
+refreshAlerts();
+setInterval(refreshAlerts, 20000); // 20s interval
+
+export const useLiveAlerts = () => {
+    const [alerts, setAlerts] = useState(current9);
+    useEffect(() => {
+        listeners.push(setAlerts);
+        return () => {
+            listeners = listeners.filter(l => l !== setAlerts);
+        };
+    }, []);
+    return alerts;
+};
 
 const NotificationSystem = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -527,26 +553,24 @@ const NotificationSystem = () => {
     const [toastNotification, setToastNotification] = useState(null);
     const panelRef = useRef(null);
 
+    const liveAlerts = useLiveAlerts();
+    
     // Initial load and rotation logic
     useEffect(() => {
-        setActiveNotifications(CURRENT_LIVE_ALERTS);
+        const top2 = liveAlerts.slice(0, 2).map(a => ({...a, unread: true}));
+        setActiveNotifications(top2);
         setHasUnread(true);
         
-        // Delay initial animation slightly so user notices it
         const initTimeout = setTimeout(() => {
-            // Trigger bell vibration - Big Animation
             setIsVibrating(true);
-            setTimeout(() => setIsVibrating(false), 2500); // Vibrate for 2.5 seconds
+            setTimeout(() => setIsVibrating(false), 2500);
             
-            // Trigger Toast Alert
-            setToastNotification(CURRENT_LIVE_ALERTS[0]); // Show the first one as a toast
-            setTimeout(() => setToastNotification(null), 6000); // Hide toast after 6 seconds
-        }, 3000);
+            setToastNotification(top2[0]);
+            setTimeout(() => setToastNotification(null), 6000);
+        }, 500);
 
-        return () => {
-            clearTimeout(initTimeout);
-        };
-    }, []);
+        return () => clearTimeout(initTimeout);
+    }, [liveAlerts]);
 
     // Close panel when clicking outside
     useEffect(() => {
