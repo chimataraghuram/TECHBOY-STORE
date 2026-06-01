@@ -207,6 +207,42 @@ const ProductCard = ({ product, onCompare, onOpenCompare, isComparing, onView, o
                             )}
                         </div>
                     )}
+
+                    {activePopover === 'view' && (
+                        <div className="product-popover-content" style={{ paddingRight: '20px' }}>
+                            <div className="product-popover-icon" style={{ marginBottom: '8px' }}>🔍</div>
+                            <h4 style={{ marginBottom: '16px' }}>Quick Specs</h4>
+                            <div style={{ display: 'grid', gap: '10px', fontSize: '0.9rem', color: 'var(--redline-muted)' }}>
+                                {product.chip && (
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ color: '#ff5d70', fontWeight: 'bold', width: '24px' }}>⚡</span>
+                                        <span>{product.chip}</span>
+                                    </div>
+                                )}
+                                {product.display && (
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ color: '#ff5d70', fontWeight: 'bold', width: '24px' }}>📱</span>
+                                        <span>{product.display}</span>
+                                    </div>
+                                )}
+                                {product.camera && (
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ color: '#ff5d70', fontWeight: 'bold', width: '24px' }}>📸</span>
+                                        <span>{product.camera}</span>
+                                    </div>
+                                )}
+                                {product.battery && (
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ color: '#ff5d70', fontWeight: 'bold', width: '24px' }}>🔋</span>
+                                        <span>{product.battery}</span>
+                                    </div>
+                                )}
+                                {(!product.chip && !product.display && !product.camera && !product.battery) && (
+                                    <p>Full detailed specifications are available on the product page.</p>
+                                )}
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
 
@@ -263,7 +299,7 @@ const ProductCard = ({ product, onCompare, onOpenCompare, isComparing, onView, o
                     <div style={{ display: 'flex', gap: '6px', width: '100%', position: 'relative', zIndex: 100, pointerEvents: 'auto' }}>
                         <button 
                             className="primary-btn mini" 
-                            style={{ flex: 1, padding: '8px 4px', borderRadius: '10px', background: 'linear-gradient(135deg, #2563eb, #3b82f6)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', border: 'none', color: 'white', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer' }}
+                            style={{ flex: 1, padding: '8px 4px', borderRadius: '20px', background: '#ff1f3d', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', fontWeight: 'bold', border: 'none', color: 'white', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer', textTransform: 'uppercase' }}
                             onClick={(e) => { 
                                 e.stopPropagation(); 
                                 setActivePopover('alert');
@@ -273,18 +309,17 @@ const ProductCard = ({ product, onCompare, onOpenCompare, isComparing, onView, o
                         </button>
                         <button
                             className="primary-btn mini compare-btn"
-                            style={{ flex: 1, padding: '8px 4px', borderRadius: '10px', background: isComparing ? 'rgba(255, 31, 61, 0.2)' : 'rgba(255, 255, 255, 0.1)', color: isComparing ? 'var(--accent-primary)' : 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', border: '1px solid rgba(255,255,255,0.1)', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer' }}
+                            style={{ flex: 1, padding: '8px 4px', borderRadius: '20px', background: '#ff1f3d', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', fontWeight: 'bold', border: 'none', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer', textTransform: 'uppercase' }}
                             onClick={(e) => { e.stopPropagation(); onCompare && onCompare(product); setActivePopover('compare'); }}
                         >
                             ⚔️ VS
                         </button>
                         <button 
                             className="primary-btn mini" 
-                            style={{ flex: 1, padding: '8px 4px', borderRadius: '10px', fontSize: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer' }}
+                            style={{ flex: 1, padding: '8px 4px', borderRadius: '20px', background: '#ff1f3d', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 'bold', border: 'none', color: 'white', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer', textTransform: 'uppercase' }}
                             onClick={(e) => { 
                                 e.stopPropagation(); 
-                                const rect = e.currentTarget.closest('.product-card').getBoundingClientRect();
-                                onView && onView(product, rect); 
+                                setActivePopover('view');
                             }}
                         >
                             View
