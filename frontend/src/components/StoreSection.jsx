@@ -361,9 +361,9 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                 <AnimatePresence>
                     {compareList.length > 0 && (
                         <m.div 
-                            initial={{ x: 100, opacity: 0 }}
+                            initial={{ x: -100, opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
-                            exit={{ x: 100, opacity: 0 }}
+                            exit={{ x: -100, opacity: 0 }}
                             className="comparison-bar glass-card"
                         >
                             <div className="comp-info">
