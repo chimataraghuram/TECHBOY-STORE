@@ -21,7 +21,10 @@ const localAdvisor = (text, phonesData) => {
         matches.sort((a, b) => b.price - a.price);
     }
 
-    if (query.includes('gaming') || query.includes('game')) {
+    if (query.includes('flagship') || query.includes('premium')) {
+        matches = matches.filter(p => Number(p.price) >= 40000);
+        matches.sort((a, b) => b.price - a.price);
+    } else if (query.includes('gaming') || query.includes('game')) {
         matches = matches.filter(p => `${p.tag} ${p.description}`.toLowerCase().includes('gaming') || `${p.description}`.toLowerCase().includes('snapdragon'));
     } else if (query.includes('camera') || query.includes('photo')) {
         matches = matches.filter(p => `${p.tag} ${p.description}`.toLowerCase().includes('camera') || `${p.description}`.toLowerCase().includes('mp'));
@@ -148,14 +151,18 @@ const ChatPopup = ({ isOpen, onClose }) => {
     }, []);
 
     useEffect(() => {
-        const catalogText = livePhonesData.map(p =>
-            `[${p.category}] ${p.name} (${p.tag}) — ₹${(p.price || 0).toLocaleString()} — ${p.description}`
-        ).join('\n');
+        const catalogText = livePhonesData.map(p => {
+            const specsStr = Array.isArray(p.specs) ? p.specs.join(', ') : (p.specs || 'N/A');
+            return `[${p.category}] ${p.brand} ${p.name} (${p.tag}) — ₹${(p.price || 0).toLocaleString()} — Desc: ${p.description} — Specs: ${specsStr}`;
+        }).join('\n');
         
         setSystemPrompt(`You are TechBoy AI, an expert smartphone buying advisor for TechBoy Store — India's smartest phone recommendation platform.
 Help users find the perfect smartphone. Be concise, friendly, and specific.
 CRITICAL RULE: You MUST ONLY recommend phones listed in the CATALOG below. Do NOT recommend, mention, or invent any smartphones that are not strictly in this list.
 If a user asks for a phone not in the list, politely inform them you only recommend products currently available in the TechBoy Store inventory.
+If the user asks about specific specs (like camera, processor, battery) for a phone, accurately quote the Specs field from the catalog.
+If a user asks for "gaming phones", prioritize phones with high-end processors (Snapdragon, Dimensity).
+If a user asks for "flagships" or "premium", recommend the absolute best phones in the highest price tiers.
 Use ₹ for prices. Bold important specs with **text**.
 Use bullet points (- item) for comparisons. Keep replies under 160 words unless a deep comparison is asked.
 If recommending, mention name, price, and why it fits. Suggest 1-3 phones max per reply.
