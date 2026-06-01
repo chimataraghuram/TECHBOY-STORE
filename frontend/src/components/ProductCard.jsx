@@ -257,16 +257,15 @@ const ProductCard = ({ product, onCompare, isComparing, onView, onPriceAlert, in
                             style={{ flex: 1, padding: '8px 4px', borderRadius: '10px', background: 'linear-gradient(135deg, #2563eb, #3b82f6)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', border: 'none', color: 'white', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer' }}
                             onClick={(e) => { 
                                 e.stopPropagation(); 
-                                const rect = e.currentTarget.closest('.product-card').getBoundingClientRect();
-                                onPriceAlert && onPriceAlert(product, rect); 
+                                setActivePopover('alert');
                             }}
                         >
                             🔔 Alert
                         </button>
                         <button
-                            className="primary-btn mini"
+                            className="primary-btn mini compare-btn"
                             style={{ flex: 1, padding: '8px 4px', borderRadius: '10px', background: isComparing ? 'rgba(255, 31, 61, 0.2)' : 'rgba(255, 255, 255, 0.1)', color: isComparing ? 'var(--accent-primary)' : 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', border: '1px solid rgba(255,255,255,0.1)', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer' }}
-                            onClick={(e) => { e.stopPropagation(); onCompare && onCompare(product); }}
+                            onClick={(e) => { e.stopPropagation(); onCompare && onCompare(product); setActivePopover('compare'); }}
                         >
                             ⚔️ VS
                         </button>

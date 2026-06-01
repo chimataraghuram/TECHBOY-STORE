@@ -88,21 +88,28 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
   // Calculate dynamic position if triggerRect is provided
   let modalStyle = {};
   if (triggerRect) {
-    const modalWidth = 480;
-    const modalHeight = 450;
-    let left = triggerRect.left;
+    const modalWidth = 360;
+    const modalHeight = 420;
+    let left = triggerRect.left - modalWidth - 14;
     let top = triggerRect.top;
     
-    // Only adjust horizontally if overflowing viewport
-    if (left + modalWidth > window.innerWidth) {
-      left = window.innerWidth - modalWidth - 20;
+    if (left < 12) {
+      left = triggerRect.right + 14;
     }
-    if (left < 0) left = 20;
+    if (left + modalWidth > window.innerWidth) {
+      left = window.innerWidth - modalWidth - 12;
+    }
+    if (left < 12) left = 12;
+    if (top + modalHeight > window.innerHeight) {
+      top = window.innerHeight - modalHeight - 12;
+    }
+    if (top < 12) top = 12;
 
     modalStyle = {
-      position: 'absolute',
+      position: 'fixed',
       left: `${left}px`,
       top: `${top}px`,
+      width: `${modalWidth}px`,
       margin: 0
     };
   }
@@ -122,7 +129,7 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
             <div className="price-alert-glow" />
           </div>
           
-          <button className="price-alert-close" onClick={onClose} style={{ position: 'absolute', right: '16px', top: '16px', left: 'auto', margin: 0, zIndex: 100 }}>
+          <button className="price-alert-close" onClick={onClose}>
             <X size={20} />
           </button>
 
