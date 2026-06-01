@@ -249,12 +249,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
         >
             <div className="container">
                 <div className="section-header text-center">
-                    <m.span 
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        className="badge analyst-badge glow-badge"
-                    >PHONE GALLERY</m.span>
+
                     <m.h2 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}

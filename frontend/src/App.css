@@ -3604,6 +3604,9 @@ html {
 
 /* -- Premium glowing section text -- */
 .text-glow-premium {
+  font-size: clamp(2.5rem, 5vw + 1rem, 4.5rem) !important;
+  font-weight: 900 !important;
+  line-height: 1.2;
   text-shadow: 0 0 15px rgba(230, 0, 43, 0.5), 0 0 30px rgba(230, 0, 43, 0.3);
   animation: slow-glow-pulse 3s infinite alternate ease-in-out;
 }
