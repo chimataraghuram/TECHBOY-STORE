@@ -25,9 +25,7 @@ const ProductCardSkeleton = () => (
 const StoreSection = ({ searchTerm, onSearch }) => {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
-    const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selectedRange, setSelectedRange] = useState("");
     const [compareList, setCompareList] = useState([]);
     const [isCompModalOpen, setIsCompModalOpen] = useState(false);
     const [activeViewProduct, setActiveViewProduct] = useState(null);
@@ -70,9 +68,6 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                     const productsList = data.results || data;
                     if (productsList && productsList.length > 0) {
                         setProducts(productsList);
-                        const cats = ["All", ...new Set(productsList.map(p => p.category))];
-                        setCategories(cats);
-                        setSelectedRange("All");
                         const highPrice = Math.max(...productsList.map(p => p.price));
                         setMaxPrice(highPrice);
                     } else {
@@ -83,9 +78,6 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                 console.warn("Fetch failed, falling back to local JSON database", err);
                 if (mounted) {
                     setProducts(localPhonesData);
-                    const cats = ["All", ...new Set(localPhonesData.map(p => p.category))];
-                    setCategories(cats);
-                    setSelectedRange("All");
                     const highPrice = Math.max(...localPhonesData.map(p => p.price));
                     setMaxPrice(highPrice);
                 }
@@ -118,7 +110,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     const highestPrice = products.length > 0 ? Math.max(...products.map(p => p.price)) : 150000;
     const availableBrands = [...new Set(products.map(p => p.brand).filter(b => b))].sort();
 
-    const isPureAll = selectedRange === "All" && !searchTerm && selectedBrands.length === 0 && minPrice === 0 && maxPrice === highestPrice;
+    const isPureAll = !searchTerm && selectedBrands.length === 0 && minPrice === 0 && maxPrice === highestPrice;
 
     const allFilterRandomized = React.useMemo(() => {
         if (isPureAll && filteredProducts.length > 0) {
@@ -129,13 +121,6 @@ const StoreSection = ({ searchTerm, onSearch }) => {
         }
         return [];
     }, [filteredProducts, shuffleSeed, isPureAll]);
-
-    const handleCategoryClick = (range) => {
-        if (range === "All") {
-            setShuffleSeed(prev => prev + 1);
-        }
-        setSelectedRange(range);
-    };
 
     const workerRef = useRef(null);
     const [workerSupported, setWorkerSupported] = useState(true);
@@ -161,7 +146,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
 
     // Local filtering fallback logic (exact match of worker logic)
     const localFilterProducts = (payload) => {
-        const { products, debouncedSearch, selectedRange, selectedBrands, minPrice, maxPrice, sortBy } = payload;
+        const { products, debouncedSearch, selectedBrands, minPrice, maxPrice, sortBy } = payload;
         let filtered = [...(products || [])];
         const term = (debouncedSearch || "").toLowerCase().trim();
 
@@ -172,8 +157,6 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                 (p.tag && p.tag.toLowerCase().includes(term)) ||
                 (p.description && p.description.toLowerCase().includes(term))
             );
-        } else if (selectedRange && selectedRange !== "All") {
-            filtered = filtered.filter(p => p.category === selectedRange);
         }
 
         if (selectedBrands && selectedBrands.length > 0) {
@@ -205,7 +188,6 @@ const StoreSection = ({ searchTerm, onSearch }) => {
         const payload = {
             products, 
             debouncedSearch, 
-            selectedRange, 
             selectedBrands, 
             minPrice, 
             maxPrice, 
@@ -266,21 +248,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                     >Categorized by budget and performance. We do the research, you get the best deal.</m.p>
                 </div>
 
-                {!searchTerm && (
-                    <div className="price-filter-container">
-                        <div className="price-tabs">
-                            {categories.map(range => (
-                                <button
-                                    key={range}
-                                    className={`price-tab ${selectedRange === range ? 'active' : ''}`}
-                                    onClick={() => handleCategoryClick(range)}
-                                >
-                                    {range}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                )}
+
 
                 {searchTerm && (
                     <div className="search-results-info">

@@ -1,5 +1,5 @@
 self.onmessage = function(e) {
-    const { products, debouncedSearch, selectedRange, selectedBrands, minPrice, maxPrice, sortBy } = e.data;
+    const { products, debouncedSearch, selectedBrands, minPrice, maxPrice, sortBy } = e.data;
     
     let filteredProducts = [...(products || [])];
     let term = (debouncedSearch || "").toLowerCase().trim();
@@ -41,8 +41,6 @@ self.onmessage = function(e) {
             (p.tag && p.tag.toLowerCase().includes(term)) ||
             (p.description && p.description.toLowerCase().includes(term))
         );
-    } else if (selectedRange && selectedRange !== "All") {
-        filteredProducts = filteredProducts.filter(p => p.category === selectedRange);
     }
 
     // Apply Intents
