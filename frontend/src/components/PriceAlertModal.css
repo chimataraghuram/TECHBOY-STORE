@@ -1,24 +1,26 @@
 .price-alert-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 999999 !important; /* Extremely high to cover splide arrows */
   padding: 20px;
 }
 
 .price-alert-modal {
-  background: rgba(20, 20, 20, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(10, 10, 12, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 31, 61, 0.2);
   border-radius: 24px;
   width: 100%;
   max-width: 480px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 31, 61, 0.1);
 }
 
 .price-alert-glow {
@@ -27,13 +29,13 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle at center, rgba(37, 99, 235, 0.15) 0%, transparent 50%);
+  background: radial-gradient(circle at center, rgba(255, 31, 61, 0.12) 0%, transparent 50%);
   pointer-events: none;
   animation: pulseGlow 4s infinite alternate ease-in-out;
 }
 
 @keyframes pulseGlow {
-  0% { transform: scale(0.9); opacity: 0.8; }
+  0% { transform: scale(0.9); opacity: 0.6; }
   100% { transform: scale(1.1); opacity: 1; }
 }
 
@@ -41,8 +43,8 @@
   position: absolute;
   top: 16px;
   right: 16px;
-  background: rgba(255, 255, 255, 0.05);
-  border: none;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: #a1a1aa;
   width: 32px;
   height: 32px;
@@ -56,8 +58,9 @@
 }
 
 .price-alert-close:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: rgba(255, 31, 61, 0.15);
+  border-color: rgba(255, 31, 61, 0.3);
+  color: #ff1f3d;
   transform: scale(1.05);
 }
 
@@ -75,14 +78,14 @@
 .price-alert-icon {
   width: 56px;
   height: 56px;
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(59, 130, 246, 0.05));
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  background: linear-gradient(135deg, rgba(255, 31, 61, 0.15), rgba(255, 31, 61, 0.02));
+  border: 1px solid rgba(255, 31, 61, 0.3);
   border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 16px;
-  color: #3b82f6;
+  color: #ff1f3d;
 }
 
 .price-alert-title {
@@ -127,7 +130,7 @@
 .price-alert-google-btn:hover {
   background: #f4f4f5;
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .price-alert-divider {
@@ -146,11 +149,11 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.price-alert-divider:not(:empty)::before {
+.price-alert-divider:not(:empty):before {
   margin-right: .25em;
 }
 
-.price-alert-divider:not(:empty)::after {
+.price-alert-divider:not(:empty):after {
   margin-left: .25em;
 }
 
@@ -162,7 +165,7 @@
 }
 
 .price-alert-input {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 14px 16px;
@@ -173,13 +176,13 @@
 
 .price-alert-input:focus {
   outline: none;
-  border-color: #3b82f6;
-  background: rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: #ff1f3d;
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 0 3px rgba(255, 31, 61, 0.15);
 }
 
 .price-alert-btn {
-  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   color: #fff;
   border: none;
   border-radius: 12px;
@@ -196,7 +199,7 @@
 
 .price-alert-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 10px 20px rgba(255, 31, 61, 0.3);
 }
 
 .price-alert-btn:disabled {
@@ -222,7 +225,7 @@
   height: 60px;
   object-fit: contain;
   border-radius: 8px;
-  background: #fff;
+  background: transparent;
   padding: 4px;
 }
 
@@ -234,7 +237,7 @@
 
 .price-alert-product-info p {
   margin: 0;
-  color: #3b82f6;
+  color: #ff1f3d;
   font-size: 16px;
   font-weight: 700;
 }
@@ -263,13 +266,13 @@
 }
 
 .price-alert-option.selected {
-  background: rgba(37, 99, 235, 0.1);
-  border-color: rgba(37, 99, 235, 0.5);
+  background: rgba(255, 31, 61, 0.08);
+  border-color: rgba(255, 31, 61, 0.4);
 }
 
 .price-alert-option-radio {
   margin-top: 4px;
-  accent-color: #3b82f6;
+  accent-color: #ff1f3d;
 }
 
 .price-alert-option-content h5 {
