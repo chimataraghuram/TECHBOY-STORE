@@ -872,28 +872,37 @@
 /* Comparison Bar */
 .comparison-bar {
   position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 600px;
-  padding: 16px 24px;
+  right: 20px;
+  top: 50%;
+  left: auto;
+  bottom: auto;
+  transform: translateY(-50%) !important;
+  width: 220px;
+  padding: 20px 16px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
   align-items: center;
   z-index: 1000;
   border: 1px solid rgba(255, 69, 0, 0.3);
-  animation: slide-up 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .comp-info {
   font-weight: 600;
   color: white;
+  text-align: center;
 }
 
 .comp-actions {
   display: flex;
+  flex-direction: column;
   gap: 12px;
+  width: 100%;
+}
+
+.comp-actions button {
+  width: 100%;
 }
 
 .clear-btn {
@@ -3937,7 +3946,6 @@ html {
 /* -- Safe area for notched phones (iPhone etc) -- */
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
   .chat-popup { padding-bottom: env(safe-area-inset-bottom); }
-  .comparison-bar { bottom: calc(20px + env(safe-area-inset-bottom)); }
   .navbar { padding-top: env(safe-area-inset-top); }
 }
 
