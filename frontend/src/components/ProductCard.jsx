@@ -213,33 +213,50 @@ const ProductCard = ({ product, onCompare, onOpenCompare, isComparing, onView, o
                             <div className="product-popover-icon" style={{ marginBottom: '8px' }}>🔍</div>
                             <h4 style={{ marginBottom: '16px' }}>Quick Specs</h4>
                             <div style={{ display: 'grid', gap: '10px', fontSize: '0.9rem', color: 'var(--redline-muted)' }}>
-                                {product.chip && (
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                        <span style={{ color: '#ff5d70', fontWeight: 'bold', width: '24px' }}>⚡</span>
-                                        <span>{product.chip}</span>
-                                    </div>
-                                )}
-                                {product.display && (
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                        <span style={{ color: '#ff5d70', fontWeight: 'bold', width: '24px' }}>📱</span>
-                                        <span>{product.display}</span>
-                                    </div>
-                                )}
-                                {product.camera && (
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                        <span style={{ color: '#ff5d70', fontWeight: 'bold', width: '24px' }}>📸</span>
-                                        <span>{product.camera}</span>
-                                    </div>
-                                )}
-                                {product.battery && (
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                        <span style={{ color: '#ff5d70', fontWeight: 'bold', width: '24px' }}>🔋</span>
-                                        <span>{product.battery}</span>
-                                    </div>
-                                )}
-                                {(!product.chip && !product.display && !product.camera && !product.battery) && (
-                                    <p>Full detailed specifications are available on the product page.</p>
-                                )}
+                                {(() => {
+                                    const specs = product.description ? product.description.split('|').map(s => s.trim()) : [];
+                                    const getSpec = (key) => {
+                                        const s = specs.find(spec => spec.toLowerCase().includes(key));
+                                        return s ? s.split(':')[1]?.trim() : null;
+                                    };
+                                    
+                                    const chip = product.chip || getSpec('chip');
+                                    const display = product.display || getSpec('display');
+                                    const camera = product.camera || getSpec('camera');
+                                    const battery = product.battery || getSpec('battery');
+                                    
+                                    return (
+                                        <>
+                                            {chip && (
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <span style={{ color: '#ff5d70', fontWeight: 'bold', width: '24px' }}>⚡</span>
+                                                    <span>{chip}</span>
+                                                </div>
+                                            )}
+                                            {display && (
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <span style={{ color: '#ff5d70', fontWeight: 'bold', width: '24px' }}>📱</span>
+                                                    <span>{display}</span>
+                                                </div>
+                                            )}
+                                            {camera && (
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <span style={{ color: '#ff5d70', fontWeight: 'bold', width: '24px' }}>📸</span>
+                                                    <span>{camera}</span>
+                                                </div>
+                                            )}
+                                            {battery && (
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <span style={{ color: '#ff5d70', fontWeight: 'bold', width: '24px' }}>🔋</span>
+                                                    <span>{battery}</span>
+                                                </div>
+                                            )}
+                                            {(!chip && !display && !camera && !battery) && (
+                                                <p>Full detailed specifications are available on the product page.</p>
+                                            )}
+                                        </>
+                                    );
+                                })()}
                             </div>
                         </div>
                     )}
