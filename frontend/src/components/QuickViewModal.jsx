@@ -84,39 +84,17 @@ const QuickViewModal = ({ product, onClose }) => {
         }
     };
 
-    // Calculate dynamic position if triggerRect is provided
-    let modalStyle = {};
-    if (triggerRect) {
-        const modalWidth = 800; // QuickView is wider
-        const modalHeight = 600;
-        let left = triggerRect.left;
-        let top = triggerRect.top;
-        
-        // Only adjust horizontally if overflowing viewport
-        if (left + modalWidth > window.innerWidth) {
-            left = window.innerWidth - modalWidth - 20;
-        }
-        if (left < 0) left = 20;
-
-        modalStyle = {
-            position: 'absolute',
-            left: `${left}px`,
-            top: `${top}px`,
-            margin: 0
-        };
-    }
-
     return (
-        <div className="quickview-overlay" onClick={onClose} style={{ zIndex: 9999 }}>
+        <div className="quickview-overlay" onClick={onClose} style={{ zIndex: 99999, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(10px)' }}>
             <m.div 
                 className="quickview-content glass-card"
-                initial={{ opacity: 0, scale: 0.95, y: triggerRect ? 0 : 20 }}
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: triggerRect ? 0 : 20 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
                 onClick={(e) => e.stopPropagation()}
-                style={modalStyle}
+                style={{ width: '90%', maxWidth: '1000px', maxHeight: '90vh', overflowY: 'auto', position: 'relative' }}
             >
-                <button className="close-btn top-right" onClick={onClose}>&times;</button>
+                <button className="close-btn top-right" onClick={onClose} style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 100, fontSize: '24px', background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '50%', width: '40px', height: '40px', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>&times;</button>
                 <div className="quickview-body">
                     <div className="quickview-image-side">
                         <div className="view-toggle-buttons" style={{ display: 'flex', gap: '8px', marginBottom: '16px', justifyContent: 'center' }}>
@@ -187,12 +165,34 @@ const QuickViewModal = ({ product, onClose }) => {
                             {alertStatus === 'error' && <p className="status-msg error">Please login to set alerts.</p>}
                         </div>
 
-                        <div className="specs-detail-list">
-                            {product.description && product.description.split('|').map((spec, i) => (
-                                <div key={i} className="spec-detail-item">
-                                    <p>{spec.trim()}</p>
-                                </div>
-                            ))}
+                        <div className="specs-detail-list" style={{ marginTop: '20px' }}>
+                            <h4 style={{ marginBottom: '12px', fontSize: '18px', color: '#fff' }}>Full Specifications</h4>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
+                                {product.description && product.description.split('|').map((spec, i) => {
+                                    const parts = spec.split(':');
+                                    const key = parts[0] ? parts[0].trim() : '';
+                                    const val = parts[1] ? parts[1].trim() : '';
+                                    if (!key) return null;
+                                    
+                                    let icon = '📌';
+                                    if (key.toLowerCase().includes('chip')) icon = '⚡';
+                                    else if (key.toLowerCase().includes('display')) icon = '📱';
+                                    else if (key.toLowerCase().includes('camera')) icon = '📸';
+                                    else if (key.toLowerCase().includes('battery')) icon = '🔋';
+                                    else if (key.toLowerCase().includes('ram')) icon = '🧠';
+                                    else if (key.toLowerCase().includes('storage')) icon = '💾';
+
+                                    return (
+                                        <div key={i} className="spec-detail-item" style={{ background: 'rgba(255,255,255,0.05)', padding: '12px', borderRadius: '12px', display: 'flex', alignItems: 'flex-start', gap: '12px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                                            <span style={{ fontSize: '20px' }}>{icon}</span>
+                                            <div>
+                                                <div style={{ fontSize: '12px', color: 'var(--redline-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>{key}</div>
+                                                <div style={{ fontSize: '15px', color: '#fff', fontWeight: 'bold' }}>{val || spec.trim()}</div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
                         </div>
 
                         <div className="modal-actions">

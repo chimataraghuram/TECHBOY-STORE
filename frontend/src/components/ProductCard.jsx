@@ -207,59 +207,6 @@ const ProductCard = ({ product, onCompare, onOpenCompare, isComparing, onView, o
                             )}
                         </div>
                     )}
-
-                    {activePopover === 'view' && (
-                        <div className="product-popover-content" style={{ paddingRight: '20px' }}>
-                            <div className="product-popover-icon" style={{ marginBottom: '8px' }}>🔍</div>
-                            <h4 style={{ marginBottom: '16px' }}>Quick Specs</h4>
-                            <div style={{ display: 'grid', gap: '10px', fontSize: '0.9rem', color: 'var(--redline-muted)' }}>
-                                {(() => {
-                                    const specs = product.description ? product.description.split('|').map(s => s.trim()) : [];
-                                    const getSpec = (key) => {
-                                        const s = specs.find(spec => spec.toLowerCase().includes(key));
-                                        return s ? s.split(':')[1]?.trim() : null;
-                                    };
-                                    
-                                    const chip = product.chip || getSpec('chip');
-                                    const display = product.display || getSpec('display');
-                                    const camera = product.camera || getSpec('camera');
-                                    const battery = product.battery || getSpec('battery');
-                                    
-                                    return (
-                                        <>
-                                            {chip && (
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                    <span style={{ color: '#ff5d70', fontWeight: 'bold', width: '24px' }}>⚡</span>
-                                                    <span>{chip}</span>
-                                                </div>
-                                            )}
-                                            {display && (
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                    <span style={{ color: '#ff5d70', fontWeight: 'bold', width: '24px' }}>📱</span>
-                                                    <span>{display}</span>
-                                                </div>
-                                            )}
-                                            {camera && (
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                    <span style={{ color: '#ff5d70', fontWeight: 'bold', width: '24px' }}>📸</span>
-                                                    <span>{camera}</span>
-                                                </div>
-                                            )}
-                                            {battery && (
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                    <span style={{ color: '#ff5d70', fontWeight: 'bold', width: '24px' }}>🔋</span>
-                                                    <span>{battery}</span>
-                                                </div>
-                                            )}
-                                            {(!chip && !display && !camera && !battery) && (
-                                                <p>Full detailed specifications are available on the product page.</p>
-                                            )}
-                                        </>
-                                    );
-                                })()}
-                            </div>
-                        </div>
-                    )}
                 </div>
             )}
 
@@ -336,7 +283,7 @@ const ProductCard = ({ product, onCompare, onOpenCompare, isComparing, onView, o
                             style={{ flex: 1, padding: '8px 4px', borderRadius: '20px', background: '#ff1f3d', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 'bold', border: 'none', color: 'white', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer', textTransform: 'uppercase' }}
                             onClick={(e) => { 
                                 e.stopPropagation(); 
-                                setActivePopover('view');
+                                onView && onView(product, null);
                             }}
                         >
                             View
