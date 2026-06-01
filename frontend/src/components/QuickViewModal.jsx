@@ -213,7 +213,7 @@ const QuickViewModal = ({ product, onClose }) => {
                     </div>
                 </div>
             </m.div>
-        </m.div>
+        </div>
     );
 };
 
