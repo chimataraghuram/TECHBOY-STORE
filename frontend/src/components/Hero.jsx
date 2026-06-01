@@ -125,15 +125,10 @@ const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
                     <m.div variants={itemVariants} className="hero-buttons">
                         <button
                             className="primary-btn large jelly-btn recommend-btn"
-                            onClick={onOpenAdvisor}
-                        >
-                            <Zap size={18} /> Recommend Me
-                        </button>
-                        <button
-                            className="secondary-btn large jelly-btn"
                             onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
+                            style={{ width: '100%', maxWidth: '400px', fontSize: '1.1rem' }}
                         >
-                            Browse All
+                            <Zap size={20} /> FIND MY PERFECT PHONE
                         </button>
                     </m.div>
 
