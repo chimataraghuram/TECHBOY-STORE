@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { m, AnimatePresence } from 'framer-motion';
-import { Bell, X, Check, ArrowRight, Loader2, Target } from 'lucide-react';
+import { motion as m, AnimatePresence } from 'framer-motion';
+import { Bell, X, Check, ArrowRight, Loader2, Target, CheckCircle2, AlertCircle } from 'lucide-react';
+import { useMediaQuery } from '../hooks/useMediaQuery';
+import { useAuth } from '../context/AuthContext';
 import './PriceAlertModal.css';
 
 const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
+  const { login, addAlert } = useAuth();
   // Step 1: Collect Email (if not logged in)
   // Step 2: Configure Alert
   // Step 3: Success
@@ -32,48 +35,47 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
       return;
     }
     setError('');
+    login(); // Call login to set the user state
     setStep(2);
   };
 
   const handleGoogleLogin = () => {
-    // We mock the google login for now or guide them to standard auth
-    // Since Phase 2 says "Continue with Google", we'll just show an error directing them to login via navbar for full experience,
-    // OR just use their email.
-    alert('Please login via the top right profile icon, or enter your email below.');
+    login(); // Call our global AuthContext login
+    setStep(2);
   };
 
-  const handleSubmitAlert = async () => {
-    if (alertType === 'TARGET' && !targetPrice) {
-      setError('Please enter a target price');
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email) {
+      setError('Please enter your email.');
       return;
     }
-    
-    setLoading(true);
     setError('');
     
+    if (step === 1) {
+      login(); // Simulates logging in with Google / Email
+      setStep(2);
+      return;
+    }
+
+    // Step 2 submission
+    setLoading(true);
     try {
+      // Simulate a real API call
+      await new Promise(r => setTimeout(r, 600));
+      
       const payload = {
         email: email,
-        product: product.id,
-        product_name: product.name,
+        product_id: product.id,
         current_price: product.price,
         alert_type: alertType,
         target_price: alertType === 'TARGET' ? parseInt(targetPrice.replace(/\D/g, ''), 10) : null
       };
 
-      const token = localStorage.getItem('techboy_token');
-      const headers = { 'Content-Type': 'application/json' };
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
-
-      const res = await fetch('http://127.0.0.1:8000/api/alerts/', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(payload)
-      });
+      addAlert(product, payload.target_price);
       
-      if (!res.ok) throw new Error('Failed to set alert');
       setStep(3);
     } catch (err) {
       setError('Failed to set alert. Please try again.');
@@ -83,10 +85,12 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
     }
   };
 
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
   if (!isOpen || !product) return null;
 
   let modalStyle = {};
-  if (triggerRect) {
+  if (triggerRect && !isMobile) {
     const modalWidth = 450; // Increased width for the "big" feel
     const modalHeight = 460;
     
@@ -118,24 +122,49 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
       maxWidth: 'calc(100vw - 40px)',
       margin: 0
     };
-  } else {
+  } else if (!isMobile) {
       modalStyle = {
           position: 'relative',
           width: '100%',
           maxWidth: '500px',
           margin: '0 auto'
       };
+  } else {
+      // Mobile bottom sheet style
+      modalStyle = {
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          width: '100%',
+          maxWidth: '100%',
+          margin: 0,
+          borderBottomLeftRadius: 0,
+          borderBottomRightRadius: 0
+      };
   }
+
+  const desktopVariants = {
+    hidden: { opacity: 0, scale: 0.9, y: 20 },
+    visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", damping: 25, stiffness: 300 } },
+    exit: { opacity: 0, scale: 0.9, y: 20, transition: { duration: 0.2 } }
+  };
+
+  const mobileVariants = {
+    hidden: { opacity: 1, y: "100%" },
+    visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 25, stiffness: 300 } },
+    exit: { opacity: 1, y: "100%", transition: { duration: 0.2 } }
+  };
 
   return (
     <AnimatePresence>
-      <div className="price-alert-overlay" onClick={onClose}>
+      <div className="price-alert-overlay" onClick={onClose} style={isMobile ? { alignItems: 'flex-end', padding: 0 } : {}}>
         <m.div 
           className="price-alert-modal glass-panel"
-          initial={{ opacity: 0, scale: 0.95, y: triggerRect ? 0 : 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: triggerRect ? 0 : 20 }}
           onClick={e => e.stopPropagation()}
+          variants={isMobile ? mobileVariants : desktopVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
           style={modalStyle}
         >
           <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', borderRadius: '24px', pointerEvents: 'none' }}>

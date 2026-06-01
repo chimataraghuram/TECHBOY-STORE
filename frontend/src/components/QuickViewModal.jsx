@@ -1,6 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { m } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 import RadarChart from './RadarChart';
 import PriceHistoryChart from './PriceHistoryChart';
 import { resolveProductImage } from '../utils/imageResolver';
@@ -84,15 +85,46 @@ const QuickViewModal = ({ product, onClose }) => {
         }
     };
 
+    const isMobile = useMediaQuery('(max-width: 768px)');
+
+    if (!isOpen || !product) return null;
+
+    const desktopVariants = {
+      hidden: { opacity: 0, scale: 0.9, y: 20 },
+      visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", damping: 25, stiffness: 300 } },
+      exit: { opacity: 0, scale: 0.9, y: 20, transition: { duration: 0.2 } }
+    };
+
+    const mobileVariants = {
+      hidden: { opacity: 1, y: "100%" },
+      visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 25, stiffness: 300 } },
+      exit: { opacity: 1, y: "100%", transition: { duration: 0.2 } }
+    };
+
+    const modalStyle = isMobile ? {
+      position: 'fixed',
+      bottom: 0,
+      left: 0,
+      width: '100%',
+      maxWidth: '100%',
+      margin: 0,
+      maxHeight: '90vh',
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
+      overflowY: 'auto'
+    } : { width: '100%', maxWidth: '900px', margin: '0 auto', maxHeight: '85vh', overflowY: 'auto' };
+
     return (
-        <div className="quickview-overlay" onClick={onClose} style={{ zIndex: 99999, background: 'rgba(0, 0, 0, 0.85)' }}>
+        <AnimatePresence>
+          <div className="quickview-overlay" onClick={onClose} style={isMobile ? { alignItems: 'flex-end', padding: 0, zIndex: 99999, background: 'rgba(0, 0, 0, 0.85)' } : { zIndex: 99999, background: 'rgba(0, 0, 0, 0.85)' }}>
             <m.div 
                 className="quickview-content glass-card"
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                variants={isMobile ? mobileVariants : desktopVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
                 onClick={(e) => e.stopPropagation()}
-                style={{ width: '100%', maxWidth: '900px', margin: '0 auto', maxHeight: '85vh', overflowY: 'auto' }}
+                style={modalStyle}
             >
                 <button className="close-btn top-right" onClick={onClose} style={{ position: 'absolute', top: '24px', right: '24px', zIndex: 100, fontSize: '28px', background: 'rgba(255, 31, 61, 0.2)', border: '1px solid rgba(255, 31, 61, 0.5)', borderRadius: '50%', width: '44px', height: '44px', color: '#ff1f3d', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}>&times;</button>
                 <div className="quickview-body">
@@ -211,6 +243,7 @@ const QuickViewModal = ({ product, onClose }) => {
                 </div>
             </m.div>
         </div>
+        </AnimatePresence>
     );
 };
 

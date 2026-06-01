@@ -6,6 +6,7 @@ import WatchlistModal from './WatchlistModal';
 import { useAuth } from '../context/AuthContext';
 import AuthDropdown from './AuthDropdown';
 import NotificationSystem from './NotificationSystem';
+import UserDashboard from './UserDashboard';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
@@ -30,9 +31,9 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
     const [activeSection, setActiveSection] = useState('home');
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1200);
 
-    const { user, loginWithGoogle } = useAuth();
+    const { user, login } = useAuth();
     const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
-
+    const [isDashboardOpen, setIsDashboardOpen] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
@@ -146,7 +147,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                 <input
                                     type="text"
                                     className="search-input"
-                                    placeholder="Search gear..."
+                                    placeholder="Search 'gaming phones under 40k'..."
                                     value={searchTerm}
                                     onChange={handleSearchChange}
                                     aria-label="Search products"
@@ -201,7 +202,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                     <input
                                         type="text"
                                         className="search-input"
-                                        placeholder="Search gear..."
+                                        placeholder="Search 'gaming under 40k'..."
                                         value={searchTerm}
                                         onChange={handleSearchChange}
                                     />
@@ -227,16 +228,19 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                         <NotificationSystem />
 
                     {user ? (
-                        <AuthDropdown onWatchlistClick={() => setIsWatchlistOpen(true)} />
+                        <AuthDropdown 
+                            onWatchlistClick={() => setIsWatchlistOpen(true)} 
+                            onDashboardClick={() => setIsDashboardOpen(true)}
+                        />
                     ) : (
-                        <button className="pill-auth-btn" onClick={loginWithGoogle}>SIGN UP</button>
+                        <button className="pill-auth-btn" onClick={login}>SIGN UP</button>
                     )}
                     </div>
                 </div>
             </div>
 
-            
             <WatchlistModal isOpen={isWatchlistOpen} onClose={() => setIsWatchlistOpen(false)} />
+            <UserDashboard isOpen={isDashboardOpen} onClose={() => setIsDashboardOpen(false)} />
         </nav>
     );
 };

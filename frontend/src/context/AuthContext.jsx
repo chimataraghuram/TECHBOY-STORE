@@ -1,101 +1,81 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { auth, googleProvider, signInWithPopup, signOut } from '../firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
 export function useAuth() {
-  return useContext(AuthContext);
+    return useContext(AuthContext);
 }
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
+    const [priceAlerts, setPriceAlerts] = useState([]);
+    const [watchlist, setWatchlist] = useState([]);
 
-  useEffect(() => {
-    // Listen to Firebase auth state changes
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        try {
-          // Get Firebase token
-          const token = await firebaseUser.getIdToken();
-          
-          // Send to Django backend
-          const res = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api'}/auth/google/`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ token })
-          });
-          
-          if (res.ok) {
-            const data = await res.json();
-            // Store django token for API calls
-            localStorage.setItem('techboy_token', data.token);
-            // Store user profile combined from Firebase/Django
-            const userData = {
-              uid: firebaseUser.uid,
-              displayName: firebaseUser.displayName,
-              email: firebaseUser.email,
-              photoURL: firebaseUser.photoURL,
-              ...data.user
-            };
-            localStorage.setItem('techboy_user', JSON.stringify(userData));
-            setUser(userData);
-          } else {
-            console.error('Failed to verify token with backend');
-            // If backend fails, log out from firebase too to keep in sync
-            await auth.signOut();
-            setUser(null);
-            localStorage.removeItem('techboy_token');
-            localStorage.removeItem('techboy_user');
-          }
-        } catch (error) {
-          console.error("Auth context error:", error);
-          setUser(null);
+    // Load from localStorage on mount
+    useEffect(() => {
+        const storedUser = localStorage.getItem('tb_user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+            const alerts = localStorage.getItem('tb_alerts');
+            if (alerts) setPriceAlerts(JSON.parse(alerts));
+            const watch = localStorage.getItem('tb_watchlist');
+            if (watch) setWatchlist(JSON.parse(watch));
         }
-      } else {
+    }, []);
+
+    const login = () => {
+        const dummyUser = {
+            id: 'u_123',
+            name: 'Tech Enthusiast',
+            email: 'techfan@example.com',
+            avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix'
+        };
+        setUser(dummyUser);
+        localStorage.setItem('tb_user', JSON.stringify(dummyUser));
+    };
+
+    const logout = () => {
         setUser(null);
-        localStorage.removeItem('techboy_token');
-        localStorage.removeItem('techboy_user');
-      }
-      setLoading(false);
-    });
+        setPriceAlerts([]);
+        setWatchlist([]);
+        localStorage.removeItem('tb_user');
+        localStorage.removeItem('tb_alerts');
+        localStorage.removeItem('tb_watchlist');
+    };
 
-    return unsubscribe;
-  }, []);
+    const addAlert = (product, targetPrice) => {
+        const newAlert = {
+            id: Date.now().toString(),
+            product,
+            targetPrice,
+            dateAdded: new Date().toISOString()
+        };
+        const updated = [...priceAlerts, newAlert];
+        setPriceAlerts(updated);
+        localStorage.setItem('tb_alerts', JSON.stringify(updated));
+    };
+    
+    const removeAlert = (id) => {
+        const updated = priceAlerts.filter(a => a.id !== id);
+        setPriceAlerts(updated);
+        localStorage.setItem('tb_alerts', JSON.stringify(updated));
+    };
 
-  const loginWithGoogle = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-    } catch (error) {
-      console.error("Google sign in failed:", error);
-      throw error;
-    }
-  };
+    const toggleWatchlist = (product) => {
+        const exists = watchlist.find(p => p.id === product.id);
+        let updated;
+        if (exists) {
+            updated = watchlist.filter(p => p.id !== product.id);
+        } else {
+            updated = [...watchlist, product];
+        }
+        setWatchlist(updated);
+        localStorage.setItem('tb_watchlist', JSON.stringify(updated));
+    };
 
-  const logout = async () => {
-    try {
-      await signOut(auth);
-      localStorage.removeItem('techboy_token');
-      localStorage.removeItem('techboy_user');
-      setUser(null);
-    } catch (error) {
-      console.error("Sign out error:", error);
-    }
-  };
-
-  const value = {
-    user,
-    loading,
-    loginWithGoogle,
-    logout
-  };
-
-  return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
-    </AuthContext.Provider>
-  );
+    return (
+        <AuthContext.Provider value={{ user, priceAlerts, watchlist, login, logout, addAlert, removeAlert, toggleWatchlist }}>
+            {children}
+        </AuthContext.Provider>
+    );
 }

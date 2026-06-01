@@ -4,7 +4,7 @@ import { User, Bookmark, LogOut, Settings, History, Heart } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './AuthDropdown.css';
 
-const AuthDropdown = ({ onWatchlistClick }) => {
+const AuthDropdown = ({ onWatchlistClick, onDashboardClick }) => {
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -22,9 +22,9 @@ const AuthDropdown = ({ onWatchlistClick }) => {
   if (!user) return null;
 
   // Fallback to a default image if no photo URL is available
-  const photoURL = user.photoURL || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + user.uid;
+  const photoURL = user.avatar || user.photoURL || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + user.uid;
   // Get first name or default to 'User'
-  const displayName = user.displayName ? user.displayName.split(' ')[0] : 'User';
+  const displayName = user.name ? user.name.split(' ')[0] : (user.displayName ? user.displayName.split(' ')[0] : 'User');
 
   return (
     <div className="auth-dropdown-container" ref={dropdownRef}>
@@ -59,7 +59,7 @@ const AuthDropdown = ({ onWatchlistClick }) => {
             <div className="dropdown-header">
               <img src={photoURL} alt="Profile" className="dropdown-header-img" />
               <div className="dropdown-user-info">
-                <span className="dropdown-full-name">{user.displayName || 'TechBoy User'}</span>
+                <span className="dropdown-full-name">{user.name || user.displayName || 'TechBoy User'}</span>
                 <span className="dropdown-email">{user.email || ''}</span>
               </div>
             </div>
@@ -67,9 +67,9 @@ const AuthDropdown = ({ onWatchlistClick }) => {
             <div className="dropdown-divider"></div>
 
             <div className="dropdown-items">
-              <button className="dropdown-item">
+              <button className="dropdown-item" onClick={() => { setIsOpen(false); onDashboardClick && onDashboardClick(); }}>
                 <User size={16} className="dropdown-icon" />
-                <span>My Profile</span>
+                <span>My Profile Dashboard</span>
               </button>
               
               <button className="dropdown-item">
