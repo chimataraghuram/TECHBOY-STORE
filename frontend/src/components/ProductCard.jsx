@@ -187,7 +187,11 @@ const ProductCard = ({ product, onCompare, isComparing, onView, onPriceAlert, in
                         <button 
                             className="primary-btn mini" 
                             style={{ flex: 1, padding: '8px 4px', borderRadius: '10px', background: 'linear-gradient(135deg, #2563eb, #3b82f6)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', border: 'none', color: 'white', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer' }}
-                            onClick={(e) => { e.stopPropagation(); onPriceAlert && onPriceAlert(product); }}
+                            onClick={(e) => { 
+                                e.stopPropagation(); 
+                                const rect = e.currentTarget.closest('.product-card').getBoundingClientRect();
+                                onPriceAlert && onPriceAlert(product, rect); 
+                            }}
                         >
                             🔔 Alert
                         </button>
@@ -201,7 +205,11 @@ const ProductCard = ({ product, onCompare, isComparing, onView, onPriceAlert, in
                         <button 
                             className="primary-btn mini" 
                             style={{ flex: 1, padding: '8px 4px', borderRadius: '10px', fontSize: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer' }}
-                            onClick={(e) => { e.stopPropagation(); onView && onView(product); }}
+                            onClick={(e) => { 
+                                e.stopPropagation(); 
+                                const rect = e.currentTarget.closest('.product-card').getBoundingClientRect();
+                                onView && onView(product, rect); 
+                            }}
                         >
                             View
                         </button>

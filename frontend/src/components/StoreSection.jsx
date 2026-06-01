@@ -325,8 +325,8 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                                     key={product.id} 
                                     product={product} 
                                     onCompare={handleCompare}
-                                    onView={() => setActiveViewProduct(product)}
-                                    onPriceAlert={(p) => setPriceAlertProduct(p)}
+                                    onView={(p, rect) => setActiveViewProduct({ product: p, rect })}
+                                    onPriceAlert={(p, rect) => setPriceAlertProduct({ product: p, rect })}
                                     isComparing={compareList.some(p => p.id === product.id)}
                                     index={idx}
                                     searchTerm={debouncedSearch}
@@ -348,16 +348,18 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                                     <h3>No matches found</h3>
                                     <p>We couldn't find any products matching "{searchTerm}". Try a different category or name.</p>
                                     <button className="secondary-btn mini clear-results-btn" onClick={() => {
-                                        onSearch('');
-                                        window.scrollTo({top: 0, behavior: 'smooth'});
-                                    }}>Try Again</button>
-                                    <button className="jelly-btn mini" onClick={() => (onSearch(''), window.location.hash = '#products')}>Return to Home</button>
+                                        setSearchTerm('');
+                                        setDebouncedSearch('');
+                                    }}>
+                                        Clear Search
+                                    </button>
                                 </div>
                             </div>
                         )}
                     </div>
                 </div>
 
+                {/* Floating Side Comparison Bar */}
                 <AnimatePresence>
                     {compareList.length > 0 && (
                         <m.div 
@@ -385,14 +387,19 @@ const StoreSection = ({ searchTerm, onSearch }) => {
 
                 <AnimatePresence>
                     {activeViewProduct && (
-                        <QuickViewModal product={activeViewProduct} onClose={() => setActiveViewProduct(null)} />
+                        <QuickViewModal 
+                            product={activeViewProduct.product} 
+                            triggerRect={activeViewProduct.rect}
+                            onClose={() => setActiveViewProduct(null)} 
+                        />
                     )}
                 </AnimatePresence>
 
                 <PriceAlertModal
                     isOpen={!!priceAlertProduct}
                     onClose={() => setPriceAlertProduct(null)}
-                    product={priceAlertProduct}
+                    product={priceAlertProduct ? priceAlertProduct.product : null}
+                    triggerRect={priceAlertProduct ? priceAlertProduct.rect : null}
                     user={user}
                 />
             </div>

@@ -84,20 +84,40 @@ const QuickViewModal = ({ product, onClose }) => {
         }
     };
 
+    // Calculate dynamic position if triggerRect is provided
+    let modalStyle = {};
+    if (triggerRect) {
+        const modalWidth = 800; // QuickView is wider
+        const modalHeight = 600;
+        let left = triggerRect.right + 20;
+        let top = triggerRect.top;
+        
+        // Adjust if overflowing viewport
+        if (left + modalWidth > window.innerWidth) {
+            left = triggerRect.left - modalWidth - 20;
+        }
+        if (top + modalHeight > window.innerHeight) {
+            top = Math.max(20, window.innerHeight - modalHeight - 20);
+        }
+        if (left < 0) left = Math.max(20, (window.innerWidth - modalWidth) / 2); // fallback to center if too big
+
+        modalStyle = {
+            position: 'absolute',
+            left: `${left}px`,
+            top: `${top}px`,
+            margin: 0
+        };
+    }
+
     return (
-        <m.div 
-            className="quickview-overlay" 
-            onClick={onClose}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-        >
+        <div className="quickview-overlay" onClick={onClose} style={{ zIndex: 9999 }}>
             <m.div 
-                className="quickview-content glass-card" 
-                onClick={e => e.stopPropagation()}
-                initial={{ scale: 0.95, opacity: 0, y: 20 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                className="quickview-content glass-card"
+                initial={{ opacity: 0, scale: 0.95, y: triggerRect ? 0 : 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: triggerRect ? 0 : 20 }}
+                onClick={(e) => e.stopPropagation()}
+                style={modalStyle}
             >
                 <button className="close-btn top-right" onClick={onClose}>&times;</button>
                 <div className="quickview-body">

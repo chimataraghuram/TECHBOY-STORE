@@ -85,15 +85,41 @@ const PriceAlertModal = ({ isOpen, onClose, product, user }) => {
 
   if (!isOpen || !product) return null;
 
+  // Calculate dynamic position if triggerRect is provided
+  let modalStyle = {};
+  if (triggerRect) {
+    const modalWidth = 480;
+    const modalHeight = 450;
+    let left = triggerRect.right + 20;
+    let top = triggerRect.top;
+    
+    // Adjust if overflowing viewport
+    if (left + modalWidth > window.innerWidth) {
+      left = triggerRect.left - modalWidth - 20;
+    }
+    if (top + modalHeight > window.innerHeight) {
+      top = Math.max(20, window.innerHeight - modalHeight - 20);
+    }
+    if (left < 0) left = 20; // fallback
+
+    modalStyle = {
+      position: 'absolute',
+      left: `${left}px`,
+      top: `${top}px`,
+      margin: 0
+    };
+  }
+
   return (
     <AnimatePresence>
       <div className="price-alert-overlay" onClick={onClose}>
         <m.div 
           className="price-alert-modal glass-panel"
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          initial={{ opacity: 0, scale: 0.95, y: triggerRect ? 0 : 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          exit={{ opacity: 0, scale: 0.95, y: triggerRect ? 0 : 20 }}
           onClick={e => e.stopPropagation()}
+          style={modalStyle}
         >
           <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', borderRadius: '24px', pointerEvents: 'none' }}>
             <div className="price-alert-glow" />
