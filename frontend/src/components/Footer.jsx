@@ -49,33 +49,40 @@ const Footer = () => {
                         </button>
                     </div>
 
-                    {/* Middle Column: How to Use */}
+                    {/* Middle Column: How it Works */}
                     <div className="footer-col how-to-guide">
                         <div className="col-header">
-                            <span className="header-icon">📖</span>
-                            <h4>HOW TO USE THIS PROJECT</h4>
+                            <span className="header-icon">🧠</span>
+                            <h4>HOW IT WORKS</h4>
                         </div>
 
                         <div className="guide-steps">
                             <div className="guide-step">
                                 <div className="step-num">1</div>
                                 <div className="step-content">
-                                    <h6>1. EXPLORE DEALS</h6>
-                                    <p>Enter any keyword (e.g., '120Hz', 'OLED') into the search bar. We instantly pull matching deals from multiple platforms.</p>
+                                    <h6>1. INSTANT SEARCH</h6>
+                                    <p>Blazing fast, real-time filtering across our entire smartphone database to find your exact match.</p>
                                 </div>
                             </div>
                             <div className="guide-step">
                                 <div className="step-num">2</div>
                                 <div className="step-content">
-                                    <h6>2. COMPARE SPECS</h6>
-                                    <p>Not sure what to buy? Use our comparison modal to browse real-time specs and top-starred performance indices.</p>
+                                    <h6>2. AI ADVISOR</h6>
+                                    <p>Skip the spec-sheet fatigue. Our AI translates complex hardware data into clear, personalized buying verdicts.</p>
                                 </div>
                             </div>
                             <div className="guide-step">
                                 <div className="step-num">3</div>
                                 <div className="step-content">
-                                    <h6>3. GET THE BEST PRICE</h6>
-                                    <p>Click 'Get Deal' to bookmark interesting projects to your personal dashboard. Use TECHBOY AI to summarize price history.</p>
+                                    <h6>3. GEEK-LEVEL INSIGHTS</h6>
+                                    <p>Dive deep into custom performance metrics, thermal scores, and battery endurance ratings.</p>
+                                </div>
+                            </div>
+                            <div className="guide-step">
+                                <div className="step-num">4</div>
+                                <div className="step-content">
+                                    <h6>4. ENTHUSIAST APPROVED</h6>
+                                    <p>Zero bloat. We only curate devices that meet strict performance and value standards.</p>
                                 </div>
                             </div>
                         </div>
