@@ -17,15 +17,15 @@ const buildLocalSummary = (product) => {
 };
 
 const QuickViewModal = ({ product, onClose }) => {
-    const [alertPrice, setAlertPrice] = useState(product.price - 1000);
+    const [alertPrice, setAlertPrice] = useState(product?.price ? product.price - 1000 : 0);
     const [isAlertSubmitting, setIsAlertSubmitting] = useState(false);
     const [alertStatus, setAlertStatus] = useState(null); // 'success', 'error'
     const [aiSummary, setAiSummary] = useState(null);
     const [isLoadingAi, setIsLoadingAi] = useState(false);
     const [viewMode, setViewMode] = useState('2d'); // '2d' or '3d'
-    const amazonUrl = product.amazon_link || product.amazonLink;
-    const flipkartUrl = product.flipkart_link || product.flipkartLink;
-    const imageUrl = resolveProductImage(product.image, product.name);
+    const amazonUrl = product?.amazon_link || product?.amazonLink;
+    const flipkartUrl = product?.flipkart_link || product?.flipkartLink;
+    const imageUrl = product ? resolveProductImage(product.image, product.name) : '';
 
     useEffect(() => {
         const fetchAiSummary = async () => {
@@ -87,7 +87,7 @@ const QuickViewModal = ({ product, onClose }) => {
 
     const isMobile = useMediaQuery('(max-width: 768px)');
 
-    if (!isOpen || !product) return null;
+    if (!product) return null;
 
     const desktopVariants = {
       hidden: { opacity: 0, scale: 0.9, y: 20 },
