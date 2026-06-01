@@ -3615,6 +3615,23 @@ html {
   100% { text-shadow: 0 0 25px rgba(230, 0, 43, 0.8), 0 0 45px rgba(230, 0, 43, 0.5); }
 }
 
+.section-title-pill {
+  display: inline-block;
+  padding: 1rem 3rem;
+  border-radius: 100px;
+  background: rgba(15, 15, 15, 0.6);
+  border: 1px solid rgba(255, 31, 61, 0.4);
+  box-shadow: 0 0 30px rgba(255, 31, 61, 0.2), inset 0 0 15px rgba(255, 31, 61, 0.1);
+  backdrop-filter: blur(12px);
+  margin-bottom: 24px;
+  animation: pill-glow-pulse 4s infinite alternate ease-in-out;
+}
+
+@keyframes pill-glow-pulse {
+  0% { box-shadow: 0 0 20px rgba(255, 31, 61, 0.2), inset 0 0 10px rgba(255, 31, 61, 0.1); border-color: rgba(255, 31, 61, 0.3); }
+  100% { box-shadow: 0 0 50px rgba(255, 31, 61, 0.5), inset 0 0 25px rgba(255, 31, 61, 0.2); border-color: rgba(255, 31, 61, 0.7); }
+}
+
 .glow-badge {
   box-shadow: 0 0 15px rgba(230, 0, 43, 0.6) !important;
   border-color: rgba(230, 0, 43, 0.8) !important;

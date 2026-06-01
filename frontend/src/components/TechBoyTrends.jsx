@@ -81,7 +81,7 @@ const TechBoyTrends = () => {
       {/* ── Section Header ── */}
       <div className="section-header text-center">
 
-        <m.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} viewport={{ once: true }} className="section-title text-glow-premium">
+        <m.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} viewport={{ once: true }} className="section-title text-glow-premium section-title-pill">
           TechBoy <span className="text-gradient">Trends</span> 🔥
         </m.h2>
         <m.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.2 }} viewport={{ once: true }} className="section-subtitle">

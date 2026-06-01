@@ -255,7 +255,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
                         viewport={{ once: true }}
-                        className="section-title text-glow-premium"
+                        className="section-title text-glow-premium section-title-pill"
                     >Premium Smartphone <span className="text-gradient">Collection</span></m.h2>
                     <m.p 
                         initial={{ opacity: 0 }}

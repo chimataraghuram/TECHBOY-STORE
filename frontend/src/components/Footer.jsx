@@ -6,7 +6,7 @@ const Footer = () => {
         <footer id="footer" className="footer-section">
             <div className="container footer-container">
                 <div className="section-header text-center" style={{ marginBottom: '50px', marginTop: '20px' }}>
-                    <h2 className="section-title text-glow-premium">
+                    <h2 className="section-title text-glow-premium section-title-pill">
                         Contact <span className="text-gradient">TechBoy</span>
                     </h2>
                 </div>
