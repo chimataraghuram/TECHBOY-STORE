@@ -2487,6 +2487,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 30px !important;
   overflow: visible !important;
+  will-change: transform, opacity;
 }
 
 .product-card::after {

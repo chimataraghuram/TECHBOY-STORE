@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
+import { VirtuosoGrid } from 'react-virtuoso';
 import ProductCard from './ProductCard';
-import ComparisonModal from './ComparisonModal';
-import QuickViewModal from './QuickViewModal';
-import FilterSidebar from './FilterSidebar';
-import PriceAlertModal from './PriceAlertModal';
+const ComparisonModal = React.lazy(() => import('./ComparisonModal'));
+const QuickViewModal = React.lazy(() => import('./QuickViewModal'));
+const PriceAlertModal = React.lazy(() => import('./PriceAlertModal'));
+const FilterSidebar = React.lazy(() => import('./FilterSidebar'));
 import { useAuth } from '../context/AuthContext';
 import localPhonesData from '../data/phones.json';
 
@@ -295,94 +296,110 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                 )}
 
                 <div className="store-layout" style={{ marginTop: '40px' }}>
-                    <FilterSidebar 
-                        brands={availableBrands}
-                        selectedBrands={selectedBrands}
-                        setSelectedBrands={setSelectedBrands}
-                        minPrice={minPrice}
-                        setMinPrice={setMinPrice}
-                        maxPrice={maxPrice}
-                        setMaxPrice={setMaxPrice}
-                        highestPrice={highestPrice}
-                        sortBy={sortBy}
-                        setSortBy={setSortBy}
-                        onClearFilters={() => {
-                            setSelectedBrands([]);
-                            setMinPrice(0);
-                            setMaxPrice(highestPrice);
-                            setSortBy("featured");
-                        }}
-                    />
+                    <Suspense fallback={<div>Loading Filters...</div>}>
+                        <FilterSidebar 
+                            brands={availableBrands}
+                            selectedBrands={selectedBrands}
+                            setSelectedBrands={setSelectedBrands}
+                            minPrice={minPrice}
+                            setMinPrice={setMinPrice}
+                            maxPrice={maxPrice}
+                            setMaxPrice={setMaxPrice}
+                            highestPrice={highestPrice}
+                            sortBy={sortBy}
+                            setSortBy={setSortBy}
+                            onClearFilters={() => {
+                                setSelectedBrands([]);
+                                setMinPrice(0);
+                                setMaxPrice(highestPrice);
+                                setSortBy("featured");
+                            }}
+                        />
+                    </Suspense>
 
-                    <div className="product-grid">
-                        {loading ? (
-                            [...Array(6)].map((_, idx) => (
+                    {loading ? (
+                        <div className="product-grid">
+                            {[...Array(6)].map((_, idx) => (
                                 <ProductCardSkeleton key={idx} />
-                            ))
-                        ) : (
-                            (isPureAll ? allFilterRandomized : filteredProducts.slice(0, displayLimit)).map((product, idx) => (
-                                <ProductCard 
-                                    key={product.id} 
-                                    product={product} 
-                                    onCompare={handleCompare}
-                                    onOpenCompare={() => setIsCompModalOpen(true)}
-                                    onView={(p, rect) => setActiveViewProduct({ product: p, rect })}
-                                    onPriceAlert={(p, rect) => setPriceAlertProduct({ product: p, rect })}
-                                    isComparing={compareList.some(p => p.id === product.id)}
-                                    index={idx}
-                                    searchTerm={debouncedSearch}
-                                />
-                            ))
-                        )}
-                        
-                        {!loading && !isPureAll && displayLimit < filteredProducts.length && (
-                            <div style={{ gridColumn: '1 / -1', textAlign: 'center', marginTop: '20px' }}>
-                                <button className="primary-btn" onClick={() => setDisplayLimit(prev => prev + 12)}>
-                                    Load More
-                                </button>
-                            </div>
-                        )}
-                        {!loading && filteredProducts.length === 0 && (
-                            <div className="no-results-premium glass-card">
-                                <div className="no-results-content">
-                                    <span className="warning-icon">⚠️</span>
-                                    <h3>No matches found</h3>
-                                    <p>We couldn't find any products matching "{searchTerm}". Try a different category or name.</p>
-                                    <button className="secondary-btn mini clear-results-btn" onClick={() => {
-                                        setSearchTerm('');
-                                        setDebouncedSearch('');
-                                    }}>
-                                        Clear Search
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                <AnimatePresence>
-                    {isCompModalOpen && (
-                        <ComparisonModal products={compareList} onClose={() => setIsCompModalOpen(false)} />
-                    )}
-                </AnimatePresence>
-
-                <AnimatePresence>
-                    {activeViewProduct && (
-                        <QuickViewModal 
-                            product={activeViewProduct.product} 
-                            triggerRect={activeViewProduct.rect}
-                            onClose={() => setActiveViewProduct(null)} 
+                            ))}
+                        </div>
+                    ) : (
+                        <VirtuosoGrid
+                            useWindowScroll
+                            totalCount={isPureAll ? allFilterRandomized.length : filteredProducts.length}
+                            components={{
+                                List: React.forwardRef((props, ref) => (
+                                    <div className="product-grid" ref={ref} {...props} />
+                                )),
+                                Item: ({ children, ...props }) => (
+                                    <div {...props}>{children}</div>
+                                )
+                            }}
+                            itemContent={(idx) => {
+                                const product = isPureAll ? allFilterRandomized[idx] : filteredProducts[idx];
+                                if (!product) return null;
+                                return (
+                                    <ProductCard 
+                                        key={product.id} 
+                                        product={product} 
+                                        onCompare={handleCompare}
+                                        onOpenCompare={() => setIsCompModalOpen(true)}
+                                        onView={(p, rect) => setActiveViewProduct({ product: p, rect })}
+                                        onPriceAlert={(p, rect) => setPriceAlertProduct({ product: p, rect })}
+                                        isComparing={compareList.some(p => p.id === product.id)}
+                                        index={idx}
+                                        searchTerm={debouncedSearch}
+                                    />
+                                );
+                            }}
                         />
                     )}
-                </AnimatePresence>
+                    {!loading && filteredProducts.length === 0 && (
+                        <div className="no-results-premium glass-card">
+                            <div className="no-results-content">
+                                <span className="warning-icon">⚠️</span>
+                                <h3>No matches found</h3>
+                                <p>We couldn't find any products matching "{searchTerm}". Try a different category or name.</p>
+                                <button className="secondary-btn mini clear-results-btn" onClick={() => {
+                                    setSearchTerm('');
+                                    setDebouncedSearch('');
+                                }}>
+                                    Clear Search
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </div>
 
-                <PriceAlertModal
-                    isOpen={!!priceAlertProduct}
-                    onClose={() => setPriceAlertProduct(null)}
-                    product={priceAlertProduct ? priceAlertProduct.product : null}
-                    triggerRect={priceAlertProduct ? priceAlertProduct.rect : null}
-                    user={user}
-                />
+                <Suspense fallback={null}>
+                    <AnimatePresence>
+                        {isCompModalOpen && (
+                            <ComparisonModal products={compareList} onClose={() => setIsCompModalOpen(false)} />
+                        )}
+                    </AnimatePresence>
+
+                    <AnimatePresence>
+                        {activeViewProduct && (
+                            <QuickViewModal 
+                                product={activeViewProduct.product} 
+                                triggerRect={activeViewProduct.rect}
+                                onClose={() => setActiveViewProduct(null)} 
+                            />
+                        )}
+                    </AnimatePresence>
+
+                    <AnimatePresence>
+                        {priceAlertProduct && (
+                            <PriceAlertModal
+                                isOpen={!!priceAlertProduct}
+                                onClose={() => setPriceAlertProduct(null)}
+                                product={priceAlertProduct.product}
+                                triggerRect={priceAlertProduct.rect}
+                                user={user}
+                            />
+                        )}
+                    </AnimatePresence>
+                </Suspense>
             </div>
         </m.section>
     );

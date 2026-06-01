@@ -47,4 +47,16 @@ export default defineConfig({
       }
     })
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-framer': ['framer-motion'],
+          'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-virtuoso': ['react-virtuoso']
+        }
+      }
+    }
+  }
 })
