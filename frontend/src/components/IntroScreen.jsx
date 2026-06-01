@@ -16,8 +16,8 @@ const IntroScreen = ({ onComplete }) => {
       });
 
       video.addEventListener('ended', onComplete);
-      // Timeout fallback if video event doesn't trigger
-      const introTimeout = setTimeout(onComplete, 3500);
+      // Increased timeout fallback to 8000ms to allow video to buffer and finish playing
+      const introTimeout = setTimeout(onComplete, 8000);
       return () => {
         video.removeEventListener('ended', onComplete);
         clearTimeout(introTimeout);
@@ -41,6 +41,7 @@ const IntroScreen = ({ onComplete }) => {
             muted
             playsInline
             autoPlay
+            preload="auto"
           />
         </div>
         <m.h1 
