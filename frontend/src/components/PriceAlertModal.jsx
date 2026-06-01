@@ -3,7 +3,7 @@ import { m, AnimatePresence } from 'framer-motion';
 import { Bell, X, Check, ArrowRight, Loader2, Target } from 'lucide-react';
 import './PriceAlertModal.css';
 
-const PriceAlertModal = ({ isOpen, onClose, product, user }) => {
+const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
   // Step 1: Collect Email (if not logged in)
   // Step 2: Configure Alert
   // Step 3: Success
