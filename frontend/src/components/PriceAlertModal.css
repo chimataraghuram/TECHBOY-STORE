@@ -19,7 +19,6 @@
   width: 100%;
   max-width: 480px;
   position: relative;
-  overflow: hidden;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 31, 61, 0.1);
 }
 

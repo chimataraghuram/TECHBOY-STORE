@@ -95,10 +95,12 @@ const PriceAlertModal = ({ isOpen, onClose, product, user }) => {
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           onClick={e => e.stopPropagation()}
         >
-          <div className="price-alert-glow" />
+          <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', borderRadius: '24px', pointerEvents: 'none' }}>
+            <div className="price-alert-glow" />
+          </div>
           
-          <button className="price-alert-close" onClick={onClose}>
-            <X size={18} />
+          <button className="price-alert-close" onClick={onClose} style={{ right: '16px', top: '16px', left: 'auto', zIndex: 100 }}>
+            <X size={20} />
           </button>
 
           <div className="price-alert-content">
