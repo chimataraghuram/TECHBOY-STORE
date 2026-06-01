@@ -293,7 +293,7 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
                 <button 
                   className="price-alert-btn" 
                   style={{ width: '100%' }}
-                  onClick={handleSubmitAlert}
+                  onClick={handleSubmit}
                   disabled={loading}
                 >
                   {loading ? <Loader2 size={18} className="animate-spin" /> : <><Target size={18} /> Create Alert</>}

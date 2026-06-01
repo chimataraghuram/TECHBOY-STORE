@@ -341,7 +341,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                                 <h3>No matches found</h3>
                                 <p>We couldn't find any products matching "{searchTerm}". Try a different category or name.</p>
                                 <button className="secondary-btn mini clear-results-btn" onClick={() => {
-                                    setSearchTerm('');
+                                    onSearch('');
                                     setDebouncedSearch('');
                                 }}>
                                     Clear Search

@@ -5,7 +5,8 @@ import * as THREE from 'three';
 
 const PhoneModel = ({ imageUrl, isHolographic }) => {
     // Load the product image as a texture
-    const texture = useTexture(imageUrl);
+    const baseTexture = useTexture(imageUrl);
+    const texture = baseTexture.clone();
     texture.colorSpace = THREE.SRGBColorSpace;
     const meshRef = useRef();
 
