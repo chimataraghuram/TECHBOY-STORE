@@ -248,11 +248,27 @@ const ProductCard = ({ product, onCompare, onOpenCompare, isComparing, onView, o
                     <HighlightText text={product.name} highlight={searchTerm} />
                 </h3>
 
-                <div className="smart-snippet">
+                <div className="smart-snippet" style={{ marginTop: '12px' }}>
                     {product.description && (
-                        <p className="spec-list-mini" style={{ margin: 0, padding: 0 }}>
-                            {product.description.split('|')[0].trim()}
-                        </p>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', fontSize: '12px', color: '#ccc' }}>
+                            {product.description.split('|').slice(0, 4).map((spec, i) => {
+                                const parts = spec.split(':');
+                                const val = parts.length > 1 ? parts[1].trim() : spec.trim();
+                                let icon = '📌';
+                                if (spec.toLowerCase().includes('chip')) icon = '⚡';
+                                else if (spec.toLowerCase().includes('display')) icon = '📱';
+                                else if (spec.toLowerCase().includes('camera')) icon = '📸';
+                                else if (spec.toLowerCase().includes('battery')) icon = '🔋';
+                                else if (spec.toLowerCase().includes('ram') || spec.toLowerCase().includes('storage')) icon = '💾';
+                                
+                                return (
+                                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={spec.trim()}>
+                                        <span style={{ fontSize: '14px' }}>{icon}</span>
+                                        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{val}</span>
+                                    </div>
+                                );
+                            })}
+                        </div>
                     )}
                 </div>
 
