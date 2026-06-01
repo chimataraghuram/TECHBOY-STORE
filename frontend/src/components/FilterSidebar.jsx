@@ -92,55 +92,30 @@ const FilterSidebar = ({
 
                 return (
                     <div className="filter-section">
-                        <h4>Budget Range</h4>
+                        <h4>Your Budget</h4>
                         
-                        <div className="budget-inputs">
-                            <div className="budget-input-group">
-                                <span className="budget-label">Min</span>
+                        <div className="budget-inputs" style={{ display: 'flex', width: '100%' }}>
+                            <div className="budget-input-group" style={{ width: '100%' }}>
+                                <span className="budget-label" style={{ marginBottom: '8px' }}>Your Target Budget</span>
                                 <div className="price-input-wrapper">
                                     <span className="currency-symbol">₹</span>
                                     <input 
                                         type="number"
                                         className="price-glow-input"
+                                        placeholder="e.g. 20000"
                                         min="0"
-                                        max={currentMax}
-                                        value={currentMin === 0 ? '' : currentMin}
-                                        onChange={(e) => {
-                                            if (setMinPrice) {
-                                                let val = parseInt(e.target.value);
-                                                if (isNaN(val)) val = 0;
-                                                setMinPrice(val);
-                                            }
-                                        }}
-                                        onBlur={() => {
-                                            if (setMinPrice) {
-                                                if (currentMin > currentMax) setMinPrice(currentMax);
-                                                else if (currentMin < 0) setMinPrice(0);
-                                            }
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                            
-                            <div className="budget-input-group">
-                                <span className="budget-label">Max</span>
-                                <div className="price-input-wrapper">
-                                    <span className="currency-symbol">₹</span>
-                                    <input 
-                                        type="number"
-                                        className="price-glow-input"
-                                        min={currentMin}
                                         max={maxLimit}
-                                        value={currentMax === 0 ? '' : currentMax}
+                                        value={currentMax === maxLimit ? '' : currentMax}
                                         onChange={(e) => {
                                             let val = parseInt(e.target.value);
-                                            if (isNaN(val)) val = 0;
-                                            setMaxPrice(val);
+                                            if (isNaN(val) || val <= 0) {
+                                                setMaxPrice(maxLimit);
+                                            } else {
+                                                setMaxPrice(val);
+                                            }
+                                            if (setMinPrice) setMinPrice(0); // Lock min price to 0
                                         }}
-                                        onBlur={() => {
-                                            if (!currentMax || currentMax < currentMin) setMaxPrice(currentMin);
-                                            else if (currentMax > maxLimit) setMaxPrice(maxLimit);
-                                        }}
+                                        style={{ width: '100%', fontSize: '1.1rem', padding: '12px 12px 12px 32px' }}
                                     />
                                 </div>
                             </div>
