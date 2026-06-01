@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import ProductCard from './ProductCard';
-const ComparisonModal = React.lazy(() => import('./ComparisonModal'));
-const QuickViewModal = React.lazy(() => import('./QuickViewModal'));
-const PriceAlertModal = React.lazy(() => import('./PriceAlertModal'));
-const FilterSidebar = React.lazy(() => import('./FilterSidebar'));
+import ComparisonModal from './ComparisonModal';
+import QuickViewModal from './QuickViewModal';
+import PriceAlertModal from './PriceAlertModal';
+import FilterSidebar from './FilterSidebar';
 import { useAuth } from '../context/AuthContext';
 import localPhonesData from '../data/phones.json';
 
@@ -290,7 +290,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                 )}
 
                 <div className="store-layout" style={{ marginTop: '40px' }}>
-                    <Suspense fallback={<div>Loading Filters...</div>}>
+                    <div>
                         <FilterSidebar 
                             brands={availableBrands}
                             selectedBrands={selectedBrands}
@@ -309,7 +309,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                                 setSortBy("featured");
                             }}
                         />
-                    </Suspense>
+                    </div>
 
                     {loading ? (
                         <div className="product-grid">
@@ -351,7 +351,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                     )}
                 </div>
 
-                <Suspense fallback={null}>
+                <div>
                     <AnimatePresence>
                         {isCompModalOpen && (
                             <ComparisonModal products={compareList} onClose={() => setIsCompModalOpen(false)} />
@@ -379,7 +379,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                             />
                         )}
                     </AnimatePresence>
-                </Suspense>
+                </div>
             </div>
         </m.section>
     );
