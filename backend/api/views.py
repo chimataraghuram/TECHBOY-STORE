@@ -202,8 +202,8 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
                 data = {
                     "model": "meta/llama-3.1-8b-instruct",
                     "messages": [
-                        {"role": "system", "content": "You are TechBoy AI, an expert smartphone recommender. Keep it to exactly two sentences and do not use markdown."},
-                        {"role": "user", "content": f"Write a quick, punchy 2-sentence summary about the {product.name}. Its description is: {product.description}. Its specs are: {product.specs}"}
+                        {"role": "system", "content": "You are TechBoy AI, an expert smartphone recommender. Keep your response to exactly one short, punchy sentence. Do NOT list any technical specifications or repeat the specs."},
+                        {"role": "user", "content": f"Write a 1-sentence punchy verdict about the {product.name}. Focus on who this phone is best for, without listing specs."}
                     ]
                 }
                 response = requests.post("https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=data, timeout=10)

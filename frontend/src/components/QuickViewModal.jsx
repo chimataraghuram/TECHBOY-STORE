@@ -10,9 +10,8 @@ const ThreeDViewer = lazy(() => import('./ThreeDViewer'));
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
 const buildLocalSummary = (product) => {
-    const desc = product.description || 'a balanced spec sheet';
-    const tag = product.tag ? `${product.tag} pick` : 'expert pick';
-    return `AI Verdict: The ${product.name} is a ${tag} around Rs ${product.price?.toLocaleString()}. Key highlights: ${desc}.`;
+    const tag = product.tag ? `${product.tag} pick` : 'solid choice';
+    return `AI Verdict: The ${product.name} is a ${tag} at Rs ${product.price?.toLocaleString()}, offering an excellent balance of performance and value.`;
 };
 
 const QuickViewModal = ({ product, onClose }) => {
