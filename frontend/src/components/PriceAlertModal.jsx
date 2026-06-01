@@ -90,17 +90,14 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
   if (triggerRect) {
     const modalWidth = 480;
     const modalHeight = 450;
-    let left = triggerRect.right + 20;
+    let left = triggerRect.left;
     let top = triggerRect.top;
     
-    // Adjust if overflowing viewport
+    // Only adjust horizontally if overflowing viewport
     if (left + modalWidth > window.innerWidth) {
-      left = triggerRect.left - modalWidth - 20;
+      left = window.innerWidth - modalWidth - 20;
     }
-    if (top + modalHeight > window.innerHeight) {
-      top = Math.max(20, window.innerHeight - modalHeight - 20);
-    }
-    if (left < 0) left = 20; // fallback
+    if (left < 0) left = 20;
 
     modalStyle = {
       position: 'absolute',
@@ -125,7 +122,7 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
             <div className="price-alert-glow" />
           </div>
           
-          <button className="price-alert-close" onClick={onClose} style={{ right: '16px', top: '16px', left: 'auto', zIndex: 100 }}>
+          <button className="price-alert-close" onClick={onClose} style={{ position: 'absolute', right: '16px', top: '16px', left: 'auto', margin: 0, zIndex: 100 }}>
             <X size={20} />
           </button>
 

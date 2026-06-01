@@ -89,17 +89,14 @@ const QuickViewModal = ({ product, onClose }) => {
     if (triggerRect) {
         const modalWidth = 800; // QuickView is wider
         const modalHeight = 600;
-        let left = triggerRect.right + 20;
+        let left = triggerRect.left;
         let top = triggerRect.top;
         
-        // Adjust if overflowing viewport
+        // Only adjust horizontally if overflowing viewport
         if (left + modalWidth > window.innerWidth) {
-            left = triggerRect.left - modalWidth - 20;
+            left = window.innerWidth - modalWidth - 20;
         }
-        if (top + modalHeight > window.innerHeight) {
-            top = Math.max(20, window.innerHeight - modalHeight - 20);
-        }
-        if (left < 0) left = Math.max(20, (window.innerWidth - modalWidth) / 2); // fallback to center if too big
+        if (left < 0) left = 20;
 
         modalStyle = {
             position: 'absolute',
