@@ -2819,36 +2819,47 @@
 
 .market-cards {
   display: flex;
+  flex-direction: column;
   gap: 15px;
-  margin: 10px 0;
+  margin: 25px 0;
 }
 
 .market-card {
-  flex: 1;
-  background: rgba(255, 255, 255, 0.03);
-  padding: 15px;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 20px 25px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.market-card:hover {
+  background: rgba(255, 31, 61, 0.05);
+  border-color: rgba(255, 31, 61, 0.2);
 }
 
 .market-card h6 {
-  font-size: 0.8rem;
+  font-size: 0.95rem;
+  font-weight: 700;
   color: white;
-  margin: 0 0 5px;
+  margin: 0;
 }
 
 .market-card span {
-  font-size: 0.75rem;
-  color: #707080;
+  font-size: 0.85rem;
+  color: #ff1f3d;
+  font-weight: 500;
 }
 
 .explore-source-btn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: 700;
+  background: transparent;
+  border: 1px solid rgba(255, 31, 61, 0.3);
+  color: #ff1f3d;
+  padding: 15px 25px;
+  border-radius: 25px;
+  font-weight: 600;
   cursor: pointer;
   width: fit-content;
   display: flex;
@@ -2885,32 +2896,44 @@
 .guide-steps {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 }
 
 .guide-step {
   display: flex;
   gap: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.guide-step:hover {
+  background: rgba(255, 31, 61, 0.03);
+  border-color: rgba(255, 31, 61, 0.15);
 }
 
 .step-num {
-  width: 32px;
-  height: 32px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid rgba(255, 31, 61, 0.5);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: #707080;
+  color: white;
   flex-shrink: 0;
+  background: rgba(255, 31, 61, 0.1);
 }
 
 .step-content h6 {
-  font-size: 0.9rem;
+  font-size: 1.1rem;
+  font-weight: 700;
   color: white;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
 }
 
 .step-content p {
