@@ -325,6 +325,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                                     key={product.id} 
                                     product={product} 
                                     onCompare={handleCompare}
+                                    onOpenCompare={() => setIsCompModalOpen(true)}
                                     onView={(p, rect) => setActiveViewProduct({ product: p, rect })}
                                     onPriceAlert={(p, rect) => setPriceAlertProduct({ product: p, rect })}
                                     isComparing={compareList.some(p => p.id === product.id)}
@@ -358,26 +359,6 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                         )}
                     </div>
                 </div>
-
-                {/* Floating Side Comparison Bar */}
-                <AnimatePresence>
-                    {compareList.length > 0 && (
-                        <m.div 
-                            initial={{ x: -100, opacity: 0 }}
-                            animate={{ x: 0, opacity: 1 }}
-                            exit={{ x: -100, opacity: 0 }}
-                            className="comparison-bar glass-card"
-                        >
-                            <div className="comp-info">
-                                {compareList.length} products selected for comparison
-                            </div>
-                            <div className="comp-actions">
-                                <button className="clear-btn" onClick={() => setCompareList([])}>Clear</button>
-                                <button className="primary-btn" onClick={() => setIsCompModalOpen(true)}>Compare Now</button>
-                            </div>
-                        </m.div>
-                    )}
-                </AnimatePresence>
 
                 <AnimatePresence>
                     {isCompModalOpen && (

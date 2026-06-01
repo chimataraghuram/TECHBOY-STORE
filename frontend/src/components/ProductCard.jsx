@@ -30,7 +30,7 @@ const getMappedTag = (tag = '') => {
 
 
 
-const ProductCard = ({ product, onCompare, isComparing, onView, onPriceAlert, index, searchTerm }) => {
+const ProductCard = ({ product, onCompare, onOpenCompare, isComparing, onView, onPriceAlert, index, searchTerm }) => {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
@@ -196,6 +196,15 @@ const ProductCard = ({ product, onCompare, isComparing, onView, onPriceAlert, in
                                     ? `${product.name} is in your compare tray. Pick up to 3 phones, then use Compare Now.`
                                     : `${product.name} was removed from the compare tray.`}
                             </p>
+                            {isComparing && (
+                                <button
+                                    type="button"
+                                    className="product-popover-action"
+                                    onClick={() => onOpenCompare && onOpenCompare()}
+                                >
+                                    Compare Now
+                                </button>
+                            )}
                         </div>
                     )}
                 </div>
