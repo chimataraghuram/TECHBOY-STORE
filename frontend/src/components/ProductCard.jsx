@@ -43,6 +43,8 @@ const ProductCard = ({ product, onCompare, isComparing, onView, onPriceAlert, in
     const [isSaved, setIsSaved] = React.useState(false);
     const [imgError, setImgError] = React.useState(false);
     const [imgLoaded, setImgLoaded] = React.useState(false);
+    const [activePopover, setActivePopover] = React.useState(null);
+    const [alertEmail, setAlertEmail] = React.useState('');
     const [isTouchDevice, setIsTouchDevice] = React.useState(false);
     const [cardTheme, setCardTheme] = React.useState('default');
 
@@ -65,7 +67,7 @@ const ProductCard = ({ product, onCompare, isComparing, onView, onPriceAlert, in
         e.stopPropagation();
         const token = localStorage.getItem('techboy_token');
         if (!token) {
-            alert('Please login to save products to your watchlist!');
+            setActivePopover('alert');
             return;
         }
 
@@ -80,12 +82,19 @@ const ProductCard = ({ product, onCompare, isComparing, onView, onPriceAlert, in
             });
             if (res.ok) {
                 setIsSaved(true);
+                setActivePopover('alert-success');
             } else {
-                alert('Already in watchlist or error saving.');
+                setActivePopover('alert-exists');
             }
         } catch (err) {
             console.error('Failed to save', err);
+            setActivePopover('alert');
         }
+    };
+
+    const handleEmailAlert = (e) => {
+        e.preventDefault();
+        setActivePopover('alert-email');
     };
 
     const handleMouseMove = (e) => {
@@ -125,6 +134,11 @@ const ProductCard = ({ product, onCompare, isComparing, onView, onPriceAlert, in
                 rotateY: isTouchDevice ? 0 : rotateY,
                 cursor: 'pointer'
             }}
+            onClickCapture={(event) => {
+                if (event.target.closest('.compare-btn')) {
+                    setTimeout(() => setActivePopover('compare'), 0);
+                }
+            }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             initial={{ opacity: 0, y: 20 }}
@@ -133,6 +147,60 @@ const ProductCard = ({ product, onCompare, isComparing, onView, onPriceAlert, in
             viewport={{ once: true }}
             whileHover={isTouchDevice ? {} : { scale: 1.015 }}
         >
+            {activePopover && (
+                <div className="product-action-popover" onClick={(e) => e.stopPropagation()}>
+                    <button
+                        className="product-popover-close"
+                        onClick={() => setActivePopover(null)}
+                        aria-label="Close popup"
+                        title="Close"
+                    >
+                        ×
+                    </button>
+
+                    {activePopover.startsWith('alert') && (
+                        <div className="product-popover-content">
+                            <div className="product-popover-icon">!</div>
+                            <h4>{activePopover === 'alert-success' ? 'Alert Ready' : 'Stay Updated'}</h4>
+                            {activePopover === 'alert-success' ? (
+                                <p>{product.name} is saved to your watchlist. We will track price movement from your account.</p>
+                            ) : activePopover === 'alert-exists' ? (
+                                <p>This phone is already in your watchlist. You are covered for future price checks.</p>
+                            ) : activePopover === 'alert-email' ? (
+                                <p>Thanks. Sign in later with {alertEmail || 'your email'} to manage saved alerts and watchlist phones.</p>
+                            ) : (
+                                <>
+                                    <p>Get notified when {product.name} changes price.</p>
+                                    <form className="product-popover-form" onSubmit={handleEmailAlert}>
+                                        <input
+                                            type="email"
+                                            value={alertEmail}
+                                            onChange={(event) => setAlertEmail(event.target.value)}
+                                            placeholder="you@example.com"
+                                            required
+                                        />
+                                        <button type="submit">Continue</button>
+                                    </form>
+                                    <span className="product-popover-note">Sign in to save this phone to your full watchlist.</span>
+                                </>
+                            )}
+                        </div>
+                    )}
+
+                    {activePopover === 'compare' && (
+                        <div className="product-popover-content">
+                            <div className="product-popover-icon compare-icon">↔</div>
+                            <h4>{isComparing ? 'Ready to Compare' : 'Removed'}</h4>
+                            <p>
+                                {isComparing
+                                    ? `${product.name} is in your compare tray. Pick up to 3 phones, then use Compare Now.`
+                                    : `${product.name} was removed from the compare tray.`}
+                            </p>
+                        </div>
+                    )}
+                </div>
+            )}
+
             <div className="product-card-header">
                 {product.tag && <span className="product-tag">{mappedTag}</span>}
                 <button 
