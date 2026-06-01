@@ -7,23 +7,11 @@ const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/
 
 const money = (value) => `Rs ${Number(value || 0).toLocaleString()}`;
 
-/* ── Catalog injected into system prompt ── */
-const CATALOG = localPhonesData.map(p =>
-    `[${p.category}] ${p.name} (${p.tag}) — ₹${p.price?.toLocaleString()} — ${p.description}`
-).join('\n');
+/* ── Dynamic system prompt built inside component ── */
 
-const SYSTEM_PROMPT = `You are TechBoy AI, an expert smartphone buying advisor for TechBoy Store — India's smartest phone recommendation platform.
-Help users find the perfect smartphone. Be concise, friendly, and specific.
-Always recommend phones from the catalog. Use ₹ for prices. Bold important specs with **text**.
-Use bullet points (- item) for comparisons. Keep replies under 160 words unless a deep comparison is asked.
-If recommending, mention name, price, and why it fits. Suggest 1-3 phones max per reply.
-
-CATALOG:
-${CATALOG}`;
-
-const localAdvisor = (text) => {
+const localAdvisor = (text, phonesData) => {
     const query = text.toLowerCase();
-    let matches = [...localPhonesData];
+    let matches = [...(phonesData || localPhonesData)];
 
     const budgetMatch = query.match(/(?:under|below|budget|rs|₹)\s*(\d+)\s*k?/i);
     if (budgetMatch) {
@@ -43,7 +31,7 @@ const localAdvisor = (text) => {
     }
 
     if (matches.length === 0) {
-        matches = [...localPhonesData].sort((a, b) => a.price - b.price);
+        matches = [...(phonesData || localPhonesData)].sort((a, b) => (a.price || 0) - (b.price || 0));
     }
 
     const picks = matches.slice(0, 3);
@@ -106,7 +94,7 @@ const FREE_MODELS = [
     'google/gemma-2-9b-it',
 ];
 
-const callBackend = async (text) => {
+const callBackend = async (text, phonesData) => {
     try {
         const res = await fetch(`${BACKEND_URL}/chat/`, {
             method: 'POST',
@@ -115,10 +103,10 @@ const callBackend = async (text) => {
         });
         if (!res.ok) throw new Error('Backend failed');
         const data = await res.json();
-        return { text: data.response || localAdvisor(text) };
+        return { text: data.response || localAdvisor(text, phonesData) };
     } catch (err) {
         console.error(err);
-        return { text: localAdvisor(text) };
+        return { text: localAdvisor(text, phonesData) };
     }
 };
 
@@ -135,6 +123,45 @@ const ChatPopup = ({ isOpen, onClose }) => {
     const [isStreaming, setIsStreaming] = useState(false);
     const messagesEndRef = useRef(null);
     const abortRef = useRef(null);
+    const [livePhonesData, setLivePhonesData] = useState(localPhonesData);
+    const [systemPrompt, setSystemPrompt] = useState('');
+
+    useEffect(() => {
+        let mounted = true;
+        const fetchPhones = async () => {
+            try {
+                const res = await fetch(`${BACKEND_URL}/products/`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const list = data.results || data;
+                    if (mounted && list && list.length > 0) {
+                        setLivePhonesData(list);
+                    }
+                }
+            } catch (err) {
+                console.warn('ChatPopup using local JSON fallback database', err);
+            }
+        };
+        fetchPhones();
+        return () => { mounted = false; };
+    }, []);
+
+    useEffect(() => {
+        const catalogText = livePhonesData.map(p =>
+            `[${p.category}] ${p.name} (${p.tag}) — ₹${(p.price || 0).toLocaleString()} — ${p.description}`
+        ).join('\n');
+        
+        setSystemPrompt(`You are TechBoy AI, an expert smartphone buying advisor for TechBoy Store — India's smartest phone recommendation platform.
+Help users find the perfect smartphone. Be concise, friendly, and specific.
+CRITICAL RULE: You MUST ONLY recommend phones listed in the CATALOG below. Do NOT recommend, mention, or invent any smartphones that are not strictly in this list.
+If a user asks for a phone not in the list, politely inform them you only recommend products currently available in the TechBoy Store inventory.
+Use ₹ for prices. Bold important specs with **text**.
+Use bullet points (- item) for comparisons. Keep replies under 160 words unless a deep comparison is asked.
+If recommending, mention name, price, and why it fits. Suggest 1-3 phones max per reply.
+
+CATALOG:
+${catalogText}`);
+    }, [livePhonesData]);
 
     const scrollToBottom = useCallback(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -162,7 +189,7 @@ const ChatPopup = ({ isOpen, onClose }) => {
                     },
                     body: JSON.stringify({
                         model,
-                        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...history],
+                        messages: [{ role: 'system', content: systemPrompt }, ...history],
                         max_tokens: 320,
                         temperature: 0.7,
                         stream: true
@@ -238,7 +265,7 @@ const ChatPopup = ({ isOpen, onClose }) => {
                 });
             } else {
                 console.warn('No VITE_NVIDIA_API_KEY — trying backend');
-                const result = await callBackend(text);
+                const result = await callBackend(text, livePhonesData);
                 setMessages(prev => prev.map(m =>
                     m.id === aiId ? { ...m, text: result.text || 'No response.' } : m
                 ));
@@ -264,7 +291,7 @@ const ChatPopup = ({ isOpen, onClose }) => {
 
             // Try backend as final fallback
             try {
-                const result = await callBackend(text);
+                const result = await callBackend(text, livePhonesData);
                 setMessages(prev => prev.map(m =>
                     m.id === aiId ? { ...m, text: result.text } : m
                 ));
