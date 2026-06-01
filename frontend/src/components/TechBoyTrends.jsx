@@ -5,6 +5,7 @@ import {
   Eye, Zap, ChevronUp, Bell
 } from 'lucide-react';
 import { useLiveAlerts } from './NotificationSystem';
+import PriceAlertModal from './PriceAlertModal';
 import './TechBoyTrends.css';
 
 /* ─────────────────────────── DATA ─────────────────────────── */
@@ -67,28 +68,9 @@ const TrendsCard = ({ id, className, children, variants, initial, whileInView, v
   );
 };
 
-import ProductCard from './ProductCard';
-import QuickViewModal from './QuickViewModal';
-import localPhonesData from '../data/phones.json';
-
-import PriceAlertModal from './PriceAlertModal';
-
 const TechBoyTrends = () => {
   const liveAlerts = useLiveAlerts();
-  const [activeViewProduct, setActiveViewProduct] = React.useState(null);
   const [priceAlertProduct, setPriceAlertProduct] = React.useState(null);
-
-  // Convert liveAlerts format to match what ProductCard expects
-  const formattedLiveAlerts = liveAlerts.map(alert => ({
-      id: `alert-${alert.id}`,
-      name: alert.name,
-      description: alert.specs,
-      price: alert.current,
-      category: alert.title,
-      image: alert.image,
-      tag: 'LIVE'
-  }));
-
   return (
   <section id="trends" className="tbt-section">
     {/* ambient background */}
@@ -113,66 +95,84 @@ const TechBoyTrends = () => {
         <div className="tbt-module-heading" style={{ marginBottom: '24px' }}>
           <Bell size={22} className="tbt-micon red" />
           <h3 className="tbt-module-title">Trending Market Alerts</h3>
-          <span className="tbt-live-pill">● LIVE UPDATES</span>
+          <span className="tbt-live-pill">● LIVE ALERTS</span>
         </div>
 
-        <div className="products-grid">
+        <div className="tbt-drops-grid">
           <AnimatePresence mode="popLayout">
-            {formattedLiveAlerts.map((phone, i) => (
-              <ProductCard 
-                key={phone.id}
-                product={phone}
-                index={i}
-                searchTerm=""
-                onView={(p) => setActiveViewProduct(p)}
-                onPriceAlert={(p, rect) => setPriceAlertProduct({ product: p, rect })}
-                isSaved={false}
-              />
+            {liveAlerts.map((phone, i) => (
+              <TrendsCard 
+                key={phone.id} 
+                id={`trend-alert-${phone.id}`} 
+                initial={{ opacity: 0, scale: 0.9, y: 20 }} 
+                whileInView={{ opacity: 1, scale: 1, y: 0 }} 
+                viewport={{ once: true, margin: '-40px' }}
+                exit={{ opacity: 0, scale: 0.8, y: -20 }}
+                transition={{ duration: 0.4, delay: (i % 3) * 0.1 }}
+                className="tbt-drop-card glass-card" 
+                style={{ border: '1px solid #16a34a', boxShadow: '0 0 15px rgba(22, 163, 74, 0.15)', display: 'flex', flexDirection: 'column' }}
+              >
+              {/* rank badge */}
+              <div className="tbt-rank-badge" style={{ position: 'absolute', top: '12px', left: '12px', background: 'linear-gradient(45deg, #16a34a, #15803d)', color: '#fff', padding: '4px 10px', borderRadius: '12px', fontSize: '13px', fontWeight: 'bold', zIndex: 10, border: '1px solid #4ade80' }}>
+                🔥 #{phone.rank} HIGHEST DISCOUNT
+              </div>
+              {/* pct badge */}
+              <div className="tbt-drop-pct-badge" style={{ position: 'absolute', top: '12px', right: '12px', background: 'rgba(22, 163, 74, 0.2)', color: '#4ade80', padding: '4px 10px', borderRadius: '12px', fontSize: '13px', fontWeight: 'bold', zIndex: 10 }}>
+                ↓ {phone.pct}%
+              </div>
+
+              <div className="tbt-drop-img-wrap" style={{ textAlign: 'center', margin: '20px 0', height: '180px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <img src={phone.image} alt={phone.name} className="tbt-drop-img" style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }} onError={onImgErr} />
+              </div>
+
+              <div className="tbt-drop-info" style={{ textAlign: 'left', padding: '0 16px 16px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                <h3 style={{ margin: '0 0 4px 0', color: '#fff', fontSize: '20px', fontWeight: 'bold' }}>{phone.name}</h3>
+                <p style={{ margin: '0 0 16px 0', color: '#a0aabf', fontSize: '14px' }}>{phone.specs}</p>
+                
+                <div style={{ flexGrow: 1 }} />
+                
+                <div className="tbt-price-row" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                  <span className="tbt-price-now" style={{ color: '#4ade80', fontSize: '22px', fontWeight: 'bold' }}>₹{phone.current.toLocaleString('en-IN')}</span>
+                  <span className="tbt-price-was" style={{ color: '#64748b', fontSize: '15px', textDecoration: 'line-through' }}>₹{phone.prev.toLocaleString('en-IN')}</span>
+                </div>
+                
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                  <div className="tbt-savings-tag" style={{ background: 'rgba(22, 163, 74, 0.15)', color: '#4ade80', border: '1px solid rgba(22, 163, 74, 0.3)', padding: '4px 10px', borderRadius: '6px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 600 }}>
+                    <Zap size={14} /> Save ₹{phone.savings.toLocaleString('en-IN')}
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setPriceAlertProduct({ product: { id: `alert-${phone.id}`, name: phone.name, price: phone.current, image: phone.image } });
+                    }}
+                    style={{ display: 'block', flex: 1, padding: '12px 0', textAlign: 'center', background: '#ff1f3d', color: '#fff', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none', transition: 'all 0.2s ease', cursor: 'pointer', border: 'none' }} 
+                    onMouseOver={e => { e.target.style.background = '#e01633'; e.target.style.transform = 'translateY(-2px)'; }} 
+                    onMouseOut={e => { e.target.style.background = '#ff1f3d'; e.target.style.transform = 'translateY(0)'; }}
+                  >
+                    🔔 ALERT
+                  </button>
+                  <a href={phone.buyLink} target="_blank" rel="noreferrer" style={{ display: 'block', flex: 1, padding: '12px 0', textAlign: 'center', background: '#16a34a', color: '#fff', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none', transition: 'all 0.2s ease', cursor: 'pointer' }} onMouseOver={e => { e.target.style.background = '#15803d'; e.target.style.transform = 'translateY(-2px)'; }} onMouseOut={e => { e.target.style.background = '#16a34a'; e.target.style.transform = 'translateY(0)'; }}>
+                    BUY NOW
+                  </a>
+                </div>
+              </div>
+              </TrendsCard>
             ))}
           </AnimatePresence>
         </div>
       </div>
 
-      <div className="tbt-module" style={{ marginTop: '60px' }}>
-        <div className="tbt-module-heading" style={{ marginBottom: '24px' }}>
-          <Flame size={22} className="tbt-micon red" />
-          <h3 className="tbt-module-title">All Trending Phones</h3>
-          <span className="tbt-live-pill">● ALL PHONES</span>
-        </div>
-
-        <div className="products-grid">
-          <AnimatePresence mode="popLayout">
-            {localPhonesData.map((phone, i) => (
-              <ProductCard 
-                key={phone.id}
-                product={phone}
-                index={i}
-                searchTerm=""
-                onView={(p) => setActiveViewProduct(p)}
-                onPriceAlert={(p, rect) => setPriceAlertProduct({ product: p, rect })}
-                isSaved={false}
-              />
-            ))}
-          </AnimatePresence>
-        </div>
-      </div>
     </div>
 
-    <AnimatePresence>
-        {activeViewProduct && (
-            <QuickViewModal 
-                product={activeViewProduct} 
-                onClose={() => setActiveViewProduct(null)} 
-            />
-        )}
-    </AnimatePresence>
-    
     <PriceAlertModal
         isOpen={!!priceAlertProduct}
         onClose={() => setPriceAlertProduct(null)}
         product={priceAlertProduct ? priceAlertProduct.product : null}
-        triggerRect={priceAlertProduct ? priceAlertProduct.rect : null}
-        user={null} // Or pass real user context if you have it
+        triggerRect={null}
+        user={null}
     />
   </section>
   );
