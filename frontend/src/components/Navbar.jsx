@@ -10,7 +10,7 @@ import UserDashboard from './UserDashboard';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
-const NAV_SECTIONS = ['home', 'products', 'trends', 'how-it-works', 'footer'];
+const NAV_SECTIONS = ['home', 'products', 'trends', 'footer'];
 
 const getNavbarScrollOffset = () => {
     const navbar = document.querySelector('.navbar');
@@ -126,7 +126,6 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                     let label = 'Home';
                                     if (sec === 'products') label = 'Products';
                                     else if (sec === 'trends') label = 'Trends 🔥';
-                                    else if (sec === 'how-it-works') label = 'How It Works';
                                     else if (sec === 'footer') label = 'Contact';
 
                                     return (
@@ -179,7 +178,6 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                                         let label = 'Home';
                                         if (sec === 'products') label = 'Products';
                                         else if (sec === 'trends') label = 'Trends 🔥';
-                                        else if (sec === 'how-it-works') label = 'How It Works';
                                         else if (sec === 'footer') label = 'Contact';
 
                                         return (

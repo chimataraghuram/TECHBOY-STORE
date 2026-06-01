@@ -13,7 +13,6 @@ import IntroScreen from './components/IntroScreen'
 import { StatsStrip } from './components/AnimationEngine'
 
 const TechBoyTrends = lazy(() => import('./components/TechBoyTrends'))
-const HowItWorks = lazy(() => import('./components/HowItWorks'))
 const Footer = lazy(() => import('./components/Footer'))
 
 const TechAdvisorModal = lazy(() => import('./components/TechAdvisorModal'))
@@ -93,7 +92,6 @@ function App() {
             
             <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '300px', margin: '40px 0', borderRadius: '16px'}}></div>}>
               <TechBoyTrends />
-              <HowItWorks />
             </Suspense>
 
             <div className="container">
