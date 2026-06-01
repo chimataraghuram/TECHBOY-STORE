@@ -85,16 +85,16 @@ const QuickViewModal = ({ product, onClose }) => {
     };
 
     return (
-        <div className="quickview-overlay" onClick={onClose} style={{ zIndex: 99999, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(10px)' }}>
+        <div className="quickview-overlay" onClick={onClose} style={{ zIndex: 99999, background: 'rgba(0, 0, 0, 0.85)' }}>
             <m.div 
                 className="quickview-content glass-card"
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
                 onClick={(e) => e.stopPropagation()}
-                style={{ width: '90%', maxWidth: '1000px', maxHeight: '90vh', overflowY: 'auto', position: 'relative' }}
+                style={{ width: '100%', maxWidth: '900px', margin: '0 auto', maxHeight: '85vh', overflowY: 'auto' }}
             >
-                <button className="close-btn top-right" onClick={onClose} style={{ position: 'absolute', top: '16px', right: '16px', zIndex: 100, fontSize: '24px', background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '50%', width: '40px', height: '40px', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>&times;</button>
+                <button className="close-btn top-right" onClick={onClose} style={{ position: 'absolute', top: '24px', right: '24px', zIndex: 100, fontSize: '28px', background: 'rgba(255, 31, 61, 0.2)', border: '1px solid rgba(255, 31, 61, 0.5)', borderRadius: '50%', width: '44px', height: '44px', color: '#ff1f3d', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}>&times;</button>
                 <div className="quickview-body">
                     <div className="quickview-image-side">
                         <div className="view-toggle-buttons" style={{ display: 'flex', gap: '8px', marginBottom: '16px', justifyContent: 'center' }}>
