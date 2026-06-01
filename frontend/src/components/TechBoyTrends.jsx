@@ -70,7 +70,6 @@ const TrendsCard = ({ id, className, children, variants, initial, whileInView, v
 import ProductCard from './ProductCard';
 import QuickViewModal from './QuickViewModal';
 import localPhonesData from '../data/phones.json';
-import { useLiveAlerts } from './NotificationSystem';
 
 const TechBoyTrends = () => {
   const liveAlerts = useLiveAlerts();
