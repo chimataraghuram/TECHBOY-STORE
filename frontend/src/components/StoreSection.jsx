@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
-import { VirtuosoGrid } from 'react-virtuoso';
 import ProductCard from './ProductCard';
 const ComparisonModal = React.lazy(() => import('./ComparisonModal'));
 const QuickViewModal = React.lazy(() => import('./QuickViewModal'));
@@ -324,37 +323,21 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                             ))}
                         </div>
                     ) : (
-                        <VirtuosoGrid
-                            useWindowScroll
-                            totalCount={isPureAll ? allFilterRandomized.length : filteredProducts.length}
-                            components={{
-                                List: React.forwardRef(({ style, ...props }, ref) => {
-                                    // Strip Virtuoso's default flex styles to allow our CSS Grid to work
-                                    const { display, flexWrap, ...restStyle } = style || {};
-                                    return <div className="product-grid" ref={ref} style={restStyle} {...props} />
-                                }),
-                                Item: ({ children, ...props }) => (
-                                    <div {...props}>{children}</div>
-                                )
-                            }}
-                            itemContent={(idx) => {
-                                const product = isPureAll ? allFilterRandomized[idx] : filteredProducts[idx];
-                                if (!product) return null;
-                                return (
-                                    <ProductCard 
-                                        key={product.id} 
-                                        product={product} 
-                                        onCompare={handleCompare}
-                                        onOpenCompare={() => setIsCompModalOpen(true)}
-                                        onView={(p, rect) => setActiveViewProduct({ product: p, rect })}
-                                        onPriceAlert={(p, rect) => setPriceAlertProduct({ product: p, rect })}
-                                        isComparing={compareList.some(p => p.id === product.id)}
-                                        index={idx}
-                                        searchTerm={debouncedSearch}
-                                    />
-                                );
-                            }}
-                        />
+                        <div className="product-grid">
+                            {(isPureAll ? allFilterRandomized : filteredProducts.slice(0, displayLimit)).map((product, idx) => (
+                                <ProductCard 
+                                    key={product.id} 
+                                    product={product} 
+                                    onCompare={handleCompare}
+                                    onOpenCompare={() => setIsCompModalOpen(true)}
+                                    onView={(p, rect) => setActiveViewProduct({ product: p, rect })}
+                                    onPriceAlert={(p, rect) => setPriceAlertProduct({ product: p, rect })}
+                                    isComparing={compareList.some(p => p.id === product.id)}
+                                    index={idx}
+                                    searchTerm={debouncedSearch}
+                                />
+                            ))}
+                        </div>
                     )}
                     {!loading && filteredProducts.length === 0 && (
                         <div className="no-results-premium glass-card">
