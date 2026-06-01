@@ -207,7 +207,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
             setFilteredProducts(localResult);
             setDisplayLimit(12); // Reset limit on local fallback filtering
         }
-    }, [products, debouncedSearch, selectedRange, selectedBrands, minPrice, maxPrice, sortBy, workerSupported]);
+    }, [products, debouncedSearch, selectedBrands, minPrice, maxPrice, sortBy, workerSupported]);
 
     const handleCompare = (product) => {
         setCompareList(prev => {
