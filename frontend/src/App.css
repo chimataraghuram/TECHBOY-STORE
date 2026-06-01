@@ -3852,6 +3852,9 @@ html {
   .section-title { font-size: 2rem; }
   .premium-subtitle { font-size: 1rem; }
   .section-subtitle { font-size: 1rem; }
+  .text-glow-premium { font-size: clamp(1.8rem, 6vw, 2.2rem) !important; letter-spacing: -0.5px; }
+  .section-title-pill { padding: 0.6rem 1.2rem !important; margin: 0 10px; border-radius: 20px !important; }
+  .section-title-container { width: 100%; overflow: hidden; padding: 0 5px; }
 
   /* Product grid ? 1 col */
   .product-grid { grid-template-columns: 1fr; gap: 16px; }
@@ -3879,6 +3882,10 @@ html {
   .search-only-pill { width: 100%; }
   .pill-search-input { width: 100%; }
   .ai-pill-text { display: none; }
+  
+  /* Mobile Button Touch Targets */
+  .primary-btn.mini { padding: 12px 4px !important; min-height: 44px; font-size: 13px !important; }
+  .three-d-container { pointer-events: none; }
 
   /* Comparison */
   .comparison-content { padding: 24px 16px; }
