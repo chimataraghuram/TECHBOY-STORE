@@ -26,7 +26,6 @@ html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
   scrollbar-color: var(--accent-primary) #050000;
-  overflow-x: hidden;
 }
 
 body {
@@ -42,7 +41,6 @@ body {
   color: var(--text-primary);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
 /* Scrollbar */
