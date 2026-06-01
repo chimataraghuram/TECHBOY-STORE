@@ -25,8 +25,9 @@ const PriceHistoryChart = ({ productId, currentPrice }) => {
                     for (let i = 7; i >= 0; i--) {
                         const date = new Date();
                         date.setDate(now.getDate() - i);
+                        const numericPrice = typeof currentPrice === 'string' ? parseFloat(currentPrice.replace(/[^\d.]/g, '')) : currentPrice;
                         // Random fluctuation around current price
-                        const randomPrice = currentPrice + (Math.random() * 2000 - 1000);
+                        const randomPrice = numericPrice + (Math.random() * 2000 - 1000);
                         mockData.push({
                             date: date.toLocaleDateString(),
                             price: Math.floor(randomPrice / 100) * 100
