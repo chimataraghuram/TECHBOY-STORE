@@ -85,34 +85,13 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
 
   if (!isOpen || !product) return null;
 
-  // Calculate dynamic position if triggerRect is provided
-  let modalStyle = {};
-  if (triggerRect) {
-    const modalWidth = 360;
-    const modalHeight = 420;
-    let left = triggerRect.left - modalWidth - 14;
-    let top = triggerRect.top;
-    
-    if (left < 12) {
-      left = triggerRect.right + 14;
-    }
-    if (left + modalWidth > window.innerWidth) {
-      left = window.innerWidth - modalWidth - 12;
-    }
-    if (left < 12) left = 12;
-    if (top + modalHeight > window.innerHeight) {
-      top = window.innerHeight - modalHeight - 12;
-    }
-    if (top < 12) top = 12;
-
-    modalStyle = {
-      position: 'fixed',
-      left: `${left}px`,
-      top: `${top}px`,
-      width: `${modalWidth}px`,
-      margin: 0
-    };
-  }
+  // Always center the modal instead of attaching to the trigger button
+  const modalStyle = {
+      position: 'relative',
+      width: '100%',
+      maxWidth: '600px', // Big half-screen size
+      margin: '0 auto'
+  };
 
   return (
     <AnimatePresence>

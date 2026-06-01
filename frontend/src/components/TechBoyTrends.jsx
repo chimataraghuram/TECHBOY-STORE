@@ -71,9 +71,12 @@ import ProductCard from './ProductCard';
 import QuickViewModal from './QuickViewModal';
 import localPhonesData from '../data/phones.json';
 
+import PriceAlertModal from './PriceAlertModal';
+
 const TechBoyTrends = () => {
   const liveAlerts = useLiveAlerts();
   const [activeViewProduct, setActiveViewProduct] = React.useState(null);
+  const [priceAlertProduct, setPriceAlertProduct] = React.useState(null);
 
   // Convert liveAlerts format to match what ProductCard expects
   const formattedLiveAlerts = liveAlerts.map(alert => ({
@@ -122,6 +125,7 @@ const TechBoyTrends = () => {
                 index={i}
                 searchTerm=""
                 onView={(p) => setActiveViewProduct(p)}
+                onPriceAlert={(p, rect) => setPriceAlertProduct({ product: p, rect })}
                 isSaved={false}
               />
             ))}
@@ -145,6 +149,7 @@ const TechBoyTrends = () => {
                 index={i}
                 searchTerm=""
                 onView={(p) => setActiveViewProduct(p)}
+                onPriceAlert={(p, rect) => setPriceAlertProduct({ product: p, rect })}
                 isSaved={false}
               />
             ))}
@@ -161,6 +166,14 @@ const TechBoyTrends = () => {
             />
         )}
     </AnimatePresence>
+    
+    <PriceAlertModal
+        isOpen={!!priceAlertProduct}
+        onClose={() => setPriceAlertProduct(null)}
+        product={priceAlertProduct ? priceAlertProduct.product : null}
+        triggerRect={priceAlertProduct ? priceAlertProduct.rect : null}
+        user={null} // Or pass real user context if you have it
+    />
   </section>
   );
 };

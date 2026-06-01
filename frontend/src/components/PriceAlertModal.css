@@ -1,14 +1,14 @@
 .price-alert-overlay {
   position: fixed;
   inset: 0;
-  background: transparent;
-  backdrop-filter: none;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
   z-index: 999999 !important; /* Extremely high to cover splide arrows */
-  padding: 0;
-  pointer-events: none;
+  padding: 24px;
+  pointer-events: auto;
 }
 
 .price-alert-modal {
@@ -18,7 +18,7 @@
   border: 1px solid rgba(255, 31, 61, 0.2);
   border-radius: 24px;
   width: 100%;
-  max-width: min(360px, calc(100vw - 24px));
+  max-width: 600px;
   position: relative;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 31, 61, 0.1);
   pointer-events: auto;

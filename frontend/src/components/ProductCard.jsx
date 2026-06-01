@@ -282,7 +282,11 @@ const ProductCard = ({ product, onCompare, onOpenCompare, isComparing, onView, o
                             style={{ flex: 1, padding: '8px 4px', borderRadius: '20px', background: '#ff1f3d', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', fontWeight: 'bold', border: 'none', color: 'white', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer', textTransform: 'uppercase' }}
                             onClick={(e) => { 
                                 e.stopPropagation(); 
-                                setActivePopover('alert');
+                                if (onPriceAlert) {
+                                    onPriceAlert(product, e.currentTarget.getBoundingClientRect());
+                                } else {
+                                    setActivePopover('alert');
+                                }
                             }}
                         >
                             🔔 Alert
