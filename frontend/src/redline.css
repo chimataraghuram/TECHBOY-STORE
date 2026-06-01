@@ -1646,12 +1646,6 @@ html {
     height: 48px;
   }
   
-  .comparison-bar {
-    bottom: 85px !important;
-    width: calc(100% - 32px) !important;
-    z-index: 9998 !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255, 31, 61, 0.2) !important;
-  }
 }
 
 /* ==============================================
