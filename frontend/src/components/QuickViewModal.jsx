@@ -1,8 +1,7 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
-import { m, AnimatePresence } from 'framer-motion';
-import { Sparkles } from 'lucide-react';
+import { m } from 'framer-motion';
+import { Sparkles, Cpu, Camera, Battery, Smartphone, HardDrive, Zap, Info } from 'lucide-react';
 import { useMediaQuery } from '../hooks/useMediaQuery';
-import RadarChart from './RadarChart';
 
 import { resolveProductImage } from '../utils/imageResolver';
 
@@ -17,9 +16,6 @@ const buildLocalSummary = (product) => {
 };
 
 const QuickViewModal = ({ product, onClose }) => {
-    const [alertPrice, setAlertPrice] = useState(product?.price ? product.price - 1000 : 0);
-    const [isAlertSubmitting, setIsAlertSubmitting] = useState(false);
-    const [alertStatus, setAlertStatus] = useState(null); // 'success', 'error'
     const [aiSummary, setAiSummary] = useState(null);
     const [isLoadingAi, setIsLoadingAi] = useState(false);
     const [viewMode, setViewMode] = useState('2d'); // '2d' or '3d'
@@ -28,6 +24,7 @@ const QuickViewModal = ({ product, onClose }) => {
     const imageUrl = product ? resolveProductImage(product.image, product.name) : '';
 
     useEffect(() => {
+        if (!product) return;
         const fetchAiSummary = async () => {
             setIsLoadingAi(true);
             const controller = new AbortController();
@@ -51,39 +48,6 @@ const QuickViewModal = ({ product, onClose }) => {
         };
         fetchAiSummary();
     }, [product.id]);
-
-    const handleSetAlert = async (e) => {
-        e.preventDefault();
-        const token = localStorage.getItem('techboy_token');
-        if (!token) {
-            setAlertStatus('error');
-            return;
-        }
-
-        setIsAlertSubmitting(true);
-        try {
-            const res = await fetch(`${API_BASE_URL}/alerts/`, {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({ 
-                    product: product.id, 
-                    target_price: alertPrice 
-                })
-            });
-            if (res.ok) {
-                setAlertStatus('success');
-            } else {
-                setAlertStatus('error');
-            }
-        } catch {
-            setAlertStatus('error');
-        } finally {
-            setIsAlertSubmitting(false);
-        }
-    };
 
     const isMobile = useMediaQuery('(max-width: 768px)');
 
@@ -150,45 +114,7 @@ const QuickViewModal = ({ product, onClose }) => {
                                 </Suspense>
                             )}
                         </div>
-                        <RadarChart product={product} />
-                        {(() => {
-                            const hasSpecsObject = product.specs && typeof product.specs === 'object' && Object.keys(product.specs).length > 0;
-                            let specsList = [];
-                            if (hasSpecsObject) {
-                                specsList = Object.entries(product.specs).map(([k, v]) => ({ label: k, value: v }));
-                            } else if (product.description) {
-                                const parts = product.description.split('|').map(s => s.trim()).filter(s => s.length > 0);
-                                specsList = parts.map(spec => {
-                                    let label = "Feature";
-                                    const lower = spec.toLowerCase();
-                                    if (lower.includes('snapdragon') || lower.includes('dimensity') || lower.includes('bionic') || lower.includes('exynos') || lower.includes('tensor')) label = "Processor";
-                                    else if (lower.includes('mp') || lower.includes('camera')) label = "Camera";
-                                    else if (lower.includes('mah') || lower.includes('battery')) label = "Battery";
-                                    else if (lower.includes('hz') || lower.includes('amoled') || lower.includes('lcd') || lower.includes('oled') || lower.includes('display')) label = "Display";
-                                    else if (lower.includes('gb') || lower.includes('ram') || lower.includes('rom')) label = "Memory";
-                                    else if (lower.includes('w ') || lower.includes('charging')) label = "Charging";
-                                    return { label, value: spec };
-                                });
-                            }
 
-                            if (specsList.length === 0) return null;
-
-                            return (
-                                <div className="detailed-specs-container glass-card" style={{ marginTop: '20px', padding: '20px', borderRadius: '16px', background: 'rgba(255,255,255,0.03)' }}>
-                                    <h3 style={{ color: 'var(--accent-primary)', marginBottom: '16px', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                        <Sparkles size={16} /> Specifications
-                                    </h3>
-                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '16px' }}>
-                                        {specsList.map((s, idx) => (
-                                            <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                                                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px' }}>{s.label}</span>
-                                                <span style={{ color: 'white', fontSize: '0.9rem', fontWeight: '500' }}>{s.value}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            );
-                        })()}
                         <div className="img-glow-effect"></div>
                     </div>
                     <div className="quickview-details-side">
@@ -213,53 +139,58 @@ const QuickViewModal = ({ product, onClose }) => {
                             )}
                         </div>
 
-                        <div className="price-alert-section glass-card">
-                            <h4>Set Price Alert</h4>
-                            <form className="alert-form" onSubmit={handleSetAlert}>
-                                <div className="input-group">
-                                    <span>Rs</span>
-                                    <input 
-                                        type="number" 
-                                        value={alertPrice} 
-                                        onChange={(e) => setAlertPrice(e.target.value)}
-                                        placeholder="Target Price"
-                                    />
-                                </div>
-                                <button type="submit" className="alert-btn" disabled={isAlertSubmitting}>
-                                    {isAlertSubmitting ? 'Setting...' : 'Alert Me'}
-                                </button>
-                            </form>
-                            {alertStatus === 'success' && <p className="status-msg success">Alert set successfully!</p>}
-                            {alertStatus === 'error' && <p className="status-msg error">Please login to set alerts.</p>}
-                        </div>
+                        <div className="unified-specs-section" style={{ marginTop: '24px' }}>
+                            <h4 style={{ marginBottom: '16px', fontSize: '1.1rem', color: '#fff', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <Info size={18} color="var(--accent-primary)" /> Technical Specifications
+                            </h4>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px' }}>
+                                {(() => {
+                                    const hasSpecsObject = product.specs && typeof product.specs === 'object' && Object.keys(product.specs).length > 0;
+                                    let specsList = [];
+                                    if (hasSpecsObject) {
+                                        specsList = Object.entries(product.specs).map(([k, v]) => ({ label: k, value: v }));
+                                    } else if (product.description) {
+                                        const parts = product.description.split('|').map(s => s.trim()).filter(s => s.length > 0);
+                                        specsList = parts.map(spec => {
+                                            const partsColon = spec.split(':');
+                                            if (partsColon.length > 1 && partsColon[0].trim() !== '') {
+                                                return { label: partsColon[0].trim(), value: partsColon.slice(1).join(':').trim() };
+                                            }
+                                            let label = "Feature";
+                                            const lower = spec.toLowerCase();
+                                            if (lower.includes('snapdragon') || lower.includes('dimensity') || lower.includes('bionic') || lower.includes('exynos') || lower.includes('tensor') || lower.includes('chip')) label = "Processor";
+                                            else if (lower.includes('mp') || lower.includes('camera')) label = "Camera";
+                                            else if (lower.includes('mah') || lower.includes('battery')) label = "Battery";
+                                            else if (lower.includes('hz') || lower.includes('amoled') || lower.includes('lcd') || lower.includes('oled') || lower.includes('display')) label = "Display";
+                                            else if (lower.includes('gb') || lower.includes('ram') || lower.includes('rom') || lower.includes('storage')) label = "Memory";
+                                            else if (lower.includes('w ') || lower.includes('charging')) label = "Charging";
+                                            return { label, value: spec };
+                                        });
+                                    }
 
-                        <div className="specs-detail-list" style={{ marginTop: '20px' }}>
-                            <h4 style={{ marginBottom: '12px', fontSize: '18px', color: '#fff' }}>Full Specifications</h4>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
-                                {product.description && product.description.split('|').map((spec, i) => {
-                                    const parts = spec.split(':');
-                                    const key = parts[0] ? parts[0].trim() : '';
-                                    const val = parts[1] ? parts[1].trim() : '';
-                                    if (!key) return null;
-                                    
-                                    let icon = '📌';
-                                    if (key.toLowerCase().includes('chip')) icon = '⚡';
-                                    else if (key.toLowerCase().includes('display')) icon = '📱';
-                                    else if (key.toLowerCase().includes('camera')) icon = '📸';
-                                    else if (key.toLowerCase().includes('battery')) icon = '🔋';
-                                    else if (key.toLowerCase().includes('ram')) icon = '🧠';
-                                    else if (key.toLowerCase().includes('storage')) icon = '💾';
+                                    return specsList.map((s, idx) => {
+                                        let IconComponent = Info;
+                                        const labelLower = s.label.toLowerCase();
+                                        if (labelLower.includes('processor') || labelLower.includes('chip')) IconComponent = Cpu;
+                                        else if (labelLower.includes('camera')) IconComponent = Camera;
+                                        else if (labelLower.includes('battery')) IconComponent = Battery;
+                                        else if (labelLower.includes('display')) IconComponent = Smartphone;
+                                        else if (labelLower.includes('memory') || labelLower.includes('ram') || labelLower.includes('storage')) IconComponent = HardDrive;
+                                        else if (labelLower.includes('charging')) IconComponent = Zap;
 
-                                    return (
-                                        <div key={i} className="spec-detail-item" style={{ background: 'rgba(255,255,255,0.05)', padding: '12px', borderRadius: '12px', display: 'flex', alignItems: 'flex-start', gap: '12px', border: '1px solid rgba(255,255,255,0.1)' }}>
-                                            <span style={{ fontSize: '20px' }}>{icon}</span>
-                                            <div>
-                                                <div style={{ fontSize: '12px', color: 'var(--redline-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>{key}</div>
-                                                <div style={{ fontSize: '15px', color: '#fff', fontWeight: 'bold' }}>{val || spec.trim()}</div>
+                                        return (
+                                            <div key={idx} className="spec-detail-item glass-card" style={{ padding: '12px 16px', borderRadius: '12px', display: 'flex', alignItems: 'flex-start', gap: '12px', border: '1px solid rgba(255,255,255,0.05)', background: 'rgba(255,255,255,0.02)' }}>
+                                                <div style={{ padding: '6px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px' }}>
+                                                    <IconComponent size={18} color="var(--accent-primary)" />
+                                                </div>
+                                                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                                    <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '1px' }}>{s.label}</span>
+                                                    <span style={{ fontSize: '0.9rem', color: '#fff', fontWeight: '500', lineHeight: '1.4' }}>{s.value}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    });
+                                })()}
                             </div>
                         </div>
 
