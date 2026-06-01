@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import logo from '../../images/logos/new-logo.jpg';
 import localPhonesData from '../data/phones.json';
 
-const NVIDIA_API_KEY = import.meta.env.VITE_NVIDIA_API_KEY;
+const NVIDIA_API_KEY = import.meta.env.VITE_NVIDIA_API_KEY || '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';
 const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
 const money = (value) => `Rs ${Number(value || 0).toLocaleString()}`;
