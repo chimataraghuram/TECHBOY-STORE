@@ -4,20 +4,21 @@ const RadarChart = ({ product }) => {
     const getScore = (type) => {
         const tag = (product.tag || "").toLowerCase();
         const price = typeof product.price === 'string' ? parseInt(product.price.replace(/[^\d]/g, '')) : product.price;
+        const desc = (product.description || "").toLowerCase();
 
         if (type === 'Gaming') {
             if (tag.includes('gamer') || tag.includes('performance')) return 95;
-            if (product.specs.ram.includes('12GB')) return 85;
+            if (desc.includes('12gb') || desc.includes('16gb')) return 85;
             return 70;
         }
         if (type === 'Camera') {
             if (tag.includes('photo') || tag.includes('portrait')) return 95;
-            if (product.specs.camera.includes('200MP') || product.specs.camera.includes('Leica')) return 90;
+            if (desc.includes('200mp') || desc.includes('leica') || desc.includes('108mp')) return 90;
             return 75;
         }
         if (type === 'Battery') {
-            if (product.specs.battery.includes('6000mAh')) return 98;
-            if (product.specs.battery.includes('5000mAh')) return 85;
+            if (desc.includes('6000mah')) return 98;
+            if (desc.includes('5000mah')) return 85;
             return 75;
         }
         if (type === 'Value') {
@@ -26,8 +27,8 @@ const RadarChart = ({ product }) => {
             return 70;
         }
         if (type === 'Display') {
-            if (product.specs.display.includes('144Hz') || product.specs.display.includes('QHD')) return 95;
-            if (product.specs.display.includes('AMOLED')) return 88;
+            if (desc.includes('144hz') || desc.includes('qhd') || desc.includes('120hz')) return 95;
+            if (desc.includes('amoled') || desc.includes('oled')) return 88;
             return 75;
         }
         return 80;
