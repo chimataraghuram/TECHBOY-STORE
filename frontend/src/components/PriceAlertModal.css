@@ -42,9 +42,10 @@
 }
 
 .price-alert-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
+  position: absolute !important;
+  top: 16px !important;
+  right: 16px !important;
+  left: auto !important; /* Force it to ignore any rogue left properties */
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
@@ -56,7 +57,7 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  z-index: 10;
+  z-index: 100 !important;
   padding: 0;
 }
 

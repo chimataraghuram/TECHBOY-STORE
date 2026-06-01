@@ -146,7 +146,8 @@ const TechBoyTrends = () => {
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      setPriceAlertProduct({ product: { id: `alert-${phone.id}`, name: phone.name, price: phone.current, image: phone.image } });
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      setPriceAlertProduct({ product: { id: `alert-${phone.id}`, name: phone.name, price: phone.current, image: phone.image }, rect });
                     }}
                     style={{ display: 'block', flex: 1, padding: '12px 0', textAlign: 'center', background: '#ff1f3d', color: '#fff', borderRadius: '8px', fontWeight: 'bold', textDecoration: 'none', transition: 'all 0.2s ease', cursor: 'pointer', border: 'none' }} 
                     onMouseOver={e => { e.target.style.background = '#e01633'; e.target.style.transform = 'translateY(-2px)'; }} 
@@ -171,7 +172,7 @@ const TechBoyTrends = () => {
         isOpen={!!priceAlertProduct}
         onClose={() => setPriceAlertProduct(null)}
         product={priceAlertProduct ? priceAlertProduct.product : null}
-        triggerRect={null}
+        triggerRect={priceAlertProduct ? priceAlertProduct.rect : null}
         user={null}
     />
   </section>

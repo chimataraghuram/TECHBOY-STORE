@@ -85,13 +85,47 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
 
   if (!isOpen || !product) return null;
 
-  // Always center the modal instead of attaching to the trigger button
-  const modalStyle = {
-      position: 'relative',
-      width: '100%',
-      maxWidth: '600px', // Big half-screen size
-      margin: '0 auto'
-  };
+  let modalStyle = {};
+  if (triggerRect) {
+    const modalWidth = 450; // Increased width for the "big" feel
+    const modalHeight = 460;
+    
+    // Default to the right side of the product card
+    let left = triggerRect.right + 20;
+    let top = triggerRect.top;
+    
+    // If it overflows on the right, try the left side
+    if (left + modalWidth > window.innerWidth - 20) {
+      left = triggerRect.left - modalWidth - 20;
+    }
+    
+    // If it overflows on the left too (small screen), center it
+    if (left < 20) {
+      left = (window.innerWidth - modalWidth) / 2;
+    }
+    
+    // Vertical bounding
+    if (top + modalHeight > window.innerHeight - 20) {
+      top = window.innerHeight - modalHeight - 20;
+    }
+    if (top < 20) top = 20;
+
+    modalStyle = {
+      position: 'fixed',
+      left: `${left}px`,
+      top: `${top}px`,
+      width: `${modalWidth}px`,
+      maxWidth: 'calc(100vw - 40px)',
+      margin: 0
+    };
+  } else {
+      modalStyle = {
+          position: 'relative',
+          width: '100%',
+          maxWidth: '500px',
+          margin: '0 auto'
+      };
+  }
 
   return (
     <AnimatePresence>
