@@ -237,7 +237,7 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
                   <img src={product.image} alt={product.name} className="price-alert-product-image" />
                   <div className="price-alert-product-info">
                     <h4>{product.name}</h4>
-                    <p>₹{product.price.toLocaleString('en-IN')}</p>
+                    <p>₹{(product.price || 0).toLocaleString('en-IN')}</p>
                   </div>
                 </div>
 
