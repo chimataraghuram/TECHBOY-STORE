@@ -123,9 +123,9 @@ const FilterSidebar = ({
 
                         <div className="price-quick-picks" style={{ marginTop: '16px', marginBottom: '8px' }}>
                             <button className={`price-pill ${currentMax === 10000 ? 'active' : ''}`} onClick={() => handleQuickPick(0, 10000)}>10K</button>
-                            <button className={`price-pill ${currentMax === 20000 ? 'active' : ''}`} onClick={() => handleQuickPick(0, 20000)}>20K</button>
-                            <button className={`price-pill ${currentMax === 30000 ? 'active' : ''}`} onClick={() => handleQuickPick(0, 30000)}>30K</button>
-                            <button className={`price-pill ${currentMax === 50000 ? 'active' : ''}`} onClick={() => handleQuickPick(0, 50000)}>50K</button>
+                            <button className={`price-pill ${currentMax === 20000 && currentMin >= 10000 ? 'active' : ''}`} onClick={() => handleQuickPick(10001, 20000)}>20K</button>
+                            <button className={`price-pill ${currentMax === 30000 && currentMin >= 20000 ? 'active' : ''}`} onClick={() => handleQuickPick(20001, 30000)}>30K</button>
+                            <button className={`price-pill ${currentMax === 50000 && currentMin >= 30000 ? 'active' : ''}`} onClick={() => handleQuickPick(30001, 50000)}>50K</button>
                             <button className={`price-pill ${currentMin >= 50000 ? 'active' : ''}`} onClick={() => handleQuickPick(50000, maxLimit)}>Flagships</button>
                         </div>
 
