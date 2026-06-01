@@ -328,9 +328,11 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                             useWindowScroll
                             totalCount={isPureAll ? allFilterRandomized.length : filteredProducts.length}
                             components={{
-                                List: React.forwardRef((props, ref) => (
-                                    <div className="product-grid" ref={ref} {...props} />
-                                )),
+                                List: React.forwardRef(({ style, ...props }, ref) => {
+                                    // Strip Virtuoso's default flex styles to allow our CSS Grid to work
+                                    const { display, flexWrap, ...restStyle } = style || {};
+                                    return <div className="product-grid" ref={ref} style={restStyle} {...props} />
+                                }),
                                 Item: ({ children, ...props }) => (
                                     <div {...props}>{children}</div>
                                 )
