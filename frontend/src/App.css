@@ -3602,6 +3602,21 @@ html {
   50%       { filter: drop-shadow(0 0 18px rgba(255, 31, 61,0.7)); }
 }
 
+/* -- Premium glowing section text -- */
+.text-glow-premium {
+  text-shadow: 0 0 15px rgba(230, 0, 43, 0.5), 0 0 30px rgba(230, 0, 43, 0.3);
+  animation: slow-glow-pulse 3s infinite alternate ease-in-out;
+}
+@keyframes slow-glow-pulse {
+  0% { text-shadow: 0 0 10px rgba(230, 0, 43, 0.3), 0 0 20px rgba(230, 0, 43, 0.1); }
+  100% { text-shadow: 0 0 25px rgba(230, 0, 43, 0.8), 0 0 45px rgba(230, 0, 43, 0.5); }
+}
+
+.glow-badge {
+  box-shadow: 0 0 15px rgba(230, 0, 43, 0.6) !important;
+  border-color: rgba(230, 0, 43, 0.8) !important;
+}
+
 /* -- Feature card icon spin-on-hover -- */
 .feature-icon {
   transition: transform 0.5s cubic-bezier(0.175,0.885,0.32,1.275);

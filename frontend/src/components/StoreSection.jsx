@@ -253,15 +253,15 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true }}
-                        className="badge analyst-badge"
-                    >TECHBOY ANALYST PICK</m.span>
+                        className="badge analyst-badge glow-badge"
+                    >PHONE GALLERY</m.span>
                     <m.h2 
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
                         viewport={{ once: true }}
-                        className="section-title"
-                    >Explore Expert <span className="text-gradient">Recommendations</span></m.h2>
+                        className="section-title text-glow-premium"
+                    >Premium Smartphone <span className="text-gradient">Collection</span></m.h2>
                     <m.p 
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
