@@ -18,6 +18,7 @@ const localAdvisor = (text, phonesData) => {
         let budget = Number(budgetMatch[1]);
         if (budget < 1000) budget *= 1000;
         matches = matches.filter(p => Number(p.price) <= budget);
+        matches.sort((a, b) => b.price - a.price);
     }
 
     if (query.includes('gaming') || query.includes('game')) {
@@ -158,6 +159,7 @@ If a user asks for a phone not in the list, politely inform them you only recomm
 Use ₹ for prices. Bold important specs with **text**.
 Use bullet points (- item) for comparisons. Keep replies under 160 words unless a deep comparison is asked.
 If recommending, mention name, price, and why it fits. Suggest 1-3 phones max per reply.
+CRITICAL MATCHING RULE: If the user specifies a budget like "20k", you MUST recommend the best phones CLOSEST to that budget (e.g., 15k-20k). Do NOT just recommend the cheapest phones (like 10k). ALWAYS maximize the user's budget to give them the best possible performance.
 
 CATALOG:
 ${catalogText}`);
@@ -330,7 +332,7 @@ ${catalogText}`);
             <div className="chat-header">
                 <div className="chat-header-info">
                     <div className="chat-bot-logo">
-                        <img src={logo} alt="TECHBOY AI" style={{ width: 24, height: 24, borderRadius: '50%' }} />
+                        <img src={logo} alt="TECHBOY AI" />
                         <span className="ai-live-dot" />
                     </div>
                     <div className="chat-brand-info">
@@ -338,7 +340,7 @@ ${catalogText}`);
                         <p>
                             <span className="status-dot" />
                             {isStreaming ? 'Thinking...' : 'ONLINE & READY'}
-                            <span className="ai-model-tag">Llama 3.1</span>
+                            <span className="ai-model-tag">NVIDIA AI</span>
                         </p>
                     </div>
                 </div>
