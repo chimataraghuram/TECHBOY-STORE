@@ -935,6 +935,25 @@
   position: relative;
 }
 
+.comparison-content::-webkit-scrollbar,
+.comparison-scroll-wrapper::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.comparison-content::-webkit-scrollbar-track,
+.comparison-scroll-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+.comparison-content::-webkit-scrollbar-thumb,
+.comparison-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+.comparison-content::-webkit-scrollbar-thumb:hover,
+.comparison-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 .comparison-header {
   display: flex;
   justify-content: space-between;
