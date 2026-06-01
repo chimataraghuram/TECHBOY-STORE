@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion as m, AnimatePresence } from 'framer-motion';
+import { motion as m } from 'framer-motion';
 import { Bell, X, Check, ArrowRight, Loader2, Target, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { useAuth } from '../context/AuthContext';
@@ -156,8 +156,7 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
   };
 
   return (
-    <AnimatePresence>
-      <div className="price-alert-overlay" onClick={onClose} style={isMobile ? { alignItems: 'flex-end', padding: 0 } : {}}>
+    <div className="price-alert-overlay" onClick={onClose} style={isMobile ? { alignItems: 'flex-end', padding: 0 } : {}}>
         <m.div 
           className="price-alert-modal glass-panel"
           onClick={e => e.stopPropagation()}
@@ -321,7 +320,6 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
           </div>
         </m.div>
       </div>
-    </AnimatePresence>
   );
 };
 

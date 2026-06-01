@@ -1,5 +1,5 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
-import { m } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import RadarChart from './RadarChart';
@@ -115,8 +115,7 @@ const QuickViewModal = ({ product, onClose }) => {
     } : { width: '100%', maxWidth: '900px', margin: '0 auto', maxHeight: '85vh', overflowY: 'auto' };
 
     return (
-        <AnimatePresence>
-          <div className="quickview-overlay" onClick={onClose} style={isMobile ? { alignItems: 'flex-end', padding: 0, zIndex: 99999, background: 'rgba(0, 0, 0, 0.85)' } : { zIndex: 99999, background: 'rgba(0, 0, 0, 0.85)' }}>
+        <div className="quickview-overlay" onClick={onClose} style={isMobile ? { alignItems: 'flex-end', padding: 0, zIndex: 99999, background: 'rgba(0, 0, 0, 0.85)' } : { zIndex: 99999, background: 'rgba(0, 0, 0, 0.85)' }}>
             <m.div 
                 className="quickview-content glass-card"
                 variants={isMobile ? mobileVariants : desktopVariants}
@@ -243,7 +242,6 @@ const QuickViewModal = ({ product, onClose }) => {
                 </div>
             </m.div>
         </div>
-        </AnimatePresence>
     );
 };
 
