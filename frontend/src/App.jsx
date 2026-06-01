@@ -7,8 +7,8 @@ import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import StoreSection from './components/StoreSection'
-import ChatPopup from './components/ChatPopup'
-import ParticleBackground from './components/ParticleBackground'
+const ChatPopup = lazy(() => import('./components/ChatPopup'))
+const ParticleBackground = lazy(() => import('./components/ParticleBackground'))
 import IntroScreen from './components/IntroScreen'
 import { StatsStrip } from './components/AnimationEngine'
 
@@ -75,7 +75,12 @@ function App() {
       {!showIntro && (
         <>
           <Navbar onChatToggle={() => setIsChatOpen(!isChatOpen)} onSearch={setSearchTerm} searchTerm={searchTerm} />
-          {createPortal(<ParticleBackground />, document.body)}
+          {createPortal(
+            <Suspense fallback={null}>
+              <ParticleBackground />
+            </Suspense>, 
+            document.body
+          )}
           <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -110,7 +115,9 @@ function App() {
       {!showIntro && createPortal(
         <AnimatePresence>
           {isChatOpen && (
-            <ChatPopup isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+            <Suspense fallback={null}>
+              <ChatPopup isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+            </Suspense>
           )}
           {isAdvisorOpen && (
             <Suspense fallback={<div className="modal-fallback">Loading Advisor...</div>}>

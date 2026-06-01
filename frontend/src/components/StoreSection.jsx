@@ -63,7 +63,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
             const timeoutId = setTimeout(() => controller.abort(), 3000);
             
             try {
-                const res = await fetch(`${API_BASE_URL}/products/`, { signal: controller.signal });
+                const res = await fetch(`${API_BASE_URL}/products/?limit=1000`, { signal: controller.signal });
                 clearTimeout(timeoutId);
                 const data = await res.json();
                 if (mounted) {

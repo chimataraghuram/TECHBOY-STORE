@@ -130,7 +130,7 @@ const ChatPopup = ({ isOpen, onClose }) => {
         let mounted = true;
         const fetchPhones = async () => {
             try {
-                const res = await fetch(`${BACKEND_URL}/products/`);
+                const res = await fetch(`${BACKEND_URL}/products/?limit=1000`);
                 if (res.ok) {
                     const data = await res.json();
                     const list = data.results || data;

@@ -224,14 +224,15 @@ const ProductCard = ({ product, onCompare, onOpenCompare, isComparing, onView, o
             </div>
             <div className="product-image-wrapper">
                 {!imgLoaded && <div className="img-shimmer" />}
-                <img 
-                    src={imageSrc}
-                    alt={product.name} 
-                    className={`product-real-img ${imgLoaded ? 'img-loaded' : 'img-loading'}`}
-                    loading="lazy"
-                    onLoad={() => setImgLoaded(true)}
-                    onError={() => { setImgError(true); setImgLoaded(true); }}
-                />
+                    <img 
+                        src={imageSrc}
+                        alt={product.name} 
+                        className={`product-real-img ${imgLoaded ? 'img-loaded' : 'img-loading'}`}
+                        loading="lazy"
+                        decoding="async"
+                        onLoad={() => setImgLoaded(true)}
+                        onError={() => { setImgError(true); setImgLoaded(true); }}
+                    />
             </div>
             <div className="product-info">
                 <div className="product-card-top-row">
