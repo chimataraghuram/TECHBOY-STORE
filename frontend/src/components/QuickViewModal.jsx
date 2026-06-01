@@ -3,7 +3,7 @@ import { m, AnimatePresence } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import RadarChart from './RadarChart';
-import PriceHistoryChart from './PriceHistoryChart';
+
 import { resolveProductImage } from '../utils/imageResolver';
 
 const ThreeDViewer = lazy(() => import('./ThreeDViewer'));
@@ -151,7 +151,44 @@ const QuickViewModal = ({ product, onClose }) => {
                             )}
                         </div>
                         <RadarChart product={product} />
-                        <PriceHistoryChart productId={product.id} currentPrice={product.price} />
+                        {(() => {
+                            const hasSpecsObject = product.specs && typeof product.specs === 'object' && Object.keys(product.specs).length > 0;
+                            let specsList = [];
+                            if (hasSpecsObject) {
+                                specsList = Object.entries(product.specs).map(([k, v]) => ({ label: k, value: v }));
+                            } else if (product.description) {
+                                const parts = product.description.split('|').map(s => s.trim()).filter(s => s.length > 0);
+                                specsList = parts.map(spec => {
+                                    let label = "Feature";
+                                    const lower = spec.toLowerCase();
+                                    if (lower.includes('snapdragon') || lower.includes('dimensity') || lower.includes('bionic') || lower.includes('exynos') || lower.includes('tensor')) label = "Processor";
+                                    else if (lower.includes('mp') || lower.includes('camera')) label = "Camera";
+                                    else if (lower.includes('mah') || lower.includes('battery')) label = "Battery";
+                                    else if (lower.includes('hz') || lower.includes('amoled') || lower.includes('lcd') || lower.includes('oled') || lower.includes('display')) label = "Display";
+                                    else if (lower.includes('gb') || lower.includes('ram') || lower.includes('rom')) label = "Memory";
+                                    else if (lower.includes('w ') || lower.includes('charging')) label = "Charging";
+                                    return { label, value: spec };
+                                });
+                            }
+
+                            if (specsList.length === 0) return null;
+
+                            return (
+                                <div className="detailed-specs-container glass-card" style={{ marginTop: '20px', padding: '20px', borderRadius: '16px', background: 'rgba(255,255,255,0.03)' }}>
+                                    <h3 style={{ color: 'var(--accent-primary)', marginBottom: '16px', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <Sparkles size={16} /> Specifications
+                                    </h3>
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '16px' }}>
+                                        {specsList.map((s, idx) => (
+                                            <div key={idx} style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                                <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '1px' }}>{s.label}</span>
+                                                <span style={{ color: 'white', fontSize: '0.9rem', fontWeight: '500' }}>{s.value}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            );
+                        })()}
                         <div className="img-glow-effect"></div>
                     </div>
                     <div className="quickview-details-side">
