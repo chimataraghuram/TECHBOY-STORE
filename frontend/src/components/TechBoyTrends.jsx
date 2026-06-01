@@ -70,9 +70,22 @@ const TrendsCard = ({ id, className, children, variants, initial, whileInView, v
 import ProductCard from './ProductCard';
 import QuickViewModal from './QuickViewModal';
 import localPhonesData from '../data/phones.json';
+import { useLiveAlerts } from './NotificationSystem';
 
 const TechBoyTrends = () => {
+  const liveAlerts = useLiveAlerts();
   const [activeViewProduct, setActiveViewProduct] = React.useState(null);
+
+  // Convert liveAlerts format to match what ProductCard expects
+  const formattedLiveAlerts = liveAlerts.map(alert => ({
+      id: `alert-${alert.id}`,
+      name: alert.name,
+      description: alert.specs,
+      price: alert.current,
+      category: alert.title,
+      image: alert.image,
+      tag: 'LIVE'
+  }));
 
   return (
   <section id="trends" className="tbt-section">
@@ -98,6 +111,29 @@ const TechBoyTrends = () => {
         <div className="tbt-module-heading" style={{ marginBottom: '24px' }}>
           <Bell size={22} className="tbt-micon red" />
           <h3 className="tbt-module-title">Trending Market Alerts</h3>
+          <span className="tbt-live-pill">● LIVE UPDATES</span>
+        </div>
+
+        <div className="products-grid">
+          <AnimatePresence mode="popLayout">
+            {formattedLiveAlerts.map((phone, i) => (
+              <ProductCard 
+                key={phone.id}
+                product={phone}
+                index={i}
+                searchTerm=""
+                onView={(p) => setActiveViewProduct(p)}
+                isSaved={false}
+              />
+            ))}
+          </AnimatePresence>
+        </div>
+      </div>
+
+      <div className="tbt-module" style={{ marginTop: '60px' }}>
+        <div className="tbt-module-heading" style={{ marginBottom: '24px' }}>
+          <Flame size={22} className="tbt-micon red" />
+          <h3 className="tbt-module-title">All Trending Phones</h3>
           <span className="tbt-live-pill">● ALL PHONES</span>
         </div>
 
