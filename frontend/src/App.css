@@ -2493,57 +2493,16 @@
 .product-card::after {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -1px;
+  background: linear-gradient(135deg, rgba(255, 69, 0, 0.2), transparent 40%);
   border-radius: inherit;
   z-index: -1;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(255, 31, 61, 0.1);
   opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(255, 255, 255, 0.15) !important;
+  transition: opacity 0.3s ease;
 }
 
 .product-card:hover::after {
   opacity: 1;
-}
-
-.product-actions-hover {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.3s ease;
-}
-.product-card:hover .product-actions-hover {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.action-btn {
-  flex: 1;
-  padding: 8px 4px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #ccc;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-}
-.action-btn:hover {
-  background: rgba(255, 31, 61, 0.9);
-  color: white;
-  border-color: rgba(255, 31, 61, 1);
-  box-shadow: 0 0 15px rgba(255, 31, 61, 0.4);
-  transform: translateY(-2px);
 }
 
 .price-tab {
