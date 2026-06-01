@@ -276,10 +276,9 @@ const ProductCard = ({ product, onCompare, onOpenCompare, isComparing, onView, o
                     <div className="price-info" style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <span className="price">₹{(product.price || 0).toLocaleString('en-IN')}</span>
                     </div>
-                    <div style={{ display: 'flex', gap: '6px', width: '100%', position: 'relative', zIndex: 100, pointerEvents: 'auto' }}>
+                    <div className="product-actions-hover" style={{ display: 'flex', gap: '8px', width: '100%', position: 'relative', zIndex: 100, pointerEvents: 'auto', marginTop: '10px' }}>
                         <button 
-                            className="primary-btn mini" 
-                            style={{ flex: 1, padding: '8px 4px', borderRadius: '20px', background: '#ff1f3d', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', fontWeight: 'bold', border: 'none', color: 'white', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer', textTransform: 'uppercase' }}
+                            className="action-btn"
                             onClick={(e) => { 
                                 e.stopPropagation(); 
                                 if (onPriceAlert) {
@@ -292,15 +291,13 @@ const ProductCard = ({ product, onCompare, onOpenCompare, isComparing, onView, o
                             🔔 Alert
                         </button>
                         <button
-                            className="primary-btn mini compare-btn"
-                            style={{ flex: 1, padding: '8px 4px', borderRadius: '20px', background: '#ff1f3d', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', fontWeight: 'bold', border: 'none', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer', textTransform: 'uppercase' }}
+                            className="action-btn compare-btn"
                             onClick={(e) => { e.stopPropagation(); onCompare && onCompare(product); setActivePopover('compare'); }}
                         >
                             ⚔️ VS
                         </button>
                         <button 
-                            className="primary-btn mini" 
-                            style={{ flex: 1, padding: '8px 4px', borderRadius: '20px', background: '#ff1f3d', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 'bold', border: 'none', color: 'white', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer', textTransform: 'uppercase' }}
+                            className="action-btn"
                             onClick={(e) => { 
                                 e.stopPropagation(); 
                                 onView && onView(product, null);
