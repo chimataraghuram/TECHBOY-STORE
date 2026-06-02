@@ -11,10 +11,10 @@
   [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
   > `⚡ Smart Analyst Picks for Every Budget`  
-  > `🔍 Real-Time Pricing and Deal Tracking`  
+  > `🤖 NVIDIA AI-Powered Shopping Assistant`  
   > `⚖️ Seamless Side-by-Side Comparison Engine`
 
-  **A full-stack, premium responsive web application designed for high-end smartphone discovery. It bridges the gap between expert advice and e-commerce availability with a stunning neon aesthetic.**
+  **A full-stack, premium responsive web application designed for high-end smartphone discovery. It bridges the gap between expert advice, artificial intelligence, and e-commerce availability with a stunning neon glassmorphism aesthetic.**
 
 </div>
 
@@ -23,7 +23,7 @@
 ## 🌐 Live Demo
 You can explore the live interface here: [https://techboy-store.vercel.app/](https://techboy-store.vercel.app/)
 
-> "Empowering users to find the best tech deals with zero marketing fluff, just pure performance data."
+> "Empowering users to find the best tech deals with zero marketing fluff, just pure performance data and AI-driven precision."
 
 ---
 
@@ -36,8 +36,14 @@ You can explore the live interface here: [https://techboy-store.vercel.app/](htt
   
   <br /><br />
   
+  <h3>🤖 TechBoy AI Assistant</h3>
+  <p>Real-time conversational agent powered by NVIDIA NIM Llama 3.1 that maximizes user budgets and parses live spec data.</p>
+  <img src="https://placehold.co/800x400/100000/ff8c42?text=AI+Chatbot+Integration" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);">
+
+  <br /><br />
+  
   <h3>📊 Analyst Picks</h3>
-  <p>Dynamic filtered product cards with real-time deal links and performance tags.</p>
+  <p>Dynamic filtered product cards with unified budget controls, deal links, and performance tags.</p>
   <img src="https://placehold.co/800x400/100000/ff8c42?text=Expert+Recommendations+Grid" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);">
   
   <br /><br />
@@ -51,12 +57,6 @@ You can explore the live interface here: [https://techboy-store.vercel.app/](htt
   <h3>🔐 Auth Experience</h3>
   <p>Clean Glassmorphism-style Login & Registration with JWT session management.</p>
   <img src="https://placehold.co/800x400/100000/ff8c42?text=Premium+Identity+System" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);">
-  
-  <br /><br />
-  
-  <h3>📈 Analytics View</h3>
-  <p>Backend dashboard tracking user engagement, referral trends, and click analytics.</p>
-  <img src="https://placehold.co/800x400/100000/ff8c42?text=Admin+Click+Tracking+Panel" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);">
 </div>
 
 ---
@@ -65,13 +65,14 @@ You can explore the live interface here: [https://techboy-store.vercel.app/](htt
 
 | Icon | Feature | Description |
 | :--- | :--- | :--- |
-| 📱 | **Analyst Picks** | Multi-category budget-vetted recommendations (Under 10k to Flagship). |
-| ⚖️ | **Smart Comparison** | Overlay comparison engine for a detailed spec-by-spec breakdown. |
-| 📈 | **Weighted Trending** | Advanced sorting logic using recent (24h) and total click momentum. |
-| 🧠 | **Smart Recommendations** | AI-like similarity matching based on price buffers and categories. |
-| 📊 | **Analytics Suite** | Real-time tracking of referral sources and top product engagement. |
-| 🔐 | **JWT Integration** | Secure account management with personalized search and profiles. |
-| ⚡ | **DRF Caching** | Server-side LocMem caching for lightning-fast API response times. |
+| 🤖 | **TechBoy AI Chatbot** | Built-in shopping assistant powered by NVIDIA NIM (Llama 3.1). Dynamically reads full product catalogs, specs, and budget constraints. Includes a robust offline local fallback. |
+| 📱 | **Analyst Picks** | Multi-category budget-vetted recommendations (Under 10k to Flagships) with unified filtering and seamless UI. |
+| ⚖️ | **Smart Comparison** | Overlay comparison engine for a detailed spec-by-spec breakdown, ensuring users buy exactly what they need. |
+| 🌐 | **Dynamic 3D UI** | Custom interactive particle backgrounds and webGL elements tailored for an immersive shopping experience. |
+| 📈 | **Weighted Trending** | Advanced sorting logic using recent (24h) and total click momentum to rank popular phones. |
+| 🧠 | **Smart Recommendations** | AI-like similarity matching based on price buffers and smartphone categories. |
+| 📊 | **Analytics Suite** | Real-time tracking of referral sources and top product engagement within the admin panel. |
+| 🔐 | **JWT Integration** | Secure account management with personalized search and profiles using Django REST Framework. |
 
 ---
 
@@ -80,8 +81,8 @@ You can explore the live interface here: [https://techboy-store.vercel.app/](htt
 ### Frontend
 - **React 19** - UI Core with Context API
 - **Vite** - High-performance build tooling
-- **Vanilla CSS** - Premium Neon Styling & Glassmorphism
-- **Framer Motion** - Smooth micro-animations
+- **Vanilla CSS** - Premium Neon Styling & Glassmorphism Aesthetics
+- **Framer Motion & Three.js** - Smooth micro-animations and interactive 3D elements
 
 ### Backend (Production-Grade)
 - **Django 6** - Robust Backend Framework
@@ -107,9 +108,11 @@ TECHBOY-STORE/
 │   └── core/               # Central Config (Logging, Cache, Throttle)
 ├── images/                 # Categorized Project Assets (Logos, Heroes, etc.)
 ├── scripts/                # Data Parsing and Automation Scripts
-├── src/                    # React Frontend
-│   ├── components/         # Modular UI Components
-│   └── App.css             # Neon/Glassmorphism Design System
+├── frontend/               # React Frontend (Vite)
+│   ├── src/                    
+│   │   ├── components/     # Modular UI Components (ChatPopup, CompModal, etc.)
+│   │   └── App.css         # Neon/Glassmorphism Design System
+│   └── public/             # Static Assets
 ├── workflows/              # Automation Workflows (e.g., n8n Price Drop)
 └── README.md               # Production Documentation
 ```
@@ -117,9 +120,10 @@ TECHBOY-STORE/
 ---
 
 ## 🛣️ Future Roadmap
-- [x] **AI Chatbot**: Integrate a Llama-3 based assistant for personalized advice.
-- [x] **Global Price Alert**: Email notifications for price drops on watched devices.
+- [x] **AI Chatbot**: Integrate an NVIDIA-powered Llama-3 based assistant for personalized advice with local fallback.
+- [x] **Global Price Alert**: UI integration for price drops on watched devices.
 - [x] **Deployment**: Live Deployment to Vercel and PythonAnywhere.
+- [ ] **User Wishlists**: Saving configurations and sharing comparisons via links.
 
 ---
 
