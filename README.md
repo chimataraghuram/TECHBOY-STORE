@@ -149,5 +149,5 @@ Distributed under the **MIT License**. See `LICENSE` for more information.
 
 <div align="center">
   <br />
-  Built with ❤️ by <b>Chimata Raghuram</b>
+  <b>COOKED BY RAGHU</b> ❤️
 </div>
