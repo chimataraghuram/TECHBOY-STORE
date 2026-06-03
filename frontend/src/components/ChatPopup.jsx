@@ -17,11 +17,12 @@ const localAdvisor = (text, phonesData) => {
     const query = text.toLowerCase();
     let matches = [...(phonesData || localPhonesData)];
 
-    const budgetMatch = query.match(/(?:under|below|budget|rs|₹)\s*(\d+)\s*k?/i);
+    const budgetMatch = query.match(/(?:under|below|budget|rs|₹)?\s*(\d+)\s*k/i) || query.match(/(?:under|below|budget|rs|₹)\s*(\d+)/i);
     if (budgetMatch) {
         let budget = Number(budgetMatch[1]);
         if (budget < 1000) budget *= 1000;
         matches = matches.filter(p => Number(p.price) <= budget);
+        // Sort descending so the most expensive phone UNDER the budget is first (maximizing budget)
         matches.sort((a, b) => b.price - a.price);
     }
 
