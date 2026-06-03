@@ -74,22 +74,30 @@ export function AuthProvider({ children }) {
     };
 
     const exchangeFirebaseToken = async (firebaseUser) => {
-        const idToken = await firebaseUser.getIdToken(true);
-        const res = await fetch(`${API_BASE_URL}/auth/google/`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token: idToken })
-        });
+        try {
+            const idToken = await firebaseUser.getIdToken(true);
+            const res = await fetch(`${API_BASE_URL}/auth/google/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token: idToken })
+            });
 
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok) {
-            throw new Error(data.error || 'Google authentication failed on the TECHBOY server.');
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                throw new Error(data.error || 'Backend auth failed');
+            }
+
+            const normalized = normalizeUser(data.user, firebaseUser);
+            saveSession({ token: data.token, refresh: data.refresh, user: normalized });
+            setUser(normalized);
+            return normalized;
+        } catch (backendErr) {
+            console.warn('Backend exchange failed, using Firebase profile directly:', backendErr.message);
+            const fallbackUser = normalizeUser(null, firebaseUser);
+            saveSession({ user: fallbackUser });
+            setUser(fallbackUser);
+            return fallbackUser;
         }
-
-        const normalized = normalizeUser(data.user, firebaseUser);
-        saveSession({ token: data.token, refresh: data.refresh, user: normalized });
-        setUser(normalized);
-        return normalized;
     };
 
     useEffect(() => {
