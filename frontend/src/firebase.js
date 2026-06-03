@@ -10,7 +10,7 @@ const cleanEnv = (val, fallback) => {
 };
 
 const firebaseConfig = {
-  apiKey: cleanEnv(import.meta.env.VITE_FIREBASE_API_KEY, "AIzaSyC1YBEt0-8V4Ag_1K-wTTcLIHwYsdqGTf0"),
+  apiKey: cleanEnv(import.meta.env.VITE_FIREBASE_API_KEY, "AIzaSyC1YBEtO-8V4Ag_1K-wTTcLIHwYsdqGTf0"),
   authDomain: cleanEnv(import.meta.env.VITE_FIREBASE_AUTH_DOMAIN, "techboy-store.firebaseapp.com"),
   projectId: cleanEnv(import.meta.env.VITE_FIREBASE_PROJECT_ID, "techboy-store"),
   storageBucket: cleanEnv(import.meta.env.VITE_FIREBASE_STORAGE_BUCKET, "techboy-store.firebasestorage.app"),
