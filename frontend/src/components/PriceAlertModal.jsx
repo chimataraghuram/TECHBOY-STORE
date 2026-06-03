@@ -16,6 +16,8 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
   const [targetPrice, setTargetPrice] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [manualEmail, setManualEmail] = useState('');
+  const [isN8nMode, setIsN8nMode] = useState(false);
 
   // Reset state when opened with a new user/product
   React.useEffect(() => {
@@ -25,6 +27,8 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
       setAlertType('ANY');
       setTargetPrice('');
       setError('');
+      setIsN8nMode(false);
+      setManualEmail('');
     }
   }, [isOpen, user, product]);
 
@@ -66,11 +70,31 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
         return;
       }
 
-      await createPriceAlert({
-        product,
-        alertType,
-        targetPrice: parsedTarget
-      });
+      if (isN8nMode) {
+        // Send to n8n webhook
+        const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL || 'https://n8n.example.com/webhook';
+        await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email,
+            productName: product.name,
+            productId: product.id,
+            currentPrice: product.price,
+            productImage: product.image,
+            alertType,
+            targetPrice: parsedTarget
+          })
+        }).catch(err => console.warn('n8n webhook warning:', err));
+        
+        // We assume success for the webhook or don't block the UI if it fails
+      } else {
+        await createPriceAlert({
+          product,
+          alertType,
+          targetPrice: parsedTarget
+        });
+      }
 
       setStep(3);
     } catch (err) {
@@ -195,7 +219,35 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
                     </svg>
                     {loading || authLoading ? 'Connecting...' : 'Continue with Google'}
                   </button>
-                  {error && <div className="price-alert-error">{error}</div>}
+
+                  <div style={{ textAlign: 'center', margin: '16px 0', color: '#888', fontSize: '12px' }}>OR</div>
+                  
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    <input 
+                      type="email" 
+                      placeholder="Enter Email (for n8n automation)" 
+                      className="price-alert-input"
+                      value={manualEmail}
+                      onChange={(e) => setManualEmail(e.target.value)}
+                    />
+                    <button 
+                      type="button" 
+                      className="price-alert-btn" 
+                      onClick={() => {
+                        if (!manualEmail || !manualEmail.includes('@')) {
+                          setError('Please enter a valid email address.');
+                          return;
+                        }
+                        setEmail(manualEmail);
+                        setIsN8nMode(true);
+                        setStep(2);
+                      }}
+                    >
+                      Continue with Email
+                    </button>
+                  </div>
+                  
+                  {error && <div className="price-alert-error" style={{ marginTop: '16px' }}>{error}</div>}
                 </div>
               </m.div>
             )}
