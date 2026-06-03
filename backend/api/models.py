@@ -3,9 +3,11 @@ from django.contrib.auth.models import AbstractUser
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
+    google_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
     firebase_uid = models.CharField(max_length=255, unique=True, null=True, blank=True)
     profile_picture = models.URLField(max_length=1024, null=True, blank=True)
     display_name = models.CharField(max_length=255, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
         return self.username
@@ -59,6 +61,7 @@ class PriceAlert(models.Model):
     current_price = models.IntegerField(null=True, blank=True)
     alert_type = models.CharField(max_length=50, choices=ALERT_TYPES, default='ANY')
     target_price = models.IntegerField(null=True, blank=True)
+    alert_sent = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

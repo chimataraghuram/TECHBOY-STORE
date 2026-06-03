@@ -31,7 +31,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
     const [activeSection, setActiveSection] = useState('home');
     const [isMobile, setIsMobile] = useState(window.innerWidth < 1200);
 
-    const { user, login } = useAuth();
+    const { user, login, authLoading } = useAuth();
     const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
     const [isDashboardOpen, setIsDashboardOpen] = useState(false);
 
@@ -231,7 +231,9 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
                             onDashboardClick={() => setIsDashboardOpen(true)}
                         />
                     ) : (
-                        <button className="pill-auth-btn" onClick={login}>SIGN UP</button>
+                        <button className="pill-auth-btn" onClick={login} disabled={authLoading}>
+                            {authLoading ? 'CONNECTING...' : 'SIGN UP'}
+                        </button>
                     )}
                     </div>
                 </div>

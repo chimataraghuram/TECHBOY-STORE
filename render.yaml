@@ -19,6 +19,10 @@ services:
         generateValue: true
       - key: ALLOWED_HOSTS
         value: "*"
+      - key: FIREBASE_SERVICE_ACCOUNT_JSON
+        sync: false
+      - key: N8N_WEBHOOK_URL
+        sync: false
       # Add your email configuration here as well via the Render Dashboard
       # - key: EMAIL_HOST
       # - key: EMAIL_PORT
@@ -45,5 +49,19 @@ services:
     buildCommand: "cd frontend && npm install && npm run build"
     staticPublishPath: "./frontend/dist"
     envVars:
+      - key: VITE_BACKEND_URL
+        value: "https://techboy-backend.onrender.com/api"
+      - key: VITE_FIREBASE_API_KEY
+        sync: false
+      - key: VITE_FIREBASE_AUTH_DOMAIN
+        sync: false
+      - key: VITE_FIREBASE_PROJECT_ID
+        sync: false
+      - key: VITE_FIREBASE_STORAGE_BUCKET
+        sync: false
+      - key: VITE_FIREBASE_MESSAGING_SENDER_ID
+        sync: false
+      - key: VITE_FIREBASE_APP_ID
+        sync: false
       - key: VITE_NVIDIA_API_KEY
-        value: "" # Provide NVIDIA NIM API Key in Render Dashboard
+        sync: false

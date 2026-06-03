@@ -6,9 +6,18 @@ from .models import Product, ClickTrack, PriceHistory, PriceAlert, Watchlist
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField()
+    avatar = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'firebase_uid', 'profile_picture', 'display_name']
+        fields = ['id', 'username', 'email', 'google_id', 'firebase_uid', 'profile_picture', 'display_name', 'name', 'avatar', 'created_at']
+
+    def get_name(self, obj):
+        return obj.display_name or obj.get_full_name() or obj.username
+
+    def get_avatar(self, obj):
+        return obj.profile_picture
 
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -70,7 +79,8 @@ class PriceAlertSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PriceAlert
-        fields = ['id', 'user', 'email', 'product', 'product_name', 'current_price', 'alert_type', 'product_details', 'target_price', 'is_active', 'created_at']
+        fields = ['id', 'user', 'email', 'product', 'product_name', 'current_price', 'alert_type', 'product_details', 'target_price', 'alert_sent', 'is_active', 'created_at']
+        read_only_fields = ['user', 'email', 'product_name', 'current_price', 'alert_sent']
 
 class WatchlistSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())

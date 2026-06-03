@@ -2,8 +2,8 @@ from django.contrib import admin
 from .models import CustomUser, Product, ClickTrack, PriceAlert, PriceHistory, Watchlist
 
 class CustomUserAdmin(admin.ModelAdmin):
-    list_display = ('id', 'username', 'email')
-    search_fields = ('username', 'email')
+    list_display = ('id', 'username', 'email', 'google_id', 'display_name', 'created_at')
+    search_fields = ('username', 'email', 'google_id', 'display_name')
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'price', 'category')
@@ -20,9 +20,9 @@ class PriceHistoryAdmin(admin.ModelAdmin):
     list_filter = ('timestamp',)
 
 class PriceAlertAdmin(admin.ModelAdmin):
-    list_display = ('user', 'product', 'target_price', 'is_active', 'created_at')
+    list_display = ('user', 'email', 'product', 'alert_type', 'current_price', 'target_price', 'alert_sent', 'is_active', 'created_at')
     search_fields = ('user__username', 'user__email', 'product__name')
-    list_filter = ('is_active', 'created_at')
+    list_filter = ('alert_type', 'alert_sent', 'is_active', 'created_at')
 
 class WatchlistAdmin(admin.ModelAdmin):
     list_display = ('user', 'product', 'created_at')

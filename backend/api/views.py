@@ -97,30 +97,24 @@ class GoogleAuthView(APIView):
             # Check if user already exists
             user, created = User.objects.get_or_create(email=email, defaults={
                 'username': email.split('@')[0] + '_' + str(uuid.uuid4())[:8],
+                'google_id': uid,
                 'firebase_uid': uid,
                 'display_name': name,
                 'profile_picture': picture
             })
 
-            # If user exists but fields are empty, update them
             if not created:
-                updated = False
-                if not user.firebase_uid:
-                    user.firebase_uid = uid
-                    updated = True
-                if not user.display_name:
-                    user.display_name = name
-                    updated = True
-                if not user.profile_picture:
-                    user.profile_picture = picture
-                    updated = True
-                if updated:
-                    user.save()
+                user.google_id = uid
+                user.firebase_uid = uid
+                user.display_name = name
+                user.profile_picture = picture
+                user.save(update_fields=['google_id', 'firebase_uid', 'display_name', 'profile_picture'])
 
             # Issue our own JWT token
             refresh = RefreshToken.for_user(user)
             return Response({
                 "token": str(refresh.access_token),
+                "refresh": str(refresh),
                 "user": UserSerializer(user).data
             }, status=status.HTTP_200_OK)
 
@@ -266,16 +260,20 @@ class PriceHistoryViewSet(viewsets.ReadOnlyModelViewSet):
 
 class PriceAlertViewSet(viewsets.ModelViewSet):
     serializer_class = PriceAlertSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
-        if self.request.user.is_authenticated:
-            return PriceAlert.objects.filter(user=self.request.user)
-        return PriceAlert.objects.none()
+        return PriceAlert.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        user = self.request.user if self.request.user.is_authenticated else None
-        serializer.save(user=user)
+        product = serializer.validated_data['product']
+        serializer.save(
+            user=self.request.user,
+            email=self.request.user.email,
+            product_name=product.name,
+            current_price=product.price,
+            alert_sent=False
+        )
 
 class WatchlistViewSet(viewsets.ModelViewSet):
     serializer_class = WatchlistSerializer

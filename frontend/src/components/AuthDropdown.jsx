@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
-import { User, Bookmark, LogOut, Settings, History, Heart } from 'lucide-react';
+import { User, Bookmark, LogOut, Settings, History, Heart, Bell } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './AuthDropdown.css';
 
@@ -69,7 +69,7 @@ const AuthDropdown = ({ onWatchlistClick, onDashboardClick }) => {
             <div className="dropdown-items">
               <button className="dropdown-item" onClick={() => { setIsOpen(false); onDashboardClick && onDashboardClick(); }}>
                 <User size={16} className="dropdown-icon" />
-                <span>My Profile Dashboard</span>
+                <span>My Profile</span>
               </button>
               
               <button className="dropdown-item">
@@ -85,6 +85,11 @@ const AuthDropdown = ({ onWatchlistClick, onDashboardClick }) => {
               <button className="dropdown-item">
                 <History size={16} className="dropdown-icon" />
                 <span>Compare History</span>
+              </button>
+
+              <button className="dropdown-item" onClick={() => { setIsOpen(false); onDashboardClick && onDashboardClick(); }}>
+                <Bell size={16} className="dropdown-icon" />
+                <span>Price Alerts</span>
               </button>
 
               <div className="dropdown-divider"></div>
