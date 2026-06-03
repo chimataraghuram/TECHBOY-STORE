@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
-import { User, Bookmark, LogOut, Settings, History, Heart, Bell } from 'lucide-react';
+import { User, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import './AuthDropdown.css';
 
-const AuthDropdown = ({ onWatchlistClick, onDashboardClick }) => {
+const AuthDropdown = ({ onDashboardClick }) => {
   const { user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -72,32 +72,7 @@ const AuthDropdown = ({ onWatchlistClick, onDashboardClick }) => {
                 <span>My Profile</span>
               </button>
               
-              <button className="dropdown-item">
-                <Heart size={16} className="dropdown-icon" />
-                <span>Wishlist</span>
-              </button>
-
-              <button className="dropdown-item" onClick={() => { setIsOpen(false); onWatchlistClick && onWatchlistClick(); }}>
-                <Bookmark size={16} className="dropdown-icon" />
-                <span>Saved Phones</span>
-              </button>
-              
-              <button className="dropdown-item">
-                <History size={16} className="dropdown-icon" />
-                <span>Compare History</span>
-              </button>
-
-              <button className="dropdown-item" onClick={() => { setIsOpen(false); onDashboardClick && onDashboardClick(); }}>
-                <Bell size={16} className="dropdown-icon" />
-                <span>Price Alerts</span>
-              </button>
-
               <div className="dropdown-divider"></div>
-
-              <button className="dropdown-item">
-                <Settings size={16} className="dropdown-icon" />
-                <span>Settings</span>
-              </button>
               
               <button className="dropdown-item logout-action" onClick={() => { setIsOpen(false); logout(); }}>
                 <LogOut size={16} className="dropdown-icon" />
