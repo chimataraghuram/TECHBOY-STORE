@@ -67,13 +67,6 @@ const AuthDropdown = ({ onDashboardClick }) => {
             <div className="dropdown-divider"></div>
 
             <div className="dropdown-items">
-              <button className="dropdown-item" onClick={() => { setIsOpen(false); onDashboardClick && onDashboardClick(); }}>
-                <User size={16} className="dropdown-icon" />
-                <span>My Profile</span>
-              </button>
-              
-              <div className="dropdown-divider"></div>
-              
               <button className="dropdown-item logout-action" onClick={() => { setIsOpen(false); logout(); }}>
                 <LogOut size={16} className="dropdown-icon" />
                 <span>Logout</span>
