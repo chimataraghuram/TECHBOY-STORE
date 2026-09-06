@@ -17,8 +17,6 @@ const Footer = lazy(() => import('./components/Footer'))
 
 const TechAdvisorModal = lazy(() => import('./components/TechAdvisorModal'))
 const TrackHub = lazy(() => import('./components/TrackHub'))
-const HowItWorks = lazy(() => import('./components/HowItWorks'))
-const Benefits = lazy(() => import('./components/Benefits'))
 
 function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -112,13 +110,6 @@ function App() {
                   <TechBoyTrends />
                 </Suspense>
 
-                <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '300px', margin: '40px 0', borderRadius: '16px'}}></div>}>
-                  <HowItWorks />
-                </Suspense>
-
-                <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '150px', margin: '40px 0', borderRadius: '16px'}}></div>}>
-                  <Benefits />
-                </Suspense>
               </>
             ) : currentView === 'trackhub' ? (
               <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '500px', margin: '120px 20px', borderRadius: '16px'}}></div>}>

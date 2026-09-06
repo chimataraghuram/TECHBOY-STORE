@@ -31,27 +31,15 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    {/* CENTER - Quick Links */}
+                    {/* CENTER - How It Works */}
                     <div className="md:col-span-4">
                         <h4 className="text-white font-bold text-xs tracking-wider mb-4 flex items-center gap-2">
                             <span className="w-1 h-4 bg-red-500 rounded-full"></span>
-                            QUICK LINKS
+                            HOW IT WORKS
                         </h4>
-                        <div className="grid grid-cols-2 gap-x-8 gap-y-2">
-                            <div className="flex flex-col gap-2">
-                                <a href="#products" className="text-gray-500 hover:text-white text-[11px] transition-colors flex items-center gap-1"><span className="text-red-500 text-[8px]">›</span> Smartphones</a>
-                                <a href="#trends" className="text-gray-500 hover:text-white text-[11px] transition-colors flex items-center gap-1"><span className="text-red-500 text-[8px]">›</span> Trends</a>
-                                <a href="#" className="text-gray-500 hover:text-white text-[11px] transition-colors flex items-center gap-1"><span className="text-red-500 text-[8px]">›</span> Price Alerts</a>
-                                <a href="#" className="text-gray-500 hover:text-white text-[11px] transition-colors flex items-center gap-1"><span className="text-red-500 text-[8px]">›</span> Comparisons</a>
-                                <a href="#" className="text-gray-500 hover:text-white text-[11px] transition-colors flex items-center gap-1"><span className="text-red-500 text-[8px]">›</span> TrackHub</a>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <a href="#" className="text-gray-500 hover:text-white text-[11px] transition-colors flex items-center gap-1"><span className="text-red-500 text-[8px]">›</span> Help Center</a>
-                                <a href="#" className="text-gray-500 hover:text-white text-[11px] transition-colors flex items-center gap-1"><span className="text-red-500 text-[8px]">›</span> Contact Us</a>
-                                <a href="#" className="text-gray-500 hover:text-white text-[11px] transition-colors flex items-center gap-1"><span className="text-red-500 text-[8px]">›</span> Privacy Policy</a>
-                                <a href="#" className="text-gray-500 hover:text-white text-[11px] transition-colors flex items-center gap-1"><span className="text-red-500 text-[8px]">›</span> Terms of Service</a>
-                                <a href="#about" className="text-gray-500 hover:text-white text-[11px] transition-colors flex items-center gap-1"><span className="text-red-500 text-[8px]">›</span> About Us</a>
-                            </div>
+                        <p className="text-gray-500 text-[10px] mb-4">Your journey to the perfect smartphone in five simple steps.</p>
+                        <div className="space-y-2.5">
+                            {[['01', 'Search & Discover', "Find smartphones you're interested in."], ['02', 'Compare', 'Compare specifications, prices and features.'], ['03', 'Track', 'Set your target price and enable monitoring.'], ['04', 'Get Alert', 'Receive an alert when the price reaches your target.'], ['05', 'Buy Smart', 'Make a better decision at the right time.']].map(([num, title, description]) => <div key={num} className="flex items-start gap-3"><span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-red-500 text-[9px] font-bold text-red-500">{num}</span><div><p className="text-[10px] font-bold text-white">{title}</p><p className="text-[9px] leading-relaxed text-gray-500">{description}</p></div></div>)}
                         </div>
                     </div>
 
