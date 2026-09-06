@@ -65,7 +65,23 @@ html {
 }
 
 .container {
-  max-width: 1320px !important;
+  max-width: 1440px !important;
+  width: calc(100% - 40px) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Keep the reference layout aligned to a consistent 20px desktop gutter. */
+.app-container main > section,
+.app-container footer {
+  width: 100%;
+  max-width: 1520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 640px) {
+  .container { width: calc(100% - 24px) !important; }
 }
 
 .glass-card,

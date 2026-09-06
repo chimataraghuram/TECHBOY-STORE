@@ -65,8 +65,8 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
     ];
 
     return (
-        <nav className="navbar fixed top-3 left-0 right-0 z-40 px-4" aria-label="Main navigation">
-            <div className="max-w-7xl mx-auto glass rounded-full flex items-center justify-between px-5 py-2.5 shadow-lg">
+        <nav className="navbar fixed top-3 left-0 right-0 z-40 px-2 sm:px-4" aria-label="Main navigation">
+            <div className="w-full max-w-[1500px] mx-auto glass rounded-2xl flex min-h-[68px] items-center justify-between px-4 sm:px-6 lg:px-8 py-3 shadow-lg border border-white/10 bg-[#070b10]/90">
                 
                 {/* LOGO - LEFT */}
                 <div className="flex items-center gap-3">
