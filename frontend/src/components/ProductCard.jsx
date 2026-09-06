@@ -1,73 +1,28 @@
-import React from 'react';
-import { m, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { useState } from 'react';
+import { m } from 'framer-motion';
+import { Heart, Bell, GitCompare, Star } from 'lucide-react';
 import { resolveProductImage } from '../utils/imageResolver';
-const balancedImg = "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=300&q=80";
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
-const HighlightText = ({ text, highlight }) => {
-    if (!highlight || !highlight.trim() || !text) return <>{text}</>;
-    const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
-    return (
-        <>
-            {parts.map((part, i) => 
-                part.toLowerCase() === highlight.toLowerCase() ? 
-                    <span key={i} className="search-highlight">{part}</span> : part
-            )}
-        </>
-    );
-};
+const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) => {
+    const [imgLoaded, setImgLoaded] = useState(false);
+    const [imgError, setImgError] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
 
-const getMappedTag = (tag = '') => {
-    const t = tag.toLowerCase();
-    if (t.includes('gaming')) return '🎮 Best Gaming';
-    if (t.includes('camera') || t.includes('photo')) return '📸 Camera King';
-    if (t.includes('battery') || t.includes('king') || t.includes('endurance')) return '🔋 Battery Beast';
-    if (t.includes('value') || t.includes('budget')) return '💰 Value Pick';
-    if (t.includes('ui') || t.includes('software')) return '✨ Best UI';
-    return tag || '⭐ Premium Choice';
-};
-
-
-
-const ProductCard = ({ product, onCompare, onOpenCompare, isComparing, onView, onPriceAlert, index, searchTerm }) => {
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-
-    const mouseXSpring = useSpring(x);
-    const mouseYSpring = useSpring(y);
-
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"]);
-
-    const [isSaved, setIsSaved] = React.useState(false);
-    const [imgError, setImgError] = React.useState(false);
-    const [imgLoaded, setImgLoaded] = React.useState(false);
-    const [activePopover, setActivePopover] = React.useState(null);
-    const [alertEmail, setAlertEmail] = React.useState('');
-    const [isTouchDevice, setIsTouchDevice] = React.useState(false);
-    const [cardTheme, setCardTheme] = React.useState('default');
-
-    const cycleTheme = () => {
-        const themes = ['default', 'cyberpunk', 'matrix', 'aurum', 'nebula', 'inferno'];
-        const next = themes[(themes.indexOf(cardTheme) + 1) % themes.length];
-        setCardTheme(next);
-    };
-
-    const amazonUrl = product.amazon_link || product.amazonLink;
-    const flipkartUrl = product.flipkart_link || product.flipkartLink;
-
-    React.useEffect(() => {
-        setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
-    }, []);
-
-    const imageSrc = !imgError && product.image ? resolveProductImage(product.image, product.name) : balancedImg;
+    const imageSrc = !imgError && product.image ? resolveProductImage(product.image, product.name) : "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=500&q=80";
+    
+    const currentPrice = product.price || 0;
+    const prevPrice = Math.round(currentPrice * 1.1); 
+    const discount = Math.round(((prevPrice - currentPrice) / prevPrice) * 100);
+    const rating = product.rating || 4.5;
+    const reviewCount = "1.2K";
 
     const handleSaveToWatchlist = async (e) => {
         e.stopPropagation();
         const token = localStorage.getItem('techboy_token');
         if (!token) {
-            setActivePopover('alert');
+            alert("Please sign in to add to wishlist."); 
             return;
         }
 
@@ -81,235 +36,85 @@ const ProductCard = ({ product, onCompare, onOpenCompare, isComparing, onView, o
                 body: JSON.stringify({ product: product.id })
             });
             if (res.ok) {
-                setIsSaved(true);
-                setActivePopover('alert-success');
-            } else {
-                setActivePopover('alert-exists');
+                setIsSaved(!isSaved);
             }
         } catch (err) {
             console.error('Failed to save', err);
-            setActivePopover('alert');
         }
     };
-
-    const handleEmailAlert = (e) => {
-        e.preventDefault();
-        setActivePopover('alert-email');
-    };
-
-    const handleMouseMove = (e) => {
-        if (isTouchDevice) return;
-        const rect = e.currentTarget.getBoundingClientRect();
-        const mouseX = (e.clientX - rect.left) / rect.width - 0.5;
-        const mouseY = (e.clientY - rect.top) / rect.height - 0.5;
-        x.set(mouseX);
-        y.set(mouseY);
-    };
-
-    const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
-    };
-
-    const handleTrackClick = async (source) => {
-        try {
-            await fetch(`${API_BASE_URL}/track-click/`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ product_id: product.id, source })
-            });
-        } catch (err) {
-            console.error('Failed to track click', err);
-        }
-    };
-
-    const mappedTag = getMappedTag(product.tag);
 
     return (
         <m.div
-            className={`product-card glass-card ${isComparing ? 'comparing' : ''} ${cardTheme !== 'default' ? `theme-${cardTheme}` : ''}`}
-            onClick={cycleTheme}
-            style={{
-                rotateX: isTouchDevice ? 0 : rotateX,
-                rotateY: isTouchDevice ? 0 : rotateY,
-                cursor: 'pointer'
-            }}
-            onClickCapture={(event) => {
-                if (event.target.closest('.compare-btn')) {
-                    setTimeout(() => setActivePopover('compare'), 0);
-                }
-            }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            initial={{ opacity: 0, y: 20 }}
+            className={`bg-[#111118] border border-white/8 rounded-xl overflow-hidden hover:border-white/20 transition-all group flex flex-col h-full ${isComparing ? 'ring-1 ring-red-500' : ''}`}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: index * 0.05 }}
+            transition={{ duration: 0.3, delay: index * 0.04 }}
             viewport={{ once: true }}
-            whileHover={isTouchDevice ? {} : { scale: 1.015 }}
+            whileHover={{ y: -4 }}
         >
-            {activePopover && (
-                <div className="product-action-popover" onClick={(e) => e.stopPropagation()}>
-                    <button
-                        className="product-popover-close"
-                        onClick={() => setActivePopover(null)}
-                        aria-label="Close popup"
-                        title="Close"
+            {/* Image container */}
+            <div className="relative h-[160px] sm:h-[180px] bg-[#0a0a10] flex items-center justify-center overflow-hidden">
+                {!imgLoaded && <div className="absolute inset-0 bg-white/5 animate-pulse" />}
+                <img 
+                    src={imageSrc}
+                    alt={product.name} 
+                    className={`w-full h-full object-contain p-5 transition-transform duration-300 group-hover:scale-105 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+                    onLoad={() => setImgLoaded(true)}
+                    onError={() => { setImgError(true); setImgLoaded(true); }}
+                />
+                
+                {discount > 0 && (
+                    <div className="absolute top-2.5 right-2.5 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                        -{discount}%
+                    </div>
+                )}
+            </div>
+
+            {/* Content */}
+            <div className="p-3.5 flex flex-col flex-1">
+                <div className="text-gray-500 text-[10px] font-semibold uppercase tracking-wider mb-0.5">{product.brand || 'Smartphone'}</div>
+                <h3 className="text-white font-semibold text-sm leading-snug mb-2 line-clamp-2 min-h-[2.5em]">{product.name}</h3>
+
+                {/* Price */}
+                <div className="flex items-baseline gap-2 mb-2">
+                    <span className="text-red-500 font-bold text-base">₹{currentPrice.toLocaleString('en-IN')}</span>
+                    {discount > 0 && <span className="text-gray-500 line-through text-xs">₹{prevPrice.toLocaleString('en-IN')}</span>}
+                </div>
+
+                {/* Rating */}
+                <div className="flex items-center gap-1.5 mb-3">
+                    <Star className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
+                    <span className="text-gray-300 text-xs font-medium">{rating}</span>
+                    <span className="text-gray-500 text-[10px]">({reviewCount})</span>
+                </div>
+
+                {/* Actions */}
+                <div className="flex items-center gap-2 mt-auto pt-3 border-t border-white/5">
+                    <button 
+                        onClick={handleSaveToWatchlist}
+                        className={`p-2 rounded-lg transition-colors border flex-shrink-0 ${isSaved ? 'bg-red-500/15 text-red-500 border-red-500/30' : 'bg-white/5 text-gray-500 hover:text-white border-white/5 hover:border-white/15'}`}
+                        title="Wishlist"
+                        aria-label="Add to Wishlist"
                     >
-                        ×
+                        <Heart size={14} className={isSaved ? "fill-red-500" : ""} />
+                    </button>
+                    
+                    <button 
+                        onClick={(e) => { e.stopPropagation(); onPriceAlert && onPriceAlert(product, e.currentTarget.getBoundingClientRect()); }}
+                        className="p-2 bg-white/5 text-gray-500 hover:text-white border border-white/5 hover:border-white/15 rounded-lg transition-colors flex-shrink-0"
+                        title="Price Alert"
+                        aria-label="Set Price Alert"
+                    >
+                        <Bell size={14} />
                     </button>
 
-                    {activePopover.startsWith('alert') && (
-                        <div className="product-popover-content">
-                            <div className="product-popover-icon">!</div>
-                            <h4>{activePopover === 'alert-success' ? 'Alert Ready' : 'Stay Updated'}</h4>
-                            {activePopover === 'alert-success' ? (
-                                <p>{product.name} is saved to your watchlist. We will track price movement from your account.</p>
-                            ) : activePopover === 'alert-exists' ? (
-                                <p>This phone is already in your watchlist. You are covered for future price checks.</p>
-                            ) : activePopover === 'alert-email' ? (
-                                <p>Thanks. Sign in later with {alertEmail || 'your email'} to manage saved alerts and watchlist phones.</p>
-                            ) : (
-                                <>
-                                    <p>Get notified when {product.name} changes price.</p>
-                                    <form className="product-popover-form" onSubmit={handleEmailAlert}>
-                                        <input
-                                            type="email"
-                                            value={alertEmail}
-                                            onChange={(event) => setAlertEmail(event.target.value)}
-                                            placeholder="you@example.com"
-                                            required
-                                        />
-                                        <button type="submit">Continue</button>
-                                    </form>
-                                    <span className="product-popover-note">Sign in to save this phone to your full watchlist.</span>
-                                </>
-                            )}
-                        </div>
-                    )}
-
-                    {activePopover === 'compare' && (
-                        <div className="product-popover-content">
-                            <div className="product-popover-icon compare-icon">↔</div>
-                            <h4>{isComparing ? 'Ready to Compare' : 'Removed'}</h4>
-                            <p>
-                                {isComparing
-                                    ? `${product.name} is in your compare tray. Pick up to 3 phones, then use Compare Now.`
-                                    : `${product.name} was removed from the compare tray.`}
-                            </p>
-                            {isComparing && (
-                                <button
-                                    type="button"
-                                    className="product-popover-action"
-                                    onClick={() => onOpenCompare && onOpenCompare()}
-                                >
-                                    Compare Now
-                                </button>
-                            )}
-                        </div>
-                    )}
-                </div>
-            )}
-
-            <div className="product-card-header">
-                {product.tag && <span className="product-tag">{mappedTag}</span>}
-                <button 
-                    className={`watchlist-btn ${isSaved ? 'saved' : ''}`}
-                    onClick={handleSaveToWatchlist}
-                    title="Save to Watchlist"
-                >
-                    <svg width="20" height="20" fill={isSaved ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                    </svg>
-                </button>
-            </div>
-            <div className="product-image-wrapper">
-                {!imgLoaded && <div className="img-shimmer" />}
-                    <img 
-                        src={imageSrc}
-                        alt={product.name} 
-                        className={`product-real-img ${imgLoaded ? 'img-loaded' : 'img-loading'}`}
-                        loading="lazy"
-                        decoding="async"
-                        onLoad={() => setImgLoaded(true)}
-                        onError={() => { setImgError(true); setImgLoaded(true); }}
-                    />
-            </div>
-            <div className="product-info">
-                <div className="product-card-top-row">
-                    <span className="category-label">
-                        <HighlightText text={product.category} highlight={searchTerm} />
-                    </span>
-                    {product.rating && (
-                        <span className="product-rating-badge">
-                            ★ {parseFloat(product.rating).toFixed(1)}
-                        </span>
-                    )}
-                </div>
-                <h3 className="product-title">
-                    <HighlightText text={product.name} highlight={searchTerm} />
-                </h3>
-
-                <div className="smart-snippet" style={{ marginTop: '12px' }}>
-                    {product.description && (
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', fontSize: '12px', color: '#ccc' }}>
-                            {product.description.split('|').slice(0, 4).map((spec, i) => {
-                                const parts = spec.split(':');
-                                const val = parts.length > 1 ? parts[1].trim() : spec.trim();
-                                let icon = '📌';
-                                if (spec.toLowerCase().includes('chip')) icon = '⚡';
-                                else if (spec.toLowerCase().includes('display')) icon = '📱';
-                                else if (spec.toLowerCase().includes('camera')) icon = '📸';
-                                else if (spec.toLowerCase().includes('battery')) icon = '🔋';
-                                else if (spec.toLowerCase().includes('ram') || spec.toLowerCase().includes('storage')) icon = '💾';
-                                
-                                return (
-                                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '4px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={spec.trim()}>
-                                        <span style={{ fontSize: '14px' }}>{icon}</span>
-                                        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{val}</span>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    )}
-                </div>
-
-                <div className="product-meta" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '12px', position: 'relative', zIndex: 90, pointerEvents: 'auto' }}>
-                    <div className="price-info" style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span className="price">₹{(product.price || 0).toLocaleString('en-IN')}</span>
-                    </div>
-                    <div style={{ display: 'flex', gap: '6px', width: '100%', position: 'relative', zIndex: 100, pointerEvents: 'auto' }}>
-                        <button 
-                            className="primary-btn mini" 
-                            style={{ flex: 1, padding: '8px 4px', borderRadius: '20px', background: '#ff1f3d', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', fontWeight: 'bold', border: 'none', color: 'white', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer', textTransform: 'uppercase' }}
-                            onClick={(e) => { 
-                                e.stopPropagation(); 
-                                if (onPriceAlert) {
-                                    onPriceAlert(product, e.currentTarget.getBoundingClientRect());
-                                } else {
-                                    setActivePopover('alert');
-                                }
-                            }}
-                        >
-                            🔔 Alert
-                        </button>
-                        <button
-                            className="primary-btn mini compare-btn"
-                            style={{ flex: 1, padding: '8px 4px', borderRadius: '20px', background: '#ff1f3d', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', fontSize: '12px', fontWeight: 'bold', border: 'none', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer', textTransform: 'uppercase' }}
-                            onClick={(e) => { e.stopPropagation(); onCompare && onCompare(product); setActivePopover('compare'); }}
-                        >
-                            ⚔️ VS
-                        </button>
-                        <button 
-                            className="primary-btn mini" 
-                            style={{ flex: 1, padding: '8px 4px', borderRadius: '20px', background: '#ff1f3d', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 'bold', border: 'none', color: 'white', position: 'relative', zIndex: 101, pointerEvents: 'auto', cursor: 'pointer', textTransform: 'uppercase' }}
-                            onClick={(e) => { 
-                                e.stopPropagation(); 
-                                onView && onView(product, null);
-                            }}
-                        >
-                            View
-                        </button>
-                    </div>
+                    <button 
+                        onClick={(e) => { e.stopPropagation(); onCompare && onCompare(product); }}
+                        className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-semibold transition-all border ${isComparing ? 'bg-red-500 text-white border-red-500' : 'bg-white/5 text-gray-400 hover:text-white border-white/5 hover:border-white/15'}`}
+                        aria-label="Compare"
+                    >
+                        <GitCompare size={12} /> {isComparing ? 'Comparing' : 'Compare'}
+                    </button>
                 </div>
             </div>
         </m.div>

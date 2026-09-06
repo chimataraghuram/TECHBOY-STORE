@@ -1,162 +1,43 @@
 import React from 'react';
 import { m } from 'framer-motion';
-import { Search, Brain, ShieldCheck, BatteryCharging, ArrowRight } from 'lucide-react';
 
-const BentoCard = ({ className, custom, children, style, variants, initial, whileInView, viewport }) => {
-    const [theme, setTheme] = React.useState('default');
-    const cycleTheme = (e) => {
-        if (e.target.closest('button, a, input, select')) return;
-        const themes = ['default', 'cyberpunk', 'matrix', 'aurum', 'nebula', 'inferno'];
-        const next = themes[(themes.indexOf(theme) + 1) % themes.length];
-        setTheme(next);
-    };
-    
-    return (
-        <m.div
-            custom={custom}
-            initial={initial}
-            whileInView={whileInView}
-            viewport={viewport}
-            variants={variants}
-            className={`${className} ${theme !== 'default' ? `theme-${theme}` : ''}`}
-            onClick={cycleTheme}
-            style={{ ...style, cursor: 'pointer' }}
-        >
-            {children}
-        </m.div>
-    );
-};
+const steps = [
+    { num: '01', title: 'Search & Discover', desc: "Find smartphones you're interested in." },
+    { num: '02', title: 'Compare', desc: "Compare specifications, prices and features." },
+    { num: '03', title: 'Track', desc: "Set your target price and enable price monitoring." },
+    { num: '04', title: 'Get Alert', desc: "Receive an alert when the price reaches your target." },
+    { num: '05', title: 'Buy Smart', desc: "Make a better decision at the right time." }
+];
 
 const HowItWorks = () => {
-    const bentoVariants = {
-        hidden: { opacity: 0, y: 30, scale: 0.95 },
-        visible: (i) => ({
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            transition: {
-                delay: i * 0.1,
-                duration: 0.6,
-                ease: [0.16, 1, 0.3, 1]
-            }
-        })
-    };
-
     return (
-        <section id="how-it-works" className="bento-section">
-            <div className="container">
-                <div className="section-header text-center">
-                    <m.span
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        className="badge analyst-badge"
-                    >
-                        THE PLATFORM
-                    </m.span>
-                    <m.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        viewport={{ once: true }}
-                        className="section-title"
-                    >
-                        How It <span className="text-gradient">Works</span>
-                    </m.h2>
-                    <m.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                        viewport={{ once: true }}
-                        className="section-subtitle"
-                        style={{ margin: '0 auto' }}
-                    >
-                        Everything you need to find the perfect smartphone, packed into one seamless experience.
-                    </m.p>
+        <section className="py-14 bg-[#0a0a0f] border-t border-white/5">
+            <div className="max-w-7xl mx-auto px-4 md:px-8">
+                <div className="text-center mb-10">
+                    <h2 className="text-xl font-bold text-white mb-2">How It Works</h2>
+                    <p className="text-gray-500 text-xs">Your journey to the perfect smartphone in five simple steps.</p>
                 </div>
 
-                <div className="bento-grid">
-                    {/* Big Feature: The 4-Step Process */}
-                    <BentoCard 
-                        custom={0} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={bentoVariants}
-                        className="bento-card glass-card bento-pos-1 process-card"
-                    >
-                        <div className="bento-content">
-                            <h3>The Smart-Buying Framework</h3>
-                            <p>We've simplified smartphone shopping into four seamless steps.</p>
-                            <div className="process-steps">
-                                <div className="p-step">
-                                    <div className="p-dot">1</div>
-                                    <span>Analyze Needs</span>
-                                </div>
-                                <ArrowRight className="p-arrow" size={16} />
-                                <div className="p-step">
-                                    <div className="p-dot">2</div>
-                                    <span>AI Processing</span>
-                                </div>
-                                <ArrowRight className="p-arrow" size={16} />
-                                <div className="p-step">
-                                    <div className="p-dot">3</div>
-                                    <span>Data Match</span>
-                                </div>
-                                <ArrowRight className="p-arrow" size={16} />
-                                <div className="p-step">
-                                    <div className="p-dot">4</div>
-                                    <span>Perfect Device</span>
-                                </div>
+                <div className="flex flex-col md:flex-row justify-between relative gap-8 md:gap-0">
+                    {/* Connecting Line */}
+                    <div className="hidden md:block absolute top-5 left-[10%] right-[10%] h-[1px] bg-red-500/15 z-0"></div>
+
+                    {steps.map((step, idx) => (
+                        <m.div 
+                            key={step.num}
+                            className="relative z-10 flex flex-col items-center text-center w-full md:w-1/5"
+                            initial={{ opacity: 0, y: 15 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: idx * 0.08 }}
+                            viewport={{ once: true }}
+                        >
+                            <div className="w-10 h-10 rounded-full bg-[#111118] border-2 border-red-500 flex items-center justify-center text-red-500 font-bold text-xs mb-4 shadow-[0_0_10px_rgba(239,68,68,0.2)]">
+                                {step.num}
                             </div>
-                        </div>
-                    </BentoCard>
-
-                    {/* Tall Feature: AI */}
-                    <BentoCard 
-                        custom={1} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={bentoVariants}
-                        className="bento-card glass-card bento-pos-2 ai-card"
-                    >
-                        <Brain size={48} className="bento-icon pulse-icon" />
-                        <div className="bento-content">
-                            <h3>TechBoy AI Advisor</h3>
-                            <p>Skip the spec-sheet fatigue. Our AI instantly translates complex hardware data into clear, personalized buying verdicts.</p>
-                        </div>
-                    </BentoCard>
-
-                    {/* Square: Instant Search */}
-                    <BentoCard 
-                        custom={2} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={bentoVariants}
-                        className="bento-card glass-card bento-pos-3"
-                    >
-                        <Search size={32} className="bento-icon" />
-                        <div className="bento-content">
-                            <h3>Millisecond Queries</h3>
-                            <p>Blazing fast, real-time filtering across our entire smartphone database.</p>
-                        </div>
-                    </BentoCard>
-
-                    {/* Square: Verified Picks */}
-                    <BentoCard 
-                        custom={3} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={bentoVariants}
-                        className="bento-card glass-card bento-pos-4"
-                    >
-                        <ShieldCheck size={32} className="bento-icon" />
-                        <div className="bento-content">
-                            <h3>Enthusiast Approved</h3>
-                            <p>Zero bloat. We only curate devices that meet strict performance and value standards.</p>
-                        </div>
-                    </BentoCard>
-
-                    {/* Wide: Battery Focus */}
-                    <BentoCard 
-                        custom={4} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={bentoVariants}
-                        className="bento-card glass-card bento-pos-5"
-                        style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '24px' }}
-                    >
-                        <BatteryCharging size={48} className="bento-icon" style={{ margin: 0 }} />
-                        <div className="bento-content">
-                            <h3>Geek-Level Insights</h3>
-                            <p>Dive deep into custom performance metrics, thermal scores, and battery endurance ratings.</p>
-                        </div>
-                    </BentoCard>
-
+                            <h3 className="text-white font-semibold text-sm mb-1">{step.title}</h3>
+                            <p className="text-gray-500 text-[11px] leading-relaxed max-w-[140px]">{step.desc}</p>
+                        </m.div>
+                    ))}
                 </div>
             </div>
         </section>

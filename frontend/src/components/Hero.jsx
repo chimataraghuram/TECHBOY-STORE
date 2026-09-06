@@ -1,233 +1,122 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { m } from 'framer-motion';
+import { Smartphone, Bell, Users, ShieldCheck, ArrowRight } from 'lucide-react';
+const appleIphone = '/images/phones/apple-iphone-16-pro-max.jpg';
 
-const heroImages = [
-    "/images/phones/apple-iphone-16-pro-max.jpg",
-    "/images/phones/google-pixel-9-pro.jpg",
-    "/images/phones/samsung-galaxy-s26-ultra.jpg",
-    "/images/phones/nothing-phone-3a.jpg",
-    "/images/phones/oneplus-13.jpg"
-];
-
-import {
-    Zap,
-    Diamond,
-    Smartphone,
-    Timer,
-    Cpu,
-    Gauge,
-    ShieldCheck,
-    RadioTower,
-    Search
-} from 'lucide-react';
-
-import { resolveProductImage } from '../utils/imageResolver';
-
-const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
-
-const Hero = ({ onOpenAdvisor, searchTerm, onSearch }) => {
-    const [dealOfDay, setDealOfDay] = useState(null);
-    const [timeLeft, setTimeLeft] = useState({ hours: 14, minutes: 23, seconds: 59 });
-    const [currentImage, setCurrentImage] = useState(heroImages[0]);
-
-    useEffect(() => {
-        // Pick a random image on mount to keep it fresh
-        const randomIndex = Math.floor(Math.random() * heroImages.length);
-        setCurrentImage(heroImages[randomIndex]);
-
-        const fetchDeal = async () => {
-            try {
-                const res = await fetch(`${API_BASE_URL}/products/deal_of_the_day/`);
-                if (res.ok) {
-                    const data = await res.json();
-                    setDealOfDay(data);
-                }
-            } catch (err) {
-                console.error('Failed to fetch deal of the day', err);
-            }
-        };
-
-        fetchDeal();
-
-        const timer = setInterval(() => {
-            setTimeLeft(prev => {
-                let { hours, minutes, seconds } = prev;
-                if (seconds > 0) seconds -= 1;
-                else if (minutes > 0) {
-                    minutes -= 1;
-                    seconds = 59;
-                } else if (hours > 0) {
-                    hours -= 1;
-                    minutes = 59;
-                    seconds = 59;
-                }
-                return { hours, minutes, seconds };
-            });
-        }, 1000);
-
-        return () => clearInterval(timer);
-    }, []);
-
+const Hero = ({ setCurrentView }) => {
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
-            transition: { staggerChildren: 0.16, delayChildren: 0.18 }
+            transition: { staggerChildren: 0.08, delayChildren: 0.1 }
         }
     };
 
     const itemVariants = {
-        hidden: { y: 24, opacity: 0 },
+        hidden: { y: 15, opacity: 0 },
         visible: {
             y: 0,
             opacity: 1,
-            transition: { duration: 0.72, ease: [0.16, 1, 0.3, 1] }
+            transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
         }
     };
 
-    const handleSearchSubmit = (e) => {
-        e.preventDefault();
-        document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
-    };
-
     return (
-        <section id="home" className="hero-section redesigned-hero">
-            <div className="redesign-grid-bg"></div>
-            <div className="redesign-beam redesign-beam-1"></div>
-            <div className="redesign-beam redesign-beam-2"></div>
-            <div className="background-glows">
-                <div className="glow glow-1"></div>
-                <div className="glow glow-2"></div>
+        <section id="home" className="relative pt-24 pb-12 overflow-hidden bg-[#080808]">
+            {/* Ambient red glow - subtle */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-600/8 rounded-full blur-[120px]"></div>
+                <div className="absolute bottom-0 left-1/4 w-[300px] h-[300px] bg-red-600/5 rounded-full blur-[100px]"></div>
             </div>
 
             <m.div
-                className="container hero-content"
+                className="max-w-7xl mx-auto px-4 md:px-8 w-full z-10 relative"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
             >
-                <div className="hero-text">
-                    <m.div variants={itemVariants} className="badge-wrapper">
-                        <span className="badge analyst-badge">SMART TECH ADVISOR</span>
-                    </m.div>
-
-                    <m.h1 variants={itemVariants} className="premium-title">
-                        Find Your Perfect <br />
-                        <span className="text-gradient">Smartphone</span>
-                    </m.h1>
-
-                    <m.p variants={itemVariants} className="premium-subtitle">
-                        AI-assisted recommendations based on your budget, gaming needs, camera preferences, and daily usage. Stop browsing, start deciding.
-                    </m.p>
-                    
-
-
-                    <m.div variants={itemVariants} className="hero-buttons">
-                        <button
-                            className="primary-btn large jelly-btn recommend-btn"
-                            onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
-                            style={{ width: '100%', maxWidth: '400px', fontSize: '1.1rem' }}
-                        >
-                            <Zap size={20} /> FIND MY PERFECT PHONE
-                        </button>
-                    </m.div>
-
-
-                </div>
-
-                <m.div
-                    className="hero-visual-wrapper"
-                    initial={{ opacity: 0, scale: 0.84, rotateY: -10 }}
-                    animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-                    transition={{ duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
-                >
-                    <m.div
-                        className="hero-main-visual glass-card hero-device-stage"
-                        animate={{ y: [0, -12, 0], rotateZ: [0, 0.8, 0] }}
-                        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                    >
-                        <div className="hero-stage-rings">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <div className="hero-phone-3d">
-                            <div className="phone-side phone-side-left"></div>
-                            <div className="phone-face">
-                                <img src={currentImage} alt="TECHBOY red 3D phone showcase" className="hero-img" />
-                                <div className="phone-screen-scan"></div>
-                            </div>
-                            <div className="phone-side phone-side-right"></div>
-                        </div>
-
-                        <div className="hero-hud-card hud-card-top">
-                            <Cpu size={16} />
-                            <span>Performance Rank</span>
-                            <strong>98</strong>
-                        </div>
-                        <div className="hero-hud-card hud-card-bottom">
-                            <Gauge size={16} />
-                            <span>Deal Score</span>
-                            <strong>Hot</strong>
-                        </div>
-                    </m.div>
-
-                    <div className="floating-elements">
-                        <m.div className="float-icon icon-1" animate={{ y: [0, -15, 0], x: [0, 5, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}>
-                            <Zap size={24} fill="var(--accent-primary)" stroke="var(--accent-primary)" />
+                {/* Two-column hero */}
+                <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-12">
+                    {/* LEFT */}
+                    <div className="flex flex-col items-start text-left lg:w-[55%]">
+                        <m.div variants={itemVariants} className="flex items-center gap-3 mb-5">
+                            <div className="w-1 h-5 bg-red-500 rounded-full"></div>
+                            <span className="text-red-500 text-[11px] font-bold tracking-[0.15em] uppercase">Smarter Choices. Better Deals.</span>
                         </m.div>
-                        <m.div className="float-icon icon-3" animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}>
-                            <Smartphone size={24} fill="var(--accent-primary)" stroke="var(--accent-primary)" />
-                        </m.div>
-                        <m.div className="float-icon icon-5" animate={{ y: [0, -16, 0], x: [0, 8, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}>
-                            <RadioTower size={24} stroke="var(--accent-primary)" />
+
+                        <m.h1 variants={itemVariants} className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold leading-[1.15] mb-5 tracking-tight text-white">
+                            Find Your Perfect<br />
+                            <span className="text-red-500">Smartphone</span>
+                        </m.h1>
+
+                        <m.p variants={itemVariants} className="text-gray-400 text-sm md:text-base mb-8 max-w-lg leading-relaxed">
+                            Discover, compare and track the best smartphones with real-time price alerts & smart recommendations.
+                        </m.p>
+
+                        <m.div variants={itemVariants} className="flex flex-wrap gap-3 mb-0">
+                            <button
+                                className="bg-red-600 hover:bg-red-500 text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all flex items-center gap-2"
+                                onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
+                            >
+                                Explore Smartphones <ArrowRight size={16} />
+                            </button>
+                            <button
+                                className="bg-transparent text-white border border-white/15 hover:border-white/30 px-6 py-2.5 rounded-full text-sm font-semibold transition-all"
+                                onClick={() => document.getElementById('trends')?.scrollIntoView({ behavior: 'smooth' })}
+                            >
+                                Explore Trends
+                            </button>
                         </m.div>
                     </div>
 
-                    {dealOfDay && (
-                        <m.div
-                            className="deal-of-day-card glass-card tech-deal-card"
-                            initial={{ opacity: 0, x: 50, scale: 0.9 }}
-                            animate={{ opacity: 1, x: 0, scale: 1 }}
-                            transition={{ delay: 1.1, duration: 0.8 }}
-                            whileHover={{ scale: 1.03, y: -5 }}
-                        >
-                            <div className="deal-header-row">
-                                <span className="deal-pulse-dot"></span>
-                                <Timer size={14} className="deal-timer-icon" />
-                                <span className="deal-title-label">FLASH SALE ENDS IN</span>
-                            </div>
-                            <div className="led-countdown">
-                                <div className="led-unit">
-                                    <span className="led-digits">{String(timeLeft.hours).padStart(2, '0')}</span>
-                                    <span className="led-label">HRS</span>
-                                </div>
-                                <span className="led-separator">:</span>
-                                <div className="led-unit">
-                                    <span className="led-digits">{String(timeLeft.minutes).padStart(2, '0')}</span>
-                                    <span className="led-label">MIN</span>
-                                </div>
-                                <span className="led-separator">:</span>
-                                <div className="led-unit">
-                                    <span className="led-digits">{String(timeLeft.seconds).padStart(2, '0')}</span>
-                                    <span className="led-label">SEC</span>
-                                </div>
-                            </div>
-                            <div className="deal-product-row">
-                                <div className="deal-img-container">
-                                    <img src={resolveProductImage(dealOfDay.image, dealOfDay.name)} alt={dealOfDay.name} className="deal-product-img" />
-                                </div>
-                                <div className="deal-product-info">
-                                    <h4 className="deal-product-title">{dealOfDay.name}</h4>
-                                    <div className="deal-price-wrapper">
-                                        <span className="deal-price-old">Rs {Math.round(dealOfDay.price * 1.2).toLocaleString('en-IN')}</span>
-                                        <span className="deal-price-new">Rs {dealOfDay.price.toLocaleString('en-IN')}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </m.div>
-                    )}
+                    {/* RIGHT - Phone image */}
+                    <m.div
+                        className="relative flex justify-center items-center lg:w-[45%]"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                    >
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] md:w-[280px] md:h-[280px] bg-red-600/10 blur-[60px] rounded-full"></div>
+                        <m.img
+                            src={appleIphone}
+                            alt="Flagship Smartphone"
+                            className="relative z-10 w-[200px] md:w-[260px] lg:w-[300px] h-auto object-contain drop-shadow-2xl"
+                            animate={{ y: [-6, 6, -6] }}
+                            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                        />
+                    </m.div>
+                </div>
+
+                {/* Stats row */}
+                <m.div variants={itemVariants} className="flex flex-wrap items-center gap-8 md:gap-12 pt-8 border-t border-white/5">
+                    <div className="flex items-center gap-3">
+                        <Smartphone className="text-red-500 w-5 h-5" />
+                        <div>
+                            <div className="text-white font-bold text-lg">500+</div>
+                            <div className="text-gray-500 text-[11px] font-medium">Smartphones</div>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <Bell className="text-red-500 w-5 h-5" />
+                        <div>
+                            <div className="text-white font-bold text-lg">30</div>
+                            <div className="text-gray-500 text-[11px] font-medium">Daily Alerts</div>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <Users className="text-red-500 w-5 h-5" />
+                        <div>
+                            <div className="text-white font-bold text-lg">10K+</div>
+                            <div className="text-gray-500 text-[11px] font-medium">Happy Users</div>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <ShieldCheck className="text-red-500 w-5 h-5" />
+                        <div>
+                            <div className="text-white font-bold text-lg">100%</div>
+                            <div className="text-gray-500 text-[11px] font-medium">Secure & Free</div>
+                        </div>
+                    </div>
                 </m.div>
             </m.div>
         </section>

@@ -146,7 +146,6 @@ html {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 31, 61, 0.05) !important;
   padding: 8px 24px !important;
   border-radius: 28px !important;
-    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
 }
 
 .navbar-left {

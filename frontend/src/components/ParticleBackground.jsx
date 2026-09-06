@@ -13,48 +13,28 @@ const ParticleBackground = () => {
                 value: "transparent",
             },
         },
-        fpsLimit: 120,
+        fpsLimit: 60,
         interactivity: {
-            detectsOn: "window",
             events: {
-                onClick: {
-                    enable: true,
-                    mode: "push",
-                },
-                onHover: {
-                    enable: true,
-                    mode: "repulse",
-                },
-            },
-            modes: {
-                push: {
-                    quantity: 4,
-                },
-                repulse: {
-                    distance: 120,
-                    duration: 0.4,
-                },
+                onClick: { enable: false },
+                onHover: { enable: false },
             },
         },
         particles: {
             color: {
-                value: ["#ff1f3d", "#ffffff"],
+                value: ["#ff2a2a", "#ffffff"],
             },
             links: {
-                color: "#ff1f3d",
-                distance: 150,
                 enable: false,
-                opacity: 0.15,
-                width: 1,
             },
             move: {
                 direction: "none",
                 enable: true,
                 outModes: {
-                    default: "bounce",
+                    default: "out",
                 },
                 random: true,
-                speed: 0.8,
+                speed: 0.3,
                 straight: false,
             },
             number: {
@@ -63,13 +43,13 @@ const ParticleBackground = () => {
                     width: 800,
                     height: 800,
                 },
-                value: 45,
+                value: 15,
             },
             opacity: {
-                value: 0.4,
+                value: 0.15,
                 animation: {
                     enable: true,
-                    speed: 1,
+                    speed: 0.5,
                     sync: false,
                 },
             },
@@ -77,12 +57,7 @@ const ParticleBackground = () => {
                 type: "circle",
             },
             size: {
-                value: { min: 1, max: 3 },
-                animation: {
-                    enable: true,
-                    speed: 2,
-                    sync: false,
-                },
+                value: { min: 1, max: 2 },
             },
         },
         detectRetina: true,
@@ -93,7 +68,7 @@ const ParticleBackground = () => {
             <Particles
                 id="tsparticles"
                 options={options}
-                className="particle-canvas-global"
+                className="particle-canvas-global pointer-events-none"
             />
         </ParticlesProvider>
     );

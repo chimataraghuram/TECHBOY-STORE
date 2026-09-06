@@ -1,23 +1,25 @@
-import React, { useState, useEffect, useRef, Suspense } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import ProductCard from './ProductCard';
 import ComparisonModal from './ComparisonModal';
-import QuickViewModal from './QuickViewModal';
 import PriceAlertModal from './PriceAlertModal';
-import FilterSidebar from './FilterSidebar';
 import { useAuth } from '../context/AuthContext';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import localPhonesData from '../data/phones.json';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
+const BRANDS = ["All", "Samsung", "OnePlus", "iQOO", "Nothing", "Xiaomi", "Realme", "Motorola"];
 
 const ProductCardSkeleton = () => (
-    <div className="product-card skeleton-card">
-        <div className="skeleton-img-placeholder shimmer-bg"></div>
-        <div className="skeleton-info">
-            <div className="skeleton-line short shimmer-bg" style={{ marginBottom: '8px' }}></div>
-            <div className="skeleton-line long shimmer-bg" style={{ marginBottom: '16px', height: '20px' }}></div>
-            <div className="skeleton-line medium shimmer-bg" style={{ marginBottom: '10px' }}></div>
-            <div className="skeleton-line short shimmer-bg"></div>
+    <div className="bg-[#111118] border border-white/5 rounded-xl h-[340px] animate-pulse p-3.5 flex flex-col">
+        <div className="w-full h-[160px] bg-white/5 rounded-lg mb-3"></div>
+        <div className="w-1/3 h-2.5 bg-white/8 rounded mb-1.5"></div>
+        <div className="w-3/4 h-3.5 bg-white/8 rounded mb-3"></div>
+        <div className="w-1/2 h-4 bg-white/8 rounded mb-auto"></div>
+        <div className="flex gap-2 mt-3 pt-3 border-t border-white/5">
+            <div className="w-8 h-8 bg-white/8 rounded-lg"></div>
+            <div className="w-8 h-8 bg-white/8 rounded-lg"></div>
+            <div className="flex-1 h-8 bg-white/8 rounded-lg"></div>
         </div>
     </div>
 );
@@ -28,186 +30,53 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     const [loading, setLoading] = useState(true);
     const [compareList, setCompareList] = useState([]);
     const [isCompModalOpen, setIsCompModalOpen] = useState(false);
-    const [activeViewProduct, setActiveViewProduct] = useState(null);
     const [priceAlertProduct, setPriceAlertProduct] = useState(null);
-    const [displayLimit, setDisplayLimit] = useState(12);
-    const [shuffleSeed, setShuffleSeed] = useState(0);
+    const [activeBrand, setActiveBrand] = useState("All");
 
     const { user } = useAuth();
 
-    // Advanced Filtering States
-    const [selectedBrands, setSelectedBrands] = useState([]);
-    const [minPrice, setMinPrice] = useState(0);
-    const [maxPrice, setMaxPrice] = useState(150000);
-    const [sortBy, setSortBy] = useState("featured");
-
-    // Debounced search term for grid filters (prevents laggy re-renders on keystroke)
-    const [debouncedSearch, setDebouncedSearch] = useState(searchTerm);
-
-    useEffect(() => {
-        const handler = setTimeout(() => {
-            setDebouncedSearch(searchTerm);
-            setDisplayLimit(12); // Reset limit on search
-        }, 300);
-        return () => clearTimeout(handler);
-    }, [searchTerm]);
-
-    // One stable mount effect to load data
     useEffect(() => {
         let mounted = true;
-        
         const load = async () => {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 3000);
-            
             try {
-                const res = await fetch(`${API_BASE_URL}/products/?limit=1000`, { signal: controller.signal });
-                clearTimeout(timeoutId);
+                const res = await fetch(`${API_BASE_URL}/products/?limit=100`);
                 const data = await res.json();
                 if (mounted) {
                     const productsList = data.results || data;
                     if (productsList && productsList.length > 0) {
                         setProducts(productsList);
-                        const highPrice = Math.max(...productsList.map(p => p.price));
-                        setMaxPrice(highPrice);
                     } else {
                         throw new Error("Empty API results");
                     }
                 }
             } catch (err) {
-                console.warn("Fetch failed, falling back to local JSON database", err);
-                if (mounted) {
-                    setProducts(localPhonesData);
-                    const highPrice = Math.max(...localPhonesData.map(p => p.price));
-                    setMaxPrice(highPrice);
-                }
+                console.warn("Fetch failed, falling back to local JSON", err);
+                if (mounted) setProducts(localPhonesData);
             } finally {
-                // Keep loader visible for a small window to make transition smooth
-                setTimeout(() => {
-                    if (mounted) {
-                        setLoading(false);
-                    }
-                }, 800);
+                if (mounted) setLoading(false);
             }
         };
-        
         load();
-        return () => { 
-            mounted = false; 
-        };
+        return () => { mounted = false; };
     }, []);
 
-    // Auto-scroll when search becomes active
     useEffect(() => {
-        if (searchTerm && searchTerm.length > 1) {
-            const el = document.getElementById('products');
-            if (el) {
-                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+        let result = [...products];
+        
+        if (activeBrand !== "All") {
+            result = result.filter(p => p.brand?.toLowerCase() === activeBrand.toLowerCase());
         }
-    }, [searchTerm]);
 
-    const highestPrice = products.length > 0 ? Math.max(...products.map(p => p.price)) : 150000;
-    const availableBrands = [...new Set(products.map(p => p.brand).filter(b => b))].sort();
-
-    const isPureAll = !searchTerm && selectedBrands.length === 0 && minPrice === 0 && maxPrice === highestPrice;
-
-    const allFilterRandomized = React.useMemo(() => {
-        if (isPureAll && filteredProducts.length > 0) {
-            // Using a seeded approach or just random based on shuffleSeed
-            // Math.random() works well enough here since we want completely new ones
-            const shuffled = [...filteredProducts].sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, 10);
-        }
-        return [];
-    }, [filteredProducts, shuffleSeed, isPureAll]);
-
-    const workerRef = useRef(null);
-    const [workerSupported, setWorkerSupported] = useState(true);
-
-    // Initialize Web Worker
-    useEffect(() => {
-        try {
-            workerRef.current = new Worker(new URL('../workers/filter.worker.js', import.meta.url), { type: 'module' });
-            workerRef.current.onmessage = (e) => {
-                setFilteredProducts(e.data.filteredProducts || []);
-                setDisplayLimit(12);
-            };
-        } catch (err) {
-            console.warn("Web Worker is not supported in this browser environment. Falling back to main-thread filtering.", err);
-            setWorkerSupported(false);
-        }
-        return () => {
-            if (workerRef.current) {
-                workerRef.current.terminate();
-            }
-        };
-    }, []);
-
-    // Local filtering fallback logic (exact match of worker logic)
-    const localFilterProducts = (payload) => {
-        const { products, debouncedSearch, selectedBrands, minPrice, maxPrice, sortBy } = payload;
-        let filtered = [...(products || [])];
-        const term = (debouncedSearch || "").toLowerCase().trim();
-
-        if (term) {
-            filtered = filtered.filter(p => 
-                (p.name && p.name.toLowerCase().includes(term)) || 
-                (p.category && p.category.toLowerCase().includes(term)) ||
-                (p.tag && p.tag.toLowerCase().includes(term)) ||
-                (p.description && p.description.toLowerCase().includes(term))
+        if (searchTerm) {
+            const term = searchTerm.toLowerCase();
+            result = result.filter(p => 
+                p.name?.toLowerCase().includes(term) || 
+                p.brand?.toLowerCase().includes(term)
             );
         }
 
-        if (selectedBrands && selectedBrands.length > 0) {
-            filtered = filtered.filter(p => p.brand && selectedBrands.includes(p.brand));
-        }
-
-        if (minPrice !== undefined && maxPrice !== undefined) {
-            filtered = filtered.filter(p => p.price >= minPrice && p.price <= maxPrice);
-        }
-
-        if (sortBy === 'price_asc') {
-            filtered.sort((a, b) => a.price - b.price);
-        } else if (sortBy === 'price_desc') {
-            filtered.sort((a, b) => b.price - a.price);
-        } else if (sortBy === 'rating') {
-            filtered.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-        }
-
-        return filtered;
-    };
-
-    // Dispatch to Web Worker or run local filtering fallback
-    useEffect(() => {
-        if (products.length === 0) {
-            setFilteredProducts([]);
-            return;
-        }
-
-        const payload = {
-            products, 
-            debouncedSearch, 
-            selectedBrands, 
-            minPrice, 
-            maxPrice, 
-            sortBy
-        };
-
-        if (workerSupported && workerRef.current) {
-            try {
-                workerRef.current.postMessage(payload);
-            } catch (err) {
-                console.warn("Failed to communicate with Web Worker. Falling back to local filtering.", err);
-                const localResult = localFilterProducts(payload);
-                setFilteredProducts(localResult);
-            }
-        } else {
-            const localResult = localFilterProducts(payload);
-            setFilteredProducts(localResult);
-            setDisplayLimit(12); // Reset limit on local fallback filtering
-        }
-    }, [products, debouncedSearch, selectedBrands, minPrice, maxPrice, sortBy, workerSupported]);
+        setFilteredProducts(result);
+    }, [products, activeBrand, searchTerm]);
 
     const handleCompare = (product) => {
         setCompareList(prev => {
@@ -219,137 +88,83 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     };
 
     return (
-        <m.section 
-            id="products" 
-            className="store-section"
-            onViewportEnter={() => {
-                if (isPureAll) {
-                    setShuffleSeed(prev => prev + 1);
-                }
-            }}
-            viewport={{ once: false, margin: "-100px" }}
-        >
-            <div className="container">
-                <div className="section-header text-center">
-
-                    <m.h2 
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        viewport={{ once: true }}
-                        className="section-title text-glow-premium section-title-pill"
-                    >Premium Smartphone <span className="text-gradient">Collection</span></m.h2>
-                    <m.p 
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                        viewport={{ once: true }}
-                        className="section-subtitle"
-                    >Categorized by budget and performance. We do the research, you get the best deal.</m.p>
+        <section id="products" className="py-12 bg-[#0a0a0f]">
+            <div className="max-w-7xl mx-auto px-4 md:px-8">
+                
+                {/* Section Header */}
+                <div className="flex items-end justify-between mb-5">
+                    <div>
+                        <h2 className="text-xl font-bold text-white mb-1">Popular Smartphones</h2>
+                        <p className="text-gray-500 text-xs">Categorized by budget and performance.</p>
+                    </div>
+                    <button className="text-xs font-semibold text-gray-400 hover:text-white flex items-center gap-1 group">
+                        View All <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+                    </button>
                 </div>
 
-
+                {/* Brand Filters */}
+                <div className="flex overflow-x-auto pb-3 mb-6 gap-2 hide-scrollbar">
+                    {BRANDS.map(brand => (
+                        <button
+                            key={brand}
+                            onClick={() => setActiveBrand(brand)}
+                            className={`px-4 py-1.5 rounded-full text-[11px] font-semibold whitespace-nowrap transition-all border ${activeBrand === brand ? 'bg-red-600 text-white border-red-500' : 'bg-white/5 text-gray-400 border-white/5 hover:bg-white/10 hover:text-white'}`}
+                        >
+                            {brand}
+                        </button>
+                    ))}
+                </div>
 
                 {searchTerm && (
-                    <div className="search-results-info">
-                        <h3>Showing {loading ? '...' : filteredProducts.length} results for "<span className="text-gradient">{searchTerm}</span>"</h3>
-                        {!loading && filteredProducts.length > 0 && <p>Found the best tech matches for your query.</p>}
+                    <div className="mb-5 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+                        <p className="text-white text-sm">Showing results for <span className="text-red-500 font-bold">"{searchTerm}"</span></p>
                     </div>
                 )}
 
-                <div className="store-layout" style={{ marginTop: '40px' }}>
-                    <div>
-                        <FilterSidebar 
-                            brands={availableBrands}
-                            selectedBrands={selectedBrands}
-                            setSelectedBrands={setSelectedBrands}
-                            minPrice={minPrice}
-                            setMinPrice={setMinPrice}
-                            maxPrice={maxPrice}
-                            setMaxPrice={setMaxPrice}
-                            highestPrice={highestPrice}
-                            sortBy={sortBy}
-                            setSortBy={setSortBy}
-                            onClearFilters={() => {
-                                setSelectedBrands([]);
-                                setMinPrice(0);
-                                setMaxPrice(highestPrice);
-                                setSortBy("featured");
-                            }}
-                        />
-                    </div>
-
+                {/* Product Grid - 4 columns desktop matching reference */}
+                <div className="grid grid-cols-1 min-[420px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {loading ? (
-                        <div className="product-grid">
-                            {[...Array(6)].map((_, idx) => (
-                                <ProductCardSkeleton key={idx} />
-                            ))}
-                        </div>
+                        [...Array(8)].map((_, idx) => <ProductCardSkeleton key={idx} />)
+                    ) : filteredProducts.length > 0 ? (
+                        filteredProducts.slice(0, 8).map((product, idx) => (
+                            <ProductCard 
+                                key={product.id} 
+                                product={product} 
+                                onCompare={handleCompare}
+                                isComparing={compareList.some(p => p.id === product.id)}
+                                onPriceAlert={(p, rect) => setPriceAlertProduct({ product: p, rect })}
+                                index={idx}
+                            />
+                        ))
                     ) : (
-                        <div className="product-grid">
-                            {(isPureAll ? allFilterRandomized : filteredProducts.slice(0, displayLimit)).map((product, idx) => (
-                                <ProductCard 
-                                    key={product.id} 
-                                    product={product} 
-                                    onCompare={handleCompare}
-                                    onOpenCompare={() => setIsCompModalOpen(true)}
-                                    onView={(p, rect) => setActiveViewProduct({ product: p, rect })}
-                                    onPriceAlert={(p, rect) => setPriceAlertProduct({ product: p, rect })}
-                                    isComparing={compareList.some(p => p.id === product.id)}
-                                    index={idx}
-                                    searchTerm={debouncedSearch}
-                                />
-                            ))}
-                        </div>
-                    )}
-                    {!loading && filteredProducts.length === 0 && (
-                        <div className="no-results-premium glass-card">
-                            <div className="no-results-content">
-                                <span className="warning-icon">⚠️</span>
-                                <h3>No matches found</h3>
-                                <p>We couldn't find any products matching "{searchTerm}". Try a different category or name.</p>
-                                <button className="secondary-btn mini clear-results-btn" onClick={() => {
-                                    onSearch('');
-                                    setDebouncedSearch('');
-                                }}>
-                                    Clear Search
-                                </button>
-                            </div>
+                        <div className="col-span-full py-12 text-center bg-white/5 rounded-xl border border-white/5">
+                            <span className="text-2xl mb-3 block">🔍</span>
+                            <h3 className="text-base font-bold text-white mb-1">No smartphones found</h3>
+                            <p className="text-gray-500 text-xs">Try adjusting your filters or search term.</p>
                         </div>
                     )}
                 </div>
 
-                <div>
-                    <AnimatePresence>
-                        {isCompModalOpen && (
-                            <ComparisonModal products={compareList} onClose={() => setIsCompModalOpen(false)} />
-                        )}
-                    </AnimatePresence>
+                <AnimatePresence>
+                    {isCompModalOpen && (
+                        <ComparisonModal products={compareList} onClose={() => setIsCompModalOpen(false)} />
+                    )}
+                </AnimatePresence>
 
-                    <AnimatePresence>
-                        {activeViewProduct && (
-                            <QuickViewModal 
-                                product={activeViewProduct.product} 
-                                triggerRect={activeViewProduct.rect}
-                                onClose={() => setActiveViewProduct(null)} 
-                            />
-                        )}
-                    </AnimatePresence>
+                <AnimatePresence>
+                    {priceAlertProduct && (
+                        <PriceAlertModal
+                            isOpen={!!priceAlertProduct}
+                            onClose={() => setPriceAlertProduct(null)}
+                            product={priceAlertProduct.product}
+                            triggerRect={priceAlertProduct.rect}
+                            user={user}
+                        />
+                    )}
+                </AnimatePresence>
 
-                    <AnimatePresence>
-                        {priceAlertProduct && (
-                            <PriceAlertModal
-                                isOpen={!!priceAlertProduct}
-                                onClose={() => setPriceAlertProduct(null)}
-                                product={priceAlertProduct.product}
-                                triggerRect={priceAlertProduct.rect}
-                                user={user}
-                            />
-                        )}
-                    </AnimatePresence>
-                </div>
             </div>
-        </m.section>
+        </section>
     );
 };
 

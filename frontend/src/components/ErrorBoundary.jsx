@@ -20,11 +20,11 @@ class ErrorBoundary extends React.Component {
       return (
         <div style={{ padding: '20px', background: '#111', color: '#ff3333', minHeight: '100vh', fontFamily: 'monospace' }}>
           <h2>Something went wrong.</h2>
-          <details style={{ whiteSpace: 'pre-wrap' }}>
+          <div style={{ whiteSpace: 'pre-wrap', marginTop: '10px', padding: '10px', background: '#222', border: '1px solid #444', color: '#ffaaaa' }}>
             {this.state.error && this.state.error.toString()}
             <br />
             {this.state.errorInfo && this.state.errorInfo.componentStack}
-          </details>
+          </div>
           <button 
             onClick={() => window.location.reload()}
             style={{ marginTop: '20px', padding: '10px 20px', background: '#ff3333', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}

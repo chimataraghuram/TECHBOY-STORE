@@ -7,14 +7,11 @@ import { useAuth } from '../context/AuthContext';
 import AuthDropdown from './AuthDropdown';
 import NotificationSystem from './NotificationSystem';
 import UserDashboard from './UserDashboard';
-
-const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
-
-const NAV_SECTIONS = ['home', 'products', 'trends', 'footer'];
+import SearchModal from './SearchModal';
 
 const getNavbarScrollOffset = () => {
     const navbar = document.querySelector('.navbar');
-    if (!navbar) return 120;
+    if (!navbar) return 80;
     return navbar.getBoundingClientRect().bottom + 12;
 };
 
@@ -26,10 +23,11 @@ const scrollToSection = (sectionId) => {
     window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
 };
 
-const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
+const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentView }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 1200);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+    const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
 
     const { user, login, authLoading } = useAuth();
     const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
@@ -37,210 +35,139 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm }) => {
 
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth < 1200);
-            if (window.innerWidth >= 1200) {
-                setIsMenuOpen(false);
-            }
+            setIsMobile(window.innerWidth < 1024);
+            if (window.innerWidth >= 1024) setIsMenuOpen(false);
         };
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() => {
-        let ticking = false;
-
-        const updateActiveSection = () => {
-            const offset = getNavbarScrollOffset();
-            let current = NAV_SECTIONS[0];
-
-            for (const id of NAV_SECTIONS) {
-                const el = document.getElementById(id);
-                if (!el) continue;
-                if (el.getBoundingClientRect().top <= offset) {
-                    current = id;
-                }
-            }
-
-            setActiveSection(current);
-            ticking = false;
-        };
-
-        const onScroll = () => {
-            if (!ticking) {
-                ticking = true;
-                requestAnimationFrame(updateActiveSection);
-            }
-        };
-
-        updateActiveSection();
-        window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', updateActiveSection, { passive: true });
-
-        return () => {
-            window.removeEventListener('scroll', onScroll);
-            window.removeEventListener('resize', updateActiveSection);
-        };
-    }, []);
-
     const handleNavClick = useCallback((e, sectionId) => {
         e.preventDefault();
-        scrollToSection(sectionId);
-    }, []);
+        setIsMenuOpen(false);
+        if (sectionId === 'trackhub') {
+            setCurrentView('trackhub');
+        } else {
+            setCurrentView('home');
+            setTimeout(() => {
+                scrollToSection(sectionId);
+                setActiveSection(sectionId);
+            }, 100);
+        }
+    }, [setCurrentView]);
 
-    const handleSearchChange = (e) => {
-        onSearch(e.target.value);
-    };
+    const NAV_ITEMS = [
+        { id: 'home', label: 'Home' },
+        { id: 'products', label: 'Products' },
+        { id: 'trends', label: 'Trends' },
+        { id: 'trackhub', label: 'TrackHub' },
+        { id: 'about', label: 'About' }
+    ];
 
     return (
-        <nav className="navbar" aria-label="Main navigation">
-
-            <div className="navbar-content">
-                {/* LOGO AREA - LEFT */}
-                <div className="navbar-left-container" style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                    <div className="navbar-left pill-wrapper">
-                        <button 
-                            className="mobile-menu-toggle" 
-                            onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            aria-label="Toggle menu"
-                            aria-expanded={isMenuOpen}
-                        >
-                            {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
-                        </button>
-                        <a href="/" className="logo-container" onClick={(e) => {
-                            e.preventDefault();
-                            scrollToSection('home');
-                        }}>
-                            <img src={logo} alt="TECHBOY STORE" className="logo-img" />
-                            <span className="logo-text jelly-text">TECHBOY STORE</span>
-                        </a>
-                    </div>
+        <nav className="navbar fixed top-3 left-0 right-0 z-40 px-4" aria-label="Main navigation">
+            <div className="max-w-7xl mx-auto glass rounded-full flex items-center justify-between px-5 py-2.5 shadow-lg">
+                
+                {/* LOGO - LEFT */}
+                <div className="flex items-center gap-3">
+                    <button 
+                        className="lg:hidden text-white hover:text-red-500 transition-colors" 
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        aria-label="Toggle menu"
+                    >
+                        {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                    </button>
+                    <a href="/" className="flex items-center gap-2.5" onClick={(e) => handleNavClick(e, 'home')}>
+                        <img src={logo} alt="TECHBOY STORE" className="h-8 w-8 rounded-full border border-red-500/60 object-cover" />
+                        <div className="hidden sm:block leading-none">
+                            <span className="text-white font-bold tracking-wider text-sm block">TECHBOY <span className="text-red-500">STORE</span></span>
+                            <span className="text-[9px] text-red-500/80 font-semibold tracking-wider">SMARTER CHOICES. BETTER DEALS.</span>
+                        </div>
+                    </a>
                 </div>
 
-                {/* NAVIGATION - CENTER */}
-                {!isMobile ? (
-                    <div className="navbar-center-container" style={{ display: 'flex', justifyContent: 'center' }}>
-                        <div className="navbar-center pill-wrapper">
-                            <div className="nav-links">
-                                {NAV_SECTIONS.map(sec => {
-                                    const isActive = activeSection === sec;
-                                    let label = 'Home';
-                                    if (sec === 'products') label = 'Products';
-                                    else if (sec === 'trends') label = 'Trends 🔥';
-                                    else if (sec === 'footer') label = 'Contact';
-
-                                    return (
-                                        <a 
-                                            key={sec}
-                                            href={`#${sec}`} 
-                                            className={`nav-link ${isActive ? 'active' : ''}`}
-                                            onClick={(e) => handleNavClick(e, sec)}
-                                        >
-                                            {label}
-                                        </a>
-                                    );
-                                })}
-                            </div>
-                            <div className="nav-divider" aria-hidden="true"></div>
-                            <div className="search-bar" role="search">
-                                <Search size={18} className="search-icon" />
-                                <input
-                                    type="text"
-                                    className="search-input"
-                                    placeholder="Search 'gaming phones under 40k'..."
-                                    value={searchTerm}
-                                    onChange={handleSearchChange}
-                                    aria-label="Search products"
-                                />
-                                {searchTerm && (
-                                    <button className="clear-search-btn" onClick={(e) => {
-                                        e.stopPropagation();
-                                        onSearch('');
-                                    }} title="Clear Search">
-                                        <X size={14} />
-                                    </button>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                ) : (
-                    <AnimatePresence>
-                        {isMenuOpen && (
-                            <m.div 
-                                initial={{ opacity: 0, y: -20, scale: 0.95 }}
-                                animate={{ opacity: 1, y: 0, scale: 1 }}
-                                exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                                className="navbar-center active mobile-drawer"
+                {/* NAV LINKS - CENTER */}
+                <div className="hidden lg:flex items-center gap-7">
+                    {NAV_ITEMS.map(item => {
+                        const isActive = currentView === 'trackhub' ? item.id === 'trackhub' : activeSection === item.id;
+                        return (
+                            <a 
+                                key={item.id}
+                                href={`#${item.id}`} 
+                                className={`text-[13px] font-semibold transition-all relative pb-1 ${isActive ? 'text-white' : 'text-gray-400 hover:text-white'}`}
+                                onClick={(e) => handleNavClick(e, item.id)}
                             >
-                                <div className="nav-links mobile">
-                                    {NAV_SECTIONS.map(sec => {
-                                        const isActive = activeSection === sec;
-                                        let label = 'Home';
-                                        if (sec === 'products') label = 'Products';
-                                        else if (sec === 'trends') label = 'Trends 🔥';
-                                        else if (sec === 'footer') label = 'Contact';
-
-                                        return (
-                                            <a 
-                                                key={sec}
-                                                href={`#${sec}`} 
-                                                className={`nav-link ${isActive ? 'active' : ''}`} 
-                                                onClick={(e) => {
-                                                    setIsMenuOpen(false);
-                                                    handleNavClick(e, sec);
-                                                }}
-                                            >
-                                                {label}
-                                            </a>
-                                        );
-                                    })}
-                                </div>
-                                <div className="search-bar mobile">
-                                    <Search size={18} className="search-icon" />
-                                    <input
-                                        type="text"
-                                        className="search-input"
-                                        placeholder="Search 'gaming under 40k'..."
-                                        value={searchTerm}
-                                        onChange={handleSearchChange}
-                                    />
-                                    {searchTerm && (
-                                        <button className="clear-search-btn" onClick={() => onSearch('')} title="Clear Search">
-                                            <X size={14} />
-                                        </button>
-                                    )}
-                                </div>
-                            </m.div>
-                        )}
-                    </AnimatePresence>
-                )}
+                                {item.label}
+                                {isActive && (
+                                    <m.div layoutId="navIndicator" className="absolute -bottom-0.5 left-0 right-0 h-[2px] bg-red-500 rounded-full" />
+                                )}
+                            </a>
+                        );
+                    })}
+                </div>
 
                 {/* ACTIONS - RIGHT */}
-                <div className="navbar-right-container" style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <div className="navbar-right pill-wrapper">
-                        <button onClick={onChatToggle} className="ai-pill-btn-standalone">
-                            <Bot size={18} className="ai-pill-icon" />
-                            <span className="ai-pill-text">TECHBOY AI</span>
-                        </button>
+                <div className="flex items-center gap-2 lg:gap-3">
+                    <button 
+                        className="text-gray-400 hover:text-white transition-colors p-1.5"
+                        onClick={() => setIsSearchModalOpen(true)}
+                        aria-label="Search"
+                    >
+                        <Search size={18} />
+                    </button>
 
-                        <NotificationSystem />
+                    <button 
+                        onClick={onChatToggle} 
+                        className="hidden md:flex items-center gap-1.5 text-[11px] font-bold bg-white/5 border border-white/10 hover:border-red-500/40 px-3 py-1.5 rounded-full transition-all text-gray-300 hover:text-white"
+                    >
+                        <Bot size={14} className="text-red-500" />
+                        TechBoy AI
+                    </button>
+
+                    <NotificationSystem />
 
                     {user ? (
-                        <AuthDropdown 
-                            onWatchlistClick={() => setIsWatchlistOpen(true)} 
-                            onDashboardClick={() => setIsDashboardOpen(true)}
-                        />
+                        <AuthDropdown onViewChange={setCurrentView} />
                     ) : (
-                        <button className="pill-auth-btn" onClick={login} disabled={authLoading}>
-                            {authLoading ? 'CONNECTING...' : 'SIGN UP'}
+                        <button className="text-[11px] font-bold bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-full transition-all" onClick={login} disabled={authLoading}>
+                            {authLoading ? '...' : 'Sign Up'}
                         </button>
                     )}
-                    </div>
                 </div>
             </div>
 
+            {/* Mobile Menu */}
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <m.div 
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="lg:hidden absolute top-full left-4 right-4 mt-2 glass rounded-2xl p-3 flex flex-col shadow-2xl border border-white/10"
+                    >
+                        {NAV_ITEMS.map(item => (
+                            <a 
+                                key={item.id}
+                                href={`#${item.id}`} 
+                                className="text-white text-sm font-medium px-4 py-3 hover:bg-white/5 rounded-lg transition-colors"
+                                onClick={(e) => handleNavClick(e, item.id)}
+                            >
+                                {item.label}
+                            </a>
+                        ))}
+                    </m.div>
+                )}
+            </AnimatePresence>
+
             <WatchlistModal isOpen={isWatchlistOpen} onClose={() => setIsWatchlistOpen(false)} />
             <UserDashboard isOpen={isDashboardOpen} onClose={() => setIsDashboardOpen(false)} />
+            <SearchModal 
+                isOpen={isSearchModalOpen} 
+                onClose={() => setIsSearchModalOpen(false)}
+                onSelectResult={(product) => {
+                    console.log('Selected:', product);
+                }}
+            />
         </nav>
     );
 };

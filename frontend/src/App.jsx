@@ -16,12 +16,16 @@ const TechBoyTrends = lazy(() => import('./components/TechBoyTrends'))
 const Footer = lazy(() => import('./components/Footer'))
 
 const TechAdvisorModal = lazy(() => import('./components/TechAdvisorModal'))
+const TrackHub = lazy(() => import('./components/TrackHub'))
+const HowItWorks = lazy(() => import('./components/HowItWorks'))
+const Benefits = lazy(() => import('./components/Benefits'))
 
 function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isAdvisorOpen, setIsAdvisorOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [showIntro, setShowIntro] = useState(true);
+  const [currentView, setCurrentView] = useState('home'); // 'home' | 'trackhub'
 
   React.useEffect(() => {
     if (showIntro) return;
@@ -63,7 +67,7 @@ function App() {
       observer.disconnect();
       mutationObserver.disconnect();
     };
-  }, [showIntro]);
+  }, [showIntro, currentView]);
 
   return (
     <AuthProvider>
@@ -74,7 +78,13 @@ function App() {
 
       {!showIntro && (
         <>
-          <Navbar onChatToggle={() => setIsChatOpen(!isChatOpen)} onSearch={setSearchTerm} searchTerm={searchTerm} />
+          <Navbar 
+            onChatToggle={() => setIsChatOpen(!isChatOpen)} 
+            onSearch={setSearchTerm} 
+            searchTerm={searchTerm} 
+            currentView={currentView}
+            setCurrentView={setCurrentView}
+          />
           {createPortal(
             <Suspense fallback={null}>
               <ParticleBackground />
@@ -88,30 +98,42 @@ function App() {
             className="app-container"
           >
           <main>
-            <Hero 
-              onOpenAdvisor={() => setIsAdvisorOpen(true)} 
-              searchTerm={searchTerm} 
-              onSearch={setSearchTerm} 
-            />
-            <StoreSection searchTerm={searchTerm} onSearch={setSearchTerm} />
-            
-            <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '300px', margin: '40px 0', borderRadius: '16px'}}></div>}>
-              <TechBoyTrends />
-            </Suspense>
+            {currentView === 'home' ? (
+              <>
+                <Hero 
+                  onOpenAdvisor={() => setIsAdvisorOpen(true)} 
+                  searchTerm={searchTerm} 
+                  onSearch={setSearchTerm} 
+                  setCurrentView={setCurrentView}
+                />
+                <StoreSection searchTerm={searchTerm} onSearch={setSearchTerm} />
+                
+                <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '300px', margin: '40px 0', borderRadius: '16px'}}></div>}>
+                  <TechBoyTrends />
+                </Suspense>
 
-            <div className="container">
-              <StatsStrip />
-            </div>
+                <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '300px', margin: '40px 0', borderRadius: '16px'}}></div>}>
+                  <HowItWorks />
+                </Suspense>
+
+                <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '150px', margin: '40px 0', borderRadius: '16px'}}></div>}>
+                  <Benefits />
+                </Suspense>
+              </>
+            ) : currentView === 'trackhub' ? (
+              <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '500px', margin: '120px 20px', borderRadius: '16px'}}></div>}>
+                <TrackHub />
+              </Suspense>
+            ) : null}
           </main>
           
           <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '200px'}}></div>}>
-            <Footer />
+            <Footer setCurrentView={setCurrentView} />
           </Suspense>
           </m.div>
         </>
       )}
 
-      {/* ── Chat Portal & Modals: rendered directly in <body> so position:fixed always works ── */}
       {!showIntro && createPortal(
         <AnimatePresence>
           {isChatOpen && (
