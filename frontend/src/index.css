@@ -1,22 +1,33 @@
 @import "tailwindcss";
+
+/* ============================================================
+   TECHBOY STORE — Premium Design Tokens (2026)
+   ============================================================ */
 :root {
-  --bg-primary: #060101;
-  --bg-secondary: #0b0101;
-  --bg-glass: rgba(15, 3, 3, 0.6);
-  --bg-glass-strong: rgba(22, 4, 4, 0.85);
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --accent-primary: #ff2a2a;
-  --accent-secondary: #ff7a00;
-  --accent-rgb-primary: 255, 42, 42;
-  --accent-rgb-secondary: 255, 122, 0;
-  --primary-glow: rgba(255, 42, 42, 0.4);
-  --secondary-glow: rgba(255, 122, 0, 0.35);
-  --border-glass: rgba(255, 122, 0, 0.12);
-  --border-glass-hover: rgba(255, 42, 42, 0.3);
+  --bg-primary: #050505;
+  --bg-secondary: #0b0b0f;
+  --bg-panel: #0e0e14;
+  --bg-glass: rgba(14, 14, 20, 0.6);
+  --bg-glass-strong: rgba(16, 16, 22, 0.85);
+  --text-primary: #f6f7f9;
+  --text-secondary: #9aa0ab;
+
+  --accent-primary: #ff1f3d;
+  --accent-secondary: #e60023;
+  --accent-rgb-primary: 255, 31, 61;
+  --accent-rgb-secondary: 230, 0, 35;
+  --primary-glow: rgba(255, 31, 61, 0.35);
+  --secondary-glow: rgba(230, 0, 35, 0.25);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-glass-hover: rgba(255, 31, 61, 0.35);
+
   --font-main: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
-  --jelly-btn-grad: linear-gradient(135deg, #ff2a2a 0%, #ff7a00 100%);
-  --jelly-shadow: 0 8px 24px rgba(255, 42, 42, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.2);
+
+  --jelly-btn-grad: linear-gradient(135deg, #ff3d55 0%, #e60023 60%, #b3001b 100%);
+  --jelly-shadow: 0 8px 24px rgba(230, 0, 35, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+
+  --radius-card: 1.25rem;
+  --shadow-card: 0 20px 50px -20px rgba(0, 0, 0, 0.7);
 }
 
 * {
@@ -26,7 +37,7 @@
 html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  scrollbar-color: var(--accent-primary) #050000;
+  scrollbar-color: #e60023 #0a0a0a;
 }
 
 body {
@@ -34,14 +45,11 @@ body {
   padding: 0;
   font-family: var(--font-main);
   background-color: var(--bg-primary);
-  background-image:
-    radial-gradient(circle at 10% 15%, rgba(255, 42, 42, 0.12) 0%, transparent 35%),
-    radial-gradient(circle at 90% 85%, rgba(255, 122, 0, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, rgba(255, 0, 0, 0.03) 0%, transparent 60%);
-  background-attachment: fixed;
   color: var(--text-primary);
   min-height: 100vh;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 /* Scrollbar */
@@ -51,110 +59,28 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #050000;
+  background: #080808;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+  background: linear-gradient(180deg, #ff3d55, #c4001f);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-primary);
-  box-shadow: 0 0 10px var(--accent-primary);
+  background: #ff2038;
+  box-shadow: 0 0 10px rgba(255, 32, 56, 0.7);
 }
 
-/* Utilities */
-.glass {
-  background: var(--bg-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+::selection {
+  background: rgba(255, 31, 61, 0.35);
+  color: #fff;
 }
 
-.glass-card {
-  background: linear-gradient(135deg, rgba(255, 42, 42, 0.07) 0%, rgba(255, 122, 0, 0.03) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-glass);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
-}
-
-.glass-card:hover {
-  transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 12px 30px -10px var(--primary-glow), 0 0 15px -3px var(--secondary-glow);
-  border-color: var(--border-glass-hover);
-}
-
-.jelly-btn {
-  position: relative;
-  background: var(--accent-primary);
-  color: white;
-  border: none;
-  border-radius: 50px;
-  padding: 12px 28px;
-  font-weight: 700;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: var(--jelly-shadow);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.jelly-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--jelly-btn-grad);
-  border-radius: inherit;
-  pointer-events: none;
-}
-
-.jelly-btn:hover {
-  transform: scale(1.08) translateY(-2px);
-  box-shadow: 0 12px 40px rgba(255, 0, 0, 0.6), inset 0 4px 10px rgba(255, 255, 255, 0.6), inset 0 -4px 10px rgba(0, 0, 0, 0.4);
-  background: #ff1a1a;
-}
-
-.jelly-btn:active {
-  transform: scale(0.95);
-  box-shadow: 0 4px 10px rgba(255, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.4), inset 0 -2px 4px rgba(0, 0, 0, 0.4);
-}
-
-.text-gradient {
-  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(0 0 15px rgba(255, 42, 42, 0.3));
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 clamp(16px, 4vw, 40px);
-  width: 100%;
-}
-
-button {
-  cursor: pointer;
-  border: none;
-  font-family: var(--font-main);
-  transition: all 0.3s ease;
-}
-
-h1,
-h2,
-h3,
-h4 {
+/* ============================================================
+   Base typography
+   ============================================================ */
+h1, h2, h3, h4 {
   margin: 0;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -166,13 +92,192 @@ a {
   transition: color 0.2s;
 }
 
+button {
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-main);
+  transition: all 0.3s ease;
+}
+
+img {
+  max-width: 100%;
+}
+
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Watchlist Styles */
+/* ============================================================
+   Glass utilities (kept for modal / legacy components)
+   ============================================================ */
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.glass-card {
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.055), rgba(255, 31, 61, 0.035) 45%, rgba(10, 10, 12, 0.72));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-card);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px -18px rgba(255, 31, 61, 0.25), 0 0 18px -6px rgba(230, 0, 35, 0.2);
+  border-color: var(--border-glass-hover);
+}
+
+/* ============================================================
+   Buttons (legacy names kept alive for chat / 3D viewer)
+   ============================================================ */
+.jelly-btn {
+  position: relative;
+  background: var(--jelly-btn-grad);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 28px;
+  font-weight: 700;
+  font-size: 1rem;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: var(--jelly-shadow);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.jelly-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(230, 0, 35, 0.5);
+  filter: brightness(1.1);
+}
+
+.jelly-btn:active {
+  transform: scale(0.97);
+}
+
+.jelly-text {
+  background: linear-gradient(120deg, #ffffff 20%, #ff4d64 60%, #ff2038 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 18px rgba(255, 31, 61, 0.45));
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #ff3d55 0%, #e60023 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 14px rgba(255, 31, 61, 0.3));
+}
+
+.primary-btn, .jelly-btn {
+  background: var(--jelly-btn-grad) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  box-shadow: 0 14px 30px rgba(230, 0, 35, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+  z-index: 1;
+}
+
+.primary-btn::before, .jelly-btn::before {
+  z-index: -1 !important;
+}
+
+.secondary-btn {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: #fff !important;
+  z-index: 1;
+}
+
+.secondary-btn::before {
+  z-index: -1 !important;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
+  width: 100%;
+}
+
+/* ============================================================
+   Scroll reveal (driven by IntersectionObserver in App.jsx)
+   ============================================================ */
+section, .footer-section {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+section.animate-in, .footer-section.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero must never be hidden behind the reveal animation */
+#home {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  section, .footer-section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ============================================================
+   Keyframes
+   ============================================================ */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 6px rgba(255, 31, 61, 0.2), 0 0 12px rgba(230, 0, 35, 0.12); }
+  50% { box-shadow: 0 0 18px rgba(255, 31, 61, 0.55), 0 0 30px rgba(230, 0, 35, 0.28); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes tb-spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+.img-shimmer {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #101014 25%, #1c1c24 50%, #101014 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.shimmer-bg {
+  background: linear-gradient(90deg, #0d0d12 25%, #17171e 50%, #0d0d12 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+/* ============================================================
+   Watchlist (legacy quick-view support)
+   ============================================================ */
 .product-card-header {
   display: flex;
   justify-content: space-between;
@@ -200,67 +305,34 @@ a {
 }
 
 .watchlist-btn:hover {
-  background: rgba(255, 0, 0, 0.4);
+  background: rgba(255, 31, 61, 0.4);
   transform: scale(1.1);
 }
 
 .watchlist-btn.saved {
   color: var(--accent-primary);
-  background: rgba(255, 42, 42, 0.2);
+  background: rgba(255, 31, 61, 0.2);
   border-color: var(--accent-primary);
-  box-shadow: 0 0 10px rgba(255, 42, 42, 0.4);
+  box-shadow: 0 0 10px rgba(255, 31, 61, 0.4);
 }
 
-/* ── Keyframe Animations ── */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+/* ============================================================
+   Shared premium helpers
+   ============================================================ */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-@keyframes glow-pulse {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(255, 42, 42, 0.2), 0 0 10px rgba(255, 122, 0, 0.1);
-  }
-  50% {
-    box-shadow: 0 0 15px rgba(255, 42, 42, 0.6), 0 0 25px rgba(255, 122, 0, 0.3);
-  }
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
+.section-fallback {
+  background: var(--bg-panel);
 }
 
-.img-shimmer {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, #120303 25%, #2a0a0a 50%, #120303 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite linear;
-}
-
-/* ── Stacking Context Fixes to Prevent Gradient pseudo-elements from Hiding Button Text ── */
-.primary-btn, .jelly-btn {
-  background: transparent !important;
-  z-index: 1 !important;
-}
-
-.primary-btn::before, .jelly-btn::before {
-  z-index: -1 !important;
-}
-
-.secondary-btn {
-  z-index: 1 !important;
-}
-
-.secondary-btn::before {
-  z-index: -1 !important;
+.modal-fallback {
+  color: #9aa0ab;
+  font-family: var(--font-main);
 }

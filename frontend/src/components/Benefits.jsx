@@ -13,9 +13,9 @@ const features = [
 
 const Benefits = () => {
     return (
-        <section className="py-10 bg-[#0d0d12] border-t border-b border-white/5">
-            <div className="max-w-7xl mx-auto px-4 md:px-8">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
+        <section className="py-14 bg-[#0d0d12] border-t border-b border-white/5">
+            <div className="max-w-[1600px] mx-auto px-6 md:px-12 xl:px-16">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8 text-center">
                     {features.map((item, idx) => (
                         <m.div 
                             key={idx}
@@ -25,11 +25,11 @@ const Benefits = () => {
                             transition={{ duration: 0.3, delay: idx * 0.05 }}
                             viewport={{ once: true }}
                         >
-                            <div className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 mb-3 group-hover:bg-red-500 group-hover:text-white transition-colors duration-200">
-                                <item.icon size={18} />
+                            <div className="w-12 h-12 rounded-2xl bg-red-500/10 flex items-center justify-center text-red-500 mb-4 group-hover:bg-red-500 group-hover:text-white transition-colors duration-200 shadow-sm group-hover:shadow-[0_0_15px_rgba(239,68,68,0.4)]">
+                                <item.icon size={22} />
                             </div>
-                            <h4 className="text-white font-semibold text-[11px] mb-1">{item.title}</h4>
-                            <p className="text-gray-500 text-[10px] leading-relaxed">{item.desc}</p>
+                            <h4 className="text-white font-bold text-sm md:text-base mb-1.5">{item.title}</h4>
+                            <p className="text-gray-400 text-xs leading-relaxed">{item.desc}</p>
                         </m.div>
                     ))}
                 </div>

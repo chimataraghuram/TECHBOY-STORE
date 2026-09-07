@@ -10,7 +10,6 @@ import StoreSection from './components/StoreSection'
 const ChatPopup = lazy(() => import('./components/ChatPopup'))
 const ParticleBackground = lazy(() => import('./components/ParticleBackground'))
 import IntroScreen from './components/IntroScreen'
-import { StatsStrip } from './components/AnimationEngine'
 
 const TechBoyTrends = lazy(() => import('./components/TechBoyTrends'))
 const Footer = lazy(() => import('./components/Footer'))
@@ -23,7 +22,7 @@ function App() {
   const [isAdvisorOpen, setIsAdvisorOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [showIntro, setShowIntro] = useState(true);
-  const [currentView, setCurrentView] = useState('home'); // 'home' | 'trackhub'
+  const [currentView, setCurrentView] = useState('home');
 
   React.useEffect(() => {
     if (showIntro) return;
@@ -45,7 +44,7 @@ function App() {
 
     const observeElements = () => {
       const elementsToAnimate = document.querySelectorAll(
-        'section:not([data-observed]), .footer-section:not([data-observed]), .stats-strip-container:not([data-observed])'
+        'section:not([data-observed]), .footer-section:not([data-observed])'
       );
       elementsToAnimate.forEach(el => {
         el.setAttribute('data-observed', 'true');
@@ -105,11 +104,9 @@ function App() {
                   setCurrentView={setCurrentView}
                 />
                 <StoreSection searchTerm={searchTerm} onSearch={setSearchTerm} />
-                
                 <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '300px', margin: '40px 0', borderRadius: '16px'}}></div>}>
                   <TechBoyTrends />
                 </Suspense>
-
               </>
             ) : currentView === 'trackhub' ? (
               <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '500px', margin: '120px 20px', borderRadius: '16px'}}></div>}>
