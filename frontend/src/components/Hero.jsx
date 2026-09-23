@@ -4,7 +4,7 @@ import { Smartphone, Bell, Users, ShieldCheck, ArrowRight } from 'lucide-react';
 import { CountUp } from './AnimationEngine';
 
 const HeroPhone3D = lazy(() => import('./HeroPhone3D'));
-const appleIphone = '/images/phones/apple-iphone-16-pro-max.jpg';
+const appleIphone = '/images/phones/apple-iphone-16-pro-max.png';
 
 const STATS = [
     { icon: Smartphone, value: 500, suffix: '+', label: 'Smartphones' },
@@ -72,6 +72,71 @@ const Hero = ({ setCurrentView }) => {
                             Discover, compare and track verified smartphones with live price drops &amp; smart AI recommendations.
                         </m.p>
 
+                        {/* ── PHONE STAGE FOR MOBILE (Appears right under heading & subtitle) ── */}
+                        <div className="lg:hidden w-full my-4 flex justify-center items-center">
+                            <m.div
+                                className="relative w-full max-w-[340px] h-[260px] flex justify-center items-center"
+                                initial={{ opacity: 0, scale: 0.94 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.8, delay: 0.1 }}
+                            >
+                                {/* Glow core */}
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[220px] bg-[radial-gradient(circle,rgba(255,31,61,0.25),transparent_65%)] blur-[25px] pointer-events-none" />
+
+                                {/* Orbit rings */}
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[220px] rounded-full border border-red-500/20 pointer-events-none" />
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[160px] h-[160px] rounded-full border border-white/[0.08] pointer-events-none" style={{ animation: 'tb-spin-slow 30s linear infinite' }}>
+                                    <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-red-500 shadow-[0_0_10px_rgba(255,31,61,0.9)]" />
+                                </div>
+
+                                {/* Interactive 3D Phone or Transparent Fallback */}
+                                <Suspense fallback={
+                                    <img
+                                        src={appleIphone}
+                                        alt="Flagship smartphone"
+                                        className="relative z-10 w-[180px] h-auto object-contain drop-shadow-[0_20px_40px_rgba(255,31,61,0.3)]"
+                                    />
+                                }>
+                                    <HeroPhone3D className="absolute inset-0 z-10 w-full h-full" />
+                                </Suspense>
+
+                                {/* Floating product card — Mobile */}
+                                <m.a
+                                    href="#products"
+                                    onClick={(e) => { e.preventDefault(); goProducts(); }}
+                                    className="absolute -right-2 top-2 z-20 w-[140px] rounded-2xl border border-white/15 bg-[#0d0d13]/85 backdrop-blur-xl p-2.5 shadow-[0_12px_35px_rgba(0,0,0,0.7),0_0_20px_rgba(255,31,61,0.15)] group"
+                                    animate={{ y: [-4, 4, -4] }}
+                                    transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+                                >
+                                    <div className="flex items-start justify-between mb-1">
+                                        <svg className="w-4 h-4 text-white fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8.98-.2 1.92-.86 3.24-.76 1.66.13 2.85.76 3.62 1.94-3.27 1.96-2.72 6.02.5 7.24-.65 1.7-1.5 3.37-2.44 3.75zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                                        </svg>
+                                        <span className="flex items-center justify-center w-5 h-5 rounded-full bg-red-500/20 text-red-500">
+                                            <ArrowRight size={10} />
+                                        </span>
+                                    </div>
+                                    <p className="text-white font-bold text-xs leading-tight">iPhone 16 Pro</p>
+                                    <p className="text-gray-400 text-[9.5px] mt-0.5">Titanium Power</p>
+                                </m.a>
+
+                                {/* Floating price chip — Mobile */}
+                                <m.div
+                                    className="absolute -left-2 bottom-2 z-20 flex items-center gap-2 rounded-xl border border-white/15 bg-[#0d0d13]/85 backdrop-blur-xl px-2.5 py-1.5 shadow-[0_12px_30px_rgba(0,0,0,0.7)]"
+                                    animate={{ y: [4, -4, 4] }}
+                                    transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+                                >
+                                    <span className="flex items-center justify-center w-6 h-6 rounded-lg bg-green-500/15 border border-green-500/25">
+                                        <Bell size={11} className="text-green-400" />
+                                    </span>
+                                    <div className="leading-tight">
+                                        <p className="text-white text-[10px] font-bold">Price Alert</p>
+                                        <p className="text-green-400 text-[9px] font-extrabold">−₹14,000</p>
+                                    </div>
+                                </m.div>
+                            </m.div>
+                        </div>
+
                         {/* Sleek Modern Actions */}
                         <m.div variants={itemVariants} className="flex flex-col min-[420px]:flex-row items-stretch min-[420px]:items-center gap-2.5 sm:gap-3.5 mb-5 sm:mb-8 w-full sm:w-auto">
                             <m.button
@@ -119,40 +184,36 @@ const Hero = ({ setCurrentView }) => {
                         </m.div>
                     </div>
 
-                    {/* ── RIGHT: phone stage ── */}
+                    {/* ── DESKTOP ONLY: right phone stage ── */}
                     <m.div
-                        className="relative w-full lg:w-[46%] xl:w-[48%] flex justify-center items-center h-[260px] min-[400px]:h-[300px] sm:h-[400px] lg:h-[460px] xl:h-[500px]"
+                        className="hidden lg:flex relative w-full lg:w-[46%] xl:w-[48%] justify-center items-center h-[460px] xl:h-[500px]"
                         initial={{ opacity: 0, scale: 0.94 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                     >
                         {/* Glow core */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] h-[260px] sm:w-[340px] sm:h-[340px] lg:w-[420px] lg:h-[420px] bg-[radial-gradient(circle,rgba(255,31,61,0.22),transparent_62%)] blur-[30px] pointer-events-none" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] bg-[radial-gradient(circle,rgba(255,31,61,0.22),transparent_62%)] blur-[30px] pointer-events-none" />
 
                         {/* Orbit rings */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] h-[260px] sm:w-[320px] sm:h-[320px] lg:w-[400px] lg:h-[400px] rounded-full border border-red-500/15 pointer-events-none" />
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[190px] h-[190px] sm:w-[240px] sm:h-[240px] lg:w-[300px] lg:h-[300px] rounded-full border border-white/[0.06] pointer-events-none" style={{ animation: 'tb-spin-slow 30s linear infinite' }}>
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full border border-red-500/15 pointer-events-none" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full border border-white/[0.06] pointer-events-none" style={{ animation: 'tb-spin-slow 30s linear infinite' }}>
                             <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-red-500 shadow-[0_0_12px_rgba(255,31,61,0.9)]" />
                         </div>
 
-                        {/* 3D phone (desktop, WebGL-capable) */}
-                        <Suspense fallback={null}>
-                            <HeroPhone3D className="absolute inset-0 z-10 hidden lg:block" />
+                        {/* 3D phone (WebGL-capable) */}
+                        <Suspense fallback={
+                            <img
+                                src={appleIphone}
+                                alt="Flagship smartphone"
+                                className="relative z-10 w-[260px] h-auto object-contain drop-shadow-[0_30px_60px_rgba(255,31,61,0.25)]"
+                            />
+                        }>
+                            <HeroPhone3D className="absolute inset-0 z-10" />
                         </Suspense>
 
-                        {/* Static phone — mobile/tablet + WebGL fallback */}
-                        <m.img
-                            src={appleIphone}
-                            alt="Flagship smartphone"
-                            className="relative z-10 w-[210px] sm:w-[260px] lg:hidden h-auto object-contain"
-                            style={{ filter: 'drop-shadow(0 30px 60px rgba(255,31,61,0.25)) drop-shadow(0 10px 30px rgba(0,0,0,0.8))' }}
-                            animate={{ y: [-8, 8, -8] }}
-                            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                        />
-
                         {/* Script tagline */}
-                        <div className="absolute left-[2%] top-[14%] lg:left-[4%] lg:top-[18%] z-20 pointer-events-none select-none hidden sm:block">
-                            <span className="text-[20px] lg:text-[24px] italic font-bold text-white/85 -rotate-[14deg] inline-block drop-shadow-[0_2px_18px_rgba(255,31,61,0.35)]" style={{ fontFamily: "'Plus Jakarta Sans', cursive" }}>
+                        <div className="absolute left-[4%] top-[18%] z-20 pointer-events-none select-none">
+                            <span className="text-[24px] italic font-bold text-white/85 -rotate-[14deg] inline-block drop-shadow-[0_2px_18px_rgba(255,31,61,0.35)]" style={{ fontFamily: "'Plus Jakarta Sans', cursive" }}>
                                 Latest Tech,<br />Better You
                             </span>
                             <span className="block w-14 h-[3px] mt-1 ml-5 rounded-full bg-gradient-to-r from-red-500 to-transparent" />
@@ -162,34 +223,34 @@ const Hero = ({ setCurrentView }) => {
                         <m.a
                             href="#products"
                             onClick={(e) => { e.preventDefault(); goProducts(); }}
-                            className="absolute right-0 sm:right-[1%] lg:right-[-1%] top-[3%] sm:top-[4%] z-20 w-[145px] min-[400px]:w-[165px] sm:w-[195px] rounded-2xl border border-white/12 bg-[#0d0d13]/85 backdrop-blur-xl p-2.5 sm:p-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_25px_rgba(255,31,61,0.12)] hover:border-red-500/40 hover:shadow-[0_20px_60px_rgba(0,0,0,0.7),0_0_35px_rgba(255,31,61,0.28)] transition-all duration-300 group"
+                            className="absolute right-[-1%] top-[4%] z-20 w-[195px] rounded-2xl border border-white/12 bg-[#0d0d13]/85 backdrop-blur-xl p-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_25px_rgba(255,31,61,0.12)] hover:border-red-500/40 hover:shadow-[0_20px_60px_rgba(0,0,0,0.7),0_0_35px_rgba(255,31,61,0.28)] transition-all duration-300 group"
                             animate={{ y: [-6, 6, -6] }}
                             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
                         >
-                            <div className="flex items-start justify-between mb-1.5 sm:mb-2">
-                                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white fill-current" viewBox="0 0 24 24" aria-hidden="true">
+                            <div className="flex items-start justify-between mb-2">
+                                <svg className="w-6 h-6 text-white fill-current" viewBox="0 0 24 24" aria-hidden="true">
                                     <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8.98-.2 1.92-.86 3.24-.76 1.66.13 2.85.76 3.62 1.94-3.27 1.96-2.72 6.02.5 7.24-.65 1.7-1.5 3.37-2.44 3.75zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
                                 </svg>
-                                <span className="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-red-500/15 border border-red-500/30 text-red-500 transition-all duration-300 group-hover:bg-red-500 group-hover:text-white group-hover:shadow-[0_0_14px_rgba(255,31,61,0.6)]">
-                                    <ArrowRight size={12} className="sm:w-[13px] sm:h-[13px]" />
+                                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-red-500/15 border border-red-500/30 text-red-500 transition-all duration-300 group-hover:bg-red-500 group-hover:text-white group-hover:shadow-[0_0_14px_rgba(255,31,61,0.6)]">
+                                    <ArrowRight size={13} />
                                 </span>
                             </div>
-                            <p className="text-white font-bold text-xs min-[400px]:text-[13px] sm:text-[14px] leading-tight">iPhone 16 Pro</p>
-                            <p className="text-gray-400 text-[10px] min-[400px]:text-[11px] mt-0.5 leading-snug">A smarter, more powerful you.</p>
+                            <p className="text-white font-bold text-[14px] leading-tight">iPhone 16 Pro</p>
+                            <p className="text-gray-400 text-[11px] mt-0.5 leading-snug">A smarter, more powerful you.</p>
                         </m.a>
 
                         {/* Floating price chip */}
                         <m.div
-                            className="absolute left-0 sm:left-[2%] bottom-[6%] lg:bottom-[8%] z-20 flex items-center gap-2 sm:gap-2.5 rounded-xl sm:rounded-2xl border border-white/12 bg-[#0d0d13]/85 backdrop-blur-xl px-3 py-2 sm:px-3.5 sm:py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.6)]"
+                            className="absolute left-[2%] bottom-[8%] z-20 flex items-center gap-2.5 rounded-2xl border border-white/12 bg-[#0d0d13]/85 backdrop-blur-xl px-3.5 py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.6)]"
                             animate={{ y: [5, -5, 5] }}
                             transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
                         >
-                            <span className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-green-500/15 border border-green-500/25">
+                            <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-green-500/15 border border-green-500/25">
                                 <Bell size={13} className="text-green-400" />
                             </span>
                             <div className="leading-tight">
-                                <p className="text-white text-[11px] sm:text-xs font-bold">Price Drop Alert</p>
-                                <p className="text-green-400 text-[9.5px] sm:text-[10px] font-bold mt-0.5">Galaxy S26 · −₹14,000</p>
+                                <p className="text-white text-xs font-bold">Price Drop Alert</p>
+                                <p className="text-green-400 text-[10px] font-bold mt-0.5">Galaxy S26 · −₹14,000</p>
                             </div>
                         </m.div>
                     </m.div>
