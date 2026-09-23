@@ -101,7 +101,7 @@ function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
-            className="app-container pb-20 lg:pb-0"
+            className="app-container pb-mobile-dock pb-24 lg:pb-0"
           >
           <main>
             <AnimatePresence mode="wait">

@@ -15,13 +15,12 @@ const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000
 const PAGE_SIZE = 8;
 
 const ProductCardSkeleton = () => (
-    <div className="bg-[#0a0a0f] border border-white/5 rounded-2xl h-[375px] sm:h-[390px] animate-pulse p-2.5 sm:p-3 flex flex-col max-w-[340px] min-[500px]:max-w-none mx-auto w-full">
-        <div className="w-full h-[185px] sm:h-[195px] md:h-[205px] bg-white/5 rounded-xl mb-3"></div>
-        <div className="w-1/4 h-2 bg-white/5 rounded mb-1.5"></div>
-        <div className="w-3/4 h-3.5 bg-white/5 rounded mb-2"></div>
-        <div className="w-1/2 h-2.5 bg-white/5 rounded mb-3"></div>
-        <div className="w-1/3 h-5 bg-white/5 rounded mb-auto"></div>
-        <div className="h-8 bg-white/5 rounded-xl mt-3"></div>
+    <div className="bg-[#0a0a0f] border border-white/5 rounded-2xl h-[310px] sm:h-[370px] md:h-[390px] animate-pulse p-2 sm:p-3 flex flex-col w-full">
+        <div className="w-full h-[135px] sm:h-[180px] md:h-[200px] bg-white/5 rounded-xl mb-2 sm:mb-3"></div>
+        <div className="w-1/3 h-2 bg-white/5 rounded mb-1"></div>
+        <div className="w-3/4 h-3 bg-white/5 rounded mb-2"></div>
+        <div className="w-1/2 h-2.5 bg-white/5 rounded mb-auto"></div>
+        <div className="h-7 sm:h-8 bg-white/5 rounded-xl mt-2"></div>
     </div>
 );
 
@@ -193,8 +192,8 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                         </div>
                     )}
 
-                    {/* Product Grid - Fluid responsive breakpoints */}
-                    <div className="grid grid-cols-1 min-[500px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
+                    {/* Product Grid - Native 2-column mobile experience & fluid responsive breakpoints */}
+                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4 md:gap-5 lg:gap-6">
                         {loading ? (
                             [...Array(PAGE_SIZE)].map((_, idx) => <ProductCardSkeleton key={idx} />)
                         ) : filteredProducts.length > 0 ? (

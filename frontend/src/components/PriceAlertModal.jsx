@@ -189,6 +189,12 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
           <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', borderRadius: '24px', pointerEvents: 'none' }}>
             <div className="price-alert-glow" />
           </div>
+
+          {isMobile && (
+            <div className="w-full flex justify-center pt-2.5 pb-1 relative z-10" aria-hidden="true">
+              <div className="w-12 h-1.5 rounded-full bg-white/25" />
+            </div>
+          )}
           
           <button className="price-alert-close" onClick={onClose}>
             <X size={20} />

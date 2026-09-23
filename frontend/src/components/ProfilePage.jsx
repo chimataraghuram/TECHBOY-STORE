@@ -219,7 +219,7 @@ const ProfilePage = ({ setCurrentView, initialTab, onSearch }) => {
     ];
 
     return (
-        <div className="min-h-screen pt-24 sm:pt-28 pb-28 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+        <div className="min-h-screen pt-20 sm:pt-28 pb-mobile-dock pb-28 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
             {/* Back & Logout bar */}
             <div className="mb-5 flex items-center justify-between">
                 <button

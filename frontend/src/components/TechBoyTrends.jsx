@@ -179,8 +179,8 @@ const TechBoyTrends = () => {
                     })}
                 </div>
 
-                {/* Compact Trend Cards Grid - Fluid responsive breakpoints */}
-                <div className="grid grid-cols-1 min-[500px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
+                {/* Compact Trend Cards Grid - Native 2-column mobile experience & fluid responsive breakpoints */}
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4 md:gap-5 lg:gap-6">
                     <AnimatePresence mode="popLayout">
                         {filteredAlerts.slice(0, displayCount).map((alert, idx) => {
                             const chart = generateChartData(alert);

@@ -88,7 +88,12 @@ const QuickViewModal = ({ product, onClose }) => {
                 onClick={(e) => e.stopPropagation()}
                 style={modalStyle}
             >
-                <button className="close-btn top-right" onClick={onClose} style={{ position: 'absolute', top: '24px', right: '24px', zIndex: 100, fontSize: '28px', background: 'rgba(255, 31, 61, 0.2)', border: '1px solid rgba(255, 31, 61, 0.5)', borderRadius: '50%', width: '44px', height: '44px', color: '#ff1f3d', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}>&times;</button>
+                {isMobile && (
+                    <div className="w-full flex justify-center pt-3 pb-1" aria-hidden="true">
+                        <div className="w-12 h-1.5 rounded-full bg-white/25" />
+                    </div>
+                )}
+                <button className="close-btn top-right" onClick={onClose} style={{ position: 'absolute', top: isMobile ? '14px' : '24px', right: isMobile ? '14px' : '24px', zIndex: 100, fontSize: isMobile ? '22px' : '28px', background: 'rgba(255, 31, 61, 0.2)', border: '1px solid rgba(255, 31, 61, 0.5)', borderRadius: '50%', width: isMobile ? '36px' : '44px', height: isMobile ? '36px' : '44px', color: '#ff1f3d', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}>&times;</button>
                 <div className="quickview-body">
                     <div className="quickview-image-side">
                         <div className="view-toggle-buttons" style={{ display: 'flex', gap: '8px', marginBottom: '16px', justifyContent: 'center' }}>

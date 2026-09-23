@@ -336,3 +336,27 @@ section.animate-in, .footer-section.animate-in {
   color: #9aa0ab;
   font-family: var(--font-main);
 }
+
+/* ============================================================
+   Mobile App Native Optimization Helpers
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Hardware accelerated momentum touch scrolling */
+  .mobile-touch-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+  }
+  .mobile-touch-item {
+    scroll-snap-align: start;
+  }
+  /* Prevent blue tap highlights and speed up mobile touch responses */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* Ensure smooth bottom clearance for mobile dock */
+  .pb-mobile-dock {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom, 16px)) !important;
+  }
+}
+
