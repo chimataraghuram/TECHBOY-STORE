@@ -137,13 +137,10 @@ const TechBoyTrends = () => {
                             Live smartphone intelligence, price drops, and analyst alerts.
                         </p>
                     </div>
-                    <button className="flex items-center gap-1.5 text-xs font-semibold text-gray-200 hover:text-white px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-red-500/15 border border-white/10 hover:border-red-500/40 transition-all whitespace-nowrap self-start sm:self-end shadow-sm hover:shadow-[0_0_15px_rgba(255,31,61,0.2)]">
-                        View All Trends <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
-                    </button>
                 </div>
 
-                {/* Category Icon Filters */}
-                <div className="flex flex-wrap gap-2 sm:gap-2.5 md:gap-3 items-center justify-start overflow-x-auto pb-1 mb-6 sm:mb-8 hide-scrollbar">
+                {/* Category Icon Filters — Single Horizontal Scroll on Mobile, Wrapping on Desktop */}
+                <div className="flex flex-nowrap sm:flex-wrap gap-2 sm:gap-2.5 md:gap-3 items-center justify-start overflow-x-auto pb-2 sm:pb-1 mb-6 sm:mb-8 hide-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
                     {CATEGORIES.map(cat => {
                         const isActive = activeCategory === cat.id;
                         const Icon = cat.icon;
@@ -166,7 +163,7 @@ const TechBoyTrends = () => {
                                 }`}>
                                     <Icon size={18} strokeWidth={2.4} />
                                 </span>
-                                <span className={`text-[10px] sm:text-[11px] font-semibold tracking-wide uppercase transition-colors ${
+                                <span className={`text-[10px] sm:text-[11px] font-semibold tracking-wide uppercase transition-colors whitespace-nowrap ${
                                     isActive ? 'text-white' : 'text-gray-400 group-hover:text-gray-200'
                                 }`}>
                                     {cat.label}
@@ -348,16 +345,24 @@ const TechBoyTrends = () => {
                     </AnimatePresence>
                 </div>
 
-                {filteredAlerts.length > displayCount && (
-                    <div className="mt-10 flex justify-center">
+                {/* Bottom Action: View All Trends / Load More */}
+                <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+                    {filteredAlerts.length > displayCount && (
                         <button
                             onClick={() => setDisplayCount(prev => prev + 8)}
-                            className="bg-white/[0.03] hover:bg-white/[0.07] text-white border border-white/10 px-6 py-2.5 rounded-full text-xs font-semibold transition-all shadow-sm hover:shadow-[0_0_20px_rgba(255,31,61,0.2)]"
+                            className="bg-white/[0.04] hover:bg-white/[0.08] text-white border border-white/10 hover:border-red-500/40 px-6 py-2.5 rounded-full text-xs font-bold transition-all shadow-sm hover:shadow-[0_0_20px_rgba(255,31,61,0.2)]"
                         >
-                            Load More
+                            Load More ({filteredAlerts.length - displayCount} left)
                         </button>
-                    </div>
-                )}
+                    )}
+                    <button
+                        onClick={() => { setActiveCategory('all'); setDisplayCount(filteredAlerts.length); }}
+                        className="group flex items-center gap-2 text-xs font-bold text-gray-300 hover:text-white px-5 py-2.5 rounded-full bg-red-500/10 hover:bg-red-500/20 border border-red-500/25 hover:border-red-500/50 transition-all shadow-[0_0_15px_rgba(255,31,61,0.15)]"
+                    >
+                        <span>View All Trends</span>
+                        <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
+                    </button>
+                </div>
 
             </div>
 
