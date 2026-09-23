@@ -134,7 +134,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
             <div className="mx-auto max-w-[1560px] px-5 sm:px-8 lg:px-12">
 
                 {/* Section Header — Top */}
-                <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-5 sm:mb-6">
+                <div className="mb-4 sm:mb-5">
                     <div className="relative pl-3.5 sm:pl-4 border-l-2 border-red-500">
                         <div className="absolute -left-[2px] top-0 bottom-0 w-[2px] bg-red-500 shadow-[0_0_10px_rgba(255,31,61,0.8)]" />
                         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
@@ -148,8 +148,16 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                             Categorized by budget and performance. Best deals tracked in real-time.
                         </p>
                     </div>
+                </div>
 
-                    <div className="flex items-center gap-2.5 sm:gap-3 self-start sm:self-end">
+                {/* Brand Filter Icon Strip — Directly Under Title */}
+                <div className="mb-3 sm:mb-4">
+                    <BrandStrip activeBrand={activeBrand} onChange={setActiveBrand} />
+                </div>
+
+                {/* Action Bar Below Filters — Reset, Count & View All */}
+                <div className="flex items-center justify-between gap-3 mb-6 sm:mb-8">
+                    <div className="flex items-center gap-2">
                         {activeBrand !== 'All' && (
                             <button
                                 onClick={() => setActiveBrand('All')}
@@ -161,20 +169,16 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                         <span className="text-xs text-gray-400 font-semibold px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/[0.08]">
                             {filteredProducts.length} {filteredProducts.length === 1 ? 'phone' : 'phones'}
                         </span>
-                        {visibleCount < filteredProducts.length && (
-                            <button
-                                className="group flex items-center gap-1.5 text-xs font-semibold text-gray-200 hover:text-white px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-red-500/15 border border-white/10 hover:border-red-500/40 transition-all whitespace-nowrap shadow-sm hover:shadow-[0_0_15px_rgba(255,31,61,0.2)]"
-                                onClick={() => setVisibleCount(filteredProducts.length)}
-                            >
-                                View All ({filteredProducts.length}) <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
-                            </button>
-                        )}
                     </div>
-                </div>
 
-                {/* Brand Filter Icon Strip — Directly Under Title */}
-                <div className="mb-6 sm:mb-8">
-                    <BrandStrip activeBrand={activeBrand} onChange={setActiveBrand} />
+                    {visibleCount < filteredProducts.length && (
+                        <button
+                            className="group flex items-center gap-1.5 text-xs font-semibold text-gray-200 hover:text-white px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-red-500/15 border border-white/10 hover:border-red-500/40 transition-all whitespace-nowrap shadow-sm hover:shadow-[0_0_15px_rgba(255,31,61,0.2)]"
+                            onClick={() => setVisibleCount(filteredProducts.length)}
+                        >
+                            View All ({filteredProducts.length}) <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
+                        </button>
+                    )}
                 </div>
 
                     {searchTerm && (
