@@ -4,25 +4,24 @@ import ProductCard from './ProductCard';
 import ComparisonModal from './ComparisonModal';
 import PriceAlertModal from './PriceAlertModal';
 import { useAuth } from '../context/AuthContext';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, ArrowLeftRight, X } from 'lucide-react';
 import localPhonesData from '../data/phones.json';
 import BrandStrip from './BrandStrip';
+import { matchesSearch } from '../utils/searchHelper';
+import { resolveProductImage } from '../utils/imageResolver';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
 const PAGE_SIZE = 8;
 
 const ProductCardSkeleton = () => (
-    <div className="bg-[#111118] border border-white/5 rounded-2xl h-[440px] animate-pulse p-4 flex flex-col">
-        <div className="w-full h-[240px] bg-white/5 rounded-xl mb-4"></div>
-        <div className="w-1/4 h-2.5 bg-white/8 rounded mb-2"></div>
-        <div className="w-3/4 h-3.5 bg-white/8 rounded mb-4"></div>
-        <div className="flex flex-wrap gap-1.5 mb-4">
-            <div className="w-[70px] h-4 bg-white/5 rounded"></div>
-            <div className="w-[70px] h-4 bg-white/5 rounded"></div>
-        </div>
-        <div className="w-1/2 h-5 bg-white/8 rounded mb-auto"></div>
-        <div className="h-12 bg-white/5 rounded-xl mt-4"></div>
+    <div className="bg-[#0a0a0f] border border-white/5 rounded-2xl h-[375px] sm:h-[390px] animate-pulse p-2.5 sm:p-3 flex flex-col max-w-[340px] min-[500px]:max-w-none mx-auto w-full">
+        <div className="w-full h-[185px] sm:h-[195px] md:h-[205px] bg-white/5 rounded-xl mb-3"></div>
+        <div className="w-1/4 h-2 bg-white/5 rounded mb-1.5"></div>
+        <div className="w-3/4 h-3.5 bg-white/5 rounded mb-2"></div>
+        <div className="w-1/2 h-2.5 bg-white/5 rounded mb-3"></div>
+        <div className="w-1/3 h-5 bg-white/5 rounded mb-auto"></div>
+        <div className="h-8 bg-white/5 rounded-xl mt-3"></div>
     </div>
 );
 
@@ -30,13 +29,37 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [compareList, setCompareList] = useState([]);
+    const [compareList, setCompareList] = useState(() => {
+        try {
+            return JSON.parse(localStorage.getItem('tb_compare_list') || '[]');
+        } catch {
+            return [];
+        }
+    });
     const [isCompModalOpen, setIsCompModalOpen] = useState(false);
     const [priceAlertProduct, setPriceAlertProduct] = useState(null);
     const [activeBrand, setActiveBrand] = useState("All");
     const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
     const { user } = useAuth();
+
+    useEffect(() => {
+        try {
+            localStorage.setItem('tb_compare_list', JSON.stringify(compareList));
+            window.dispatchEvent(new Event('tb_compare_updated'));
+        } catch (e) {}
+    }, [compareList]);
+
+    useEffect(() => {
+        const syncCompare = () => {
+            try {
+                const stored = JSON.parse(localStorage.getItem('tb_compare_list') || '[]');
+                setCompareList(stored);
+            } catch (e) {}
+        };
+        window.addEventListener('tb_compare_updated', syncCompare);
+        return () => window.removeEventListener('tb_compare_updated', syncCompare);
+    }, []);
 
     useEffect(() => {
         let mounted = true;
@@ -66,19 +89,27 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     useEffect(() => {
         let result = [...products];
 
-        if (activeBrand !== "All") {
+        if (searchTerm && searchTerm.trim()) {
+            // Smart multi-token, spec, and price-intent matching
+            result = result.filter(p => matchesSearch(p, searchTerm));
+
+            // If a specific brand is selected, see if there are matches in that brand
+            if (activeBrand !== "All") {
+                const brandLower = activeBrand.toLowerCase();
+                const brandMatches = result.filter(p =>
+                    (p.brand && p.brand.toLowerCase() === brandLower) ||
+                    (p.name && p.name.toLowerCase().includes(brandLower))
+                );
+                // Keep brand filter if matches exist; otherwise show all matching phones
+                if (brandMatches.length > 0) {
+                    result = brandMatches;
+                }
+            }
+        } else if (activeBrand !== "All") {
             const brandLower = activeBrand.toLowerCase();
             result = result.filter(p =>
                 (p.brand && p.brand.toLowerCase() === brandLower) ||
                 (p.name && p.name.toLowerCase().includes(brandLower))
-            );
-        }
-
-        if (searchTerm) {
-            const term = searchTerm.toLowerCase();
-            result = result.filter(p =>
-                (p.name && p.name.toLowerCase().includes(term)) ||
-                (p.brand && p.brand.toLowerCase().includes(term))
             );
         }
 
@@ -100,34 +131,70 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     };
 
     return (
-        <>
-            <BrandStrip activeBrand={activeBrand} onChange={setActiveBrand} />
+        <section id="products" className="pt-6 sm:pt-8 md:pt-10 pb-14 sm:pb-16 md:pb-20 bg-[#050505]">
+            <div className="mx-auto max-w-[1560px] px-5 sm:px-8 lg:px-12">
 
-            <section id="products" className="py-12 md:py-16 lg:py-20 bg-[#050505]">
-                <div className="mx-auto max-w-[1560px] px-5 sm:px-8 lg:px-12">
-
-                    {/* Section Header */}
-                    <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
-                        <div>
-                            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-2 tracking-tight">Popular Smartphones</h2>
-                            <p className="text-gray-400 text-sm sm:text-base">Categorized by budget and performance. Best deals tracked in real-time.</p>
-                        </div>
-                        <button
-                            className="flex items-center gap-2 text-sm font-semibold text-gray-300 hover:text-white transition-colors whitespace-nowrap self-start"
-                            onClick={scrollToProducts}
-                        >
-                            View All <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-                        </button>
+                {/* Section Header — Top */}
+                <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-5 sm:mb-6">
+                    <div className="relative pl-3.5 sm:pl-4 border-l-2 border-red-500">
+                        <div className="absolute -left-[2px] top-0 bottom-0 w-[2px] bg-red-500 shadow-[0_0_10px_rgba(255,31,61,0.8)]" />
+                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
+                            {activeBrand === 'All' ? (
+                                <>Popular <span className="bg-gradient-to-r from-[#ff3350] via-[#ff1f3d] to-[#ff6b81] bg-clip-text text-transparent drop-shadow-[0_0_24px_rgba(255,31,61,0.35)]">Smartphones</span></>
+                            ) : (
+                                <><span className="text-white">{activeBrand}</span> <span className="bg-gradient-to-r from-[#ff3350] via-[#ff1f3d] to-[#ff6b81] bg-clip-text text-transparent drop-shadow-[0_0_24px_rgba(255,31,61,0.35)]">Smartphones</span></>
+                            )}
+                        </h2>
+                        <p className="text-neutral-400 text-xs sm:text-sm font-normal mt-1 leading-relaxed">
+                            Categorized by budget and performance. Best deals tracked in real-time.
+                        </p>
                     </div>
 
+                    <div className="flex items-center gap-2.5 sm:gap-3 self-start sm:self-end">
+                        {activeBrand !== 'All' && (
+                            <button
+                                onClick={() => setActiveBrand('All')}
+                                className="text-xs font-semibold text-gray-400 hover:text-red-400 transition-colors px-3 py-1.5 rounded-xl bg-white/[0.04] hover:bg-red-500/10 border border-white/10 hover:border-red-500/30"
+                            >
+                                Reset to All &times;
+                            </button>
+                        )}
+                        <span className="text-xs text-gray-400 font-semibold px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/[0.08]">
+                            {filteredProducts.length} {filteredProducts.length === 1 ? 'phone' : 'phones'}
+                        </span>
+                        {visibleCount < filteredProducts.length && (
+                            <button
+                                className="group flex items-center gap-1.5 text-xs font-semibold text-gray-200 hover:text-white px-3.5 py-1.5 rounded-xl bg-white/[0.04] hover:bg-red-500/15 border border-white/10 hover:border-red-500/40 transition-all whitespace-nowrap shadow-sm hover:shadow-[0_0_15px_rgba(255,31,61,0.2)]"
+                                onClick={() => setVisibleCount(filteredProducts.length)}
+                            >
+                                View All ({filteredProducts.length}) <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
+                            </button>
+                        )}
+                    </div>
+                </div>
+
+                {/* Brand Filter Icon Strip — Directly Under Title */}
+                <div className="mb-6 sm:mb-8">
+                    <BrandStrip activeBrand={activeBrand} onChange={setActiveBrand} />
+                </div>
+
                     {searchTerm && (
-                        <div className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-xl">
-                            <p className="text-white text-base">Showing results for <span className="text-red-500 font-bold">"{searchTerm}"</span></p>
+                        <div className="mb-6 flex flex-wrap items-center justify-between gap-3 p-3.5 sm:p-4 bg-red-500/10 border border-red-500/25 rounded-xl sm:rounded-2xl">
+                            <p className="text-white text-sm sm:text-base">
+                                Showing results for <span className="text-red-500 font-bold">"{searchTerm}"</span>
+                                <span className="text-gray-400 text-xs ml-2">({filteredProducts.length} {filteredProducts.length === 1 ? 'phone' : 'phones'} found)</span>
+                            </p>
+                            <button
+                                onClick={() => onSearch('')}
+                                className="text-xs font-semibold text-gray-300 hover:text-white bg-white/10 hover:bg-red-500/25 px-3 py-1.5 rounded-lg border border-white/10 transition-colors"
+                            >
+                                Clear Search &times;
+                            </button>
                         </div>
                     )}
 
-                    {/* Product Grid - 4 cols desktop, 2 tablet, 1 mobile — capped at 8 initially */}
-                    <div className="mx-auto max-w-[1200px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
+                    {/* Product Grid - Fluid responsive breakpoints */}
+                    <div className="grid grid-cols-1 min-[500px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
                         {loading ? (
                             [...Array(PAGE_SIZE)].map((_, idx) => <ProductCardSkeleton key={idx} />)
                         ) : filteredProducts.length > 0 ? (
@@ -142,10 +209,29 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                                 />
                             ))
                         ) : (
-                            <div className="col-span-full py-16 text-center bg-white/5 rounded-2xl border border-white/5">
-                                <span className="text-3xl mb-3 block">🔍</span>
-                                <h3 className="text-base font-bold text-white mb-1">No smartphones found</h3>
-                                <p className="text-gray-500 text-xs">Try adjusting your filters or search term.</p>
+                            <div className="col-span-full py-14 text-center bg-white/[0.02] rounded-2xl border border-white/10 p-6">
+                                <span className="text-4xl mb-3 block">🔍</span>
+                                <h3 className="text-base sm:text-lg font-bold text-white mb-1.5">No smartphones found</h3>
+                                <p className="text-gray-400 text-xs sm:text-sm max-w-md mx-auto mb-5">
+                                    We couldn't find any smartphones matching <span className="text-red-400 font-semibold">"{searchTerm || activeBrand}"</span>. Try adjusting your query or explore popular searches below:
+                                </p>
+                                <div className="flex flex-wrap items-center justify-center gap-2">
+                                    <button
+                                        onClick={() => { onSearch(''); setActiveBrand('All'); }}
+                                        className="text-xs font-bold text-white bg-red-600 hover:bg-red-500 px-4 py-2 rounded-xl transition-all shadow-[0_0_15px_rgba(255,31,61,0.3)]"
+                                    >
+                                        Reset All Filters
+                                    </button>
+                                    {['5G', 'Samsung', 'iPhone', 'Snapdragon', 'Under ₹20K'].map((s) => (
+                                        <button
+                                            key={s}
+                                            onClick={() => onSearch(s)}
+                                            className="text-xs font-medium text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 px-3 py-1.5 rounded-xl border border-white/10 transition-colors"
+                                        >
+                                            Try "{s}"
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
                         )}
                     </div>
@@ -180,6 +266,83 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                         </div>
                     )}
 
+                    {/* Floating Comparison Dock */}
+                    <AnimatePresence>
+                        {compareList.length > 0 && (
+                            <m.div
+                                initial={{ opacity: 0, y: 70, scale: 0.95 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                exit={{ opacity: 0, y: 70, scale: 0.95 }}
+                                transition={{ type: "spring", damping: 25, stiffness: 350 }}
+                                className="fixed bottom-[80px] sm:bottom-[86px] lg:bottom-7 left-1/2 -translate-x-1/2 z-[95] w-[94%] max-w-[640px] rounded-2xl bg-[#090910]/95 border border-red-500/50 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.85),0_0_35px_rgba(255,31,61,0.25)] p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4"
+                            >
+                                {/* Selected phones preview thumbnails */}
+                                <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-between sm:justify-start">
+                                    <div className="flex items-center gap-2">
+                                        {[0, 1, 2].map((slotIdx) => {
+                                            const item = compareList[slotIdx];
+                                            if (item) {
+                                                return (
+                                                    <div key={item.id} className="relative group/thumb w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white/[0.05] border border-red-500/50 p-1 flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(255,31,61,0.2)]">
+                                                        <img
+                                                            src={resolveProductImage(item.image, item.name)}
+                                                            alt={item.name}
+                                                            className="w-full h-full object-contain"
+                                                        />
+                                                        <button
+                                                            onClick={(e) => { e.stopPropagation(); handleCompare(item); }}
+                                                            className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-600 hover:bg-red-500 text-white flex items-center justify-center text-[10px] font-bold shadow-md transition-transform hover:scale-110"
+                                                            title={`Remove ${item.name}`}
+                                                            aria-label={`Remove ${item.name}`}
+                                                        >
+                                                            <X size={11} className="stroke-[3]" />
+                                                        </button>
+                                                    </div>
+                                                );
+                                            }
+                                            return (
+                                                <div key={`empty-${slotIdx}`} className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl border border-dashed border-white/15 bg-white/[0.02] flex flex-col items-center justify-center text-gray-500 shrink-0">
+                                                    <span className="text-[10px] font-bold text-gray-500">Slot {slotIdx + 1}</span>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+
+                                    <div className="text-left hidden min-[400px]:block">
+                                        <p className="text-white text-xs sm:text-[13px] font-bold">Compare Phones</p>
+                                        <p className="text-gray-400 text-[10px] sm:text-[11px]">
+                                            {compareList.length === 1 ? 'Select 1 more to compare' : `${compareList.length} of 3 selected`}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Actions */}
+                                <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+                                    <button
+                                        onClick={() => setCompareList([])}
+                                        className="text-gray-400 hover:text-white px-3 py-2 text-xs font-semibold rounded-xl hover:bg-white/[0.06] transition-colors"
+                                    >
+                                        Clear
+                                    </button>
+                                    <m.button
+                                        whileHover={{ scale: 1.04 }}
+                                        whileTap={{ scale: 0.96 }}
+                                        disabled={compareList.length < 2}
+                                        onClick={() => setIsCompModalOpen(true)}
+                                        className={`relative overflow-hidden flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-[13px] transition-all shadow-md ${
+                                            compareList.length >= 2
+                                                ? 'bg-gradient-to-r from-[#ff1f3d] via-[#e60023] to-[#c7001e] text-white shadow-[0_4px_20px_rgba(230,0,35,0.45)] border border-white/20 cursor-pointer animate-pulse'
+                                                : 'bg-white/10 text-gray-400 border border-white/10 cursor-not-allowed'
+                                        }`}
+                                    >
+                                        <ArrowLeftRight size={14} className="stroke-[2.5]" />
+                                        <span>Compare Now ({compareList.length})</span>
+                                    </m.button>
+                                </div>
+                            </m.div>
+                        )}
+                    </AnimatePresence>
+
                     <AnimatePresence>
                         {isCompModalOpen && (
                             <ComparisonModal products={compareList} onClose={() => setIsCompModalOpen(false)} />
@@ -200,7 +363,6 @@ const StoreSection = ({ searchTerm, onSearch }) => {
 
                 </div>
             </section>
-        </>
     );
 };
 

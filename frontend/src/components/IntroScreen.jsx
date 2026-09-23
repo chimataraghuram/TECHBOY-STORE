@@ -27,10 +27,12 @@ const IntroScreen = ({ onComplete }) => {
 
   return (
     <m.div 
-      className="intro-container"
+      className="intro-container cursor-pointer select-none"
+      onClick={onComplete}
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1 }}
+      transition={{ duration: 0.6 }}
+      title="Click anywhere to skip"
     >
       <div className="intro-content">
         <div className="intro-video-wrapper">

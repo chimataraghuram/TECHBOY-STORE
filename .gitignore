@@ -41,3 +41,6 @@ db.sqlite3-journal
 static/
 media/
 firebase-service-account.json
+.venv/
+test_*.html
+

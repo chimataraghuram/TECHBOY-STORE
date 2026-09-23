@@ -1,11 +1,17 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import { m, AnimatePresence } from 'framer-motion';
-import { Search, Bot, X, Menu } from 'lucide-react';
+import { Search, Bot, X, Menu, TrendingUp, ChevronRight, Home, Smartphone, Flame, Activity, User, LogOut } from 'lucide-react';
 import logo from '../../images/logos/new-logo.jpg';
 import { useAuth } from '../context/AuthContext';
 import AuthDropdown from './AuthDropdown';
 import NotificationSystem from './NotificationSystem';
 import SearchModal from './SearchModal';
+import { resolveProductImage } from '../utils/imageResolver';
+import { filterProducts, TRENDING_SEARCHES } from '../utils/searchHelper';
+import localPhonesData from '../data/phones.json';
+
+const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
 const getNavbarScrollOffset = () => {
     const navbar = document.querySelector('.tb-nav');
@@ -21,223 +27,507 @@ const scrollToSection = (sectionId) => {
 };
 
 const NAV_ITEMS = [
-    { id: 'home', label: 'Home' },
-    { id: 'products', label: 'Products' },
-    { id: 'trends', label: 'Trends' },
-    { id: 'trackhub', label: 'TrackHub' }
+    { id: 'home', label: 'Home', icon: Home },
+    { id: 'products', label: 'Products', icon: Smartphone },
+    { id: 'trends', label: 'Trends', icon: Flame },
+    { id: 'trackhub', label: 'TrackHub', icon: Activity }
 ];
 
 const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentView }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
     const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+    const [isSearchFocused, setIsSearchFocused] = useState(false);
+    const [isMobileProfileOpen, setIsMobileProfileOpen] = useState(false);
+    const [products, setProducts] = useState(localPhonesData);
 
-    const { user, login, authLoading } = useAuth();
+    const searchContainerRef = useRef(null);
+    const mobileProfileRef = useRef(null);
+    const { user, login, logout, authLoading } = useAuth();
+
+    // Load full products list for instant search autocomplete
+    useEffect(() => {
+        let mounted = true;
+        const fetchProducts = async () => {
+            try {
+                const res = await fetch(`${API_BASE_URL}/products/?limit=100`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const list = data.results || data || [];
+                    if (mounted && list.length > 0) {
+                        setProducts(list);
+                    }
+                }
+            } catch (err) {
+                console.warn('Navbar products fetch error (using local):', err);
+            }
+        };
+        fetchProducts();
+        return () => { mounted = false; };
+    }, []);
+
+    // Close search & mobile profile dropdown on click outside
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (searchContainerRef.current && !searchContainerRef.current.contains(e.target)) {
+                setIsSearchFocused(false);
+            }
+            if (mobileProfileRef.current && !mobileProfileRef.current.contains(e.target)) {
+                setIsMobileProfileOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    // Filtered instant search suggestions
+    const searchMatches = useMemo(() => {
+        if (!searchTerm || !searchTerm.trim()) return [];
+        return filterProducts(products, searchTerm).slice(0, 6);
+    }, [products, searchTerm]);
+
+    // Track active section on scroll when on home view
+    useEffect(() => {
+        if (currentView !== 'home') {
+            setActiveSection(currentView);
+            return;
+        }
+        const handleScroll = () => {
+            const scrollY = window.scrollY;
+            const trendsEl = document.getElementById('trends');
+            const productsEl = document.getElementById('products');
+            
+            const trendsTop = trendsEl ? (trendsEl.offsetTop - 280) : Infinity;
+            const productsTop = productsEl ? (productsEl.offsetTop - 280) : Infinity;
+
+            if (scrollY >= trendsTop) {
+                setActiveSection('trends');
+            } else if (scrollY >= productsTop) {
+                setActiveSection('products');
+            } else {
+                setActiveSection('home');
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [currentView]);
 
     const handleNavClick = useCallback((e, sectionId) => {
-        e.preventDefault();
+        if (e && e.preventDefault) e.preventDefault();
         setIsMenuOpen(false);
+        setIsSearchFocused(false);
         if (sectionId === 'trackhub') {
             setCurrentView('trackhub');
             setActiveSection('trackhub');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (sectionId === 'profile') {
+            setCurrentView('profile');
+            setActiveSection('profile');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
             setCurrentView('home');
             setTimeout(() => {
                 scrollToSection(sectionId);
                 setActiveSection(sectionId);
-            }, 100);
+            }, 80);
         }
     }, [setCurrentView]);
 
     const handleSearchSubmit = (e) => {
-        e.preventDefault();
+        if (e && e.preventDefault) e.preventDefault();
         setIsMenuOpen(false);
+        setIsSearchFocused(false);
+        if (currentView !== 'home') setCurrentView('home');
+        setTimeout(() => scrollToSection('products'), 80);
+    };
+
+    const handleSelectProduct = (product) => {
+        onSearch(product.name || '');
+        setIsSearchFocused(false);
         if (currentView !== 'home') setCurrentView('home');
         setTimeout(() => scrollToSection('products'), 80);
     };
 
     return (
-        <nav className="tb-nav fixed top-0 left-0 right-0 z-[90] w-full" aria-label="Main navigation">
-            <div className="w-full border-b border-white/[0.06] bg-[#060608]/85 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.55)]">
-                <div className="mx-auto max-w-[1560px] px-3 sm:px-5 lg:px-8">
-                    <div className="flex items-center justify-between gap-2 sm:gap-4 h-[66px] md:h-[78px]">
+        <>
+            {/* TOP HEADER NAVBAR */}
+            <nav className="tb-nav fixed top-0 left-0 right-0 z-[90] w-full" aria-label="Main navigation">
+                <div className="w-full border-b border-white/[0.06] bg-[#060608]/85 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.55)]">
+                    <div className="mx-auto max-w-[1560px] px-3 sm:px-5 lg:px-8">
+                        <div className="flex items-center justify-between gap-2 sm:gap-4 h-[62px] sm:h-[68px] md:h-[78px]">
 
-                        {/* LOGO */}
-                        <a href="/#home" className="flex items-center gap-2.5 sm:gap-3 group shrink-0" onClick={(e) => handleNavClick(e, 'home')}>
-                            <span className="relative shrink-0">
-                                <img
-                                    src={logo}
-                                    alt="TECHBOY STORE"
-                                    className="h-10 w-10 md:h-11 md:w-11 rounded-full object-cover border border-red-500/60 shadow-[0_0_16px_rgba(255,31,61,0.4)] transition-transform duration-500 group-hover:scale-105 group-hover:shadow-[0_0_22px_rgba(255,31,61,0.65)]"
-                                />
-                                <span className="absolute inset-0 rounded-full ring-1 ring-white/10 pointer-events-none" />
-                            </span>
-                            <span className="text-white font-extrabold tracking-wide text-[15px] sm:text-base md:text-lg whitespace-nowrap leading-none">
-                                TECHBOY <span className="text-red-500 drop-shadow-[0_0_12px_rgba(255,31,61,0.6)]">STORE</span>
-                            </span>
-                        </a>
-
-                        {/* DESKTOP NAV LINKS */}
-                        <div className="hidden lg:flex items-center gap-7 xl:gap-9 shrink-0">
-                            {NAV_ITEMS.map(item => {
-                                const isActive = currentView === 'trackhub' ? item.id === 'trackhub' : activeSection === item.id;
-                                return (
-                                    <a
-                                        key={item.id}
-                                        href={`#${item.id}`}
-                                        className={`relative py-2 text-[15px] font-semibold tracking-wide transition-colors ${isActive ? 'text-white' : 'text-gray-400 hover:text-white'}`}
-                                        onClick={(e) => handleNavClick(e, item.id)}
-                                    >
-                                        {item.label}
-                                        {isActive && (
-                                            <m.span
-                                                layoutId="navIndicator"
-                                                className="absolute -bottom-0.5 left-0 right-0 h-[2.5px] rounded-full bg-red-500 shadow-[0_0_12px_rgba(255,31,61,0.9)]"
-                                            />
-                                        )}
-                                    </a>
-                                );
-                            })}
-                        </div>
-
-                        {/* RIGHT CLUSTER */}
-                        <div className="flex items-center justify-end gap-1.5 sm:gap-2.5 flex-1 lg:flex-none">
-
-                            {/* Inline search (desktop) */}
-                            <form onSubmit={handleSearchSubmit} className="hidden xl:flex items-center w-[230px] 2xl:w-[280px] h-11 rounded-full bg-white/[0.05] border border-white/10 focus-within:border-red-500/50 focus-within:bg-white/[0.07] focus-within:shadow-[0_0_20px_rgba(255,31,61,0.18)] px-4 transition-all duration-300">
-                                <Search size={16} className="text-gray-500 shrink-0" />
-                                <input
-                                    type="text"
-                                    value={searchTerm}
-                                    onChange={(e) => onSearch(e.target.value)}
-                                    placeholder="Search smartphones, brands..."
-                                    className="flex-1 min-w-0 bg-transparent outline-none border-none text-[13px] text-white placeholder:text-gray-500 px-2.5"
-                                />
-                                {searchTerm && (
-                                    <button type="button" onClick={() => onSearch('')} aria-label="Clear search" className="text-gray-500 hover:text-white p-0.5">
-                                        <X size={14} />
-                                    </button>
-                                )}
-                            </form>
-
-                            {/* Search icon (tablet & below) */}
-                            <button
-                                className="xl:hidden text-gray-300 hover:text-white p-2.5 rounded-full hover:bg-white/[0.07] transition-colors"
-                                onClick={() => setIsSearchModalOpen(true)}
-                                aria-label="Search"
-                            >
-                                <Search size={21} />
-                            </button>
-
-                            {/* TechBoy AI (desktop) */}
-                            <button
-                                onClick={onChatToggle}
-                                className="hidden md:flex items-center gap-2 text-[13px] font-bold whitespace-nowrap bg-white/[0.05] border border-white/10 hover:border-red-500/40 hover:bg-red-500/10 px-4 py-2.5 rounded-full transition-all text-gray-200 hover:text-white"
-                            >
-                                <Bot size={17} className="text-red-500 shrink-0" />
-                                <span>TechBoy AI</span>
-                            </button>
-
-                            <NotificationSystem />
-
-                            {user ? (
-                                <AuthDropdown onViewChange={setCurrentView} />
-                            ) : (
-                                <button
-                                    className="hidden sm:flex text-[13px] md:text-sm font-extrabold whitespace-nowrap text-white px-5 md:px-6 py-2.5 md:py-3 rounded-full bg-gradient-to-r from-[#ff3d55] to-[#e60023] hover:from-[#ff4d64] hover:to-[#ff1030] transition-all shadow-[0_0_20px_rgba(230,0,35,0.45)] hover:shadow-[0_0_30px_rgba(255,31,61,0.65)] items-center justify-center tracking-wider active:scale-95"
-                                    onClick={login}
-                                    disabled={authLoading}
-                                >
-                                    {authLoading ? '...' : 'Sign Up'}
-                                </button>
-                            )}
-
-                            {/* Mobile menu toggle */}
-                            <button
-                                className="lg:hidden text-gray-200 hover:text-white p-2.5 rounded-xl hover:bg-white/[0.07] transition-colors"
-                                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                aria-label="Toggle menu"
-                                aria-expanded={isMenuOpen}
-                            >
-                                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Mobile Menu */}
-            <AnimatePresence>
-                {isMenuOpen && (
-                    <>
-                        <m.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="lg:hidden fixed inset-0 top-[66px] bg-black/60 backdrop-blur-sm z-[80]"
-                            onClick={() => setIsMenuOpen(false)}
-                        />
-                        <m.div
-                            initial={{ opacity: 0, y: -14 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -14 }}
-                            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                            className="lg:hidden absolute top-full left-3 right-3 mt-2 rounded-2xl border border-white/10 bg-[#0a0a0f]/98 backdrop-blur-2xl shadow-[0_25px_60px_rgba(0,0,0,0.7)] overflow-hidden z-[85]"
-                        >
-                            <div className="p-3">
-                                <form onSubmit={handleSearchSubmit} className="flex items-center h-12 rounded-xl bg-white/[0.05] border border-white/10 px-4 mb-3">
-                                    <Search size={16} className="text-gray-500 shrink-0" />
-                                    <input
-                                        type="text"
-                                        value={searchTerm}
-                                        onChange={(e) => onSearch(e.target.value)}
-                                        placeholder="Search smartphones, brands..."
-                                        className="flex-1 min-w-0 bg-transparent outline-none border-none text-sm text-white placeholder:text-gray-500 px-3"
+                            {/* LOGO */}
+                            <a href="/#home" className="flex items-center gap-2 sm:gap-3 group shrink-0" onClick={(e) => handleNavClick(e, 'home')}>
+                                <span className="relative shrink-0">
+                                    <img
+                                        src={logo}
+                                        alt="TECHBOY STORE"
+                                        className="h-9 w-9 sm:h-10 sm:w-10 md:h-11 md:w-11 rounded-full object-cover border border-red-500/60 shadow-[0_0_16px_rgba(255,31,61,0.4)] transition-transform duration-500 group-hover:scale-105 group-hover:shadow-[0_0_22px_rgba(255,31,61,0.65)]"
                                     />
-                                </form>
+                                    <span className="absolute inset-0 rounded-full ring-1 ring-white/10 pointer-events-none" />
+                                </span>
+                                <span className="text-white font-extrabold tracking-wide text-[14px] sm:text-base md:text-lg whitespace-nowrap leading-none">
+                                    TECHBOY <span className="text-red-500 drop-shadow-[0_0_12px_rgba(255,31,61,0.6)]">STORE</span>
+                                </span>
+                            </a>
 
-                                {NAV_ITEMS.map((item, idx) => {
-                                    const isActive = currentView === 'trackhub' ? item.id === 'trackhub' : activeSection === item.id;
+                            {/* DESKTOP NAV LINKS — RED PILLS WITH SYMBOLS */}
+                            <div className="hidden lg:flex items-center gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/[0.08] backdrop-blur-md shrink-0">
+                                {NAV_ITEMS.map(item => {
+                                    const Icon = item.icon;
+                                    const isActive = currentView === 'trackhub' ? item.id === 'trackhub' : (currentView === 'home' && activeSection === item.id);
                                     return (
-                                        <m.a
+                                        <a
                                             key={item.id}
                                             href={`#${item.id}`}
-                                            initial={{ opacity: 0, x: -10 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: 0.04 * idx }}
-                                            className={`flex items-center justify-between px-4 py-3.5 rounded-xl text-[15px] font-bold transition-colors ${isActive ? 'bg-red-500/10 text-red-400' : 'text-gray-200 hover:bg-white/[0.06] hover:text-white'}`}
+                                            className={`relative flex items-center gap-1.5 px-3.5 xl:px-4 py-1.5 text-[13.5px] font-bold tracking-wide rounded-full transition-all duration-250 select-none z-10 ${
+                                                isActive ? 'text-white' : 'text-gray-300 hover:text-white hover:bg-white/[0.05]'
+                                            }`}
                                             onClick={(e) => handleNavClick(e, item.id)}
                                         >
-                                            {item.label}
-                                            {isActive && <span className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(255,31,61,0.9)]" />}
-                                        </m.a>
+                                            {isActive && (
+                                                <m.span
+                                                    layoutId="navPill"
+                                                    className="absolute inset-0 rounded-full bg-gradient-to-r from-[#ff1f3d] via-[#e60023] to-[#c7001e] shadow-[0_2px_14px_rgba(230,0,35,0.55)] border border-white/25 -z-10"
+                                                    transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                                                />
+                                            )}
+                                            {Icon && <Icon size={14} className={`shrink-0 transition-colors ${isActive ? 'text-white' : 'text-red-400'}`} />}
+                                            <span className="relative z-10">{item.label}</span>
+                                        </a>
                                     );
                                 })}
+                            </div>
 
-                                {!user && (
+                            {/* RIGHT CLUSTER */}
+                            <div className="flex items-center justify-end gap-1.5 sm:gap-2.5 flex-1 lg:flex-none">
+
+                                {/* Instant Live Search Engine (Desktop) */}
+                                <div ref={searchContainerRef} className="relative hidden xl:block">
+                                    <form
+                                        onSubmit={handleSearchSubmit}
+                                        className="flex items-center w-[270px] 2xl:w-[320px] h-11 rounded-full bg-white/[0.05] border border-white/10 focus-within:border-red-500/50 focus-within:bg-white/[0.08] focus-within:shadow-[0_0_24px_rgba(255,31,61,0.22)] px-4 transition-all duration-300"
+                                    >
+                                        <Search size={16} className="text-gray-400 shrink-0" />
+                                        <input
+                                            type="text"
+                                            value={searchTerm}
+                                            onFocus={() => setIsSearchFocused(true)}
+                                            onChange={(e) => {
+                                                onSearch(e.target.value);
+                                                setIsSearchFocused(true);
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Escape') setIsSearchFocused(false);
+                                            }}
+                                            placeholder="Search phones, brands..."
+                                            className="flex-1 min-w-0 bg-transparent outline-none border-none text-[13px] text-white placeholder:text-gray-500 px-2.5"
+                                        />
+                                        {searchTerm && (
+                                            <button
+                                                type="button"
+                                                onClick={() => onSearch('')}
+                                                aria-label="Clear search"
+                                                className="text-gray-400 hover:text-white p-0.5"
+                                            >
+                                                <X size={14} />
+                                            </button>
+                                        )}
+                                    </form>
+
+                                    {/* Instant Live Search Dropdown */}
+                                    <AnimatePresence>
+                                        {isSearchFocused && (
+                                            <m.div
+                                                initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                                                transition={{ duration: 0.18 }}
+                                                className="absolute top-[calc(100%+8px)] right-0 w-[380px] 2xl:w-[420px] bg-[#0c0d14]/98 backdrop-blur-2xl border border-white/15 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.85),0_0_30px_rgba(255,31,61,0.18)] p-3 z-[110] overflow-hidden"
+                                            >
+                                                {!searchTerm && (
+                                                    <div className="p-2">
+                                                        <div className="flex items-center gap-1.5 text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2.5 px-1">
+                                                            <TrendingUp size={13} className="text-red-500" />
+                                                            <span>Trending Searches</span>
+                                                        </div>
+                                                        <div className="flex flex-wrap gap-1.5 mb-3.5">
+                                                            {TRENDING_SEARCHES.map((t) => (
+                                                                <button
+                                                                    key={t.label}
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        onSearch(t.query);
+                                                                        handleSearchSubmit();
+                                                                    }}
+                                                                    className="text-xs text-gray-300 hover:text-white bg-white/5 hover:bg-red-500/20 hover:border-red-500/40 border border-white/10 px-2.5 py-1 rounded-full transition-all"
+                                                                >
+                                                                    {t.label}
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                        <div className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-2 px-1">
+                                                            Popular Brands
+                                                        </div>
+                                                        <div className="flex flex-wrap gap-1.5">
+                                                            {['Apple', 'Samsung', 'OnePlus', 'Xiaomi', 'Realme', 'iQOO', 'Nothing', 'Vivo'].map((b) => (
+                                                                <button
+                                                                    key={b}
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        onSearch(b);
+                                                                        handleSearchSubmit();
+                                                                    }}
+                                                                    className="text-xs text-gray-400 hover:text-white bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] px-2.5 py-1 rounded-lg transition-colors"
+                                                                >
+                                                                    {b}
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {searchTerm && searchMatches.length > 0 && (
+                                                    <div className="p-1">
+                                                        <div className="px-2 py-1 text-[11px] font-bold text-gray-400 uppercase tracking-wider flex justify-between items-center mb-1">
+                                                            <span>Smartphones</span>
+                                                            <span className="text-red-400 font-semibold">{searchMatches.length} matches</span>
+                                                        </div>
+                                                        <div className="space-y-1 max-h-[320px] overflow-y-auto hide-scrollbar">
+                                                            {searchMatches.map((p) => {
+                                                                const imgSrc = resolveProductImage(p.image, p.name);
+                                                                return (
+                                                                    <button
+                                                                        key={p.id || p.name}
+                                                                        type="button"
+                                                                        onClick={() => handleSelectProduct(p)}
+                                                                        className="w-full flex items-center gap-3 p-2 hover:bg-white/[0.06] rounded-xl transition-all text-left group"
+                                                                    >
+                                                                        <div className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center p-1 shrink-0 overflow-hidden group-hover:border-red-500/40 transition-colors">
+                                                                            <img
+                                                                                src={imgSrc}
+                                                                                alt={p.name}
+                                                                                className="w-full h-full object-contain group-hover:scale-105 transition-transform"
+                                                                                onError={(e) => {
+                                                                                    e.target.onerror = null;
+                                                                                    e.target.src = '/images/phones/apple-iphone-16-pro-max.jpg';
+                                                                                }}
+                                                                            />
+                                                                        </div>
+                                                                        <div className="flex-1 min-w-0">
+                                                                            <div className="text-white text-xs sm:text-[13px] font-bold truncate group-hover:text-red-400 transition-colors">
+                                                                                {p.name}
+                                                                            </div>
+                                                                            <div className="text-[11px] text-gray-400 truncate">
+                                                                                {p.brand ? `${p.brand} • ` : ''}{p.tag || p.category || ''}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="text-right shrink-0">
+                                                                            <div className="text-xs font-extrabold text-red-400">
+                                                                                {p.price ? `₹${Number(p.price).toLocaleString()}` : ''}
+                                                                            </div>
+                                                                        </div>
+                                                                    </button>
+                                                                );
+                                                            })}
+                                                        </div>
+                                                        <div className="mt-2 pt-2 border-t border-white/10 px-2 flex justify-between items-center text-xs">
+                                                            <button
+                                                                type="button"
+                                                                onClick={handleSearchSubmit}
+                                                                className="text-red-400 hover:text-red-300 font-semibold flex items-center gap-1 transition-colors"
+                                                            >
+                                                                View all results in catalog <ChevronRight size={13} />
+                                                            </button>
+                                                            <span className="text-[10px] text-gray-500">Press Enter ↵</span>
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                {searchTerm && searchMatches.length === 0 && (
+                                                    <div className="p-4 text-center">
+                                                        <div className="text-2xl mb-1">🔍</div>
+                                                        <div className="text-white text-xs font-bold mb-1">No smartphones found</div>
+                                                        <div className="text-gray-400 text-[11px] mb-3">No matches for "{searchTerm}"</div>
+                                                        <div className="flex flex-wrap justify-center gap-1.5">
+                                                            {['5G', 'Samsung', 'iPhone', 'Snapdragon'].map((s) => (
+                                                                <button
+                                                                    key={s}
+                                                                    type="button"
+                                                                    onClick={() => {
+                                                                        onSearch(s);
+                                                                        handleSearchSubmit();
+                                                                    }}
+                                                                    className="text-[11px] text-gray-300 bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-lg border border-white/10"
+                                                                >
+                                                                    Try "{s}"
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </m.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+
+                                {/* Search icon (mobile & tablet) */}
+                                <button
+                                    className="xl:hidden text-gray-300 hover:text-white p-2 sm:p-2.5 rounded-full hover:bg-white/[0.07] transition-colors"
+                                    onClick={() => setIsSearchModalOpen(true)}
+                                    aria-label="Search"
+                                >
+                                    <Search size={20} className="sm:w-[22px] sm:h-[22px]" />
+                                </button>
+
+                                {/* TechBoy AI (top header button, visible on mobile, tablet & desktop) */}
+                                <button
+                                    onClick={onChatToggle}
+                                    className="relative flex items-center gap-1.5 sm:gap-2 text-[12.5px] sm:text-[13px] font-bold whitespace-nowrap bg-white/[0.05] border border-white/10 hover:border-red-500/40 hover:bg-red-500/10 p-2 sm:px-3.5 sm:py-2 rounded-full transition-all text-gray-200 hover:text-white group"
+                                    aria-label="TechBoy AI"
+                                >
+                                    <div className="relative flex items-center justify-center">
+                                        <Bot size={18} className="text-red-500 group-hover:scale-110 transition-transform" />
+                                        <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-red-500 animate-ping opacity-75" />
+                                        <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(255,31,61,0.9)]" />
+                                    </div>
+                                    <span className="hidden sm:inline">TechBoy AI</span>
+                                </button>
+
+                                <NotificationSystem />
+
+                                {/* Desktop Auth Button (Mobile uses the floating bottom dock Profile icon) */}
+                                {user ? (
+                                    <div className="hidden lg:block">
+                                        <AuthDropdown onViewChange={setCurrentView} />
+                                    </div>
+                                ) : (
                                     <button
-                                        className="mt-3 w-full py-3.5 rounded-xl bg-gradient-to-r from-[#ff3d55] to-[#e60023] text-white text-sm font-extrabold tracking-wider shadow-[0_0_20px_rgba(230,0,35,0.4)]"
-                                        onClick={() => { setIsMenuOpen(false); login(); }}
+                                        className="hidden lg:flex text-xs sm:text-[13px] md:text-sm font-extrabold whitespace-nowrap text-white px-5 py-2.5 rounded-full bg-gradient-to-r from-[#ff3d55] to-[#e60023] hover:from-[#ff4d64] hover:to-[#ff1030] transition-all shadow-[0_0_18px_rgba(230,0,35,0.45)] hover:shadow-[0_0_26px_rgba(255,31,61,0.65)] items-center justify-center tracking-wider active:scale-95"
+                                        onClick={login}
+                                        disabled={authLoading}
                                     >
                                         Sign Up
                                     </button>
                                 )}
                             </div>
-                        </m.div>
-                    </>
-                )}
-            </AnimatePresence>
+                        </div>
+                    </div>
+                </div>
 
-            <SearchModal
-                isOpen={isSearchModalOpen}
-                onClose={() => setIsSearchModalOpen(false)}
-                onSelectResult={(product) => {
-                    onSearch(product.name || '');
-                    setCurrentView('home');
-                    setTimeout(() => scrollToSection('products'), 100);
-                }}
-            />
-        </nav>
+                <SearchModal
+                    isOpen={isSearchModalOpen}
+                    onClose={() => setIsSearchModalOpen(false)}
+                    onSelectResult={(product) => {
+                        onSearch(product.name || '');
+                        setCurrentView('home');
+                        setTimeout(() => scrollToSection('products'), 100);
+                    }}
+                />
+            </nav>
+
+            {/* MOBILE & TABLET FLOATING DOCK NAVBAR — DIRECT BODY PORTAL WITH LIQUID GLASS JELLY PHYSICS */}
+            {typeof document !== 'undefined' && createPortal(
+                <div 
+                    className="lg:hidden fixed left-1/2 -translate-x-1/2 z-[9990] w-[calc(100%-20px)] sm:w-[calc(100%-32px)] max-w-[420px] rounded-full bg-gradient-to-b from-[#1c1c2a]/80 via-[#0e0e18]/90 to-[#07070d]/95 backdrop-blur-3xl border border-white/25 p-1.5 ring-1 ring-white/10 pointer-events-auto select-none"
+                    style={{
+                        bottom: 'max(14px, env(safe-area-inset-bottom, 14px))',
+                        boxShadow: '0 20px 50px rgba(0, 0, 0, 0.88), 0 0 30px rgba(255, 31, 61, 0.22), inset 0 1.5px 1px rgba(255, 255, 255, 0.35), inset 0 -1.5px 2px rgba(0, 0, 0, 0.6)'
+                    }}
+                >
+                    <div className="grid grid-cols-5 items-center justify-items-center gap-1">
+                        {NAV_ITEMS.map((item) => {
+                            const Icon = item.icon;
+                            const isActive = currentView === 'trackhub' ? item.id === 'trackhub' : (currentView === 'home' && activeSection === item.id);
+                            return (
+                                <button
+                                    key={item.id}
+                                    type="button"
+                                    onClick={(e) => handleNavClick(e, item.id)}
+                                    className={`relative flex flex-col items-center justify-center py-1.5 px-1 rounded-full w-full transition-all duration-200 select-none group active:scale-90 z-10 ${
+                                        isActive ? 'text-white' : 'text-gray-400 hover:text-white'
+                                    }`}
+                                >
+                                    {isActive && (
+                                        <m.div
+                                            layoutId="mobileBottomNavPill"
+                                            className="absolute inset-0 rounded-full bg-gradient-to-b from-[#ff3856] via-[#e60023] to-[#ad0017] border border-white/35 -z-10"
+                                            style={{
+                                                boxShadow: '0 4px 18px rgba(230, 0, 35, 0.7), 0 0 25px rgba(255, 31, 61, 0.4), inset 0 1.5px 1px rgba(255, 255, 255, 0.6), inset 0 -2px 3px rgba(0, 0, 0, 0.45)'
+                                            }}
+                                            transition={{ type: "spring", stiffness: 360, damping: 22, mass: 0.75 }}
+                                        />
+                                    )}
+                                    <m.div 
+                                        className="relative flex items-center justify-center"
+                                        animate={isActive ? { scale: [0.88, 1.12, 1] } : { scale: 1 }}
+                                        transition={{ duration: 0.35, ease: "easeOut" }}
+                                    >
+                                        <Icon size={18} className={isActive ? 'stroke-[2.6]' : 'stroke-[2]'} />
+                                    </m.div>
+                                    <span className={`text-[10px] tracking-tight leading-none mt-1 transition-all ${
+                                        isActive ? 'font-extrabold text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]' : 'font-medium text-gray-400'
+                                    }`}>
+                                        {item.id === 'products' ? 'Phones' : item.label}
+                                    </span>
+                                </button>
+                            );
+                        })}
+
+                        {/* Profile / Sign Up button on mobile bottom nav */}
+                        <div className="relative w-full" ref={mobileProfileRef}>
+                            <button
+                                type="button"
+                                onClick={(e) => {
+                                    if (user) {
+                                        handleNavClick(e, 'profile');
+                                    } else {
+                                        login();
+                                    }
+                                }}
+                                className={`relative flex flex-col items-center justify-center py-1 sm:py-1.5 px-1 rounded-full w-full transition-all duration-200 select-none group active:scale-90 z-10 ${
+                                    currentView === 'profile' ? 'text-white' : 'text-gray-400 hover:text-white'
+                                }`}
+                            >
+                                {currentView === 'profile' && (
+                                    <m.div
+                                        layoutId="mobileBottomNavPill"
+                                        className="absolute inset-0 rounded-full bg-gradient-to-b from-[#ff3856] via-[#e60023] to-[#ad0017] border border-white/35 -z-10"
+                                        style={{
+                                            boxShadow: '0 4px 18px rgba(230, 0, 35, 0.7), 0 0 25px rgba(255, 31, 61, 0.4), inset 0 1.5px 1px rgba(255, 255, 255, 0.6), inset 0 -2px 3px rgba(0, 0, 0, 0.45)'
+                                        }}
+                                        transition={{ type: "spring", stiffness: 360, damping: 22, mass: 0.75 }}
+                                    />
+                                )}
+                                <m.div 
+                                    className="relative flex items-center justify-center"
+                                    animate={currentView === 'profile' ? { scale: [0.88, 1.12, 1] } : { scale: 1 }}
+                                    transition={{ duration: 0.35, ease: "easeOut" }}
+                                >
+                                    {user ? (
+                                        <img
+                                            src={user.avatar || user.photoURL || ('https://api.dicebear.com/7.x/avataaars/svg?seed=' + (user.uid || 'user'))}
+                                            alt={user.name || 'User'}
+                                            className="w-[26px] h-[26px] sm:w-[28px] sm:h-[28px] rounded-full object-cover border-[1.8px] border-white/95 shadow-[0_0_14px_rgba(255,31,61,0.65)]"
+                                        />
+                                    ) : (
+                                        <User size={19} className="stroke-[2.3] text-gray-400 group-hover:text-white" />
+                                    )}
+                                </m.div>
+                                <span className={`text-[10px] tracking-tight leading-none mt-1 transition-all ${
+                                    currentView === 'profile' ? 'font-extrabold text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]' : 'font-medium text-gray-400'
+                                }`}>
+                                    Profile
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            )}
+        </>
     );
 };
 

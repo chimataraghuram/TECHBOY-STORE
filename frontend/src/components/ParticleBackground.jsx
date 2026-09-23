@@ -2,6 +2,10 @@ import React, { useMemo } from 'react';
 import Particles, { ParticlesProvider } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
+const initParticlesEngine = async (engine) => {
+    await loadSlim(engine);
+};
+
 const ParticleBackground = () => {
     const options = useMemo(() => ({
         fullScreen: { 
@@ -64,7 +68,7 @@ const ParticleBackground = () => {
     }), []);
 
     return (
-        <ParticlesProvider init={async (engine) => await loadSlim(engine)}>
+        <ParticlesProvider init={initParticlesEngine}>
             <Particles
                 id="tsparticles"
                 options={options}

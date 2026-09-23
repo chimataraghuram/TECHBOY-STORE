@@ -68,9 +68,10 @@ const Footer = ({ setCurrentView }) => {
             <div className="relative z-10 mx-auto max-w-[1560px] px-5 sm:px-8 lg:px-12 pt-14 md:pt-16 pb-8">
                 <m.div
                     className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-8 md:gap-10 mb-12"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.7, staggerChildren: 0.08 }}
+                    initial={{ opacity: 0, y: 25 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, staggerChildren: 0.08 }}
                 >
                     {/* BRAND — logo + title only */}
                     <div className="col-span-2 md:col-span-4 lg:col-span-5 flex flex-col justify-start">
@@ -96,22 +97,24 @@ const Footer = ({ setCurrentView }) => {
                     </div>
                     <div className="lg:col-span-3 md:col-span-2">
                         <LinkColumn title="LEGAL" links={legalLinks} />
-                        <button
+                        <m.button
+                            whileHover={{ y: -3, scale: 1.04 }}
+                            whileTap={{ scale: 0.95 }}
                             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                            className="mt-6 group flex items-center gap-2.5 text-[12px] font-bold tracking-widest text-gray-500 hover:text-white transition-colors"
+                            className="mt-6 group flex items-center gap-2.5 text-[12px] font-bold tracking-widest text-gray-400 hover:text-white transition-colors"
                         >
-                            <span className="flex items-center justify-center w-9 h-9 rounded-full border border-white/10 bg-white/[0.03] group-hover:border-red-500/50 group-hover:bg-red-500/10 group-hover:shadow-[0_0_14px_rgba(255,31,61,0.35)] transition-all">
-                                <ArrowUp size={15} className="transition-transform duration-300 group-hover:-translate-y-0.5" />
+                            <span className="flex items-center justify-center w-9 h-9 rounded-full border border-white/10 bg-white/[0.03] group-hover:border-red-500/50 group-hover:bg-red-500/15 group-hover:shadow-[0_0_16px_rgba(255,31,61,0.45)] transition-all">
+                                <ArrowUp size={15} className="transition-transform duration-300 group-hover:-translate-y-0.5 text-white" />
                             </span>
                             BACK TO TOP
-                        </button>
+                        </m.button>
                     </div>
                 </m.div>
 
                 {/* Bottom bar */}
                 <div className="pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p className="text-gray-500 text-xs font-medium flex items-center gap-1.5 order-2 sm:order-1">
-                        Built with <span className="text-red-500 animate-pulse">♥</span> by <span className="text-gray-300 font-bold">Raghu</span>
+                        Built with <m.span animate={{ scale: [1, 1.3, 1] }} transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }} className="text-red-500 inline-block">♥</m.span> by <span className="text-gray-300 font-bold">Raghu</span>
                     </p>
                     <p className="text-gray-600 text-[11px] font-semibold tracking-[0.2em] uppercase flex items-center gap-2 order-1 sm:order-2">
                         <span className="relative flex h-1.5 w-1.5">

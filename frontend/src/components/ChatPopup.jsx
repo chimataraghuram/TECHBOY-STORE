@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { m } from 'framer-motion';
 import logo from '../../images/logos/new-logo.jpg';
 import localPhonesData from '../data/phones.json';
 
@@ -132,8 +133,29 @@ const ChatPopup = ({ isOpen, onClose }) => {
     const [isStreaming, setIsStreaming] = useState(false);
     const messagesEndRef = useRef(null);
     const abortRef = useRef(null);
+    const popupRef = useRef(null);
     const [livePhonesData, setLivePhonesData] = useState(localPhonesData);
     const [systemPrompt, setSystemPrompt] = useState('');
+
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (popupRef.current && !popupRef.current.contains(e.target)) {
+                if (e.target.closest('button[aria-label="TechBoy AI"]')) return;
+                onClose();
+            }
+        };
+        const handleEsc = (e) => {
+            if (e.key === 'Escape') onClose();
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        document.addEventListener('touchstart', handleClickOutside, { passive: true });
+        document.addEventListener('keydown', handleEsc);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('touchstart', handleClickOutside);
+            document.removeEventListener('keydown', handleEsc);
+        };
+    }, [onClose]);
 
     useEffect(() => {
         let mounted = true;
@@ -345,7 +367,14 @@ ${catalogText}`);
     if (!isOpen) return null;
 
     return (
-        <div className="chat-popup glass-card">
+        <m.div
+            ref={popupRef}
+            className="chat-popup glass-card"
+            initial={{ opacity: 0, scale: 0.9, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 16 }}
+            transition={{ type: "spring", stiffness: 360, damping: 25 }}
+        >
             {/* Header */}
             <div className="chat-header">
                 <div className="chat-header-info">
@@ -429,7 +458,7 @@ ${catalogText}`);
                     </button>
                 )}
             </form>
-        </div>
+        </m.div>
     );
 };
 

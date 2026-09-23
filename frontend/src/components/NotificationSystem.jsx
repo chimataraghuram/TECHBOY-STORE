@@ -89,7 +89,7 @@ const NotificationSystem = () => {
             <AnimatePresence>
                 {isOpen && (
                     <m.div 
-                        className="absolute top-full right-0 mt-3.5 w-76 sm:w-80 bg-[#101018] border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50 backdrop-blur-xl"
+                        className="absolute top-full right-0 mt-3.5 w-[290px] sm:w-80 max-w-[calc(100vw-24px)] bg-[#101018] border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50 backdrop-blur-xl"
                         initial={{ opacity: 0, y: 8, scale: 0.96 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 8, scale: 0.96 }}

@@ -75,7 +75,7 @@ const Phone3D = () => {
         const t = state.clock.elapsedTime;
         if (!group.current) return;
         // Gentle levitation
-        group.current.position.y = Math.sin(t * 0.9) * 0.12;
+        group.current.position.y = Math.sin(t * 0.9) * 0.08;
         // Mouse parallax
         const targetX = Math.sin(t * 0.4) * 0.08 + state.pointer.y * -0.12;
         const targetY = -0.55 + state.pointer.x * 0.35;
@@ -84,7 +84,7 @@ const Phone3D = () => {
     });
 
     return (
-        <group ref={group} rotation={[0, -0.55, 0]} position={[0, -0.1, 0]}>
+        <group ref={group} rotation={[0, -0.55, 0]} position={[0, 0, 0]}>
             {/* Frame */}
             <RoundedBox args={[2.62, 5.4, 0.3]} radius={0.42} smoothness={6}>
                 <meshPhysicalMaterial
@@ -186,7 +186,7 @@ const HeroPhone3D = ({ className = '' }) => {
                     <Suspense fallback={null}>
                         <Canvas
                             dpr={[1, 1.75]}
-                            camera={{ position: [0, 0, 6.4], fov: 42 }}
+                            camera={{ position: [0, 0, 8.2], fov: 40 }}
                             gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
                             style={{ background: 'transparent' }}
                         >

@@ -136,7 +136,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_class = ProductFilter
-    search_fields = ['name', 'category', 'description']
+    search_fields = ['name', 'brand', 'category', 'tag', 'description']
 
     def get_queryset(self):
         qs = super().get_queryset()

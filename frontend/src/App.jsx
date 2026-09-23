@@ -3,7 +3,6 @@ import React, { useState, Suspense, lazy } from 'react'
 import { createPortal } from 'react-dom'
 import './App.css'
 import './redline.css'
-import { AuthProvider } from './context/AuthContext'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import StoreSection from './components/StoreSection'
@@ -16,6 +15,7 @@ const Footer = lazy(() => import('./components/Footer'))
 
 const TechAdvisorModal = lazy(() => import('./components/TechAdvisorModal'))
 const TrackHub = lazy(() => import('./components/TrackHub'))
+const ProfilePage = lazy(() => import('./components/ProfilePage'))
 
 function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -23,6 +23,16 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [showIntro, setShowIntro] = useState(true);
   const [currentView, setCurrentView] = useState('home');
+  const [profileTab, setProfileTab] = useState('profile');
+
+  // Support navigating to profile with a specific tab
+  const handleViewChange = (view, tab) => {
+    setCurrentView(view);
+    if (view === 'profile' && tab) {
+      setProfileTab(tab);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   React.useEffect(() => {
     if (showIntro) return;
@@ -67,8 +77,7 @@ function App() {
   }, [showIntro, currentView]);
 
   return (
-    <AuthProvider>
-      <LazyMotion features={domAnimation}>
+    <LazyMotion features={domAnimation}>
       <AnimatePresence>
         {showIntro && <IntroScreen key="intro" onComplete={() => setShowIntro(false)} />}
       </AnimatePresence>
@@ -80,7 +89,7 @@ function App() {
             onSearch={setSearchTerm} 
             searchTerm={searchTerm} 
             currentView={currentView}
-            setCurrentView={setCurrentView}
+            setCurrentView={handleViewChange}
           />
           {createPortal(
             <Suspense fallback={null}>
@@ -92,31 +101,59 @@ function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
-            className="app-container"
+            className="app-container pb-20 lg:pb-0"
           >
           <main>
-            {currentView === 'home' ? (
-              <>
-                <Hero 
-                  onOpenAdvisor={() => setIsAdvisorOpen(true)} 
-                  searchTerm={searchTerm} 
-                  onSearch={setSearchTerm} 
-                  setCurrentView={setCurrentView}
-                />
-                <StoreSection searchTerm={searchTerm} onSearch={setSearchTerm} />
-                <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '300px', margin: '40px 0', borderRadius: '16px'}}></div>}>
-                  <TechBoyTrends />
-                </Suspense>
-              </>
-            ) : currentView === 'trackhub' ? (
-              <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '500px', margin: '120px 20px', borderRadius: '16px'}}></div>}>
-                <TrackHub />
-              </Suspense>
-            ) : null}
+            <AnimatePresence mode="wait">
+              {currentView === 'home' ? (
+                <m.div
+                  key="home"
+                  initial={{ opacity: 0, y: 12, filter: 'blur(3px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, y: -8, filter: 'blur(3px)' }}
+                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <Hero 
+                    onOpenAdvisor={() => setIsAdvisorOpen(true)} 
+                    searchTerm={searchTerm} 
+                    onSearch={setSearchTerm} 
+                    setCurrentView={handleViewChange}
+                  />
+                  <StoreSection searchTerm={searchTerm} onSearch={setSearchTerm} />
+                  <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '300px', margin: '40px 0', borderRadius: '16px'}}></div>}>
+                    <TechBoyTrends />
+                  </Suspense>
+                </m.div>
+              ) : currentView === 'trackhub' ? (
+                <m.div
+                  key="trackhub"
+                  initial={{ opacity: 0, y: 12, filter: 'blur(3px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, y: -8, filter: 'blur(3px)' }}
+                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '500px', margin: '120px 20px', borderRadius: '16px'}}></div>}>
+                    <TrackHub />
+                  </Suspense>
+                </m.div>
+              ) : currentView === 'profile' ? (
+                <m.div
+                  key={`profile-${profileTab}`}
+                  initial={{ opacity: 0, y: 12, filter: 'blur(3px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, y: -8, filter: 'blur(3px)' }}
+                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '500px', margin: '120px 20px', borderRadius: '16px'}}></div>}>
+                    <ProfilePage setCurrentView={handleViewChange} initialTab={profileTab} onSearch={setSearchTerm} />
+                  </Suspense>
+                </m.div>
+              ) : null}
+            </AnimatePresence>
           </main>
           
           <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '200px'}}></div>}>
-            <Footer setCurrentView={setCurrentView} />
+            <Footer setCurrentView={handleViewChange} />
           </Suspense>
           </m.div>
         </>
@@ -138,7 +175,6 @@ function App() {
         document.body
       )}
       </LazyMotion>
-    </AuthProvider>
   )
 }
 
