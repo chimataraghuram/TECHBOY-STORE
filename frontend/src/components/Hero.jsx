@@ -49,69 +49,72 @@ const Hero = ({ setCurrentView }) => {
 
                     {/* ── LEFT: copy ── */}
                     <div className="flex flex-col items-start text-left w-full lg:w-[54%] xl:w-[52%]">
-                        <m.div variants={itemVariants} className="flex items-center gap-2.5 sm:gap-3 mb-2.5 sm:mb-4">
+                        {/* Live Status Pill */}
+                        <m.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-red-500/15 to-transparent border border-red-500/30 backdrop-blur-md mb-3 sm:mb-4">
                             <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-60" />
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500 shadow-[0_0_10px_rgba(255,31,61,0.9)]" />
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500 shadow-[0_0_8px_rgba(255,31,61,1)]" />
                             </span>
-                            <span className="text-red-500 text-[10.5px] sm:text-xs md:text-sm font-extrabold tracking-[0.2em] sm:tracking-[0.24em] uppercase">
+                            <span className="text-white text-[11px] sm:text-xs font-bold tracking-wider uppercase">
                                 Smarter Choices. Better Deals.
                             </span>
                         </m.div>
 
-                        <m.h1 variants={itemVariants} className="text-[28px] min-[400px]:text-[34px] sm:text-5xl lg:text-[46px] xl:text-[54px] font-extrabold mb-2 sm:mb-4 tracking-tight text-white leading-[1.12]">
-                            Find Your Perfect<br />
-                            <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#ff3d55] via-[#ff2038] to-[#d10f2a] drop-shadow-[0_0_28px_rgba(255,31,61,0.45)]">
+                        {/* Modern High-Impact Heading */}
+                        <m.h1 variants={itemVariants} className="text-3xl min-[400px]:text-4xl sm:text-5xl lg:text-[46px] xl:text-[54px] font-black mb-2 sm:mb-4 tracking-tight text-white leading-[1.08]">
+                            Find Your Perfect{' '}
+                            <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#ff3d55] via-[#ff2038] to-[#ff6b81] drop-shadow-[0_0_30px_rgba(255,31,61,0.5)]">
                                 Smartphone
                             </span>
                         </m.h1>
 
-                        <m.p variants={itemVariants} className="text-gray-400 text-xs sm:text-base md:text-[17px] mb-4 sm:mb-8 max-w-xl leading-relaxed">
-                            Discover, compare and track the best smartphones with real-time price alerts &amp; smart recommendations.
+                        <m.p variants={itemVariants} className="text-gray-400 text-xs sm:text-base md:text-[17px] mb-4 sm:mb-7 max-w-xl leading-relaxed">
+                            Discover, compare and track verified smartphones with live price drops &amp; smart AI recommendations.
                         </m.p>
 
-                        {/* CTA and Quick Mobile Badges */}
-                        <m.div variants={itemVariants} className="flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-4 mb-4 sm:mb-9 w-full sm:w-auto">
+                        {/* Sleek Modern Actions */}
+                        <m.div variants={itemVariants} className="flex flex-col min-[420px]:flex-row items-stretch min-[420px]:items-center gap-2.5 sm:gap-3.5 mb-5 sm:mb-8 w-full sm:w-auto">
                             <m.button
-                                whileHover={{ scale: 1.03, y: -2 }}
-                                whileTap={{ scale: 0.97 }}
-                                className="relative overflow-hidden group flex items-center justify-center gap-2.5 bg-gradient-to-r from-[#ff3d55] via-[#e60023] to-[#c7001e] hover:from-[#ff4d64] hover:to-[#ff1030] text-white px-5 sm:px-8 py-3 sm:py-4 rounded-full text-xs min-[400px]:text-sm sm:text-base font-bold transition-all shadow-[0_10px_35px_rgba(230,0,35,0.45)] active:translate-y-0 border border-white/20 w-full sm:w-auto"
+                                whileHover={{ scale: 1.02, y: -2 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="relative overflow-hidden group flex items-center justify-center gap-2 bg-gradient-to-r from-[#ff1f3d] via-[#e60023] to-[#c7001e] hover:from-[#ff3856] hover:to-[#ff1030] text-white px-6 py-3.5 sm:py-4 rounded-2xl text-xs sm:text-sm font-extrabold tracking-wide transition-all shadow-[0_8px_25px_rgba(230,0,35,0.45)] border border-white/20 active:scale-95"
                                 onClick={goProducts}
                             >
-                                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
-                                <span className="relative z-10 font-bold">Explore Smartphones</span>
-                                <ArrowRight size={16} className="relative z-10 transition-transform duration-300 group-hover:translate-x-1" />
+                                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 pointer-events-none" />
+                                <span className="relative z-10">Explore Smartphones</span>
+                                <ArrowRight size={16} className="relative z-10 transition-transform duration-300 group-hover:translate-x-1 stroke-[2.5]" />
                             </m.button>
 
-                            {/* Mobile Quick Deals Pill — visible on mobile */}
+                            {/* Trending Pill for Mobile */}
                             <button
                                 onClick={goProducts}
-                                className="sm:hidden flex items-center justify-center gap-2 py-2 px-3 rounded-full bg-white/[0.04] border border-white/10 text-gray-300 text-[11px] font-semibold hover:border-red-500/40"
+                                className="group flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-red-500/40 text-xs text-gray-300 transition-all backdrop-blur-xl"
                             >
-                                <span>🔥 Trending Drops</span>
-                                <span className="text-red-400 font-bold">Save up to 35%</span>
+                                <span className="text-sm">🔥</span>
+                                <span className="font-semibold text-gray-200">Price Drops</span>
+                                <span className="px-1.5 py-0.5 rounded-md bg-red-500/20 text-red-400 font-extrabold text-[10px] border border-red-500/30">
+                                    Up to 35% Off
+                                </span>
                             </button>
                         </m.div>
 
-                        {/* Stats */}
-                        <m.div variants={itemVariants} className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-x-4 sm:gap-x-10 gap-y-2 sm:gap-y-4 w-full max-w-xl">
+                        {/* Modern Glass Stats Strip */}
+                        <m.div variants={itemVariants} className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 w-full max-w-xl">
                             {STATS.map(({ icon: Icon, value, prefix = '', suffix, label }) => (
-                                <m.div
+                                <div
                                     key={label}
-                                    whileHover={{ y: -3, scale: 1.04 }}
-                                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                                    className="flex items-center gap-2 sm:gap-3 p-1 rounded-xl cursor-default transition-colors hover:bg-white/[0.03]"
+                                    className="flex items-center gap-2.5 p-2 sm:p-2.5 rounded-xl bg-white/[0.03] border border-white/10 hover:border-white/20 transition-all backdrop-blur-md"
                                 >
-                                    <span className="flex items-center justify-center w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-red-500/10 border border-red-500/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] transition-all">
-                                        <Icon className="text-red-500 w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]" />
-                                    </span>
-                                    <div className="leading-tight">
-                                        <div className="text-white font-extrabold text-sm sm:text-lg">
+                                    <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/25 text-red-400 shrink-0">
+                                        <Icon size={15} className="stroke-[2.2]" />
+                                    </div>
+                                    <div className="min-w-0">
+                                        <div className="text-white font-black text-sm sm:text-base leading-tight">
                                             <CountUp end={value} prefix={prefix} suffix={suffix} />
                                         </div>
-                                        <div className="text-gray-500 text-[9.5px] sm:text-[11px] font-semibold whitespace-nowrap">{label}</div>
+                                        <div className="text-gray-400 text-[9px] sm:text-[10px] font-semibold truncate leading-tight mt-0.5">{label}</div>
                                     </div>
-                                </m.div>
+                                </div>
                             ))}
                         </m.div>
                     </div>
