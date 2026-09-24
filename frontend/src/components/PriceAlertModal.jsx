@@ -5,13 +5,27 @@ import { useMediaQuery } from '../hooks/useMediaQuery';
 import { useAuth } from '../context/AuthContext';
 import './PriceAlertModal.css';
 
-const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
-  const { loginWithGoogle, createPriceAlert, authLoading } = useAuth();
+const PriceAlertModal = ({ isOpen, onClose, product, user: propUser, triggerRect }) => {
+  const { user: authUser, loginWithGoogle, createPriceAlert, authLoading } = useAuth();
+  
+  // Resolve logged-in user with multiple fallbacks (prop, context, localStorage)
+  const getResolvedUser = () => {
+    if (propUser) return propUser;
+    if (authUser) return authUser;
+    try {
+      const stored = localStorage.getItem('techboy_user');
+      if (stored) return JSON.parse(stored);
+    } catch (e) {}
+    return null;
+  };
+
+  const activeUser = getResolvedUser();
+
   // Step 1: Collect Email (if not logged in)
   // Step 2: Configure Alert
   // Step 3: Success
-  const [step, setStep] = useState(user ? 2 : 1);
-  const [email, setEmail] = useState(user?.email || '');
+  const [step, setStep] = useState(activeUser ? 2 : 1);
+  const [email, setEmail] = useState(activeUser?.email || '');
   const [alertType, setAlertType] = useState('ANY'); // 'ANY' or 'TARGET'
   const [targetPrice, setTargetPrice] = useState('');
   const [loading, setLoading] = useState(false);
@@ -22,15 +36,16 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
   // Reset state when opened with a new user/product
   React.useEffect(() => {
     if (isOpen) {
-      setStep(user ? 2 : 1);
-      setEmail(user?.email || '');
+      const currentUser = getResolvedUser();
+      setStep(currentUser ? 2 : 1);
+      setEmail(currentUser?.email || '');
       setAlertType('ANY');
       setTargetPrice('');
       setError('');
       setIsN8nMode(false);
       setManualEmail('');
     }
-  }, [isOpen, user, product]);
+  }, [isOpen, propUser, authUser, product]);
 
   const handleGoogleLogin = async () => {
     setLoading(true);
@@ -109,78 +124,45 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
 
   if (!isOpen || !product) return null;
 
-  let modalStyle = {};
-  if (triggerRect && !isMobile) {
-    const modalWidth = 450; // Increased width for the "big" feel
-    const modalHeight = 460;
-    
-    // Default to the right side of the product card
-    let left = triggerRect.right + 20;
-    let top = triggerRect.top;
-    
-    // If it overflows on the right, try the left side
-    if (left + modalWidth > window.innerWidth - 20) {
-      left = triggerRect.left - modalWidth - 20;
-    }
-    
-    // If it overflows on the left too (small screen), center it
-    if (left < 20) {
-      left = (window.innerWidth - modalWidth) / 2;
-    }
-    
-    // Vertical bounding
-    if (top + modalHeight > window.innerHeight - 20) {
-      top = window.innerHeight - modalHeight - 20;
-    }
-    if (top < 20) top = 20;
-
-    modalStyle = {
-      position: 'fixed',
-      left: `${left}px`,
-      top: `${top}px`,
-      width: `${modalWidth}px`,
-      maxWidth: 'calc(100vw - 40px)',
-      margin: 0
-    };
-  } else if (!isMobile) {
-      modalStyle = {
-          position: 'relative',
-          width: '100%',
-          maxWidth: '500px',
-          margin: '0 auto'
-      };
-  } else {
-      // Mobile bottom sheet style
-      modalStyle = {
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          width: '100%',
-          maxWidth: '100%',
-          margin: 0,
-          borderBottomLeftRadius: 0,
-          borderBottomRightRadius: 0
-      };
-  }
-
-  const desktopVariants = {
-    hidden: { opacity: 0, scale: 0.9, y: 20 },
-    visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", damping: 25, stiffness: 300 } },
-    exit: { opacity: 0, scale: 0.9, y: 20, transition: { duration: 0.2 } }
+  const modalVariants = {
+    hidden: { opacity: 0, scale: 0.92, y: 15 },
+    visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", damping: 25, stiffness: 320 } },
+    exit: { opacity: 0, scale: 0.92, y: 15, transition: { duration: 0.2 } }
   };
 
-  const mobileVariants = {
-    hidden: { opacity: 1, y: "100%" },
-    visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 25, stiffness: 300 } },
-    exit: { opacity: 1, y: "100%", transition: { duration: 0.2 } }
+  const modalStyle = {
+    position: 'relative',
+    width: '92%',
+    maxWidth: '500px',
+    margin: 'auto',
+    borderRadius: '24px'
   };
 
   return (
-    <div className="price-alert-overlay" onClick={onClose} style={isMobile ? { alignItems: 'flex-end', padding: 0 } : {}}>
+    <m.div 
+      className="price-alert-overlay" 
+      onClick={onClose} 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      style={{ 
+        position: 'fixed',
+        inset: 0,
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        padding: '16px',
+        zIndex: 999999,
+        background: 'rgba(0, 0, 0, 0.82)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)'
+      }}
+    >
         <m.div 
           className="price-alert-modal glass-panel"
           onClick={e => e.stopPropagation()}
-          variants={isMobile ? mobileVariants : desktopVariants}
+          variants={modalVariants}
           initial="hidden"
           animate="visible"
           exit="exit"
@@ -356,7 +338,7 @@ const PriceAlertModal = ({ isOpen, onClose, product, user, triggerRect }) => {
             )}
           </div>
         </m.div>
-      </div>
+      </m.div>
   );
 };
 

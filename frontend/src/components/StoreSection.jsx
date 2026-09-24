@@ -3,12 +3,15 @@ import { m, AnimatePresence } from 'framer-motion';
 import ProductCard from './ProductCard';
 import ComparisonModal from './ComparisonModal';
 import PriceAlertModal from './PriceAlertModal';
+import QuickViewModal from './QuickViewModal';
 import { useAuth } from '../context/AuthContext';
 import { ArrowRight, ChevronLeft, ChevronRight, ArrowLeftRight, X } from 'lucide-react';
 import localPhonesData from '../data/phones.json';
 import BrandStrip from './BrandStrip';
 import { matchesSearch } from '../utils/searchHelper';
 import { resolveProductImage } from '../utils/imageResolver';
+import { getPhoneSlugFromHash, slugifyPhone } from '../utils/deepLink';
+import { feedback } from '../utils/haptics';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
@@ -39,8 +42,26 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     const [priceAlertProduct, setPriceAlertProduct] = useState(null);
     const [activeBrand, setActiveBrand] = useState("All");
     const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+    const [deepLinkedProduct, setDeepLinkedProduct] = useState(null);
 
     const { user } = useAuth();
+
+    // Deep Linking: Auto open QuickViewModal if #phone=slug is present in URL
+    useEffect(() => {
+        if (!products || products.length === 0) return;
+        const checkHash = () => {
+            const slug = getPhoneSlugFromHash();
+            if (slug) {
+                const match = products.find(p => slugifyPhone(p.name || '') === slug);
+                if (match) {
+                    setDeepLinkedProduct(match);
+                }
+            }
+        };
+        checkHash();
+        window.addEventListener('hashchange', checkHash);
+        return () => window.removeEventListener('hashchange', checkHash);
+    }, [products]);
 
     useEffect(() => {
         try {
@@ -152,7 +173,13 @@ const StoreSection = ({ searchTerm, onSearch }) => {
 
                 {/* Brand Filter Icon Strip — Directly Under Title */}
                 <div className="mb-3 sm:mb-4">
-                    <BrandStrip activeBrand={activeBrand} onChange={setActiveBrand} />
+                    <BrandStrip
+                        activeBrand={activeBrand}
+                        onChange={(b) => {
+                            feedback.click();
+                            setActiveBrand(b);
+                        }}
+                    />
                 </div>
 
                 {/* Action Bar Below Filters — Reset, Count & View All */}
@@ -195,6 +222,90 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                             </button>
                         </div>
                     )}
+
+                    {/* Comparison Bar — Placed neatly right at the top of the cards in the user's active view */}
+                    <AnimatePresence>
+                        {compareList.length > 0 && (
+                            <m.div
+                                initial={{ opacity: 0, y: -15, scale: 0.98 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                exit={{ opacity: 0, y: -15, scale: 0.98 }}
+                                transition={{ type: "spring", damping: 25, stiffness: 350 }}
+                                className="mb-6 w-full rounded-2xl bg-[#090910]/95 border border-red-500/50 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.7),0_0_25px_rgba(255,31,61,0.2)] p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4"
+                            >
+                                {/* Selected phones preview thumbnails */}
+                                <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-between sm:justify-start">
+                                    <div className="flex items-center gap-2">
+                                        {[0, 1, 2].map((slotIdx) => {
+                                            const item = compareList[slotIdx];
+                                            if (item) {
+                                                return (
+                                                    <m.div 
+                                                        key={item.id} 
+                                                        initial={{ scale: 0.7, opacity: 0 }}
+                                                        animate={{ scale: 1, opacity: 1 }}
+                                                        exit={{ scale: 0.7, opacity: 0 }}
+                                                        transition={{ type: "spring", stiffness: 450, damping: 22 }}
+                                                        className="relative group/thumb w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white/[0.05] border border-red-500/50 p-1 flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(255,31,61,0.2)]"
+                                                    >
+                                                        <img
+                                                            src={resolveProductImage(item.image, item.name)}
+                                                            alt={item.name}
+                                                            className="w-full h-full object-contain"
+                                                        />
+                                                        <button
+                                                            onClick={(e) => { e.stopPropagation(); handleCompare(item); }}
+                                                            className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-600 hover:bg-red-500 text-white flex items-center justify-center text-[10px] font-bold shadow-md transition-transform hover:scale-110 active:scale-90"
+                                                            title={`Remove ${item.name}`}
+                                                            aria-label={`Remove ${item.name}`}
+                                                        >
+                                                            <X size={11} className="stroke-[3]" />
+                                                        </button>
+                                                    </m.div>
+                                                );
+                                            }
+                                            return (
+                                                <div key={`empty-${slotIdx}`} className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl border border-dashed border-white/15 bg-white/[0.02] flex flex-col items-center justify-center text-gray-500 shrink-0">
+                                                    <span className="text-[10px] font-bold text-gray-500">Slot {slotIdx + 1}</span>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+
+                                    <div className="text-left hidden min-[400px]:block">
+                                        <p className="text-white text-xs sm:text-[13px] font-bold">Compare Phones</p>
+                                        <p className="text-gray-400 text-[10px] sm:text-[11px]">
+                                            {compareList.length === 1 ? 'Select 1 more to compare' : `${compareList.length} of 3 selected`}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Actions */}
+                                <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+                                    <button
+                                        onClick={() => setCompareList([])}
+                                        className="text-gray-400 hover:text-white px-3 py-2 text-xs font-semibold rounded-xl hover:bg-white/[0.06] transition-colors"
+                                    >
+                                        Clear
+                                    </button>
+                                    <m.button
+                                        whileHover={{ scale: 1.04 }}
+                                        whileTap={{ scale: 0.96 }}
+                                        disabled={compareList.length < 2}
+                                        onClick={() => setIsCompModalOpen(true)}
+                                        className={`relative overflow-hidden flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-[13px] transition-all shadow-md ${
+                                            compareList.length >= 2
+                                                ? 'bg-gradient-to-r from-[#ff1f3d] via-[#e60023] to-[#c7001e] text-white shadow-[0_4px_20px_rgba(230,0,35,0.45)] border border-white/20 cursor-pointer animate-pulse'
+                                                : 'bg-white/10 text-gray-400 border border-white/10 cursor-not-allowed'
+                                        }`}
+                                    >
+                                        <ArrowLeftRight size={14} className="stroke-[2.5]" />
+                                        <span>Compare Now ({compareList.length})</span>
+                                    </m.button>
+                                </div>
+                            </m.div>
+                        )}
+                    </AnimatePresence>
 
                     {/* Product Grid - Native 2-column mobile experience & fluid responsive breakpoints */}
                     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4 md:gap-5 lg:gap-6">
@@ -269,82 +380,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                         </div>
                     )}
 
-                    {/* Floating Comparison Dock */}
-                    <AnimatePresence>
-                        {compareList.length > 0 && (
-                            <m.div
-                                initial={{ opacity: 0, y: 70, scale: 0.95 }}
-                                animate={{ opacity: 1, y: 0, scale: 1 }}
-                                exit={{ opacity: 0, y: 70, scale: 0.95 }}
-                                transition={{ type: "spring", damping: 25, stiffness: 350 }}
-                                className="fixed bottom-[80px] sm:bottom-[86px] lg:bottom-7 left-1/2 -translate-x-1/2 z-[95] w-[94%] max-w-[640px] rounded-2xl bg-[#090910]/95 border border-red-500/50 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.85),0_0_35px_rgba(255,31,61,0.25)] p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4"
-                            >
-                                {/* Selected phones preview thumbnails */}
-                                <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-between sm:justify-start">
-                                    <div className="flex items-center gap-2">
-                                        {[0, 1, 2].map((slotIdx) => {
-                                            const item = compareList[slotIdx];
-                                            if (item) {
-                                                return (
-                                                    <div key={item.id} className="relative group/thumb w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white/[0.05] border border-red-500/50 p-1 flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(255,31,61,0.2)]">
-                                                        <img
-                                                            src={resolveProductImage(item.image, item.name)}
-                                                            alt={item.name}
-                                                            className="w-full h-full object-contain"
-                                                        />
-                                                        <button
-                                                            onClick={(e) => { e.stopPropagation(); handleCompare(item); }}
-                                                            className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-600 hover:bg-red-500 text-white flex items-center justify-center text-[10px] font-bold shadow-md transition-transform hover:scale-110"
-                                                            title={`Remove ${item.name}`}
-                                                            aria-label={`Remove ${item.name}`}
-                                                        >
-                                                            <X size={11} className="stroke-[3]" />
-                                                        </button>
-                                                    </div>
-                                                );
-                                            }
-                                            return (
-                                                <div key={`empty-${slotIdx}`} className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl border border-dashed border-white/15 bg-white/[0.02] flex flex-col items-center justify-center text-gray-500 shrink-0">
-                                                    <span className="text-[10px] font-bold text-gray-500">Slot {slotIdx + 1}</span>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
 
-                                    <div className="text-left hidden min-[400px]:block">
-                                        <p className="text-white text-xs sm:text-[13px] font-bold">Compare Phones</p>
-                                        <p className="text-gray-400 text-[10px] sm:text-[11px]">
-                                            {compareList.length === 1 ? 'Select 1 more to compare' : `${compareList.length} of 3 selected`}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* Actions */}
-                                <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
-                                    <button
-                                        onClick={() => setCompareList([])}
-                                        className="text-gray-400 hover:text-white px-3 py-2 text-xs font-semibold rounded-xl hover:bg-white/[0.06] transition-colors"
-                                    >
-                                        Clear
-                                    </button>
-                                    <m.button
-                                        whileHover={{ scale: 1.04 }}
-                                        whileTap={{ scale: 0.96 }}
-                                        disabled={compareList.length < 2}
-                                        onClick={() => setIsCompModalOpen(true)}
-                                        className={`relative overflow-hidden flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-xs sm:text-[13px] transition-all shadow-md ${
-                                            compareList.length >= 2
-                                                ? 'bg-gradient-to-r from-[#ff1f3d] via-[#e60023] to-[#c7001e] text-white shadow-[0_4px_20px_rgba(230,0,35,0.45)] border border-white/20 cursor-pointer animate-pulse'
-                                                : 'bg-white/10 text-gray-400 border border-white/10 cursor-not-allowed'
-                                        }`}
-                                    >
-                                        <ArrowLeftRight size={14} className="stroke-[2.5]" />
-                                        <span>Compare Now ({compareList.length})</span>
-                                    </m.button>
-                                </div>
-                            </m.div>
-                        )}
-                    </AnimatePresence>
 
                     <AnimatePresence>
                         {isCompModalOpen && (
@@ -360,6 +396,21 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                                 product={priceAlertProduct.product}
                                 triggerRect={priceAlertProduct.rect}
                                 user={user}
+                            />
+                        )}
+                    </AnimatePresence>
+
+                    {/* Deep-linked Phone Modal (e.g. from shared link #phone=iphone-16-pro) */}
+                    <AnimatePresence>
+                        {deepLinkedProduct && (
+                            <QuickViewModal
+                                product={deepLinkedProduct}
+                                onClose={() => {
+                                    setDeepLinkedProduct(null);
+                                    if (window.location.hash.includes('phone=')) {
+                                        history.replaceState(null, '', window.location.pathname);
+                                    }
+                                }}
                             />
                         )}
                     </AnimatePresence>

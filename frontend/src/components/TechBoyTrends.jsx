@@ -6,6 +6,7 @@ import QuickViewModal from './QuickViewModal';
 import { PREDEFINED_NOTIFICATIONS } from './NotificationSystemData';
 import { parseSpecs } from '../utils/specsParser';
 import { resolveProductImage } from '../utils/imageResolver';
+import { feedback } from '../utils/haptics';
 
 const CATEGORIES = [
     { id: 'all', label: 'All Trends', icon: Activity },
@@ -147,7 +148,11 @@ const TechBoyTrends = () => {
                         return (
                             <m.button
                                 key={cat.id}
-                                onClick={() => { setActiveCategory(cat.id); setDisplayCount(8); }}
+                                onClick={() => {
+                                    feedback.click();
+                                    setActiveCategory(cat.id);
+                                    setDisplayCount(8);
+                                }}
                                 className={`group relative flex flex-col items-center gap-1.5 px-3 py-2.5 sm:px-4 sm:py-3 min-w-[76px] sm:min-w-[88px] rounded-xl sm:rounded-2xl border transition-all duration-300 select-none shrink-0 ${
                                     isActive
                                         ? 'bg-gradient-to-br from-red-600/30 to-red-600/10 border-red-500/50 shadow-[0_0_24px_rgba(255,31,61,0.25),0_4px_16px_rgba(255,31,61,0.15)]'
@@ -169,7 +174,11 @@ const TechBoyTrends = () => {
                                     {cat.label}
                                 </span>
                                 {isActive && (
-                                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(255,31,61,0.9)]" />
+                                    <m.span 
+                                        layoutId="activeCategoryDot"
+                                        className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_10px_rgba(255,31,61,0.95)]"
+                                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                    />
                                 )}
                             </m.button>
                         );
@@ -373,13 +382,16 @@ const TechBoyTrends = () => {
 
             </div>
 
-            <PriceAlertModal
-                isOpen={!!priceAlertProduct}
-                onClose={() => setPriceAlertProduct(null)}
-                product={priceAlertProduct ? priceAlertProduct.product : null}
-                triggerRect={priceAlertProduct ? priceAlertProduct.rect : null}
-                user={null}
-            />
+            <AnimatePresence>
+                {priceAlertProduct && (
+                    <PriceAlertModal
+                        isOpen={!!priceAlertProduct}
+                        onClose={() => setPriceAlertProduct(null)}
+                        product={priceAlertProduct.product}
+                        triggerRect={priceAlertProduct.rect}
+                    />
+                )}
+            </AnimatePresence>
 
             <AnimatePresence>
                 {selectedProduct && (

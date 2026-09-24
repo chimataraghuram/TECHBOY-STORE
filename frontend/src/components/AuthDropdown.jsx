@@ -28,7 +28,6 @@ const AuthDropdown = ({ onViewChange }) => {
     { icon: User,       label: 'My Profile',    tab: 'profile',  accent: 'text-red-400',  bg: 'bg-red-500/10' },
     { icon: Bell,       label: 'My Alerts',     tab: 'alerts',   accent: 'text-yellow-400', bg: 'bg-yellow-500/10' },
     { icon: Heart,      label: 'Wishlist',      tab: 'wishlist', accent: 'text-pink-400',  bg: 'bg-pink-500/10' },
-    { icon: GitCompare, label: 'Compare List',  tab: 'compare',  accent: 'text-blue-400',  bg: 'bg-blue-500/10' },
     { icon: Settings,   label: 'Settings',      tab: 'settings', accent: 'text-purple-400', bg: 'bg-purple-500/10' },
   ];
 

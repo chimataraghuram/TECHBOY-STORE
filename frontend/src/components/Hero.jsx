@@ -1,7 +1,8 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { m } from 'framer-motion';
 import { Smartphone, Bell, Users, ShieldCheck, ArrowRight } from 'lucide-react';
 import { CountUp } from './AnimationEngine';
+import { feedback } from '../utils/haptics';
 
 const HeroPhone3D = lazy(() => import('./HeroPhone3D'));
 const appleIphone = '/images/phones/apple-iphone-16-pro-max.png';
@@ -14,6 +15,18 @@ const STATS = [
 ];
 
 const Hero = ({ setCurrentView }) => {
+    // Lazy defer heavy WebGL 3D canvas so initial paint is instantaneous
+    const [load3D, setLoad3D] = useState(false);
+
+    useEffect(() => {
+        if ('requestIdleCallback' in window) {
+            const handle = window.requestIdleCallback(() => setLoad3D(true), { timeout: 1500 });
+            return () => window.cancelIdleCallback(handle);
+        } else {
+            const timer = setTimeout(() => setLoad3D(true), 800);
+            return () => clearTimeout(timer);
+        }
+    }, []);
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -90,15 +103,23 @@ const Hero = ({ setCurrentView }) => {
                                 </div>
 
                                 {/* Interactive 3D Phone or Transparent Fallback */}
-                                <Suspense fallback={
+                                {load3D ? (
+                                    <Suspense fallback={
+                                        <img
+                                            src={appleIphone}
+                                            alt="Flagship smartphone"
+                                            className="relative z-10 w-[180px] h-auto object-contain drop-shadow-[0_20px_40px_rgba(255,31,61,0.3)]"
+                                        />
+                                    }>
+                                        <HeroPhone3D className="absolute inset-0 z-10 w-full h-full" />
+                                    </Suspense>
+                                ) : (
                                     <img
                                         src={appleIphone}
                                         alt="Flagship smartphone"
                                         className="relative z-10 w-[180px] h-auto object-contain drop-shadow-[0_20px_40px_rgba(255,31,61,0.3)]"
                                     />
-                                }>
-                                    <HeroPhone3D className="absolute inset-0 z-10 w-full h-full" />
-                                </Suspense>
+                                )}
 
                                 {/* Floating product card — Mobile */}
                                 <m.a
@@ -201,15 +222,23 @@ const Hero = ({ setCurrentView }) => {
                         </div>
 
                         {/* 3D phone (WebGL-capable) */}
-                        <Suspense fallback={
+                        {load3D ? (
+                            <Suspense fallback={
+                                <img
+                                    src={appleIphone}
+                                    alt="Flagship smartphone"
+                                    className="relative z-10 w-[260px] h-auto object-contain drop-shadow-[0_30px_60px_rgba(255,31,61,0.25)]"
+                                />
+                            }>
+                                <HeroPhone3D className="absolute inset-0 z-10" />
+                            </Suspense>
+                        ) : (
                             <img
                                 src={appleIphone}
                                 alt="Flagship smartphone"
                                 className="relative z-10 w-[260px] h-auto object-contain drop-shadow-[0_30px_60px_rgba(255,31,61,0.25)]"
                             />
-                        }>
-                            <HeroPhone3D className="absolute inset-0 z-10" />
-                        </Suspense>
+                        )}
 
                         {/* Script tagline */}
                         <div className="absolute left-[4%] top-[18%] z-20 pointer-events-none select-none">

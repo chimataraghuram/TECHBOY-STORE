@@ -4,10 +4,12 @@ import {
     User, Bell, Heart, GitCompare, Settings, ShieldCheck, Mail, Calendar,
     ArrowLeft, LogOut, CheckCircle2, Smartphone, Sparkles, TrendingDown,
     Target, Trash2, Edit3, Check, X, Package, Star, ExternalLink, BarChart2,
-    BellOff, Zap
+    BellOff, Zap, Eye, Sliders, Clock, ChevronRight, CheckSquare
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { resolveProductImage } from '../utils/imageResolver';
+import { getRecentlyViewed, clearRecentlyViewed } from '../utils/recentViews';
+import QuickViewModal from './QuickViewModal';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
@@ -56,8 +58,16 @@ const ProfilePage = ({ setCurrentView, initialTab, onSearch }) => {
     // Wishlist
     const [wishlist, setWishlist] = useState([]);
 
-    // Compare List
-    const [compareList, setCompareList] = useState([]);
+    // Recently Viewed
+    const [recentlyViewed, setRecentlyViewed] = useState([]);
+    const [quickViewProduct, setQuickViewProduct] = useState(null);
+
+    // Smartphone Preferences
+    const [preferences, setPreferences] = useState({
+        brand: 'Any',
+        budget: 'Any',
+        priority: 'All-Rounder'
+    });
 
     // Settings
     const [notifications, setNotifications] = useState({
@@ -66,12 +76,16 @@ const ProfilePage = ({ setCurrentView, initialTab, onSearch }) => {
         launchAlerts: true
     });
 
-    /* ── Load user saved name ── */
+    /* ── Load user saved name & preferences ── */
     useEffect(() => {
         if (user) {
             const saved = localStorage.getItem(`tb_custom_name_${user.uid || user.id}`);
             setCustomName(saved || user.name || user.displayName || 'TechBoy Explorer');
         }
+        try {
+            const savedPref = localStorage.getItem('tb_user_preferences');
+            if (savedPref) setPreferences(JSON.parse(savedPref));
+        } catch (e) {}
     }, [user]);
 
     /* ── Load alerts ── */
@@ -91,17 +105,25 @@ const ProfilePage = ({ setCurrentView, initialTab, onSearch }) => {
         return () => window.removeEventListener('tb_wishlist_updated', loadWishlist);
     }, []);
 
-    /* ── Load compare list from localStorage ── */
+    /* ── Load recently viewed from localStorage ── */
     useEffect(() => {
-        const loadCompare = () => {
-            try {
-                setCompareList(JSON.parse(localStorage.getItem('tb_compare_list') || '[]'));
-            } catch { setCompareList([]); }
+        const loadRecent = () => {
+            setRecentlyViewed(getRecentlyViewed());
         };
-        loadCompare();
-        window.addEventListener('tb_compare_updated', loadCompare);
-        return () => window.removeEventListener('tb_compare_updated', loadCompare);
+        loadRecent();
+        window.addEventListener('tb_recently_viewed_updated', loadRecent);
+        return () => window.removeEventListener('tb_recently_viewed_updated', loadRecent);
     }, []);
+
+    const updatePreference = (key, value) => {
+        setPreferences(prev => {
+            const updated = { ...prev, [key]: value };
+            try {
+                localStorage.setItem('tb_user_preferences', JSON.stringify(updated));
+            } catch (e) {}
+            return updated;
+        });
+    };
 
     /* ── Support initial tab from nav ── */
     useEffect(() => {
@@ -214,7 +236,6 @@ const ProfilePage = ({ setCurrentView, initialTab, onSearch }) => {
         { id: 'profile',  icon: User,       label: 'My Profile' },
         { id: 'alerts',   icon: Bell,       label: 'Alerts',     count: alerts.length },
         { id: 'wishlist', icon: Heart,      label: 'Wishlist',   count: wishlist.length },
-        { id: 'compare',  icon: GitCompare, label: 'Compare',    count: compareList.length },
         { id: 'settings', icon: Settings,   label: 'Settings' },
     ];
 
@@ -303,11 +324,10 @@ const ProfilePage = ({ setCurrentView, initialTab, onSearch }) => {
                     </div>
 
                     {/* Quick stats */}
-                    <div className="grid grid-cols-4 sm:grid-cols-2 gap-2 shrink-0">
+                    <div className="grid grid-cols-3 sm:grid-cols-3 gap-2 shrink-0">
                         {[
                             { label: 'Alerts', value: alerts.length, color: 'text-red-400' },
                             { label: 'Wishlist', value: wishlist.length, color: 'text-pink-400' },
-                            { label: 'Compare', value: compareList.length, color: 'text-blue-400' },
                             { label: 'Tier', value: 'VIP', color: 'text-yellow-400' },
                         ].map(s => (
                             <div key={s.label} className="rounded-2xl bg-white/[0.04] border border-white/10 p-3 text-center min-w-[70px]">
@@ -372,7 +392,6 @@ const ProfilePage = ({ setCurrentView, initialTab, onSearch }) => {
                                         { label: 'Display Name', value: customName, action: () => setIsEditingName(true) },
                                         { label: 'Email Address', value: user.email || 'Google Account', action: null },
                                         { label: 'Member Since', value: `Since ${memberSince}`, action: null },
-                                        { label: 'Account Type', value: 'Google Firebase Auth', action: null },
                                     ].map(row => (
                                         <div key={row.label} className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.03] border border-white/5">
                                             <div>
@@ -397,11 +416,10 @@ const ProfilePage = ({ setCurrentView, initialTab, onSearch }) => {
                                     </div>
                                     <h3 className="text-base font-bold text-white">Activity Overview</h3>
                                 </div>
-                                <div className="grid grid-cols-2 gap-3 mb-6">
+                                <div className="grid grid-cols-3 gap-3 mb-6">
                                     {[
                                         { icon: Bell, label: 'Price Alerts', value: alerts.length, color: 'text-red-400', bg: 'bg-red-500/10' },
                                         { icon: Heart, label: 'Wishlist Items', value: wishlist.length, color: 'text-pink-400', bg: 'bg-pink-500/10' },
-                                        { icon: GitCompare, label: 'In Compare', value: compareList.length, color: 'text-blue-400', bg: 'bg-blue-500/10' },
                                         { icon: Zap, label: 'Status', value: 'Active', color: 'text-green-400', bg: 'bg-green-500/10' },
                                     ].map(stat => {
                                         const Icon = stat.icon;
@@ -423,7 +441,6 @@ const ProfilePage = ({ setCurrentView, initialTab, onSearch }) => {
                                     {[
                                         { tab: 'alerts',   icon: Bell,       label: 'View Price Alerts',  count: alerts.length },
                                         { tab: 'wishlist', icon: Heart,      label: 'My Wishlist',         count: wishlist.length },
-                                        { tab: 'compare',  icon: GitCompare, label: 'Compare List',        count: compareList.length },
                                     ].map(row => {
                                         const Icon = row.icon;
                                         return (
@@ -442,6 +459,156 @@ const ProfilePage = ({ setCurrentView, initialTab, onSearch }) => {
                                     })}
                                 </div>
                             </div>
+                        </div>
+
+                        {/* ── Smartphone Preferences Card ── */}
+                        <div className="mt-6 rounded-3xl bg-[#0f0f18]/90 border border-white/10 p-5 sm:p-6 backdrop-blur-xl">
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-8 h-8 rounded-xl bg-purple-500/15 flex items-center justify-center">
+                                        <Sliders size={16} className="text-purple-400" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-base font-bold text-white">My Smartphone Preferences</h3>
+                                        <p className="text-xs text-gray-400">Tailors deals, AI advisor recommendations, and feed highlights</p>
+                                    </div>
+                                </div>
+                                <span className="self-start sm:self-auto text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full bg-purple-500/15 border border-purple-500/30 text-purple-300">
+                                    Auto-Personalized
+                                </span>
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                                {/* Preferred Brand */}
+                                <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5">
+                                    <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider block mb-2">Preferred Ecosystem</label>
+                                    <div className="flex flex-wrap gap-1.5">
+                                        {['Any', 'Apple', 'Samsung', 'OnePlus', 'Google', 'Xiaomi'].map(b => (
+                                            <button
+                                                key={b}
+                                                onClick={() => updatePreference('brand', b)}
+                                                className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition-all ${
+                                                    preferences.brand === b
+                                                        ? 'bg-red-500/20 border-red-500/60 text-white shadow-[0_0_10px_rgba(255,31,61,0.3)]'
+                                                        : 'bg-white/[0.04] border-white/10 text-gray-400 hover:text-white hover:border-white/20'
+                                                }`}
+                                            >
+                                                {b}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Target Budget */}
+                                <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5">
+                                    <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider block mb-2">Budget Target</label>
+                                    <div className="flex flex-wrap gap-1.5">
+                                        {[
+                                            { id: 'Any', label: 'Any' },
+                                            { id: 'Under 25k', label: '< ₹25k' },
+                                            { id: '25k - 50k', label: '₹25k-50k' },
+                                            { id: '50k - 80k', label: '₹50k-80k' },
+                                            { id: 'Flagship 80k+', label: 'Flagship' }
+                                        ].map(bg => (
+                                            <button
+                                                key={bg.id}
+                                                onClick={() => updatePreference('budget', bg.id)}
+                                                className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition-all ${
+                                                    preferences.budget === bg.id
+                                                        ? 'bg-red-500/20 border-red-500/60 text-white shadow-[0_0_10px_rgba(255,31,61,0.3)]'
+                                                        : 'bg-white/[0.04] border-white/10 text-gray-400 hover:text-white hover:border-white/20'
+                                                }`}
+                                            >
+                                                {bg.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Priority Feature */}
+                                <div className="p-3.5 rounded-2xl bg-white/[0.03] border border-white/5">
+                                    <label className="text-[10px] font-bold text-gray-500 uppercase tracking-wider block mb-2">Top Priority</label>
+                                    <div className="flex flex-wrap gap-1.5">
+                                        {['All-Rounder', 'Camera', 'Gaming', 'Battery Life', 'Design'].map(p => (
+                                            <button
+                                                key={p}
+                                                onClick={() => updatePreference('priority', p)}
+                                                className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition-all ${
+                                                    preferences.priority === p
+                                                        ? 'bg-red-500/20 border-red-500/60 text-white shadow-[0_0_10px_rgba(255,31,61,0.3)]'
+                                                        : 'bg-white/[0.04] border-white/10 text-gray-400 hover:text-white hover:border-white/20'
+                                                }`}
+                                            >
+                                                {p}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* ── Recently Viewed Smartphones ── */}
+                        <div className="mt-6 rounded-3xl bg-[#0f0f18]/90 border border-white/10 p-5 sm:p-6 backdrop-blur-xl">
+                            <div className="flex items-center justify-between gap-3 mb-4">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-8 h-8 rounded-xl bg-green-500/15 flex items-center justify-center">
+                                        <Clock size={16} className="text-green-400" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-base font-bold text-white">Recently Viewed Smartphones</h3>
+                                        <p className="text-xs text-gray-400">Quickly pick up where you left off</p>
+                                    </div>
+                                </div>
+                                {recentlyViewed.length > 0 && (
+                                    <button
+                                        onClick={clearRecentlyViewed}
+                                        className="text-xs font-semibold text-gray-400 hover:text-red-400 bg-white/[0.03] hover:bg-red-500/10 border border-white/10 hover:border-red-500/30 px-3 py-1.5 rounded-xl transition-all"
+                                    >
+                                        Clear History
+                                    </button>
+                                )}
+                            </div>
+
+                            {recentlyViewed.length === 0 ? (
+                                <div className="py-8 px-4 rounded-2xl bg-white/[0.02] border border-white/5 text-center">
+                                    <Eye size={24} className="mx-auto mb-2 text-gray-500" />
+                                    <p className="text-sm font-semibold text-gray-300">No recently viewed phones yet</p>
+                                    <p className="text-xs text-gray-500 mt-1 max-w-sm mx-auto">Click "Details" on any smartphone in the store to preview its specs, and it will be remembered here.</p>
+                                    <button
+                                        onClick={() => { setCurrentView('home'); setTimeout(() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' }), 80); }}
+                                        className="mt-4 px-4 py-1.5 rounded-full bg-red-600 hover:bg-red-500 text-white text-xs font-bold transition-all shadow-[0_0_15px_rgba(255,31,61,0.3)]"
+                                    >
+                                        Explore Smartphones
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
+                                    {recentlyViewed.map(item => {
+                                        const imgSrc = resolveProductImage(item.image, item.name);
+                                        const price = item.price || 0;
+                                        return (
+                                            <div
+                                                key={item.id}
+                                                onClick={() => setQuickViewProduct(item)}
+                                                className="group cursor-pointer rounded-2xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-red-500/40 p-3 flex flex-col justify-between transition-all hover:scale-[1.02] hover:shadow-[0_8px_20px_rgba(0,0,0,0.5)]"
+                                            >
+                                                <div className="relative h-28 sm:h-32 rounded-xl bg-black/40 flex items-center justify-center p-2 mb-2 overflow-hidden">
+                                                    <img
+                                                        src={imgSrc}
+                                                        alt={item.name}
+                                                        className="h-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300"
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <p className="text-[9.5px] font-bold uppercase tracking-wider text-gray-500 truncate">{item.brand || 'Smartphone'}</p>
+                                                    <h4 className="text-xs font-bold text-white truncate group-hover:text-red-400 transition-colors mt-0.5">{item.name}</h4>
+                                                    <p className="text-sm font-extrabold text-white mt-1">₹{Number(price).toLocaleString()}</p>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
                         </div>
                     </m.div>
                 )}
@@ -746,6 +913,14 @@ const ProfilePage = ({ setCurrentView, initialTab, onSearch }) => {
                     </m.div>
                 )}
             </AnimatePresence>
+
+            {/* Quick View Modal for Recently Viewed Phones */}
+            {quickViewProduct && (
+                <QuickViewModal
+                    product={quickViewProduct}
+                    onClose={() => setQuickViewProduct(null)}
+                />
+            )}
         </div>
     );
 };

@@ -1,9 +1,12 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { m } from 'framer-motion';
-import { Sparkles, Cpu, Camera, Battery, Smartphone, HardDrive, Zap, Info } from 'lucide-react';
+import { Sparkles, Cpu, Camera, Battery, Smartphone, HardDrive, Zap, Info, Share2, Check } from 'lucide-react';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 
 import { resolveProductImage } from '../utils/imageResolver';
+import { recordRecentView } from '../utils/recentViews';
+import { copyPhoneShareLink } from '../utils/deepLink';
+import { feedback } from '../utils/haptics';
 
 const ThreeDViewer = lazy(() => import('./ThreeDViewer'));
 
@@ -18,12 +21,20 @@ const QuickViewModal = ({ product, onClose }) => {
     const [aiSummary, setAiSummary] = useState(null);
     const [isLoadingAi, setIsLoadingAi] = useState(false);
     const [viewMode, setViewMode] = useState('2d'); // '2d' or '3d'
-    const amazonUrl = product?.amazon_link || product?.amazonLink;
-    const flipkartUrl = product?.flipkart_link || product?.flipkartLink;
-    const imageUrl = product ? resolveProductImage(product.image, product.name) : '';
+    const [isCopied, setIsCopied] = useState(false);
+
+    const handleShare = async () => {
+        feedback.shareSuccess();
+        const res = await copyPhoneShareLink(product);
+        if (res.success) {
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2200);
+        }
+    };
 
     useEffect(() => {
         if (!product) return;
+        recordRecentView(product);
         const fetchAiSummary = async () => {
             setIsLoadingAi(true);
             const controller = new AbortController();
@@ -52,36 +63,43 @@ const QuickViewModal = ({ product, onClose }) => {
 
     if (!product) return null;
 
-    const desktopVariants = {
-      hidden: { opacity: 0, scale: 0.9, y: 20 },
-      visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", damping: 25, stiffness: 300 } },
-      exit: { opacity: 0, scale: 0.9, y: 20, transition: { duration: 0.2 } }
-    };
-
-    const mobileVariants = {
-      hidden: { opacity: 1, y: "100%" },
-      visible: { opacity: 1, y: 0, transition: { type: "spring", damping: 25, stiffness: 300 } },
-      exit: { opacity: 1, y: "100%", transition: { duration: 0.2 } }
+    const modalVariants = {
+      hidden: { opacity: 0, scale: 0.92, y: 15 },
+      visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", damping: 25, stiffness: 320 } },
+      exit: { opacity: 0, scale: 0.92, y: 15, transition: { duration: 0.2 } }
     };
 
     const modalStyle = isMobile ? {
-      position: 'fixed',
-      bottom: 0,
-      left: 0,
-      width: '100%',
-      maxWidth: '100%',
-      margin: 0,
-      maxHeight: '90vh',
-      borderBottomLeftRadius: 0,
-      borderBottomRightRadius: 0,
+      width: '92%',
+      maxWidth: '460px',
+      margin: 'auto',
+      maxHeight: '85vh',
+      borderRadius: '24px',
       overflowY: 'auto'
-    } : { width: '100%', maxWidth: '900px', margin: '0 auto', maxHeight: '85vh', overflowY: 'auto' };
+    } : { width: '100%', maxWidth: '900px', margin: 'auto', maxHeight: '85vh', overflowY: 'auto' };
 
     return (
-        <div className="quickview-overlay" onClick={onClose} style={isMobile ? { alignItems: 'flex-end', padding: 0, zIndex: 99999, background: 'rgba(0, 0, 0, 0.85)' } : { zIndex: 99999, background: 'rgba(0, 0, 0, 0.85)' }}>
+        <m.div 
+            className="quickview-overlay" 
+            onClick={onClose} 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22 }}
+            style={{ 
+                display: 'flex',
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                padding: isMobile ? '16px' : '24px', 
+                zIndex: 99999, 
+                background: 'rgba(0, 0, 0, 0.85)',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)'
+            }}
+        >
             <m.div 
                 className="quickview-content glass-card"
-                variants={isMobile ? mobileVariants : desktopVariants}
+                variants={modalVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
@@ -93,7 +111,49 @@ const QuickViewModal = ({ product, onClose }) => {
                         <div className="w-12 h-1.5 rounded-full bg-white/25" />
                     </div>
                 )}
-                <button className="close-btn top-right" onClick={onClose} style={{ position: 'absolute', top: isMobile ? '14px' : '24px', right: isMobile ? '14px' : '24px', zIndex: 100, fontSize: isMobile ? '22px' : '28px', background: 'rgba(255, 31, 61, 0.2)', border: '1px solid rgba(255, 31, 61, 0.5)', borderRadius: '50%', width: isMobile ? '36px' : '44px', height: isMobile ? '36px' : '44px', color: '#ff1f3d', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}>&times;</button>
+                {/* Top-right action buttons */}
+                <div style={{ position: 'absolute', top: isMobile ? '12px' : '22px', right: isMobile ? '12px' : '22px', zIndex: 100, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <button
+                        onClick={handleShare}
+                        title={isCopied ? "Link Copied!" : "Share Phone Link"}
+                        style={{
+                            background: isCopied ? 'rgba(34, 197, 94, 0.25)' : 'rgba(255, 255, 255, 0.08)',
+                            border: isCopied ? '1px solid rgba(34, 197, 94, 0.6)' : '1px solid rgba(255, 255, 255, 0.15)',
+                            borderRadius: '50%',
+                            width: isMobile ? '36px' : '44px',
+                            height: isMobile ? '36px' : '44px',
+                            color: isCopied ? '#4ade80' : '#ffffff',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'all 0.2s',
+                            boxShadow: isCopied ? '0 0 15px rgba(34, 197, 94, 0.4)' : 'none'
+                        }}
+                    >
+                        {isCopied ? <Check size={isMobile ? 15 : 18} strokeWidth={3} /> : <Share2 size={isMobile ? 15 : 18} />}
+                    </button>
+                    <button
+                        className="close-btn"
+                        onClick={onClose}
+                        style={{
+                            fontSize: isMobile ? '22px' : '28px',
+                            background: 'rgba(255, 31, 61, 0.2)',
+                            border: '1px solid rgba(255, 31, 61, 0.5)',
+                            borderRadius: '50%',
+                            width: isMobile ? '36px' : '44px',
+                            height: isMobile ? '36px' : '44px',
+                            color: '#ff1f3d',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'all 0.2s'
+                        }}
+                    >
+                        &times;
+                    </button>
+                </div>
                 <div className="quickview-body">
                     <div className="quickview-image-side">
                         <div className="view-toggle-buttons" style={{ display: 'flex', gap: '8px', marginBottom: '16px', justifyContent: 'center' }}>
@@ -213,7 +273,7 @@ const QuickViewModal = ({ product, onClose }) => {
                     </div>
                 </div>
             </m.div>
-        </div>
+        </m.div>
     );
 };
 
