@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { TrendingDown, Flame, Rocket, Star, GitCompare, Bell, ArrowRight, TrendingUp, Activity, Clock } from 'lucide-react';
 import PriceAlertModal from './PriceAlertModal';
@@ -104,17 +104,52 @@ const generateChartData = (alert) => {
     return { linePath, areaPath, lastPoint, color, isPriceDrop, isTrending };
 };
 
+const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
+
 const TechBoyTrends = () => {
     const [activeCategory, setActiveCategory] = useState('all');
     const [priceAlertProduct, setPriceAlertProduct] = useState(null);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [displayCount, setDisplayCount] = useState(8);
+    const [liveProducts, setLiveProducts] = useState([]);
+
+    useEffect(() => {
+        let mounted = true;
+        const fetchLive = async () => {
+            try {
+                const res = await fetch(`${API_BASE_URL}/products/?limit=50`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const list = data.results || data;
+                    if (mounted && Array.isArray(list) && list.length > 0) {
+                        setLiveProducts(list);
+                    }
+                }
+            } catch (e) {
+                // Graceful fallback to static data
+            }
+        };
+        fetchLive();
+        return () => { mounted = false; };
+    }, []);
 
     const alerts = PREDEFINED_NOTIFICATIONS.map((item, index) => {
-        if (index === 5 || index === 15 || index === 25) {
-            return { ...item, type: 'comparison', title: 'Versus', desc: `${item.name} vs Competitor` };
+        let enhanced = { ...item };
+        // If we have live products from DB, sync real live price and direct platform links
+        const match = liveProducts.find(p => p.name && (p.name.toLowerCase() === item.name.toLowerCase() || item.name.toLowerCase().includes(p.name.toLowerCase())));
+        if (match) {
+            enhanced.current = match.price || enhanced.current;
+            enhanced.amazon_link = match.amazon_link || `https://www.amazon.in/s?k=${encodeURIComponent(match.name)}`;
+            enhanced.flipkart_link = match.flipkart_link || `https://www.flipkart.com/search?q=${encodeURIComponent(match.name)}`;
+            if (enhanced.prev && enhanced.current && enhanced.prev > enhanced.current) {
+                enhanced.savings = enhanced.prev - enhanced.current;
+                enhanced.pct = Math.round((enhanced.savings / enhanced.prev) * 100);
+            }
         }
-        return item;
+        if (index === 5 || index === 15 || index === 25) {
+            return { ...enhanced, type: 'comparison', title: 'Versus', desc: `${enhanced.name} vs Competitor` };
+        }
+        return enhanced;
     });
 
     const filteredAlerts = activeCategory === 'all'

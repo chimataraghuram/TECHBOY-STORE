@@ -12,7 +12,8 @@ from .views import (
     PriceAlertViewSet,
     ChatbotAPIView,
     AnalyticsAPIView,
-    WatchlistViewSet
+    WatchlistViewSet,
+    TriggerDealsCronAPIView
 )
 
 router = DefaultRouter()
@@ -33,6 +34,7 @@ urlpatterns = [
     path('track-click/', TrackClickAPIView.as_view(), name='track-click'),
     path('analytics/', AnalyticsAPIView.as_view(), name='analytics'),
     path('chat/', ChatbotAPIView.as_view(), name='chat'),
+    path('cron/update-deals/', TriggerDealsCronAPIView.as_view(), name='cron-update-deals'),
     
     # Router covers products/ API
     path('', include(router.urls)),

@@ -1,0 +1,48 @@
+name: Auto Update Deals, Graphs & Store Links
+
+on:
+  schedule:
+    # Runs automatically every 6 hours (00:00, 06:00, 12:00, 18:00 UTC)
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # Allows manual one-click trigger anytime from GitHub Actions tab
+
+jobs:
+  update-deals:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+
+      - name: Run Live Deals & Price History Updater
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          AMAZON_AFFILIATE_TAG: ${{ secrets.AMAZON_AFFILIATE_TAG || 'techboy-21' }}
+          FLIPKART_AFFILIATE_TAG: ${{ secrets.FLIPKART_AFFILIATE_TAG || 'techboy' }}
+          DJANGO_SETTINGS_MODULE: 'core.settings'
+        run: |
+          cd backend
+          python manage.py update_deals
+
+      - name: Commit and Push Updated Deals & Vercel Data
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "TechBoy-Cron-Bot"
+          git add frontend/src/data/phones.json backend/db.sqlite3 || true
+          if git diff --staged --quiet; then
+            echo "No changes in deals detected."
+          else
+            git commit -m "chore(cron): auto-update live flagship deals, sparklines & store links [skip ci]"
+            git push
+          fi

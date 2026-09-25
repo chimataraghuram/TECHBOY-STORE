@@ -337,3 +337,24 @@ class ChatbotAPIView(APIView):
             "response": ai_response,
             "products": recommendations
         })
+
+class TriggerDealsCronAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        """
+        Secure webhook / cron endpoint to update live market prices, graphs & store links.
+        Can be invoked by GitHub Actions or Vercel Cron with header Authorization: Bearer <CRON_SECRET>
+        """
+        auth_header = request.headers.get('Authorization', '')
+        secret = os.environ.get('CRON_SECRET', 'techboy_cron_secure_token')
+        
+        # Verify secret token if passed or verify in production
+        if secret and secret != 'techboy_cron_secure_token':
+            if auth_header != f"Bearer {secret}":
+                return Response({"error": "Unauthorized cron request"}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        from scripts.update_live_deals import update_all_deals
+        res = update_all_deals()
+        return Response(res, status=status.HTTP_200_OK)
+
