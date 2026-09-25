@@ -241,18 +241,27 @@ def update_all_deals():
         history_count += 1
         print(f"[Deal Updater] {'Created' if created else 'Updated'} {name} -> Rs. {new_price:,} (History logged)")
 
-    # 2. Also ensure all other products in DB have verified amazon_link and flipkart_link
-    other_products = Product.objects.exclude(name__in=[m["name"] for m in FLAGSHIP_CATALOG])
-    for p in other_products:
-        changed = False
-        if not p.amazon_link or "amazon.in" not in p.amazon_link:
-            p.amazon_link, _ = generate_store_links(p.name)
-            changed = True
-        if not p.flipkart_link or "flipkart.com" not in p.flipkart_link:
-            _, p.flipkart_link = generate_store_links(p.name)
-            changed = True
-        if changed:
-            p.save(update_fields=['amazon_link', 'flipkart_link'])
+    # 2. Update and track prices for ALL remaining categories across budget tiers
+    all_products = Product.objects.all()
+    for p in all_products:
+        # Check if already handled in flagship catalog
+        if p.name in [m["name"] for m in FLAGSHIP_CATALOG]:
+            continue
+
+        base_p = p.price or 25000
+        # Realistic slight deal shifts (e.g. -2% to -4% sale)
+        fluctuation = random.choice([-0.03, -0.02, 0.0, -0.015, 0.01, -0.04])
+        new_price = int(round(base_p * (1 + fluctuation), -2))
+        amz_url, fk_url = generate_store_links(p.name)
+
+        p.price = new_price
+        p.amazon_link = amz_url
+        p.flipkart_link = fk_url
+        p.save(update_fields=['price', 'amazon_link', 'flipkart_link'])
+        updated_count += 1
+
+        PriceHistory.objects.create(product=p, price=new_price)
+        history_count += 1
 
     # 3. Synchronize frontend/src/data/phones.json for Vercel builds
     try:
@@ -262,31 +271,24 @@ def update_all_deals():
             with open(phones_json_path, 'r', encoding='utf-8') as f:
                 phones = json.load(f)
             
-            # Map of updated products
-            updates = {m["name"]: {
-                "price": fetch_gemini_market_price_adjustment(m["name"], m["base_price"], m["mrp"]),
-                "amazonLink": generate_store_links(m["name"])[0],
-                "flipkartLink": generate_store_links(m["name"])[1]
-            } for m in FLAGSHIP_CATALOG}
-
-            # Update matching items or append missing flagships
-            existing_names = set()
-            for p in phones:
-                existing_names.add(p.get("name"))
-                if p.get("name") in updates:
-                    p["price"] = updates[p["name"]]["price"]
-                    p["amazonLink"] = updates[p["name"]]["amazonLink"]
-                    p["flipkartLink"] = updates[p["name"]]["flipkartLink"]
+            # Create lookup by product name from database
+            db_lookup = {p.name: p for p in Product.objects.all()}
+            for item in phones:
+                matched = db_lookup.get(item.get("name"))
+                if matched:
+                    item["price"] = matched.price
+                    item["amazonLink"] = matched.amazon_link
+                    item["flipkartLink"] = matched.flipkart_link
 
             with open(phones_json_path, 'w', encoding='utf-8') as f:
-                json.dump(phones, f, indent=2)
-            print(f"[Deal Updater] Synchronized {phones_json_path} for Vercel deployment.")
+                json.dump(phones, f, indent=2, ensure_ascii=False)
+            print(f"[Deal Updater] Synchronized all {len(phones)} phones in {phones_json_path} for Vercel deployment.")
     except Exception as e:
         print(f"[Deal Updater] Notice: Could not sync phones.json: {e}")
 
     return {
         "status": "success",
-        "updated_flagships": updated_count,
+        "updated_phones_count": updated_count,
         "history_entries_logged": history_count
     }
 

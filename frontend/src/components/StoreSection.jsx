@@ -41,6 +41,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     const [isCompModalOpen, setIsCompModalOpen] = useState(false);
     const [priceAlertProduct, setPriceAlertProduct] = useState(null);
     const [activeBrand, setActiveBrand] = useState("All");
+    const [activeCategory, setActiveCategory] = useState("All");
     const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
     const [deepLinkedProduct, setDeepLinkedProduct] = useState(null);
 
@@ -133,6 +134,10 @@ const StoreSection = ({ searchTerm, onSearch }) => {
             );
         }
 
+        if (activeCategory !== "All") {
+            result = result.filter(p => p.category === activeCategory);
+        }
+
         // Prioritize ultra flagship phones (Galaxy S26/S25 Ultra, Z Fold/Flip, iPhone Pro Max, Flagship tier) first
         result.sort((a, b) => {
             const isFlagshipA = (a.category && a.category.includes('Flagship')) || (a.price >= 70000) || /ultra|fold|flip|pro max/i.test(a.name || '');
@@ -144,7 +149,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
 
         setFilteredProducts(result);
         setVisibleCount(PAGE_SIZE);
-    }, [products, activeBrand, searchTerm]);
+    }, [products, activeBrand, activeCategory, searchTerm]);
 
     const handleCompare = (product) => {
         setCompareList(prev => {
@@ -191,15 +196,41 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                     />
                 </div>
 
+                {/* Category Pills Strip */}
+                <div className="flex flex-nowrap sm:flex-wrap gap-2 items-center justify-start overflow-x-auto pb-2 mb-4 hide-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+                    {['All', 'Under ₹10K', 'Under ₹20K', 'Under ₹30K', 'Under ₹40K', 'Under ₹50K', 'Under ₹60K', 'Under ₹1 Lakh', 'Flagship 1L+'].map((cat) => {
+                        const isCatActive = activeCategory === cat;
+                        return (
+                            <button
+                                key={cat}
+                                onClick={() => {
+                                    feedback.click();
+                                    setActiveCategory(cat);
+                                }}
+                                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap border shrink-0 ${
+                                    isCatActive
+                                        ? 'bg-red-500/20 text-white border-red-500/60 shadow-[0_0_12px_rgba(255,31,61,0.25)]'
+                                        : 'bg-white/[0.03] text-gray-400 border-white/[0.08] hover:text-white hover:border-white/20 hover:bg-white/[0.06]'
+                                }`}
+                            >
+                                {cat === 'All' ? 'All Budgets' : cat}
+                            </button>
+                        );
+                    })}
+                </div>
+
                 {/* Action Bar Below Filters — Reset, Count & View All */}
                 <div className="flex items-center justify-between gap-3 mb-6 sm:mb-8">
                     <div className="flex items-center gap-2">
-                        {activeBrand !== 'All' && (
+                        {(activeBrand !== 'All' || activeCategory !== 'All') && (
                             <button
-                                onClick={() => setActiveBrand('All')}
+                                onClick={() => {
+                                    setActiveBrand('All');
+                                    setActiveCategory('All');
+                                }}
                                 className="text-xs font-semibold text-gray-400 hover:text-red-400 transition-colors px-3 py-1.5 rounded-xl bg-white/[0.04] hover:bg-red-500/10 border border-white/10 hover:border-red-500/30"
                             >
-                                Reset to All &times;
+                                Reset Filters &times;
                             </button>
                         )}
                         <span className="text-xs text-gray-400 font-semibold px-3 py-1.5 rounded-xl bg-white/[0.03] border border-white/[0.08]">
