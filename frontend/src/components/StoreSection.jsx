@@ -133,6 +133,15 @@ const StoreSection = ({ searchTerm, onSearch }) => {
             );
         }
 
+        // Prioritize ultra flagship phones (Galaxy S26/S25 Ultra, Z Fold/Flip, iPhone Pro Max, Flagship tier) first
+        result.sort((a, b) => {
+            const isFlagshipA = (a.category && a.category.includes('Flagship')) || (a.price >= 70000) || /ultra|fold|flip|pro max/i.test(a.name || '');
+            const isFlagshipB = (b.category && b.category.includes('Flagship')) || (b.price >= 70000) || /ultra|fold|flip|pro max/i.test(b.name || '');
+            if (isFlagshipA && !isFlagshipB) return -1;
+            if (!isFlagshipA && isFlagshipB) return 1;
+            return (b.price || 0) - (a.price || 0); // highest flagship first
+        });
+
         setFilteredProducts(result);
         setVisibleCount(PAGE_SIZE);
     }, [products, activeBrand, searchTerm]);

@@ -1,48 +1,48 @@
 export const PREDEFINED_NOTIFICATIONS = [
   {
-    id: 1, type: 'pick', title: 'Analyst Pick', desc: 'Tecno Spark 30C is a top pick', time: 'Just now', name: 'Tecno Spark 30C', current: 8499, prev: 10499, pct: 19, savings: 2000, image: '/images/phones/tecno-spark-30c.png'
+    id: 1, type: 'pick', title: 'Ultimate Flagship', desc: 'Samsung Galaxy S26 Ultra is the top flagship pick', time: 'Just now', name: 'Samsung Galaxy S26 Ultra', current: 119000, prev: 137000, pct: 13, savings: 18000, image: '/images/phones/samsung-galaxy-s26-ultra.png'
   },
   {
-    id: 2, type: 'trending', title: 'Trending Now', desc: 'Redmi 13C 5G is trending', time: '15 mins ago', name: 'Redmi 13C 5G', current: 9299, prev: 11299, pct: 18, savings: 2000, image: '/images/phones/redmi-13c-5g.png'
+    id: 2, type: 'trending', title: 'Trending Flagship', desc: 'Apple iPhone 17 Pro Max is trending worldwide', time: '10 mins ago', name: 'Apple iPhone 17 Pro Max', current: 149900, prev: 164900, pct: 9, savings: 15000, image: '/images/phones/apple-iphone-17-pro-max.png'
   },
   {
-    id: 3, type: 'price_drop', title: 'Price Drop', desc: 'Samsung Galaxy M07 dropped by ₹2,000', time: '1 hour ago', name: 'Samsung Galaxy M07', current: 9499, prev: 11499, pct: 17, savings: 2000, image: '/images/phones/samsung-galaxy-m07.jpg'
+    id: 3, type: 'price_drop', title: 'Foldable Deal', desc: 'Samsung Galaxy Z Fold 7 dropped by ₹20,000', time: '45 mins ago', name: 'Samsung Galaxy Z Fold 7', current: 154999, prev: 174999, pct: 11, savings: 20000, image: '/images/phones/samsung-galaxy-z-fold-7.png'
   },
   {
-    id: 4, type: 'launch', title: 'New Launch', desc: 'Realme C75 now available', time: '3 hours ago', name: 'Realme C75', current: 9999, prev: 11999, pct: 17, savings: 2000, image: '/images/phones/realme-c75.jpg'
+    id: 4, type: 'launch', title: 'New Launch', desc: 'Samsung Galaxy S26+ Snapdragon 8 Elite now available', time: '2 hours ago', name: 'Samsung Galaxy S26+', current: 89999, prev: 103999, pct: 13, savings: 14000, image: '/images/phones/samsung-galaxy-s26-plus.png'
   },
   {
-    id: 5, type: 'pick', title: 'Analyst Pick', desc: 'Infinix Hot 50i is a top pick', time: '4 hours ago', name: 'Infinix Hot 50i', current: 7499, prev: 9499, pct: 21, savings: 2000, image: '/images/phones/infinix-hot-50i.jpg'
+    id: 5, type: 'pick', title: 'Analyst Pick', desc: 'Apple iPhone 16 Pro Max offers unbeatable power', time: '3 hours ago', name: 'Apple iPhone 16 Pro Max', current: 119900, prev: 134900, pct: 11, savings: 15000, image: '/images/phones/apple-iphone-16-pro-max.png'
   },
   {
-    id: 6, type: 'trending', title: 'Trending Now', desc: 'iQOO Z9 5G is trending', time: '5 hours ago', name: 'iQOO Z9 5G', current: 17999, prev: 20999, pct: 14, savings: 3000, image: '/images/phones/iqoo-z9-5g.jpg'
+    id: 6, type: 'trending', title: 'Style Flagship', desc: 'Samsung Galaxy Z Flip 7 compact foldable trending', time: '4 hours ago', name: 'Samsung Galaxy Z Flip 7', current: 109999, prev: 124999, pct: 12, savings: 15000, image: '/images/phones/samsung-galaxy-z-flip-7.png'
   },
   {
-    id: 7, type: 'price_drop', title: 'Price Drop', desc: 'Redmi Note 14 5G dropped by ₹3,000', time: '8 hours ago', name: 'Redmi Note 14 5G', current: 18999, prev: 21999, pct: 14, savings: 3000, image: '/images/phones/redmi-note-14-5g.jpg'
+    id: 7, type: 'price_drop', title: 'Price Drop', desc: 'Apple iPhone 17 Pro dropped by ₹16,000', time: '6 hours ago', name: 'Apple iPhone 17 Pro', current: 118900, prev: 134900, pct: 12, savings: 16000, image: '/images/phones/apple-iphone-17-pro.png'
   },
   {
-    id: 8, type: 'launch', title: 'New Launch', desc: 'Samsung Galaxy A26 5G now available', time: 'Yesterday', name: 'Samsung Galaxy A26 5G', current: 19999, prev: 22999, pct: 13, savings: 3000, image: '/images/phones/samsung-galaxy-a26-5g.jpg'
+    id: 8, type: 'launch', title: 'New Launch', desc: 'Google Pixel 9 Pro with Tensor G4 flagship AI', time: 'Yesterday', name: 'Google Pixel 9 Pro', current: 59999, prev: 68999, pct: 13, savings: 9000, image: '/images/phones/google-pixel-9-pro.jpg'
   },
   {
-    id: 9, type: 'pick', title: 'Analyst Pick', desc: 'Nothing Phone (3a) is a top pick', time: 'Just now', name: 'Nothing Phone (3a)', current: 19999, prev: 22999, pct: 13, savings: 3000, image: '/images/phones/nothing-phone-3a.jpg'
+    id: 9, type: 'pick', title: 'Analyst Pick', desc: 'Samsung Galaxy S25 flagship compact is a top pick', time: 'Just now', name: 'Samsung Galaxy S25', current: 68107, prev: 79107, pct: 14, savings: 11000, image: '/images/phones/samsung-galaxy-s25.jpg'
   },
   {
-    id: 10, type: 'trending', title: 'Trending Now', desc: 'vivo T5x 5G is trending', time: '15 mins ago', name: 'vivo T5x 5G', current: 18999, prev: 21999, pct: 14, savings: 3000, image: '/images/phones/vivo-t5x-5g.jpg'
+    id: 10, type: 'trending', title: 'Trending Flagship', desc: 'OnePlus 13 flagship powerhouse with Hasselblad cameras', time: '15 mins ago', name: 'OnePlus 13', current: 58999, prev: 67999, pct: 13, savings: 9000, image: '/images/phones/oneplus-13.jpg'
   },
   {
-    id: 11, type: 'price_drop', title: 'Price Drop', desc: 'iQOO Neo 10R dropped by ₹5,000', time: '1 hour ago', name: 'iQOO Neo 10R', current: 27999, prev: 32999, pct: 15, savings: 5000, image: '/images/phones/iqoo-neo-10r.jpg'
+    id: 11, type: 'price_drop', title: 'Price Drop', desc: 'Apple iPhone 17 dropped by ₹13,000', time: '1 hour ago', name: 'Apple iPhone 17', current: 82900, prev: 95900, pct: 14, savings: 13000, image: '/images/phones/apple-iphone-17.jpg'
   },
   {
-    id: 12, type: 'launch', title: 'New Launch', desc: 'Google Pixel 9a now available', time: '3 hours ago', name: 'Google Pixel 9a', current: 29999, prev: 34999, pct: 14, savings: 5000, image: '/images/phones/google-pixel-9a.jpg'
+    id: 12, type: 'launch', title: 'New Launch', desc: 'Samsung Galaxy S26 Exynos 2600 AI flagship now live', time: '3 hours ago', name: 'Samsung Galaxy S26', current: 75715, prev: 87715, pct: 14, savings: 12000, image: '/images/phones/samsung-galaxy-s26.png'
   },
   {
-    id: 13, type: 'pick', title: 'Analyst Pick', desc: 'Nothing Phone (3a) Pro is a top pick', time: '4 hours ago', name: 'Nothing Phone (3a) Pro', current: 25999, prev: 29999, pct: 13, savings: 4000, image: '/images/phones/nothing-phone-3a.jpg'
+    id: 13, type: 'pick', title: 'Analyst Pick', desc: 'POCO X8 Pro Max is a top performance pick', time: '4 hours ago', name: 'POCO X8 Pro Max', current: 42999, prev: 49999, pct: 14, savings: 7000, image: '/images/phones/poco-x8-pro-max.jpg'
   },
   {
-    id: 14, type: 'trending', title: 'Trending Now', desc: 'Realme GT 7T is trending', time: '5 hours ago', name: 'Realme GT 7T', current: 26999, prev: 31999, pct: 16, savings: 5000, image: '/images/phones/realme-gt7t.webp'
+    id: 14, type: 'trending', title: 'Trending Now', desc: 'Realme GT 7 Pro Snapdragon 8 Elite is trending', time: '5 hours ago', name: 'Realme GT 7 Pro', current: 37999, prev: 43999, pct: 14, savings: 6000, image: '/images/phones/realme-gt7-pro.jpg'
   },
   {
-    id: 15, type: 'price_drop', title: 'Price Drop', desc: 'POCO F7 5G dropped by ₹4,000', time: '8 hours ago', name: 'POCO F7 5G', current: 24999, prev: 28999, pct: 14, savings: 4000, image: '/images/phones/poco-f7-5g.jpg'
+    id: 15, type: 'price_drop', title: 'Price Drop', desc: 'iQOO 13 5G dropped by ₹8,000', time: '8 hours ago', name: 'iQOO 13 5G', current: 47999, prev: 55999, pct: 14, savings: 8000, image: '/images/phones/iqoo-13-5g.jpg'
   },
   {
     id: 16, type: 'launch', title: 'New Launch', desc: 'OnePlus Nord CE 5 now available', time: 'Yesterday', name: 'OnePlus Nord CE 5', current: 28710, prev: 33710, pct: 15, savings: 5000, image: '/images/phones/oneplus-nord-ce5.png'

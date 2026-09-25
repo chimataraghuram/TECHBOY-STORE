@@ -5,7 +5,7 @@ import { CountUp } from './AnimationEngine';
 import { feedback } from '../utils/haptics';
 
 const HeroPhone3D = lazy(() => import('./HeroPhone3D'));
-const appleIphone = '/images/phones/apple-iphone-16-pro-max.png';
+const flagshipIphone = '/images/phones/apple-iphone-17-pro-max.png';
 
 const STATS = [
     { icon: Smartphone, value: 500, suffix: '+', label: 'Smartphones' },
@@ -63,13 +63,13 @@ const Hero = ({ setCurrentView }) => {
                     {/* ── LEFT: copy ── */}
                     <div className="flex flex-col items-start text-left w-full lg:w-[54%] xl:w-[52%]">
                         {/* Live Status Pill */}
-                        <m.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-red-500/15 to-transparent border border-red-500/30 backdrop-blur-md mb-3 sm:mb-4">
+                        <m.div variants={itemVariants} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-red-500/20 via-red-500/10 to-transparent border border-red-500/40 backdrop-blur-md mb-3 sm:mb-4 shadow-[0_0_15px_rgba(255,31,61,0.15)]">
                             <span className="relative flex h-2 w-2">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500 shadow-[0_0_8px_rgba(255,31,61,1)]" />
                             </span>
-                            <span className="text-white text-[11px] sm:text-xs font-bold tracking-wider uppercase">
-                                Smarter Choices. Better Deals.
+                            <span className="text-white text-[11px] sm:text-xs font-black tracking-widest uppercase">
+                                PREMIUM TECH DESTINATION
                             </span>
                         </m.div>
 
@@ -106,8 +106,8 @@ const Hero = ({ setCurrentView }) => {
                                 {load3D ? (
                                     <Suspense fallback={
                                         <img
-                                            src={appleIphone}
-                                            alt="Flagship smartphone"
+                                            src={flagshipIphone}
+                                            alt="Apple iPhone 17 Pro Max"
                                             className="relative z-10 w-[180px] h-auto object-contain drop-shadow-[0_20px_40px_rgba(255,31,61,0.3)]"
                                         />
                                     }>
@@ -115,8 +115,8 @@ const Hero = ({ setCurrentView }) => {
                                     </Suspense>
                                 ) : (
                                     <img
-                                        src={appleIphone}
-                                        alt="Flagship smartphone"
+                                        src={flagshipIphone}
+                                        alt="Apple iPhone 17 Pro Max"
                                         className="relative z-10 w-[180px] h-auto object-contain drop-shadow-[0_20px_40px_rgba(255,31,61,0.3)]"
                                     />
                                 )}
@@ -125,7 +125,7 @@ const Hero = ({ setCurrentView }) => {
                                 <m.a
                                     href="#products"
                                     onClick={(e) => { e.preventDefault(); goProducts(); }}
-                                    className="absolute -right-2 top-2 z-20 w-[140px] rounded-2xl border border-white/15 bg-[#0d0d13]/85 backdrop-blur-xl p-2.5 shadow-[0_12px_35px_rgba(0,0,0,0.7),0_0_20px_rgba(255,31,61,0.15)] group"
+                                    className="absolute -right-2 top-2 z-20 w-[145px] rounded-2xl border border-white/15 bg-[#0d0d13]/85 backdrop-blur-xl p-2.5 shadow-[0_12px_35px_rgba(0,0,0,0.7),0_0_20px_rgba(255,31,61,0.15)] group"
                                     animate={{ y: [-4, 4, -4] }}
                                     transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
                                 >
@@ -137,7 +137,7 @@ const Hero = ({ setCurrentView }) => {
                                             <ArrowRight size={10} />
                                         </span>
                                     </div>
-                                    <p className="text-white font-bold text-xs leading-tight">iPhone 16 Pro</p>
+                                    <p className="text-white font-bold text-xs leading-tight">iPhone 17 Pro Max</p>
                                     <p className="text-gray-400 text-[9.5px] mt-0.5">Titanium Power</p>
                                 </m.a>
 
@@ -151,8 +151,8 @@ const Hero = ({ setCurrentView }) => {
                                         <Bell size={11} className="text-green-400" />
                                     </span>
                                     <div className="leading-tight">
-                                        <p className="text-white text-[10px] font-bold">Price Alert</p>
-                                        <p className="text-green-400 text-[9px] font-extrabold">−₹14,000</p>
+                                        <p className="text-white text-[10px] font-bold">Price Drop Alert</p>
+                                        <p className="text-green-400 text-[9px] font-extrabold">Galaxy S26 Ultra · −₹18,000</p>
                                     </div>
                                 </m.div>
                             </m.div>
@@ -171,16 +171,13 @@ const Hero = ({ setCurrentView }) => {
                                 <ArrowRight size={16} className="relative z-10 transition-transform duration-300 group-hover:translate-x-1 stroke-[2.5]" />
                             </m.button>
 
-                            {/* Trending Pill for Mobile */}
+                            {/* Trending Pill for Mobile / Desktop */}
                             <button
                                 onClick={goProducts}
                                 className="group flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-red-500/40 text-xs text-gray-300 transition-all backdrop-blur-xl"
                             >
                                 <span className="text-sm">🔥</span>
-                                <span className="font-semibold text-gray-200">Price Drops</span>
-                                <span className="px-1.5 py-0.5 rounded-md bg-red-500/20 text-red-400 font-extrabold text-[10px] border border-red-500/30">
-                                    Up to 35% Off
-                                </span>
+                                <span className="font-semibold text-gray-200">Price Drop Deals</span>
                             </button>
                         </m.div>
 
@@ -225,8 +222,8 @@ const Hero = ({ setCurrentView }) => {
                         {load3D ? (
                             <Suspense fallback={
                                 <img
-                                    src={appleIphone}
-                                    alt="Flagship smartphone"
+                                    src={flagshipIphone}
+                                    alt="Apple iPhone 17 Pro Max"
                                     className="relative z-10 w-[260px] h-auto object-contain drop-shadow-[0_30px_60px_rgba(255,31,61,0.25)]"
                                 />
                             }>
@@ -234,8 +231,8 @@ const Hero = ({ setCurrentView }) => {
                             </Suspense>
                         ) : (
                             <img
-                                src={appleIphone}
-                                alt="Flagship smartphone"
+                                src={flagshipIphone}
+                                alt="Apple iPhone 17 Pro Max"
                                 className="relative z-10 w-[260px] h-auto object-contain drop-shadow-[0_30px_60px_rgba(255,31,61,0.25)]"
                             />
                         )}
@@ -252,7 +249,7 @@ const Hero = ({ setCurrentView }) => {
                         <m.a
                             href="#products"
                             onClick={(e) => { e.preventDefault(); goProducts(); }}
-                            className="absolute right-[-1%] top-[4%] z-20 w-[195px] rounded-2xl border border-white/12 bg-[#0d0d13]/85 backdrop-blur-xl p-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_25px_rgba(255,31,61,0.12)] hover:border-red-500/40 hover:shadow-[0_20px_60px_rgba(0,0,0,0.7),0_0_35px_rgba(255,31,61,0.28)] transition-all duration-300 group"
+                            className="absolute right-[-1%] top-[4%] z-20 w-[205px] rounded-2xl border border-white/12 bg-[#0d0d13]/85 backdrop-blur-xl p-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_25px_rgba(255,31,61,0.12)] hover:border-red-500/40 hover:shadow-[0_20px_60px_rgba(0,0,0,0.7),0_0_35px_rgba(255,31,61,0.28)] transition-all duration-300 group"
                             animate={{ y: [-6, 6, -6] }}
                             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
                         >
@@ -264,7 +261,7 @@ const Hero = ({ setCurrentView }) => {
                                     <ArrowRight size={13} />
                                 </span>
                             </div>
-                            <p className="text-white font-bold text-[14px] leading-tight">iPhone 16 Pro</p>
+                            <p className="text-white font-bold text-[14px] leading-tight">iPhone 17 Pro Max</p>
                             <p className="text-gray-400 text-[11px] mt-0.5 leading-snug">A smarter, more powerful you.</p>
                         </m.a>
 
@@ -279,7 +276,7 @@ const Hero = ({ setCurrentView }) => {
                             </span>
                             <div className="leading-tight">
                                 <p className="text-white text-xs font-bold">Price Drop Alert</p>
-                                <p className="text-green-400 text-[10px] font-bold mt-0.5">Galaxy S26 · −₹14,000</p>
+                                <p className="text-green-400 text-[10px] font-bold mt-0.5">Galaxy S26 Ultra · −₹18,000</p>
                             </div>
                         </m.div>
                     </m.div>
