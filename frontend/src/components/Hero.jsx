@@ -8,10 +8,10 @@ const HeroPhone3D = lazy(() => import('./HeroPhone3D'));
 const flagshipIphone = '/images/phones/apple-iphone-17-pro-max.png';
 
 const STATS = [
-    { icon: Smartphone, value: 500, suffix: '+', label: 'Smartphones' },
+    { icon: ShieldCheck, value: 100, suffix: '%', label: 'Secure & Free' },
     { icon: Bell, value: 30, suffix: '', label: 'Daily Alerts' },
     { icon: Users, value: 10, prefix: '', suffix: 'K+', label: 'Happy Users' },
-    { icon: ShieldCheck, value: 100, suffix: '%', label: 'Secure & Free' }
+    { icon: Smartphone, value: 500, suffix: '+', label: 'Smartphones' }
 ];
 
 const Hero = ({ setCurrentView }) => {

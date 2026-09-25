@@ -307,24 +307,21 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                         <span className="text-gray-400 text-xs">({reviewCount} reviews)</span>
                     </div>
 
-                    {/* Bottom Action Grid: Wishlist, Track Price, Compare, and View Details */}
+                    {/* Bottom Action Grid: View Details (4), Track Price (2), Compare (3), Wishlist (1) */}
                     <div className="grid grid-cols-4 gap-1.5 sm:gap-2 mt-3.5 pt-1">
-                        {/* Wishlist */}
+                        {/* 4: View Details — Solid Red Capsule Button with hover shine */}
                         <m.button
                             whileHover={{ scale: 1.05, y: -1 }}
-                            whileTap={{ scale: 0.92 }}
-                            onClick={handleSaveToWatchlist}
-                            className={`flex flex-col items-center justify-center py-2 px-1 rounded-xl border transition-all ${
-                                isSaved
-                                    ? 'bg-red-500/20 border-red-500/60 text-red-400 shadow-[0_0_12px_rgba(255,31,61,0.25)]'
-                                    : 'bg-[#121219]/90 border-white/[0.08] text-gray-300 hover:border-red-500/35 hover:text-white hover:bg-white/[0.04]'
-                            }`}
+                            whileTap={{ scale: 0.94 }}
+                            onClick={() => setShowQuick(true)}
+                            className="group/btn relative overflow-hidden flex items-center justify-center gap-1 rounded-xl bg-gradient-to-r from-[#ff0d2d] to-[#e60023] hover:from-[#ff2642] hover:to-[#ff0d2d] text-white font-bold px-2 py-2 text-[10.5px] sm:text-xs shadow-[0_4px_16px_rgba(255,13,45,0.45)] hover:shadow-[0_4px_22px_rgba(255,13,45,0.7)] transition-all"
                         >
-                            <Heart size={14} className={isSaved ? "fill-current" : ""} />
-                            <span className="text-[9px] font-semibold mt-1">Wishlist</span>
+                            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-500 pointer-events-none" />
+                            <span className="relative z-10 whitespace-nowrap">View</span>
+                            <ArrowRight size={12} className="relative z-10 stroke-[2.5] transition-transform group-hover/btn:translate-x-0.5" />
                         </m.button>
 
-                        {/* Track Price */}
+                        {/* 2: Track Price */}
                         <m.button
                             whileHover={{ scale: 1.05, y: -1 }}
                             whileTap={{ scale: 0.92 }}
@@ -335,7 +332,7 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                             <span className="text-[9px] font-semibold mt-1 leading-tight text-center">Track Price</span>
                         </m.button>
 
-                        {/* Compare */}
+                        {/* 3: Compare */}
                         <m.button
                             whileHover={{ scale: 1.05, y: -1 }}
                             whileTap={{ scale: 0.92 }}
@@ -350,16 +347,19 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                             <span className="text-[9px] font-semibold mt-1">Compare</span>
                         </m.button>
 
-                        {/* View Details — Solid Red Capsule Button with hover shine */}
+                        {/* 1: Wishlist */}
                         <m.button
                             whileHover={{ scale: 1.05, y: -1 }}
-                            whileTap={{ scale: 0.94 }}
-                            onClick={() => setShowQuick(true)}
-                            className="group/btn relative overflow-hidden flex items-center justify-center gap-1 rounded-xl bg-gradient-to-r from-[#ff0d2d] to-[#e60023] hover:from-[#ff2642] hover:to-[#ff0d2d] text-white font-bold px-2 py-2 text-[10.5px] sm:text-xs shadow-[0_4px_16px_rgba(255,13,45,0.45)] hover:shadow-[0_4px_22px_rgba(255,13,45,0.7)] transition-all"
+                            whileTap={{ scale: 0.92 }}
+                            onClick={handleSaveToWatchlist}
+                            className={`flex flex-col items-center justify-center py-2 px-1 rounded-xl border transition-all ${
+                                isSaved
+                                    ? 'bg-red-500/20 border-red-500/60 text-red-400 shadow-[0_0_12px_rgba(255,31,61,0.25)]'
+                                    : 'bg-[#121219]/90 border-white/[0.08] text-gray-300 hover:border-red-500/35 hover:text-white hover:bg-white/[0.04]'
+                            }`}
                         >
-                            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-500 pointer-events-none" />
-                            <span className="relative z-10 whitespace-nowrap">View</span>
-                            <ArrowRight size={12} className="relative z-10 stroke-[2.5] transition-transform group-hover/btn:translate-x-0.5" />
+                            <Heart size={14} className={isSaved ? "fill-current" : ""} />
+                            <span className="text-[9px] font-semibold mt-1">Wishlist</span>
                         </m.button>
                     </div>
                 </div>
