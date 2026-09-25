@@ -5,7 +5,7 @@ import ComparisonModal from './ComparisonModal';
 import PriceAlertModal from './PriceAlertModal';
 import QuickViewModal from './QuickViewModal';
 import { useAuth } from '../context/AuthContext';
-import { ArrowRight, ChevronLeft, ChevronRight, ArrowLeftRight, X } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, ArrowLeftRight, X, RefreshCw, Radio } from 'lucide-react';
 import localPhonesData from '../data/phones.json';
 import BrandStrip from './BrandStrip';
 import { matchesSearch } from '../utils/searchHelper';
@@ -44,6 +44,8 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     const [activeCategory, setActiveCategory] = useState("All");
     const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
     const [deepLinkedProduct, setDeepLinkedProduct] = useState(null);
+    const [isAutoUpdating, setIsAutoUpdating] = useState(false);
+    const [lastSyncTime, setLastSyncTime] = useState('Just now');
 
     const { user } = useAuth();
 
@@ -82,6 +84,30 @@ const StoreSection = ({ searchTerm, onSearch }) => {
         return () => window.removeEventListener('tb_compare_updated', syncCompare);
     }, []);
 
+    const triggerAutoUpdate = async () => {
+        setIsAutoUpdating(true);
+        try {
+            // Hit backend cron update endpoint
+            const res = await fetch(`${API_BASE_URL}/cron/update-deals/`, { method: 'POST' });
+            if (res.ok) {
+                // Refresh products list
+                const prodRes = await fetch(`${API_BASE_URL}/products/?limit=100`);
+                if (prodRes.ok) {
+                    const data = await prodRes.json();
+                    const list = data.results || data;
+                    if (list && list.length > 0) {
+                        setProducts(list);
+                    }
+                }
+                setLastSyncTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+            }
+        } catch (e) {
+            console.warn("Auto-update failed:", e);
+        } finally {
+            setIsAutoUpdating(false);
+        }
+    };
+
     useEffect(() => {
         let mounted = true;
         const load = async () => {
@@ -104,7 +130,19 @@ const StoreSection = ({ searchTerm, onSearch }) => {
             }
         };
         load();
-        return () => { mounted = false; };
+
+        // Automatic background heartbeat polling every 45s for seamless device & price updates
+        const interval = setInterval(() => {
+            if (mounted) {
+                load();
+                setLastSyncTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+            }
+        }, 45000);
+
+        return () => { 
+            mounted = false; 
+            clearInterval(interval);
+        };
     }, []);
 
     useEffect(() => {
@@ -169,7 +207,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
             <div className="mx-auto max-w-[1560px] px-5 sm:px-8 lg:px-12">
 
                 {/* Section Header — Top */}
-                <div className="mb-4 sm:mb-5">
+                <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-4 sm:mb-5">
                     <div className="relative pl-3.5 sm:pl-4 border-l-2 border-red-500">
                         <div className="absolute -left-[2px] top-0 bottom-0 w-[2px] bg-red-500 shadow-[0_0_10px_rgba(255,31,61,0.8)]" />
                         <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
@@ -182,6 +220,29 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                         <p className="text-neutral-400 text-xs sm:text-sm font-normal mt-1 leading-relaxed">
                             Categorized by budget and performance. Best deals tracked in real-time.
                         </p>
+                    </div>
+
+                    {/* Real-time Auto-Update Status Pill & Manual Sync */}
+                    <div className="flex items-center gap-2 self-start sm:self-auto">
+                        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-[11px] font-semibold backdrop-blur-md">
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                            </span>
+                            <span>Auto-Sync Active ({lastSyncTime})</span>
+                        </div>
+                        <button
+                            onClick={() => {
+                                feedback.click();
+                                triggerAutoUpdate();
+                            }}
+                            disabled={isAutoUpdating}
+                            title="Auto-update devices & live market deals now"
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] hover:bg-red-500/15 border border-white/10 hover:border-red-500/40 text-gray-300 hover:text-white text-[11px] font-bold transition-all shadow-sm active:scale-95 disabled:opacity-50"
+                        >
+                            <RefreshCw size={12} className={isAutoUpdating ? "animate-spin text-red-400" : "text-gray-400"} />
+                            <span>{isAutoUpdating ? "Updating..." : "Sync Deals"}</span>
+                        </button>
                     </div>
                 </div>
 
