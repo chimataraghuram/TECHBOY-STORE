@@ -79,8 +79,17 @@ class PriceAlertSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PriceAlert
-        fields = ['id', 'user', 'email', 'product', 'product_name', 'current_price', 'alert_type', 'product_details', 'target_price', 'alert_sent', 'is_active', 'created_at']
-        read_only_fields = ['user', 'email', 'product_name', 'current_price', 'alert_sent']
+        fields = ['id', 'user', 'email', 'product', 'product_name', 'current_price', 'alert_type', 'product_details', 'target_price', 'alert_sent', 'is_active', 'last_notified_price', 'last_notified_at', 'created_at']
+        read_only_fields = ['user', 'product_name', 'current_price', 'alert_sent', 'last_notified_price', 'last_notified_at', 'created_at']
+
+    def validate(self, attrs):
+        alert_type = attrs.get('alert_type', 'ANY')
+        target_price = attrs.get('target_price')
+        if alert_type == 'TARGET' and (target_price is None or target_price <= 0):
+            raise serializers.ValidationError({'target_price': 'A positive target price is required.'})
+        if alert_type == 'ANY':
+            attrs['target_price'] = None
+        return attrs
 
 class WatchlistSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())

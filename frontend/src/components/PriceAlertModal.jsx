@@ -85,31 +85,12 @@ const PriceAlertModal = ({ isOpen, onClose, product, user: propUser, triggerRect
         return;
       }
 
-      if (isN8nMode) {
-        // Send to n8n webhook
-        const webhookUrl = import.meta.env.VITE_N8N_WEBHOOK_URL || 'https://n8n.example.com/webhook';
-        await fetch(webhookUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            email,
-            productName: product.name,
-            productId: product.id,
-            currentPrice: product.price,
-            productImage: product.image,
-            alertType,
-            targetPrice: parsedTarget
-          })
-        }).catch(err => console.warn('n8n webhook warning:', err));
-        
-        // We assume success for the webhook or don't block the UI if it fails
-      } else {
-        await createPriceAlert({
-          product,
-          alertType,
-          targetPrice: parsedTarget
-        });
-      }
+      await createPriceAlert({
+        product,
+        email,
+        alertType,
+        targetPrice: parsedTarget
+      });
 
       setStep(3);
     } catch (err) {

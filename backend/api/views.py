@@ -260,20 +260,39 @@ class PriceHistoryViewSet(viewsets.ReadOnlyModelViewSet):
 
 class PriceAlertViewSet(viewsets.ModelViewSet):
     serializer_class = PriceAlertSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     
     def get_queryset(self):
-        return PriceAlert.objects.filter(user=self.request.user)
+        if self.request.user.is_authenticated:
+            return PriceAlert.objects.filter(user=self.request.user)
+        email = self.request.query_params.get('email')
+        return PriceAlert.objects.filter(email__iexact=email) if email else PriceAlert.objects.none()
 
-    def perform_create(self, serializer):
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         product = serializer.validated_data['product']
-        serializer.save(
-            user=self.request.user,
-            email=self.request.user.email,
-            product_name=product.name,
-            current_price=product.price,
-            alert_sent=False
+        user = request.user if request.user.is_authenticated else None
+        email = (request.data.get('email') or (user.email if user else '')).strip().lower()
+        if not email:
+            return Response({'error': 'Email is required for guest price alerts.'}, status=400)
+        alert, created = PriceAlert.objects.update_or_create(
+            email=email,
+            product=product,
+            defaults={
+                'user': user,
+                'product_name': product.name,
+                'current_price': product.price,
+                'alert_type': serializer.validated_data.get('alert_type', 'ANY'),
+                'target_price': serializer.validated_data.get('target_price'),
+                'is_active': True,
+                'alert_sent': False,
+                'last_notified_price': None,
+                'last_notified_at': None,
+            },
         )
+        output = self.get_serializer(alert)
+        return Response({**output.data, 'created': created, 'message': f'Alert set for {product.name}.'}, status=200)
 
 class WatchlistViewSet(viewsets.ModelViewSet):
     serializer_class = WatchlistSerializer
@@ -357,4 +376,3 @@ class TriggerDealsCronAPIView(APIView):
         from scripts.update_live_deals import update_all_deals
         res = update_all_deals()
         return Response(res, status=status.HTTP_200_OK)
-

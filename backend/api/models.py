@@ -63,7 +63,18 @@ class PriceAlert(models.Model):
     target_price = models.IntegerField(null=True, blank=True)
     alert_sent = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    last_notified_price = models.IntegerField(null=True, blank=True)
+    last_notified_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['email', 'product'], name='unique_price_alert_email_product'),
+        ]
+        indexes = [
+            models.Index(fields=['email', 'product'], name='price_alert_email_product_idx'),
+            models.Index(fields=['product', 'is_active'], name='price_alert_product_active_idx'),
+        ]
 
     def __str__(self):
         ident = self.email if self.email else (self.user.username if self.user else 'Unknown')

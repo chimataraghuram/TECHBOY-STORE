@@ -1,7 +1,9 @@
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from django.utils import timezone
 from django.conf import settings
+from django.db.models import Q
 from api.models import PriceAlert
 
 def check_and_send_price_alerts(price_history):
@@ -14,9 +16,9 @@ def check_and_send_price_alerts(price_history):
 
     # Find all active alerts for this product where the target_price is greater than or equal to the new price
     triggered_alerts = PriceAlert.objects.filter(
-        product=product,
-        target_price__gte=new_price,
-        is_active=True
+        Q(product=product, alert_type='TARGET', target_price__gte=new_price) |
+        Q(product=product, alert_type='ANY', current_price__gt=new_price),
+        is_active=True,
     ).select_related('user')
 
     if not triggered_alerts.exists():
@@ -24,6 +26,13 @@ def check_and_send_price_alerts(price_history):
 
     for alert in triggered_alerts:
         user = alert.user
+
+        # Never send the same checkpoint twice, and do not resend after a small rebound.
+        if alert.last_notified_price is not None and new_price >= alert.last_notified_price:
+            continue
+        recipient = alert.email or (user.email if user else None)
+        if not recipient:
+            continue
         
         # Prepare email content
         subject = f"🚨 Price Drop Alert: {product.name} is now ₹{new_price}!"
@@ -34,8 +43,8 @@ def check_and_send_price_alerts(price_history):
             <body style="font-family: Arial, sans-serif; background-color: #0d0d0d; color: #f5f5f5; padding: 20px;">
                 <div style="max-width: 600px; margin: 0 auto; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 140, 66, 0.2); border-radius: 12px; padding: 30px; text-align: center;">
                     <h1 style="color: #ff8c42; text-shadow: 0 0 10px rgba(255, 140, 66, 0.5);">TECHBOY STORE</h1>
-                    <h2>Great News, {user.username}!</h2>
-                    <p style="font-size: 16px;">The price for <strong>{product.name}</strong> has dropped below your target of ₹{alert.target_price}.</p>
+                    <h2>Great News!</h2>
+                    <p style="font-size: 16px;">The price for <strong>{product.name}</strong> has reached your alert condition.</p>
                     <div style="margin: 20px 0; padding: 15px; background: rgba(255, 140, 66, 0.1); border-radius: 8px;">
                         <h3 style="margin: 0; font-size: 24px; color: #fff;">Current Price: <span style="color: #00e676;">₹{new_price}</span></h3>
                     </div>
@@ -51,18 +60,20 @@ def check_and_send_price_alerts(price_history):
             subject,
             text_content,
             getattr(settings, 'DEFAULT_FROM_EMAIL', 'noreply@techboystore.com'),
-            [user.email]
+            [recipient]
         )
         msg.attach_alternative(html_content, "text/html")
         
         try:
             msg.send()
-            # Mark alert as inactive after fulfilling it
-            alert.is_active = False
-            alert.save()
+            alert.last_notified_price = new_price
+            alert.last_notified_at = timezone.now()
+            alert.alert_sent = True
+            alert.current_price = new_price
+            alert.save(update_fields=['last_notified_price', 'last_notified_at', 'alert_sent', 'current_price'])
         except Exception as e:
             # Depending on how logging is handled
-            print(f"Failed to send email to {user.email}: {str(e)}")
+            print(f"Failed to send email to {recipient}: {str(e)}")
 
 
 def send_watchlist_price_drop_email(user, product, old_price, new_price):

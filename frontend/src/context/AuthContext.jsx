@@ -175,9 +175,10 @@ export function AuthProvider({ children }) {
         return fetch(url, { ...options, headers });
     };
 
-    const createPriceAlert = async ({ product, alertType, targetPrice }) => {
-        if (!user) {
-            throw new Error('Please sign in with Google to create price alerts.');
+    const createPriceAlert = async ({ product, alertType, targetPrice, email }) => {
+        const alertEmail = email || user?.email;
+        if (!alertEmail) {
+            throw new Error('Please provide an email address for price alerts.');
         }
 
         const res = await authFetch(`${API_BASE_URL}/alerts/`, {
@@ -185,6 +186,7 @@ export function AuthProvider({ children }) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 product: product.id,
+                email: alertEmail,
                 alert_type: alertType,
                 target_price: alertType === 'TARGET' ? targetPrice : null
             })
