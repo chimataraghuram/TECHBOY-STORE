@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { TrendingDown, Flame, Rocket, Star, GitCompare, Bell, ArrowRight, TrendingUp, Activity, Clock } from 'lucide-react';
 import PriceAlertModal from './PriceAlertModal';
-import QuickViewModal from './QuickViewModal';
+import DealDetailsModal from './DealDetailsModal';
 import { PREDEFINED_NOTIFICATIONS } from './NotificationSystemData';
 import { parseSpecs } from '../utils/specsParser';
 import { resolveProductImage } from '../utils/imageResolver';
@@ -430,7 +430,14 @@ const TechBoyTrends = () => {
 
             <AnimatePresence>
                 {selectedProduct && (
-                    <QuickViewModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+                    <DealDetailsModal
+                        product={selectedProduct}
+                        onClose={() => setSelectedProduct(null)}
+                        onTrack={(product) => {
+                            setSelectedProduct(null);
+                            setPriceAlertProduct({ product, rect: null });
+                        }}
+                    />
                 )}
             </AnimatePresence>
         </section>
