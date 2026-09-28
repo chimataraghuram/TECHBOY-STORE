@@ -22,7 +22,7 @@ const QuickViewModal = ({ product, onClose }) => {
     const [isLoadingAi, setIsLoadingAi] = useState(false);
     const [viewMode, setViewMode] = useState('2d'); // '2d' or '3d'
     const [isCopied, setIsCopied] = useState(false);
-    const imageUrl = resolveProductImage(product);
+    const imageUrl = resolveProductImage(product.image, product.name);
     const amazonUrl = product.amazonUrl || product.amazon_url || product.links?.amazon;
     const flipkartUrl = product.flipkartUrl || product.flipkart_url || product.links?.flipkart;
 
