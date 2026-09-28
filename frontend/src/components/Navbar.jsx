@@ -174,7 +174,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
                             </a>
 
                             {/* DESKTOP NAV LINKS — RED PILLS WITH SYMBOLS */}
-                            <div className="hidden lg:flex items-center gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/[0.08] backdrop-blur-md shrink-0">
+                            <div className="hidden xl:flex items-center gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/[0.08] backdrop-blur-md shrink-0">
                                 {NAV_ITEMS.map(item => {
                                     const Icon = item.icon;
                                     const isActive = currentView === 'trackhub' ? item.id === 'trackhub' : (currentView === 'home' && activeSection === item.id);
@@ -202,7 +202,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
                             </div>
 
                             {/* RIGHT CLUSTER */}
-                            <div className="flex items-center justify-end gap-1.5 sm:gap-2.5 flex-1 lg:flex-none">
+                            <div className="flex items-center justify-end gap-1.5 sm:gap-2.5 flex-1 xl:flex-none">
 
                                 {/* Sleek Search Icon Button (opens search modal) */}
                                 <button
@@ -233,12 +233,12 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
 
                                 {/* Desktop Auth Button (Mobile uses the floating bottom dock Profile icon) */}
                                 {user ? (
-                                    <div className="hidden lg:block">
+                                    <div className="hidden xl:block">
                                         <AuthDropdown onViewChange={setCurrentView} />
                                     </div>
                                 ) : (
                                     <button
-                                        className="hidden lg:flex text-xs sm:text-[13px] md:text-sm font-extrabold whitespace-nowrap text-white px-5 py-2.5 rounded-full bg-gradient-to-r from-[#ff3d55] to-[#e60023] hover:from-[#ff4d64] hover:to-[#ff1030] transition-all shadow-[0_0_18px_rgba(230,0,35,0.45)] hover:shadow-[0_0_26px_rgba(255,31,61,0.65)] items-center justify-center tracking-wider active:scale-95"
+                                        className="hidden xl:flex text-xs sm:text-[13px] md:text-sm font-extrabold whitespace-nowrap text-white px-5 py-2.5 rounded-full bg-gradient-to-r from-[#ff3d55] to-[#e60023] hover:from-[#ff4d64] hover:to-[#ff1030] transition-all shadow-[0_0_18px_rgba(230,0,35,0.45)] hover:shadow-[0_0_26px_rgba(255,31,61,0.65)] items-center justify-center tracking-wider active:scale-95"
                                         onClick={login}
                                         disabled={authLoading}
                                     >
@@ -264,7 +264,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
             {/* MOBILE & TABLET FLOATING DOCK NAVBAR — DIRECT BODY PORTAL WITH LIQUID GLASS JELLY PHYSICS */}
             {typeof document !== 'undefined' && createPortal(
                 <div 
-                    className="lg:hidden fixed left-1/2 -translate-x-1/2 z-[9990] w-[calc(100%-20px)] sm:w-[calc(100%-32px)] max-w-[420px] rounded-full bg-gradient-to-b from-[#1c1c2a]/80 via-[#0e0e18]/90 to-[#07070d]/95 backdrop-blur-3xl border border-white/25 p-1.5 ring-1 ring-white/10 pointer-events-auto select-none"
+                    className="xl:hidden fixed left-1/2 -translate-x-1/2 z-[9990] w-[calc(100%-20px)] sm:w-[calc(100%-32px)] max-w-[420px] rounded-full bg-gradient-to-b from-[#1c1c2a]/80 via-[#0e0e18]/90 to-[#07070d]/95 backdrop-blur-3xl border border-white/25 p-1.5 ring-1 ring-white/10 pointer-events-auto select-none"
                     style={{
                         bottom: 'max(14px, env(safe-area-inset-bottom, 14px))',
                         boxShadow: '0 20px 50px rgba(0, 0, 0, 0.88), 0 0 30px rgba(255, 31, 61, 0.22), inset 0 1.5px 1px rgba(255, 255, 255, 0.35), inset 0 -1.5px 2px rgba(0, 0, 0, 0.6)'
