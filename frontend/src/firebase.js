@@ -2,13 +2,20 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC1YBEtO-8V4Ag_1K-wTTcLIHwYsdqGTf0",
-  authDomain: "techboy-store.firebaseapp.com",
-  projectId: "techboy-store",
-  storageBucket: "techboy-store.firebasestorage.app",
-  messagingSenderId: "127168496451",
-  appId: "1:127168496451:web:c7b1ddda615f2bef9625f6"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
+
+const missingFirebaseConfig = Object.entries(firebaseConfig)
+  .filter(([, value]) => !value)
+  .map(([key]) => key);
+if (missingFirebaseConfig.length) {
+  throw new Error(`Missing Firebase configuration: ${missingFirebaseConfig.join(', ')}`);
+}
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);

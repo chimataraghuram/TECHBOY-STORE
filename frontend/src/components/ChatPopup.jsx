@@ -5,9 +5,6 @@ import localPhonesData from '../data/phones.json';
 
 let NVIDIA_API_KEY = import.meta.env.VITE_NVIDIA_API_KEY || '';
 NVIDIA_API_KEY = NVIDIA_API_KEY.replace(/["']/g, "").trim();
-if (!NVIDIA_API_KEY || NVIDIA_API_KEY.length < 50) {
-    NVIDIA_API_KEY = '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';
-}
 const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
 const money = (value) => `Rs ${Number(value || 0).toLocaleString()}`;
