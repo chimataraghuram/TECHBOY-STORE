@@ -5,7 +5,6 @@ import { CountUp } from './AnimationEngine';
 import { feedback } from '../utils/haptics';
 
 const HeroPhone3D = lazy(() => import('./HeroPhone3D'));
-const flagshipIphone = '/images/phones/apple-iphone-17-pro-max.png';
 
 const STATS = [
     { icon: Smartphone, value: 500, suffix: '+', label: 'Smartphones' },
@@ -102,24 +101,14 @@ const Hero = ({ setCurrentView }) => {
                                     <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-red-500 shadow-[0_0_10px_rgba(255,31,61,0.9)]" />
                                 </div>
 
-                                {/* Interactive 3D Phone or Transparent Fallback */}
+                                {/* Interactive 3D phone. Keep the initial state empty so a
+                                    static image never flashes and then disappears while
+                                    the WebGL module is loading. */}
                                 {load3D ? (
-                                    <Suspense fallback={
-                                        <img
-                                            src={flagshipIphone}
-                                            alt="Apple iPhone 17 Pro Max"
-                                            className="relative z-10 w-[180px] h-auto object-contain drop-shadow-[0_20px_40px_rgba(255,31,61,0.3)]"
-                                        />
-                                    }>
+                                    <Suspense fallback={null}>
                                         <HeroPhone3D className="absolute inset-0 z-10 w-full h-full" />
                                     </Suspense>
-                                ) : (
-                                    <img
-                                        src={flagshipIphone}
-                                        alt="Apple iPhone 17 Pro Max"
-                                        className="relative z-10 w-[180px] h-auto object-contain drop-shadow-[0_20px_40px_rgba(255,31,61,0.3)]"
-                                    />
-                                )}
+                                ) : null}
 
                                 {/* Floating product card — Mobile */}
                                 <m.a
@@ -220,22 +209,10 @@ const Hero = ({ setCurrentView }) => {
 
                         {/* 3D phone (WebGL-capable) */}
                         {load3D ? (
-                            <Suspense fallback={
-                                <img
-                                    src={flagshipIphone}
-                                    alt="Apple iPhone 17 Pro Max"
-                                    className="relative z-10 w-[260px] h-auto object-contain drop-shadow-[0_30px_60px_rgba(255,31,61,0.25)]"
-                                />
-                            }>
+                            <Suspense fallback={null}>
                                 <HeroPhone3D className="absolute inset-0 z-10" />
                             </Suspense>
-                        ) : (
-                            <img
-                                src={flagshipIphone}
-                                alt="Apple iPhone 17 Pro Max"
-                                className="relative z-10 w-[260px] h-auto object-contain drop-shadow-[0_30px_60px_rgba(255,31,61,0.25)]"
-                            />
-                        )}
+                        ) : null}
 
                         {/* Script tagline */}
                         <div className="absolute left-[4%] top-[18%] z-20 pointer-events-none select-none">
