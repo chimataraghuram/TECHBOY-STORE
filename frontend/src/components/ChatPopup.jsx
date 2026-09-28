@@ -9,11 +9,67 @@ const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/
 
 const money = (value) => `Rs ${Number(value || 0).toLocaleString()}`;
 
+const normalize = (value) => String(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9₹]+/g, ' ')
+    .trim();
+
+const getProductText = (product) => normalize([
+    product.name,
+    product.brand,
+    product.category,
+    product.tag,
+    product.description,
+    typeof product.specs === 'object' ? Object.values(product.specs).join(' ') : product.specs
+].join(' '));
+
+const extractBrand = (query, products) => {
+    const brands = [...new Set((products || []).map((product) => product.brand).filter(Boolean))]
+        .sort((a, b) => b.length - a.length);
+    const normalizedQuery = normalize(query);
+    return brands.find((brand) => normalizedQuery.includes(normalize(brand))) || null;
+};
+
+const rankProducts = (query, products) => {
+    const normalizedQuery = normalize(query);
+    const brand = extractBrand(query, products);
+    const budgetMatch = normalizedQuery.match(/(?:under|below|within|budget|rs|₹)\s*(\d+(?:\.\d+)?)\s*k?/) || normalizedQuery.match(/(\d+(?:\.\d+)?)\s*k/);
+    const budget = budgetMatch ? Number(budgetMatch[1]) * (normalizedQuery.includes(`${budgetMatch[1]} k`) || /k/.test(budgetMatch[0]) || Number(budgetMatch[1]) < 1000 ? 1000 : 1) : null;
+    const wantsGaming = /gaming|game|performance|powerful/.test(normalizedQuery);
+    const wantsCamera = /camera|photo|photography|portrait/.test(normalizedQuery);
+    const wantsBattery = /battery|long lasting|backup/.test(normalizedQuery);
+    const wantsCheap = /cheap|budget|affordable|value/.test(normalizedQuery);
+    const wantsFlagship = /flagship|premium|best phone|top phone/.test(normalizedQuery);
+
+    return [...(products || [])]
+        .filter((product) => !brand || normalize(product.brand) === normalize(brand))
+        .map((product) => {
+            const text = getProductText(product);
+            const price = Number(product.price) || 0;
+            let score = 0;
+            if (brand) score += 100;
+            if (budget !== null) score += price <= budget ? 60 - ((budget - price) / Math.max(budget, 1)) * 20 : -80;
+            if (wantsGaming && /snapdragon|dimensity|gaming|mediatek|elite/.test(text)) score += 35;
+            if (wantsCamera && /camera|mp|ois|telephoto|periscope/.test(text)) score += 35;
+            if (wantsBattery && /battery|mah|fast charge|flashcharge/.test(text)) score += 35;
+            if (wantsFlagship && price >= 40000) score += 30;
+            if (wantsCheap) score += Math.max(0, 25 - price / 10000);
+            for (const token of normalizedQuery.split(' ')) {
+                if (token.length > 2 && text.includes(token)) score += 4;
+            }
+            return { product, score };
+        })
+        .sort((a, b) => b.score - a.score || (Number(b.product.price) || 0) - (Number(a.product.price) || 0))
+        .map(({ product }) => product);
+};
+
 /* ── Dynamic system prompt built inside component ── */
 
 const localAdvisor = (text, phonesData) => {
     const query = text.toLowerCase();
-    let matches = [...(phonesData || localPhonesData)];
+    const allPhones = [...(phonesData || localPhonesData)];
+    let matches = rankProducts(query, allPhones);
+    const brand = extractBrand(query, allPhones);
 
     const budgetMatch = query.match(/(?:under|below|budget|rs|₹)?\s*(\d+)\s*k/i) || query.match(/(?:under|below|budget|rs|₹)\s*(\d+)/i);
     if (budgetMatch) {
@@ -38,14 +94,17 @@ const localAdvisor = (text, phonesData) => {
     }
 
     if (matches.length === 0) {
-        matches = [...(phonesData || localPhonesData)].sort((a, b) => (a.price || 0) - (b.price || 0));
+        return brand
+            ? `I couldn't find a ${brand} phone matching those requirements in the current catalog. Try a different budget or use case.`
+            : 'I could not find a matching phone in the current catalog. Try adding a brand, budget, or use case.';
     }
 
-    const picks = matches.slice(0, 3);
+    const picks = matches.slice(0, query.includes('compare') || query.includes('versus') ? 4 : 3);
+    const title = brand ? `Here are the best ${brand} matches I found:` : 'Here are my best TechBoy matches:';
     return [
-        'Here are my TechBoy picks:',
+        title,
         ...picks.map(p => `- **${p.name}** - ${money(p.price)}: ${p.tag || 'Strong value'}; ${p.description}`),
-        'Use Compare for a side-by-side view, or open View Phone for the quick verdict and price alert.'
+        'These recommendations are from the current TechBoy catalog. Open a phone to verify live availability and use Compare for a side-by-side view.'
     ].join('\n');
 };
 
@@ -110,7 +169,13 @@ const callBackend = async (text, phonesData) => {
         });
         if (!res.ok) throw new Error('Backend failed');
         const data = await res.json();
-        return { text: data.response || localAdvisor(text, phonesData) };
+        // Keep brand-scoped questions deterministic even when the backend model
+        // tries to broaden the recommendation beyond the requested brand.
+        const requestedBrand = extractBrand(text, phonesData || localPhonesData);
+        return {
+            text: requestedBrand ? localAdvisor(text, phonesData) : (data.response || localAdvisor(text, phonesData)),
+            products: data.products || []
+        };
     } catch (err) {
         console.error(err);
         return { text: localAdvisor(text, phonesData) };
@@ -182,15 +247,16 @@ const ChatPopup = ({ isOpen, onClose }) => {
         
         setSystemPrompt(`You are TechBoy AI, an expert smartphone buying advisor for TechBoy Store — India's smartest phone recommendation platform.
 Help users find the perfect smartphone. Be concise, friendly, and specific.
-You have extensive knowledge about ALL smartphones in the world. You are fully allowed to answer questions, provide specs, and discuss any smartphone a user asks about, even if it is not in the TechBoy Store inventory.
-When recommending phones to buy based on a budget or use-case, you should prioritize the phones listed in the CATALOG below if they fit the criteria.
-If a user asks about a phone not in the list, answer their question accurately using your general knowledge.
+For recommendations, NEVER mix brands when the user names a brand. If they ask for Tecno, recommend Tecno only; if no matching model exists, say so clearly instead of substituting another brand.
+Use the RETRIEVED MATCHES supplied with each user question as the primary source for recommendations, prices, and specs. Rank those matches by the user's budget and use case before answering.
+Do not invent prices, availability, ratings, specifications, or online research results. Catalog prices are stored TechBoy prices, not guaranteed live marketplace prices; say when live verification is needed.
+If a user asks about a phone not in the catalog, you may discuss general knowledge, but label it as external knowledge and do not present it as a live TechBoy price.
 If the user asks about specific specs (like camera, processor, battery) for a phone, accurately quote the Specs field from the catalog.
 If a user asks for "gaming phones", prioritize phones with high-end processors (Snapdragon, Dimensity).
 If a user asks for "flagships" or "premium", recommend the absolute best phones in the highest price tiers.
 Use ₹ for prices. Bold important specs with **text**.
 Use bullet points (- item) for comparisons. Keep replies under 160 words unless a deep comparison is asked.
-If recommending, mention name, price, and why it fits. Suggest 1-3 phones max per reply.
+If recommending, mention name, stored price, and why it fits. Suggest 1-3 phones max per reply.
 
 CRITICAL BUDGET RULES:
 1. "k" means thousand (e.g., "20k" = ₹20,000, "30k" = ₹30,000).
@@ -291,7 +357,16 @@ ${catalogText}`);
         setInputValue('');
         setIsStreaming(true);
 
-        const history = [...messages, userMsg]
+        const retrieved = rankProducts(text, livePhonesData).slice(0, /compare|versus|vs\.?/.test(normalize(text)) ? 5 : 8);
+        const retrievedText = retrieved.length
+            ? retrieved.map((p) => `${p.brand} ${p.name} — ₹${Number(p.price || 0).toLocaleString()} — ${p.description || ''}`).join('\n')
+            : 'No matching catalog products were retrieved. Do not substitute another brand without saying so.';
+        const groundedUserMsg = {
+            ...userMsg,
+            text: `${userMsg.text}\n\n[RETRIEVED MATCHES — use these first]\n${retrievedText}`
+        };
+
+        const history = [...messages, groundedUserMsg]
             .slice(-12)
             .map(m => ({ role: m.sender === 'user' ? 'user' : 'assistant', content: m.text }));
 
