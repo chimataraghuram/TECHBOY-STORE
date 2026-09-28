@@ -3453,7 +3453,7 @@ button:not(.close-btn):active {
 .recommendation-box p { font-size: .86rem !important; line-height: 1.5 !important; }
 .unified-specs-section { margin-top: 18px !important; }
 .spec-detail-item { min-height: 62px; padding: 10px 12px !important; }
-@media (max-width: 767px) {
+@media (max-width: 900px) {
   .quickview-content { width: 100% !important; max-height: calc(100dvh - 20px) !important; padding: 46px 16px 20px !important; border-radius: 22px !important; }
   .quickview-body { grid-template-columns: 1fr !important; gap: 12px !important; }
   .quickview-image-side { gap: 8px !important; }
@@ -3468,7 +3468,7 @@ button:not(.close-btn):active {
   .spec-detail-item span { font-size: .62rem !important; }
   .spec-detail-item div:last-child span:last-child { font-size: .75rem !important; }
 }
-@media (min-width: 768px) and (max-width: 1100px) {
+@media (min-width: 901px) and (max-width: 1100px) {
   .quickview-content { max-width: 880px !important; }
   .quickview-body { gap: 24px !important; }
   .quickview-visual { height: 300px !important; }
