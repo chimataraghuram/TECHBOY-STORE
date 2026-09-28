@@ -49,13 +49,18 @@ const LOCAL_PHONE_MAP = {
 const DEFAULT_FALLBACK = '/images/phones/apple-iphone-16-pro-max.png';
 
 export const resolveProductImage = (imgSrc, name = '') => {
+    // API responses can contain nested image objects or null values. Normalize
+    // inputs before using string methods so a malformed card never crashes the UI.
+    const image = typeof imgSrc === 'string' ? imgSrc.trim() : '';
+    const productName = typeof name === 'string' ? name : '';
+
     // 1. If it's already a local path starting with /images/phones, normalize to .png
-    if (imgSrc && imgSrc.startsWith('/images/phones/')) {
-        return imgSrc.replace(/\.(jpg|jpeg|webp)$/i, '.png');
+    if (image.startsWith('/images/phones/')) {
+        return image.replace(/\.(jpg|jpeg|webp)$/i, '.png');
     }
 
     // 2. Try to match by normalized product name
-    const n = (name || '').toLowerCase().trim();
+    const n = productName.toLowerCase().trim();
     if (n) {
         const slug = n.replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
         
@@ -123,13 +128,13 @@ export const resolveProductImage = (imgSrc, name = '') => {
     }
 
     // 3. If local path starting with "/", return it
-    if (imgSrc && imgSrc.startsWith('/')) {
-        return imgSrc;
+    if (image.startsWith('/')) {
+        return image;
     }
 
     // 4. If full external URL and not generic unsplash fallback
-    if (imgSrc && (imgSrc.startsWith('http://') || imgSrc.startsWith('https://')) && !imgSrc.includes('photo-1511707171634')) {
-        return imgSrc;
+    if ((image.startsWith('http://') || image.startsWith('https://')) && !image.includes('photo-1511707171634')) {
+        return image;
     }
 
     return DEFAULT_FALLBACK;
