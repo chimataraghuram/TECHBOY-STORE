@@ -172,7 +172,7 @@ const QuickViewModal = ({ product, onClose }) => {
                             >3D Interactive</button>
                         </div>
                         
-                        <div style={{ position: 'relative', width: '100%', height: '350px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <div className="quickview-visual" style={{ position: 'relative', width: '100%', height: '350px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             {viewMode === '2d' ? (
                                 <img src={imageUrl} alt={product.name} className="floating-img" style={{ maxHeight: '100%', objectFit: 'contain' }} />
                             ) : (

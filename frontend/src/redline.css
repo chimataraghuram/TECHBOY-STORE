@@ -3426,3 +3426,50 @@ button:not(.close-btn):active {
 .has-unread-alerts { animation: unreadShake 2s infinite ease-in-out; box-shadow: 0 0 15px rgba(255,0,0,0.6), inset 0 0 10px rgba(255,0,0,0.2) !important; border: 1px solid rgba(255,0,0,0.5) !important; }
 .has-unread-alerts .bell-icon { color: #ff3333 !important; filter: drop-shadow(0 0 5px rgba(255,0,0,0.8)); }
 @keyframes unreadShake { 0%, 100% { transform: rotate(0deg) scale(1); } 10%, 30%, 50%, 70%, 90% { transform: rotate(-8deg) scale(1.1); } 20%, 40%, 60%, 80% { transform: rotate(8deg) scale(1.1); } }
+/* Quick View: polished responsive layout for desktop, tablet, and touch screens. */
+.quickview-overlay {
+  padding: clamp(12px, 3vw, 32px) !important;
+  background: radial-gradient(circle at 50% 15%, rgba(255, 31, 61, .16), transparent 34rem), rgba(0, 0, 0, .86) !important;
+}
+.quickview-content {
+  width: min(100%, 1040px) !important;
+  max-width: 1040px !important;
+  max-height: min(900px, calc(100dvh - 32px)) !important;
+  overflow-y: auto !important;
+  padding: clamp(22px, 4vw, 44px) !important;
+  border: 1px solid rgba(255, 31, 61, .55) !important;
+  background: linear-gradient(135deg, rgba(24, 12, 18, .96), rgba(8, 10, 18, .97)) !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .7), inset 0 1px rgba(255, 255, 255, .08), 0 0 36px rgba(255, 31, 61, .12) !important;
+}
+.quickview-body { grid-template-columns: minmax(260px, .92fr) minmax(320px, 1.08fr) !important; gap: clamp(24px, 5vw, 58px) !important; align-items: start !important; }
+.quickview-image-side { min-width: 0; flex-direction: column !important; }
+.quickview-visual { height: clamp(260px, 43vh, 390px) !important; }
+.floating-img { width: min(86%, 330px) !important; max-height: 100% !important; object-fit: contain !important; }
+.quickview-details-side { min-width: 0; }
+.modal-title { font-size: clamp(1.65rem, 3.5vw, 2.65rem) !important; line-height: 1.08 !important; max-width: 15ch; }
+.price-tag-big { display: inline-block; font-size: clamp(1.8rem, 4vw, 2.8rem) !important; padding: 6px 12px !important; line-height: 1.05; }
+.modal-price-row { flex-wrap: wrap; align-items: center !important; gap: 10px !important; margin-bottom: 20px !important; }
+.recommendation-box { padding: 16px !important; margin-bottom: 20px !important; border-left-width: 3px !important; }
+.recommendation-box p { font-size: .86rem !important; line-height: 1.5 !important; }
+.unified-specs-section { margin-top: 18px !important; }
+.spec-detail-item { min-height: 62px; padding: 10px 12px !important; }
+@media (max-width: 767px) {
+  .quickview-content { width: 100% !important; max-height: calc(100dvh - 20px) !important; padding: 46px 16px 20px !important; border-radius: 22px !important; }
+  .quickview-body { grid-template-columns: 1fr !important; gap: 12px !important; }
+  .quickview-image-side { gap: 8px !important; }
+  .view-toggle-buttons { margin-bottom: 4px !important; }
+  .view-toggle-buttons button { min-height: 40px !important; padding: 8px 12px !important; font-size: 10px !important; }
+  .quickview-visual { height: 210px !important; }
+  .floating-img { width: min(62%, 220px) !important; }
+  .modal-title { font-size: 1.65rem !important; max-width: 16ch; margin: 8px 0 !important; }
+  .price-tag-big { font-size: 2rem !important; }
+  .store-tag { font-size: .7rem !important; padding: 5px 9px !important; }
+  .ai-summary-header { font-size: .72rem !important; }
+  .spec-detail-item span { font-size: .62rem !important; }
+  .spec-detail-item div:last-child span:last-child { font-size: .75rem !important; }
+}
+@media (min-width: 768px) and (max-width: 1100px) {
+  .quickview-content { max-width: 880px !important; }
+  .quickview-body { gap: 24px !important; }
+  .quickview-visual { height: 300px !important; }
+}
