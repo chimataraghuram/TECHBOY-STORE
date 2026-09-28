@@ -1,178 +1,156 @@
-# TECHBOY STORE
+<div align="center">
 
-TECHBOY STORE is a full-stack smartphone discovery and price-tracking application. It combines a React/Vite storefront with a Django REST API, product comparison, wishlist and watchlist features, AI-assisted recommendations, Google authentication, and configurable price alerts.
+  <img src="frontend/images/logos/new-logo.jpg" alt="TechBoy Logo" width="120" style="border-radius: 50%; box-shadow: 0 0 20px rgba(255, 140, 66, 0.4); border: 2px solid #ff8c42;">
 
-## Live project
+  # <span style="color: #ff8c42;">TECHBOY STORE</span>
+  
+  **The Next-Generation AI Smartphone Concierge & E-Commerce Hub**
 
-- Website: <https://techboy-store.vercel.app/>
-- Repository: <https://github.com/chimataraghuram/TECHBOY-STORE>
+  [![Live Demo](https://img.shields.io/badge/Live-Demo-ff8c42?style=for-the-badge&logoColor=white)](https://techboy-store.vercel.app/)
+  [![GitHub Repo](https://img.shields.io/badge/GitHub-Repo-white?style=for-the-badge&logo=github&logoColor=black)](https://github.com/chimataraghuram/TECHBOY-STORE)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-## Features
+  > `⚡ Unbiased, Data-Driven Smartphone Discovery`  
+  > `🤖 Conversational AI Built on NVIDIA NIM Llama 3.1`  
+  > `⚖️ Advanced Head-to-Head Technical Spec Matching`
 
-- Responsive neon/glassmorphism smartphone catalog.
-- Product search, category filtering, budget filtering, sorting, quick view, and deep links.
-- Side-by-side comparison for up to three phones.
-- Wishlist, recently viewed products, watchlist, and TrackHub.
-- Google sign-in through Firebase Authentication.
-- AI assistant with NVIDIA NIM integration and a local fallback response path.
-- Trending products and engagement analytics.
-- Target-price and price-change alerts for guests and signed-in users.
-- Database-level duplicate prevention and notification checkpointing.
-- PWA support and responsive mobile layouts.
+  **An ultra-modern, full-stack shopping application built to revolutionize how you find your next smartphone. Fusing sleek glassmorphic UI design, real-time analytics, and an intelligent chatbot, TECHBOY STORE delivers a zero-compromise discovery experience.**
 
-## Technology stack
+</div>
+
+---
+
+## 🌐 Live Demo
+Experience the premium tech shopping journey yourself: [https://techboy-store.vercel.app/](https://techboy-store.vercel.app/)
+
+> "We cut through the marketing noise to bring you raw specs, smart comparisons, and AI recommendations tailored exactly to your wallet."
+
+---
+
+## 🖼️ Project Screenshots
+
+<div align="center">
+  <h3>🚀 Hero Section</h3>
+  <p>An immersive gateway featuring 3D particle physics, neon typography, and fluid Framer Motion transitions.</p>
+  <img src="https://placehold.co/800x400/100000/ff8c42?text=Hero+Dynamic+Dashboard" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);">
+  
+  <br /><br />
+  
+  <h3>🤖 TechBoy AI Assistant</h3>
+  <p>A smart, floating conversational agent that instantly parses catalogs to recommend the perfect device based on natural language.</p>
+  <img src="https://placehold.co/800x400/100000/ff8c42?text=AI+Chatbot+Integration" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);">
+
+  <br /><br />
+  
+  <h3>📊 Analyst Picks</h3>
+  <p>A seamless, responsive product grid engineered with instant category filters, budget sliders, and deep-link product tags.</p>
+  <img src="https://placehold.co/800x400/100000/ff8c42?text=Expert+Recommendations+Grid" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);">
+  
+  <br /><br />
+  
+  <h3>⚖️ Comparison Engine</h3>
+  <p>A frosted-glass overlay that dissects devices side-by-side, analyzing processors, cameras, and battery metrics instantly.</p>
+  <img src="https://placehold.co/800x400/100000/ff8c42?text=Comparison+Engine+Modal" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);">
+  
+  <br /><br />
+  
+  <h3>🔐 Auth Experience</h3>
+  <p>A highly secure, beautiful authentication flow utilizing JSON Web Tokens, shielded by a modern UI aesthetic.</p>
+  <img src="https://placehold.co/800x400/100000/ff8c42?text=Premium+Identity+System" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 69, 0, 0.2);">
+</div>
+
+---
+
+## ✨ Features
+
+| Icon | Feature | Description |
+| :--- | :--- | :--- |
+| 🤖 | **TechBoy AI Chatbot** | Integrated NVIDIA NIM Llama 3.1 LLM that talks tech. It understands your budget, prioritizes gaming chips, and even works offline using a custom algorithmic fallback. |
+| 📱 | **Analyst Picks** | Carefully curated smartphone tiers with an intuitive, unified filtering system that guarantees you find the best value at any price point. |
+| ⚖️ | **Smart Comparison** | A head-to-head evaluation tool designed to let you stack up to three devices against each other, comparing everything from sensors to screen refresh rates. |
+| 🌐 | **Dynamic 3D UI** | A visual masterpiece utilizing Three.js and custom particle configurations, providing users with a luxurious, app-like feel right in their browser. |
+| 📈 | **Weighted Trending** | An intelligent sorting algorithm running on the backend that dynamically highlights products based on real-time community engagement. |
+| 🧠 | **Smart Recommendations** | Content-based suggestion engines that automatically pair you with similar devices if your first choice is out of stock. |
+| 📊 | **Analytics Suite** | Admin-level oversight tools that quietly log click-through rates, referral pathways, and top-performing products. |
+| 🔐 | **Firebase + API Auth** | Google sign-in through Firebase Authentication with authenticated Django REST API requests. |
+| 🔔 | **Price Alerts** | Guest and signed-in alerts with duplicate prevention, target prices, and notification checkpoints. |
+
+---
+
+## 🛠️ Tech Stack
 
 ### Frontend
+- **React 19** - State-of-the-art UI rendering with advanced Hooks
+- **Vite** - Blazing fast hot-module replacement and optimized builds
+- **Vanilla CSS** - Hand-crafted, zero-dependency neon and glassmorphism styling
+- **Framer Motion & Three.js** - Delivering 60fps animations and 3D web graphics
 
-React 19, Vite, Framer Motion, Three.js/React Three Fiber, Tailwind CSS, Firebase Authentication, and ESLint.
+### Backend (Production-Grade)
+- **Django 6** - The bedrock of the backend, ensuring extreme stability
+- **DRF (REST Framework)** - Serving cleanly serialized JSON endpoints
+- **Service Layer Architecture** - Enterprise-grade logic separation keeping views incredibly thin
+- **Caching & Throttling** - Defending against spam and delivering cached data instantly via LocMem
+- **SQLite / PostgreSQL** - Highly optimized, indexed database modeling
+- **Gunicorn** - Ensuring concurrent requests are processed securely in production
 
-### Backend
+---
 
-Django, Django REST Framework, SQLite or PostgreSQL, Simple JWT, Firebase Admin, Django Q2, SMTP, Gunicorn, and WhiteNoise.
-
-## Repository layout
+## 📂 Project Structure
 
 ```text
 TECHBOY-STORE/
-├── backend/
-│   ├── api/
-│   │   ├── migrations/        # Database migrations
-│   │   ├── services/          # Alert and business-logic services
-│   │   ├── management/        # Custom Django commands
-│   │   ├── models.py          # Users, products, alerts, history, watchlists
-│   │   ├── serializers.py     # REST representations and validation
-│   │   ├── views.py           # API viewsets and endpoints
-│   │   ├── signals.py         # Price-history alert triggers
-│   │   └── urls.py            # API routes
-│   ├── core/                  # Django settings and URL configuration
-│   ├── manage.py
-│   └── requirements.txt
-├── frontend/
-│   ├── src/
-│   │   ├── components/        # Store, catalog, auth, alert, and modal UI
-│   │   ├── context/           # Authentication and application state
-│   │   ├── data/              # Local product fallback data
-│   │   ├── hooks/             # Reusable React hooks
-│   │   ├── utils/             # Images, links, haptics, and recent views
-│   │   └── workers/           # Background client-side work
-│   ├── public/                # Public static assets
-│   ├── package.json
-│   └── vite.config.js
-├── images/                    # Shared source assets
-├── scripts/                   # Data and maintenance scripts
-├── workflows/                 # Workflow definitions and automation assets
-├── .github/workflows/         # CI and scheduled deal updates
-├── docker-compose.yml
-├── render.yaml
-└── README.md
+├── backend/                # Django REST API (Production Setup)
+│   ├── api/                
+│   │   ├── services/       # Decoupled Business Logic (Analytics, Products)
+│   │   ├── migrations/      # Versioned database schema changes
+│   │   ├── management/      # Custom Django management commands
+│   │   ├── models.py       # Optimized DB Models with Indexing
+│   │   ├── views.py        # Thin ViewSet Layer
+│   │   ├── serializers.py  # Advanced Data Transform Layer (Score Logic)
+│   │   └── exceptions.py   # Global Unified JSON Error Handler
+│   └── core/               # Central Config (Logging, Cache, Throttle)
+├── images/                 # Categorized Project Assets (Logos, Heroes, etc.)
+├── scripts/                # Data Parsing and Automation Scripts
+├── frontend/               # React Frontend (Vite)
+│   ├── src/                    
+│   │   ├── components/     # Modular UI Components (ChatPopup, CompModal, etc.)
+│   │   └── App.css         # Neon/Glassmorphism Design System
+│   └── public/             # Static Assets
+├── workflows/              # Automation Workflows (e.g., n8n Price Drop)
+└── README.md               # Production Documentation
 ```
 
-## Local setup
+---
 
-### Frontend
+## 🛣️ Future Roadmap
+- [x] **AI Chatbot**: Ground-up NVIDIA LLM integration for bespoke shopping assistance.
+- [x] **Global Price Alert**: Subscription models letting users track hardware price depreciation.
+- [x] **Deployment**: Seamless hosting CI/CD via Vercel and PythonAnywhere.
+- [x] **User Wishlists**: Save, manage, and compare favorite smartphone products.
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+---
 
-Production checks:
+## 🤝 Contributing
+1. **Fork** the repository.
+2. Create your **Feature Branch** (`git checkout -b feature/AmazingFeature`).
+3. **Commit** your changes (`git commit -m 'Add some AmazingFeature'`).
+4. **Push** to the branch (`git push origin feature/AmazingFeature`).
+5. Open a **Pull Request**.
 
-```bash
-npm run lint
-npm run build
-```
+---
 
-### Backend
+## 📜 License
+Distributed under the **MIT License**. See `LICENSE` for more information.  
+*Note: Please give appropriate credit if you use this UI template.*
 
-```bash
-cd backend
-python -m venv .venv
-# Windows: .venv\Scripts\activate
-# macOS/Linux: source .venv/bin/activate
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver
-```
+---
 
-The API runs at `http://127.0.0.1:8000/api/`.
+## 👨‍💻 Author
+**Chimata Raghuram**  
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/chimataraghuram)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/chimataraghuram)
 
-## Environment variables
-
-Create `frontend/.env.local` with the Firebase web configuration and backend URL:
-
-```env
-VITE_BACKEND_URL=http://127.0.0.1:8000/api
-VITE_FIREBASE_API_KEY=your_firebase_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
-VITE_FIREBASE_PROJECT_ID=your_firebase_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-VITE_FIREBASE_APP_ID=your_firebase_app_id
-```
-
-For Gmail SMTP, configure deployment secrets only; never commit them:
-
-```env
-EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USE_TLS=True
-EMAIL_HOST_USER=your_email@gmail.com
-EMAIL_HOST_PASSWORD=your_gmail_app_password
-DEFAULT_FROM_EMAIL=TechBoy Store <your_email@gmail.com>
-```
-
-Use a Google App Password with two-step verification enabled. Do not use the normal Google account password.
-
-## Price alerts
-
-Alerts are stored by email and product. Repeated submissions update the existing alert instead of creating duplicates. When price history is created, the service finds matching active alerts, skips the same notification checkpoint or a price rebound, sends an HTML email, records the notified price and timestamp, and keeps the alert active for later lower prices.
-
-After deployment, apply migrations:
-
-```bash
-python manage.py migrate
-```
-
-The deduplication and checkpoint migration is `0007_pricealert_checkpoints_and_unique.py`.
-
-## Scheduled updates and deployment
-
-`.github/workflows/update_deals.yml` runs the deal updater on a schedule. Configure its repository secrets and backend URL before enabling production notifications.
-
-- Frontend: Vercel or another static Vite host using `npm run build`.
-- Backend: Render, PythonAnywhere, or another Django host using Gunicorn.
-- Database: SQLite for local use; PostgreSQL is recommended for production.
-- Firebase: enable Google sign-in and add every local and deployed domain to Authentication authorized domains.
-
-## Verification checklist
-
-```bash
-cd frontend
-npm run lint
-npm run build
-
-cd ../backend
-python -m compileall -q .
-python manage.py check
-python manage.py migrate --check
-```
-
-For end-to-end alert testing, sign in or use a guest email, create the same alert twice, confirm one alert exists, create a lower price-history entry, and verify one email plus a stored checkpoint.
-
-## Contributing
-
-1. Create a feature branch.
-2. Make a focused change.
-3. Run the frontend and backend checks.
-4. Open a pull request with screenshots for UI changes.
-
-## Author
-
-**Chimata Raghuram** — [GitHub](https://github.com/chimataraghuram) · [LinkedIn](https://www.linkedin.com/in/chimataraghuram/)
-
-## License
-
-This project is distributed under the MIT License.
+<div align="center">
+  <br />
+  <b>COOKED BY RAGHU</b> ❤️
+</div>
