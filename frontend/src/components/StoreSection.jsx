@@ -28,6 +28,7 @@ const ProductCardSkeleton = () => (
 );
 
 const StoreSection = ({ searchTerm, onSearch }) => {
+    const getCompareKey = (product) => String(product?.id ?? product?.name ?? '');
     const [products, setProducts] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -77,7 +78,12 @@ const StoreSection = ({ searchTerm, onSearch }) => {
         const syncCompare = () => {
             try {
                 const stored = JSON.parse(localStorage.getItem('tb_compare_list') || '[]');
-                setCompareList(stored);
+                setCompareList(current => {
+                    const currentIds = current.map(getCompareKey);
+                    const storedIds = stored.map(getCompareKey);
+                    const unchanged = currentIds.length === storedIds.length && currentIds.every((id, index) => id === storedIds[index]);
+                    return unchanged ? current : stored.slice(0, 3);
+                });
             } catch (e) {}
         };
         window.addEventListener('tb_compare_updated', syncCompare);
@@ -190,9 +196,11 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     }, [products, activeBrand, activeCategory, searchTerm]);
 
     const handleCompare = (product) => {
+        const productKey = getCompareKey(product);
+        if (!productKey) return;
         setCompareList(prev => {
-            const exists = prev.find(p => p.id === product.id);
-            if (exists) return prev.filter(p => p.id !== product.id);
+            const exists = prev.some(p => getCompareKey(p) === productKey);
+            if (exists) return prev.filter(p => getCompareKey(p) !== productKey);
             if (prev.length < 3) return [...prev, product];
             return prev;
         });
@@ -418,7 +426,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                                     key={product.id}
                                     product={product}
                                     onCompare={handleCompare}
-                                    isComparing={compareList.some(p => p.id === product.id)}
+                                    isComparing={compareList.some(p => getCompareKey(p) === getCompareKey(product))}
                                     onPriceAlert={(p, rect) => setPriceAlertProduct({ product: p, rect })}
                                     index={idx}
                                 />
