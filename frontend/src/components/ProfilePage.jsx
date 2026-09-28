@@ -57,6 +57,13 @@ const ProfilePage = ({ setCurrentView, initialTab, onSearch }) => {
 
     // Wishlist
     const [wishlist, setWishlist] = useState([]);
+    const [compareList, setCompareList] = useState(() => {
+        try {
+            return JSON.parse(localStorage.getItem('tb_compare_list') || '[]');
+        } catch {
+            return [];
+        }
+    });
 
     // Recently Viewed
     const [recentlyViewed, setRecentlyViewed] = useState([]);
