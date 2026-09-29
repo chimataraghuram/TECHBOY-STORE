@@ -6,6 +6,9 @@ on:
     - cron: '0 */6 * * *'
   workflow_dispatch: # Allows manual one-click trigger anytime from GitHub Actions tab
 
+permissions:
+  contents: write
+
 jobs:
   update-deals:
     runs-on: ubuntu-latest
