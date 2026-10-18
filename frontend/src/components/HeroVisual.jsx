@@ -1,57 +1,92 @@
 import React from 'react';
 import { m } from 'framer-motion';
 
-/* ─── phone silhouette ──────────────────────────────────────────── */
-const Phone = ({ color, screen1, screen2, w = 84, h = 170, isHero = false }) => (
-    <div style={{
-        width: w, height: h,
-        borderRadius: isHero ? 30 : 22,
-        background: `linear-gradient(160deg,#18181f,#08080f)`,
-        border: `1.5px solid rgba(255,255,255,${isHero ? 0.16 : 0.1})`,
-        boxShadow: [
-            `0 ${isHero ? 50 : 25}px ${isHero ? 100 : 55}px rgba(0,0,0,0.9)`,
-            `0 0 ${isHero ? 55 : 28}px ${color}44`,
-            `inset 0 1px 0 rgba(255,255,255,0.1)`,
-        ].join(','),
-        position: 'relative', overflow: 'hidden', flexShrink: 0,
-    }}>
-        {/* gloss */}
-        <div style={{ position:'absolute', inset:0, borderRadius:'inherit',
-            background:'linear-gradient(135deg,rgba(255,255,255,0.07) 0%,transparent 55%)' }} />
-        {/* screen */}
+/* ─── realistic phone frame ──────────────────────────────────────── */
+const Phone = ({ color, screenTop, screenBot, w = 86, h = 172, isHero = false }) => {
+    const br = isHero ? 34 : 26;
+    const brInner = isHero ? 27 : 20;
+    const pad = isHero ? 8 : 6;
+    const nipW = isHero ? 38 : 26;
+    const nipH = isHero ? 10 : 7;
+
+    return (
         <div style={{
-            position:'absolute',
-            top: isHero ? 9 : 6, left: isHero ? 7 : 5,
-            right: isHero ? 7 : 5, bottom: isHero ? 11 : 7,
-            borderRadius: isHero ? 23 : 17,
-            background: `linear-gradient(160deg,${screen1},${screen2})`,
-            overflow:'hidden',
+            width: w, height: h,
+            borderRadius: br,
+            position: 'relative',
+            /* layered shadows = frame depth */
+            boxShadow: [
+                `0 0 0 1.5px rgba(255,255,255,0.1)`,
+                `0 0 0 3px rgba(0,0,0,0.95)`,
+                `0 35px 80px rgba(0,0,0,0.95)`,
+                `0 0 ${isHero ? 90 : 50}px ${color}55`,
+                `0 0 ${isHero ? 180 : 90}px ${color}1a`,
+                `inset 0 1px 0 rgba(255,255,255,0.13)`,
+            ].join(','),
+            background: 'linear-gradient(145deg, #1d1d26 0%, #0e0e18 50%, #070710 100%)',
         }}>
-            {/* dynamic island */}
+            {/* left edge shimmer */}
             <div style={{
-                position:'absolute', top: isHero ? 6 : 4, left:'50%',
-                transform:'translateX(-50%)',
-                width: isHero ? 34 : 22, height: isHero ? 9 : 6,
-                borderRadius:10, background:'#000',
+                position: 'absolute', top: '12%', bottom: '12%', left: 0, width: 2,
+                background: 'linear-gradient(to bottom,transparent,rgba(255,255,255,0.1),transparent)',
+                borderRadius: br,
             }} />
-            {/* screen inner glow */}
+
+            {/* screen */}
             <div style={{
-                position:'absolute', bottom:0, left:0, right:0, height:'55%',
-                background:`radial-gradient(ellipse at 50% 100%,${color}55 0%,transparent 70%)`,
-            }} />
-            {/* screen top tint */}
+                position: 'absolute',
+                top: pad, left: pad, right: pad, bottom: pad + 2,
+                borderRadius: brInner,
+                overflow: 'hidden',
+                background: screenTop,
+            }}>
+                {/* main gradient */}
+                <div style={{
+                    position: 'absolute', inset: 0,
+                    background: `linear-gradient(175deg, ${screenTop} 0%, ${screenTop} 25%, ${screenBot} 65%, ${color}cc 100%)`,
+                }} />
+                {/* bottom radial bloom */}
+                <div style={{
+                    position: 'absolute', bottom: -15, left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: '140%', height: '65%',
+                    background: `radial-gradient(ellipse at 50% 100%, ${color}bb 0%, ${color}44 35%, transparent 70%)`,
+                    filter: 'blur(6px)',
+                }} />
+                {/* top soft reflection */}
+                <div style={{
+                    position: 'absolute', top: 0, left: 0, right: 0, height: '40%',
+                    background: 'linear-gradient(180deg,rgba(255,255,255,0.05) 0%,transparent 100%)',
+                }} />
+                {/* gloss diagonal */}
+                <div style={{
+                    position: 'absolute', inset: 0,
+                    background: 'linear-gradient(128deg,rgba(255,255,255,0.07) 0%,transparent 45%)',
+                }} />
+                {/* dynamic island */}
+                <div style={{
+                    position: 'absolute', top: nipH - 3, left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: nipW, height: nipH,
+                    borderRadius: 12,
+                    background: 'rgba(0,0,0,0.95)',
+                    boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.04)',
+                }} />
+            </div>
+
+            {/* side buttons */}
+            <div style={{ position:'absolute', right:-2.5, top:'27%', width:3, height:26, borderRadius:2, background:'linear-gradient(to bottom,#252530,#18181f,#252530)' }} />
+            <div style={{ position:'absolute', left:-2.5, top:'23%', width:3, height:17, borderRadius:2, background:'linear-gradient(to bottom,#252530,#18181f,#252530)' }} />
+            <div style={{ position:'absolute', left:-2.5, top:'33%', width:3, height:17, borderRadius:2, background:'linear-gradient(to bottom,#252530,#18181f,#252530)' }} />
+
+            {/* body gloss */}
             <div style={{
-                position:'absolute', top:0, left:0, right:0, height:'40%',
-                background:`linear-gradient(180deg,${color}22,transparent)`,
+                position:'absolute', inset:0, borderRadius:br, pointerEvents:'none',
+                background:'linear-gradient(135deg,rgba(255,255,255,0.05) 0%,transparent 50%)',
             }} />
         </div>
-        {/* right button */}
-        <div style={{ position:'absolute', right:-2, top:'28%', width:2.5, height:24, borderRadius:2, background:'rgba(255,255,255,0.18)' }} />
-        {/* left buttons */}
-        <div style={{ position:'absolute', left:-2, top:'24%', width:2.5, height:16, borderRadius:2, background:'rgba(255,255,255,0.13)' }} />
-        <div style={{ position:'absolute', left:-2, top:'36%', width:2.5, height:16, borderRadius:2, background:'rgba(255,255,255,0.13)' }} />
-    </div>
-);
+    );
+};
 
 /* ─── brand pill ─────────────────────────────────────────────────── */
 const Pill = ({ brand, logo, color, style, delay = 0 }) => (
@@ -59,43 +94,42 @@ const Pill = ({ brand, logo, color, style, delay = 0 }) => (
         className="absolute z-40 flex items-center gap-1.5"
         style={{
             ...style,
-            padding:'5px 11px 5px 6px', borderRadius:20,
-            background:'rgba(8,8,16,0.9)',
-            border:'1px solid rgba(255,255,255,0.11)',
-            boxShadow:'0 8px 30px rgba(0,0,0,0.75), 0 0 14px rgba(255,31,61,0.08)',
-            backdropFilter:'blur(18px)', WebkitBackdropFilter:'blur(18px)',
-            whiteSpace:'nowrap',
+            padding: '5px 12px 5px 5px', borderRadius: 24,
+            background: 'rgba(6,6,14,0.92)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.8), 0 0 16px rgba(255,31,61,0.07)',
+            backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
+            whiteSpace: 'nowrap',
         }}
-        initial={{ opacity:0, scale:0.75, y:8 }}
+        initial={{ opacity:0, scale:0.7, y:6 }}
         animate={{ opacity:1, scale:1, y:0 }}
         transition={{ delay, duration:0.5, ease:[0.16,1,0.3,1] }}
     >
         <span style={{
-            width:22, height:22, borderRadius:'50%',
-            background:`${color}22`, border:`1px solid ${color}55`,
+            width:22, height:22, borderRadius:'50%', flexShrink:0,
+            background:`${color}1e`, border:`1px solid ${color}55`,
             display:'flex', alignItems:'center', justifyContent:'center',
-            fontSize:9, fontWeight:900, color, flexShrink:0,
+            fontSize:9, fontWeight:900, color,
+            fontFamily:'monospace',
         }}>{logo}</span>
-        <span style={{ fontSize:11, fontWeight:700, color:'#fff' }}>{brand}</span>
+        <span style={{ fontSize:11, fontWeight:700, color:'#fff', letterSpacing:0.2 }}>{brand}</span>
     </m.div>
 );
 
-/* ─── phone entry (positioned + rotated) ────────────────────────── */
-const PhoneEntry = ({ top, left, rotate, scale, z, color, screen1, screen2, delay, animY = null, w, h, isHero }) => (
+/* ─── positioned phone wrapper ───────────────────────────────────── */
+const P = ({ top, left, rotate, scale, z, delay, children, float }) => (
     <m.div
         className="absolute"
         style={{ top, left, zIndex:z, transform:`translate(-50%,-50%) rotate(${rotate}deg) scale(${scale})` }}
-        initial={{ opacity:0, y:40 }}
-        animate={{ opacity:1, y:0 }}
-        transition={{ delay, duration:0.85, ease:[0.16,1,0.3,1] }}
+        initial={{ opacity:0, y:50, scale: scale * 0.8 }}
+        animate={{ opacity:1, y:0, scale }}
+        transition={{ delay, duration:0.95, ease:[0.16,1,0.3,1] }}
     >
-        {animY ? (
-            <m.div animate={{ y: animY }} transition={{ duration:5.5, repeat:Infinity, ease:'easeInOut' }}>
-                <Phone color={color} screen1={screen1} screen2={screen2} w={w} h={h} isHero={isHero} />
+        {float ? (
+            <m.div animate={{ y:[-8,8,-8] }} transition={{ duration:5.5, repeat:Infinity, ease:'easeInOut' }}>
+                {children}
             </m.div>
-        ) : (
-            <Phone color={color} screen1={screen1} screen2={screen2} w={w} h={h} isHero={isHero} />
-        )}
+        ) : children}
     </m.div>
 );
 
@@ -103,134 +137,104 @@ const PhoneEntry = ({ top, left, rotate, scale, z, color, screen1, screen2, dela
 const HeroVisual = () => (
     <div className="relative w-full h-full flex items-center justify-center select-none overflow-visible">
 
-        {/* ── background ambient glow ── */}
+        {/* bg red radial */}
         <div className="absolute inset-0 pointer-events-none" style={{
-            background:'radial-gradient(ellipse 70% 65% at 55% 45%, rgba(255,31,61,0.22) 0%, transparent 70%)',
+            background:'radial-gradient(ellipse 70% 60% at 55% 45%, rgba(255,31,61,0.18) 0%, transparent 70%)',
         }} />
 
-        {/* ── outer decorative rings ── */}
+        {/* ── orbital ellipse rings (3D tilt) ── */}
+        {/* outer big ring */}
         <div className="absolute pointer-events-none" style={{
-            width:480, height:480, top:'50%', left:'50%',
-            transform:'translate(-50%,-50%)',
+            width:460, height:460,
+            top:'50%', left:'52%',
+            transform:'translate(-50%,-50%) perspective(600px) rotateX(74deg)',
             borderRadius:'50%',
-            border:'1px solid rgba(255,31,61,0.09)',
-            animation:'tb-pulse-ring 8s ease-in-out infinite',
-        }} />
-        <div className="absolute pointer-events-none" style={{
-            width:370, height:370, top:'50%', left:'50%',
-            transform:'translate(-50%,-50%)',
-            borderRadius:'50%',
-            border:'1px solid rgba(255,31,61,0.06)',
-            animation:'tb-pulse-ring 11s ease-in-out infinite',
-            animationDelay:'2s',
-        }} />
-
-        {/* ── 3D orbital ellipse rings (the "platform" rings) ── */}
-        <div className="absolute pointer-events-none" style={{
-            width:420, height:420, top:'50%', left:'50%',
-            transform:'translate(-50%,-50%) perspective(500px) rotateX(76deg)',
-            borderRadius:'50%',
-            border:'2px solid rgba(255,31,61,0.55)',
-            boxShadow:'0 0 28px rgba(255,31,61,0.4), inset 0 0 28px rgba(255,31,61,0.08)',
-            animation:'tb-spin-slow 18s linear infinite',
+            border:'1.5px solid rgba(255,31,61,0.5)',
+            boxShadow:'0 0 22px rgba(255,31,61,0.35), inset 0 0 22px rgba(255,31,61,0.06)',
+            animation:'tb-spin-slow 20s linear infinite',
         }}>
             <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full"
-                style={{ background:'#ff1f3d', boxShadow:'0 0 14px 4px rgba(255,31,61,0.9)' }} />
-            <span className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-2 h-2 rounded-full"
-                style={{ background:'rgba(255,31,61,0.5)', boxShadow:'0 0 8px rgba(255,31,61,0.7)' }} />
+                style={{ background:'#ff1f3d', boxShadow:'0 0 16px 5px rgba(255,31,61,0.95)' }} />
+            <span className="absolute bottom-0 right-[25%] translate-y-1/2 w-1.5 h-1.5 rounded-full"
+                style={{ background:'rgba(255,100,100,0.6)', boxShadow:'0 0 8px rgba(255,31,61,0.7)' }} />
         </div>
+        {/* inner ring */}
         <div className="absolute pointer-events-none" style={{
-            width:310, height:310, top:'50%', left:'50%',
-            transform:'translate(-50%,-50%) perspective(500px) rotateX(76deg)',
+            width:320, height:320,
+            top:'52%', left:'50%',
+            transform:'translate(-50%,-50%) perspective(600px) rotateX(74deg)',
             borderRadius:'50%',
-            border:'1.5px solid rgba(255,31,61,0.35)',
-            boxShadow:'0 0 18px rgba(255,31,61,0.25)',
-            animation:'tb-spin-slow 26s linear infinite reverse',
+            border:'1px solid rgba(255,31,61,0.28)',
+            boxShadow:'0 0 14px rgba(255,31,61,0.2)',
+            animation:'tb-spin-slow 30s linear infinite reverse',
         }} />
 
-        {/* ── glowing red platform stage at bottom ── */}
+        {/* ── red stage platform glow ── */}
         <div className="absolute pointer-events-none" style={{
-            width:220, height:40, bottom:'10%', left:'50%',
+            width:200, height:35, bottom:'8%', left:'50%',
             transform:'translateX(-50%)',
             borderRadius:'50%',
-            background:'radial-gradient(ellipse, rgba(255,31,61,0.55) 0%, rgba(255,31,61,0.2) 40%, transparent 70%)',
-            filter:'blur(8px)',
+            background:'radial-gradient(ellipse, rgba(255,31,61,0.65) 0%, rgba(255,31,61,0.2) 45%, transparent 70%)',
+            filter:'blur(10px)',
         }} />
         <div className="absolute pointer-events-none" style={{
-            width:160, height:22, bottom:'11%', left:'50%',
+            width:130, height:18, bottom:'9%', left:'50%',
             transform:'translateX(-50%)',
             borderRadius:'50%',
-            background:'radial-gradient(ellipse, rgba(255,31,61,0.7) 0%, transparent 70%)',
-            filter:'blur(5px)',
+            background:'rgba(255,31,61,0.75)',
+            filter:'blur(6px)',
         }} />
 
-        {/* ══════════ PHONES ══════════ */}
+        {/* ══ PHONES — match reference layout ══ */}
 
-        {/* Extra dark phone — far left */}
-        <PhoneEntry
-            top="55%" left="8%" rotate={-32} scale={0.62} z={8}
-            color="#444" screen1="#0a0a12" screen2="#141420"
-            w={80} h={162} delay={0.5}
-        />
+        {/* Dark phone — far left */}
+        <P top="52%" left="9%" rotate={-8} scale={0.7} z={8} delay={0.5}>
+            <Phone color="#333" screenTop="#060608" screenBot="#111118" w={82} h={168} />
+        </P>
 
         {/* Samsung — upper left */}
-        <PhoneEntry
-            top="33%" left="23%" rotate={-22} scale={0.78} z={18}
-            color="#1a4fff" screen1="#020210" screen2="#061840"
-            w={82} h={165} delay={0.3}
-        />
+        <P top="36%" left="26%" rotate={-4} scale={0.82} z={18} delay={0.3}>
+            <Phone color="#2244dd" screenTop="#02020e" screenBot="#040e38" w={84} h={172} />
+        </P>
 
-        {/* Xiaomi — lower left */}
-        <PhoneEntry
-            top="67%" left="22%" rotate={-18} scale={0.72} z={14}
-            color="#ff6900" screen1="#100400" screen2="#2a0e00"
-            w={80} h={160} delay={0.45}
-        />
+        {/* Xiaomi / Orange — lower left */}
+        <P top="68%" left="24%" rotate={-6} scale={0.78} z={14} delay={0.45}>
+            <Phone color="#e05000" screenTop="#0e0400" screenBot="#280e00" w={82} h={166} />
+        </P>
 
-        {/* ── HERO iPhone — center ── */}
-        <PhoneEntry
-            top="46%" left="50%" rotate={0} scale={1.12} z={30}
-            color="#ff1f3d" screen1="#1a0008" screen2="#3d0012"
-            w={102} h={206} delay={0.1}
-            animY={[-8, 8, -8]}
-            isHero
-        />
+        {/* ── Hero iPhone — center ── */}
+        <P top="47%" left="50%" rotate={0} scale={1.1} z={30} delay={0.1} float>
+            <Phone color="#ff1f3d" screenTop="#110006" screenBot="#2e000e" w={106} h={210} isHero />
+        </P>
 
         {/* OnePlus — upper right */}
-        <PhoneEntry
-            top="24%" left="72%" rotate={20} scale={0.76} z={18}
-            color="#f50514" screen1="#100000" screen2="#2d0000"
-            w={80} h={162} delay={0.35}
-        />
+        <P top="27%" left="70%" rotate={5} scale={0.82} z={20} delay={0.3}>
+            <Phone color="#cc0000" screenTop="#0e0000" screenBot="#280000" w={84} h={172} />
+        </P>
 
-        {/* realme — right side */}
-        <PhoneEntry
-            top="60%" left="80%" rotate={26} scale={0.71} z={14}
-            color="#ffd700" screen1="#0e0c00" screen2="#262000"
-            w={78} h={158} delay={0.55}
-        />
+        {/* realme — right */}
+        <P top="58%" left="78%" rotate={8} scale={0.76} z={16} delay={0.4}>
+            <Phone color="#b8a000" screenTop="#0a0900" screenBot="#221e00" w={82} h={166} />
+        </P>
 
-        {/* vivo — bottom right */}
-        <PhoneEntry
-            top="80%" left="60%" rotate={10} scale={0.66} z={10}
-            color="#415fff" screen1="#00020e" screen2="#060c28"
-            w={76} h={152} delay={0.65}
-        />
+        {/* vivo — bottom center-right */}
+        <P top="78%" left="58%" rotate={5} scale={0.72} z={12} delay={0.55}>
+            <Phone color="#2244ff" screenTop="#00020d" screenBot="#060a28" w={80} h={162} />
+        </P>
 
-        {/* ══════════ BRAND PILLS ══════════ */}
-
+        {/* ══ BRAND PILLS ══ */}
         <Pill brand="iPhone"  logo="🍎" color="#ff1f3d"
-            style={{ top:'5%', left:'50%', transform:'translateX(-50%)' }} delay={0.7} />
-        <Pill brand="Samsung" logo="S"   color="#4a7aff"
-            style={{ top:'18%', left:'2%' }} delay={0.8} />
-        <Pill brand="OnePlus" logo="1+"  color="#f50514"
-            style={{ top:'8%', right:'2%' }} delay={0.9} />
+            style={{ top:'5%',  left:'46%', transform:'translateX(-50%)' }} delay={0.75} />
+        <Pill brand="Samsung" logo="S"   color="#4466ff"
+            style={{ top:'14%', left:'2%' }} delay={0.85} />
+        <Pill brand="OnePlus" logo="1+"  color="#ff2222"
+            style={{ top:'5%',  right:'4%' }} delay={0.9} />
         <Pill brand="Xiaomi"  logo="mi"  color="#ff6900"
-            style={{ bottom:'24%', left:'2%' }} delay={1.0} />
-        <Pill brand="realme"  logo="R"   color="#ffd700"
-            style={{ bottom:'32%', right:'0%' }} delay={1.1} />
-        <Pill brand="vivo"    logo="V"   color="#415fff"
-            style={{ bottom:'8%', right:'8%' }} delay={1.2} />
+            style={{ top:'65%', left:'0%' }} delay={1.0} />
+        <Pill brand="realme"  logo="R"   color="#ccaa00"
+            style={{ top:'46%', right:'1%' }} delay={1.05} />
+        <Pill brand="vivo"    logo="V"   color="#4455ff"
+            style={{ bottom:'10%', right:'8%' }} delay={1.1} />
     </div>
 );
 
