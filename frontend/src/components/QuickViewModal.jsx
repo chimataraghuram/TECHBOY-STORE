@@ -10,11 +10,11 @@ import {
     Star, 
     TrendingDown, 
     Layers, 
-    Zap, 
-    ShieldCheck, 
     ChevronDown, 
     ChevronUp,
-    Tag
+    Tag,
+    Box,
+    Image as ImageIcon
 } from 'lucide-react';
 
 import { resolveProductImage, getProductImages } from '../utils/imageResolver';
@@ -129,13 +129,13 @@ const QuickViewModal = ({ product, onClose }) => {
             aria-modal="true"
             aria-label={`${product.name} details`}
             style={{
-                background: 'radial-gradient(circle at 50% 15%, rgba(255,31,61,0.12), transparent 45rem), rgba(3,3,7,0.85)',
+                background: 'radial-gradient(circle at 50% 15%, rgba(255,31,61,0.12), transparent 45rem), rgba(3,3,7,0.88)',
                 backdropFilter: 'blur(16px)',
                 WebkitBackdropFilter: 'blur(16px)'
             }}
         >
             <m.div
-                className="relative flex w-full max-h-[92dvh] sm:max-h-[85vh] sm:max-w-[580px] md:max-w-[760px] lg:max-w-[860px] flex-col overflow-hidden rounded-t-[26px] sm:rounded-[24px] border border-white/12 bg-[#0c0c12]/95 shadow-[0_25px_80px_rgba(0,0,0,0.9),0_0_35px_rgba(255,31,61,0.15)]"
+                className="relative flex w-full max-h-[92dvh] sm:max-h-[86vh] sm:max-w-[620px] md:max-w-[800px] lg:max-w-[920px] flex-col overflow-hidden rounded-t-[26px] sm:rounded-[24px] border border-white/12 bg-[#0c0c12]/95 shadow-[0_25px_80px_rgba(0,0,0,0.9),0_0_35px_rgba(255,31,61,0.15)]"
                 initial={{ opacity: 0, y: 35, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 25, scale: 0.98 }}
@@ -157,37 +157,13 @@ const QuickViewModal = ({ product, onClose }) => {
                             {product.brand || 'SMARTPHONE'}
                         </span>
                         {product.tag && (
-                            <span className="hidden sm:inline-block text-[11px] font-semibold text-gray-400 truncate max-w-[220px]">
+                            <span className="hidden sm:inline-block text-[11px] font-semibold text-gray-400 truncate max-w-[260px]">
                                 {product.tag}
                             </span>
                         )}
                     </div>
 
-                    <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-                        {/* 2D / 3D Switcher Pill */}
-                        <div className="flex items-center rounded-lg bg-black/40 border border-white/10 p-0.5">
-                            <button
-                                onClick={() => setViewMode('2d')}
-                                className={`px-2.5 py-1 text-[11px] font-bold rounded-md transition-all ${
-                                    viewMode === '2d'
-                                        ? 'bg-red-600 text-white shadow-sm'
-                                        : 'text-gray-400 hover:text-white'
-                                }`}
-                            >
-                                2D
-                            </button>
-                            <button
-                                onClick={() => setViewMode('3d')}
-                                className={`px-2.5 py-1 text-[11px] font-bold rounded-md transition-all ${
-                                    viewMode === '3d'
-                                        ? 'bg-red-600 text-white shadow-sm'
-                                        : 'text-gray-400 hover:text-white'
-                                }`}
-                            >
-                                3D
-                            </button>
-                        </div>
-
+                    <div className="flex shrink-0 items-center gap-2">
                         {/* Share Button */}
                         <button
                             onClick={async () => {
@@ -223,14 +199,14 @@ const QuickViewModal = ({ product, onClose }) => {
                 {/* ── Scrollable Body ── */}
                 <div className="relative z-10 flex-1 overflow-y-auto overscroll-contain px-4 py-3.5 sm:px-6 sm:py-4.5 space-y-4">
                     {/* Top Section: Phone Stage + Key Specs & Price */}
-                    <div className="grid grid-cols-1 sm:grid-cols-[180px_minmax(0,1fr)] md:grid-cols-[220px_minmax(0,1fr)] gap-4 sm:gap-5 items-start">
-                        {/* Visual Stage */}
+                    <div className="grid grid-cols-1 sm:grid-cols-[220px_minmax(0,1fr)] md:grid-cols-[260px_minmax(0,1fr)] gap-4 sm:gap-6 items-start">
+                        {/* Visual Stage Column */}
                         <div className="flex flex-col gap-2">
-                            <div className="relative flex h-[190px] sm:h-[230px] md:h-[260px] w-full items-center justify-center overflow-hidden rounded-xl border border-white/[0.07] bg-gradient-to-b from-[#14141e] via-[#0a0a10] to-[#050508] p-2">
-                                {/* Back Glow */}
+                            <div className="relative flex h-[210px] sm:h-[250px] md:h-[280px] w-full items-center justify-center overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-[#14141e] via-[#0a0a10] to-[#050508] p-2 shadow-inner">
+                                {/* Ambient Stage Lighting */}
                                 <div className="absolute inset-0 pointer-events-none flex items-center justify-center" aria-hidden="true">
-                                    <div className="h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(255,31,61,0.22),transparent_70%)] blur-xl" />
-                                    <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/80 to-transparent" />
+                                    <div className="h-36 w-36 rounded-full bg-[radial-gradient(circle,rgba(255,31,61,0.2),transparent_70%)] blur-xl" />
+                                    <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black/85 to-transparent" />
                                 </div>
 
                                 {viewMode === '2d' ? (
@@ -238,19 +214,52 @@ const QuickViewModal = ({ product, onClose }) => {
                                         src={imageUrl}
                                         alt={product.name}
                                         onError={() => setImgBroken(true)}
-                                        className="relative z-10 max-h-[92%] w-auto max-w-[92%] object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)] transition-transform duration-300 hover:scale-105"
+                                        className="relative z-10 max-h-[92%] w-auto max-w-[92%] object-contain drop-shadow-[0_14px_28px_rgba(0,0,0,0.85)] transition-transform duration-300 hover:scale-105"
                                     />
                                 ) : (
-                                    <Suspense fallback={<div className="relative z-10 text-[11px] text-gray-400">Loading 3D Model…</div>}>
+                                    <Suspense fallback={
+                                        <div className="relative z-10 flex items-center gap-2 text-[11px] font-bold text-gray-400">
+                                            <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
+                                            Initializing 3D Canvas...
+                                        </div>
+                                    }>
                                         <ThreeDViewer imageUrl={baseImage} />
                                     </Suspense>
                                 )}
 
+                                {/* Top Left: Discount Pill */}
                                 {discount > 0 && (
-                                    <div className="absolute top-2 left-2 z-20 px-2 py-0.5 rounded-md bg-[#ff0d2d] text-white text-[10px] font-black tracking-tight shadow-md">
+                                    <div className="absolute top-2.5 left-2.5 z-20 px-2 py-0.5 rounded-full bg-[#ff0d2d] text-white text-[10px] font-black tracking-tight shadow-md flex items-center gap-1">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                                         -{discount}%
                                     </div>
                                 )}
+
+                                {/* Bottom Left: Floating 2D / 3D Segmented Control */}
+                                <div className="absolute bottom-2.5 left-2.5 z-30 flex items-center rounded-lg bg-black/75 border border-white/15 p-0.5 backdrop-blur-md shadow-lg">
+                                    <button
+                                        onClick={() => setViewMode('2d')}
+                                        className={`flex items-center gap-1 px-2.5 py-1 text-[10px] font-black tracking-wider uppercase rounded-md transition-all ${
+                                            viewMode === '2d'
+                                                ? 'bg-red-600 text-white shadow-sm'
+                                                : 'text-gray-300 hover:text-white'
+                                        }`}
+                                    >
+                                        <ImageIcon size={10} />
+                                        <span>2D</span>
+                                    </button>
+                                    <button
+                                        onClick={() => setViewMode('3d')}
+                                        className={`flex items-center gap-1 px-2.5 py-1 text-[10px] font-black tracking-wider uppercase rounded-md transition-all ${
+                                            viewMode === '3d'
+                                                ? 'bg-red-600 text-white shadow-sm'
+                                                : 'text-gray-300 hover:text-white'
+                                        }`}
+                                    >
+                                        <Box size={10} />
+                                        <span>3D</span>
+                                    </button>
+                                </div>
                             </div>
 
                             {/* Mini Image Carousel Thumbnails */}
@@ -259,10 +268,10 @@ const QuickViewModal = ({ product, onClose }) => {
                                     {images.map((src, i) => (
                                         <button
                                             key={src}
-                                            onClick={() => { setActiveImg(i); setImgBroken(false); }}
+                                            onClick={() => { setActiveImg(i); setImgBroken(false); setViewMode('2d'); }}
                                             aria-label={`Thumbnail ${i + 1}`}
-                                            className={`h-9 w-9 shrink-0 overflow-hidden rounded-md border bg-white/[0.02] p-0.5 transition-all ${
-                                                i === safeIndex
+                                            className={`h-9 w-9 shrink-0 overflow-hidden rounded-lg border bg-white/[0.02] p-0.5 transition-all ${
+                                                i === safeIndex && viewMode === '2d'
                                                     ? 'border-red-500 shadow-[0_0_8px_rgba(255,31,61,0.4)]'
                                                     : 'border-white/10 hover:border-white/30'
                                             }`}
@@ -277,10 +286,10 @@ const QuickViewModal = ({ product, onClose }) => {
                         {/* Title, Price, AI Verdict & Highlights */}
                         <div className="flex flex-col gap-2.5 min-w-0">
                             <div>
-                                <h2 className="text-lg sm:text-xl md:text-2xl font-black text-white leading-tight">
+                                <h2 className="text-xl sm:text-2xl font-black text-white leading-tight tracking-tight">
                                     {product.name}
                                 </h2>
-                                <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">
+                                <p className="text-xs text-gray-400 mt-1 line-clamp-2 leading-relaxed">
                                     {product.description || 'Premium design with flagship display and high-speed processor.'}
                                 </p>
                             </div>
@@ -300,7 +309,7 @@ const QuickViewModal = ({ product, onClose }) => {
                                         <TrendingDown size={11} /> Save ₹{(prevPrice - currentPrice).toLocaleString('en-IN')}
                                     </span>
                                 )}
-                                <span className="inline-flex items-center gap-1 rounded-md border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 text-[10px] font-bold text-amber-400 ml-auto">
+                                <span className="inline-flex items-center gap-1 rounded-md border border-amber-500/20 bg-amber-500/10 px-2.5 py-0.5 text-[10px] font-bold text-amber-400 ml-auto">
                                     <Star size={11} className="fill-amber-400" /> {product.rating || 4.5}
                                 </span>
                             </div>
