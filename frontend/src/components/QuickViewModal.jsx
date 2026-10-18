@@ -28,7 +28,7 @@ import { copyPhoneShareLink } from '../utils/deepLink';
 import { feedback } from '../utils/haptics';
 import { buildSpecGroups, buildSixGridHighlights } from '../utils/specSheet';
 
-const ThreeDViewer = lazy(() => import('./ThreeDViewer'));
+import Interactive3DStage from './Interactive3DStage';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 const FALLBACK_IMAGE = '/images/phones/apple-iphone-17-pro-max.png';
@@ -290,14 +290,10 @@ const QuickViewModal = ({ product, onClose }) => {
                                                 className="relative z-10 max-h-[92%] w-auto max-w-[90%] object-contain drop-shadow-[0_16px_32px_rgba(0,0,0,0.95)] transition-transform duration-300 group-hover/stage:scale-105"
                                             />
                                         ) : (
-                                            <Suspense fallback={
-                                                <div className="relative z-10 flex items-center gap-2 text-[11px] font-bold text-gray-400">
-                                                    <span className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
-                                                    Initializing 3D Canvas...
-                                                </div>
-                                            }>
-                                                <ThreeDViewer imageUrl={baseImage} />
-                                            </Suspense>
+                                            <Interactive3DStage 
+                                                imageUrl={imageUrl} 
+                                                productName={product.name} 
+                                            />
                                         )}
                                     </div>
 
