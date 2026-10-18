@@ -396,33 +396,85 @@ const ProfilePage = ({ setCurrentView, initialTab, onSearch }) => {
                 {activeTab === 'profile' && (
                     <m.div key="profile" {...pageVariants} animate={pageVariants.animate} transition={pageTransition}>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            {/* Account Info Card */}
-                            <div className="rounded-3xl bg-[#0f0f18]/90 border border-white/10 p-6">
-                                <div className="flex items-center gap-2 mb-5">
-                                    <div className="w-8 h-8 rounded-xl bg-red-500/15 flex items-center justify-center">
-                                        <User size={16} className="text-red-400" />
-                                    </div>
-                                    <h3 className="text-base font-bold text-white">Account Information</h3>
-                                </div>
-                                <div className="space-y-4">
-                                    {[
-                                        { label: 'Display Name', value: customName, action: () => setIsEditingName(true) },
-                                        { label: 'Email Address', value: user.email || 'Google Account', action: null },
-                                        { label: 'Member Since', value: `Since ${memberSince}`, action: null },
-                                    ].map(row => (
-                                        <div key={row.label} className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.03] border border-white/5">
-                                            <div>
-                                                <p className="text-[11px] font-semibold text-gray-500 uppercase tracking-wider mb-0.5">{row.label}</p>
-                                                <p className="text-sm text-white font-semibold">{row.value}</p>
+                            {/* Saved Wishlist Mobiles Showcase Card */}
+                            <div className="rounded-3xl bg-[#0f0f18]/90 border border-white/10 p-6 flex flex-col justify-between">
+                                <div>
+                                    <div className="flex items-center justify-between mb-4">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-8 h-8 rounded-xl bg-pink-500/15 flex items-center justify-center">
+                                                <Heart size={16} className="text-pink-400" />
                                             </div>
-                                            {row.action && (
-                                                <button onClick={row.action} className="text-gray-400 hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition-colors">
-                                                    <Edit3 size={13} />
-                                                </button>
-                                            )}
+                                            <div>
+                                                <h3 className="text-base font-bold text-white">Wishlist Mobiles</h3>
+                                                <p className="text-[11px] text-gray-400">{wishlist.length} smartphone{wishlist.length !== 1 ? 's' : ''} saved</p>
+                                            </div>
                                         </div>
-                                    ))}
+                                        <button
+                                            onClick={() => setActiveTab('wishlist')}
+                                            className="text-xs font-bold text-pink-400 hover:text-white px-3 py-1.5 rounded-xl bg-pink-500/10 hover:bg-pink-500/20 border border-pink-500/25 transition-all cursor-pointer"
+                                        >
+                                            View All &gt;
+                                        </button>
+                                    </div>
+
+                                    {wishlist.length === 0 ? (
+                                        <div className="py-8 text-center rounded-2xl bg-white/[0.02] border border-white/5 my-auto">
+                                            <span className="text-3xl mb-2 block">🤍</span>
+                                            <p className="text-xs font-semibold text-gray-300">No phones in your wishlist yet</p>
+                                            <p className="text-[11px] text-gray-500 mt-1 max-w-[240px] mx-auto">
+                                                Click the heart icon on any smartphone to save it here for quick access.
+                                            </p>
+                                            <button
+                                                onClick={() => { setCurrentView('home'); setTimeout(() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' }), 80); }}
+                                                className="mt-3.5 px-4 py-1.5 rounded-full bg-pink-600 hover:bg-pink-500 text-white text-[11px] font-bold transition-all cursor-pointer"
+                                            >
+                                                Explore Phones
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className="space-y-2.5">
+                                            {wishlist.slice(0, 3).map((item, i) => {
+                                                const imgSrc = resolveProductImage(item.image, item.name);
+                                                const price = item.price || item.current_price || 0;
+                                                return (
+                                                    <div
+                                                        key={item.id || i}
+                                                        className="flex items-center justify-between p-2.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 hover:border-pink-500/30 transition-all group"
+                                                    >
+                                                        <div className="flex items-center gap-3 min-w-0">
+                                                            <div className="w-12 h-12 rounded-xl bg-black/40 border border-white/10 flex items-center justify-center p-1 shrink-0">
+                                                                <img src={imgSrc} alt={item.name} className="w-full h-full object-contain" />
+                                                            </div>
+                                                            <div className="min-w-0">
+                                                                <h4 className="text-xs font-bold text-white truncate group-hover:text-pink-400 transition-colors">
+                                                                    {item.name}
+                                                                </h4>
+                                                                <p className="text-xs font-extrabold text-red-400 mt-0.5">
+                                                                    ₹{Number(price).toLocaleString('en-IN')}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <button
+                                                            onClick={() => { setCurrentView('home'); onSearch?.(item.name); setTimeout(() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' }), 80); }}
+                                                            className="shrink-0 px-3 py-1.5 rounded-xl bg-white/[0.05] group-hover:bg-pink-600 text-[11px] font-bold text-gray-300 group-hover:text-white transition-all cursor-pointer"
+                                                        >
+                                                            View
+                                                        </button>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
                                 </div>
+
+                                {wishlist.length > 3 && (
+                                    <button
+                                        onClick={() => setActiveTab('wishlist')}
+                                        className="w-full mt-3 py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] text-xs font-semibold text-gray-400 hover:text-white border border-white/5 transition-all text-center cursor-pointer"
+                                    >
+                                        + {wishlist.length - 3} more in wishlist
+                                    </button>
+                                )}
                             </div>
 
                             {/* Activity Summary */}
