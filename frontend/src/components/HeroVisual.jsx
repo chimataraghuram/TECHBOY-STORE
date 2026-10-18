@@ -224,17 +224,17 @@ const HeroVisual = () => (
 
         {/* ══ BRAND PILLS ══ */}
         <Pill brand="iPhone"  logo="🍎" color="#ff1f3d"
-            style={{ top:'1%',  left:'46%', transform:'translateX(-50%)' }} delay={0.75} />
+            style={{ top:'12%', left:'50%', transform:'translateX(-50%)' }} delay={0.75} />
         <Pill brand="Samsung" logo="S"   color="#4466ff"
-            style={{ top:'9%', left:'2%' }} delay={0.85} />
+            style={{ top:'16%', left:'14%' }} delay={0.85} />
         <Pill brand="OnePlus" logo="1+"  color="#ff2222"
-            style={{ top:'1%',  right:'4%' }} delay={0.9} />
+            style={{ top:'12%', right:'14%' }} delay={0.9} />
         <Pill brand="Xiaomi"  logo="mi"  color="#ff6900"
-            style={{ top:'59%', left:'0%' }} delay={1.0} />
+            style={{ top:'58%', left:'3%' }} delay={1.0} />
         <Pill brand="realme"  logo="R"   color="#ccaa00"
-            style={{ top:'40%', right:'1%' }} delay={1.05} />
+            style={{ top:'42%', right:'4%' }} delay={1.05} />
         <Pill brand="vivo"    logo="V"   color="#4455ff"
-            style={{ bottom:'14%', right:'8%' }} delay={1.1} />
+            style={{ bottom:'14%', right:'12%' }} delay={1.1} />
     </div>
 );
 
