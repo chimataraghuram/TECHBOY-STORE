@@ -1,0 +1,159 @@
+{
+  "apple-iphone-15": [
+    "/images/phones/apple-iphone-15.png",
+    "/images/phones/apple-iphone-15.jpg"
+  ],
+  "apple-iphone-15-pro-max": [
+    "/images/phones/apple-iphone-15-pro-max.png",
+    "/images/phones/apple-iphone-15-pro-max.jpg"
+  ],
+  "apple-iphone-16": [
+    "/images/phones/apple-iphone-16.png",
+    "/images/phones/apple-iphone-16.jpg"
+  ],
+  "apple-iphone-16-pro-max": [
+    "/images/phones/apple-iphone-16-pro-max.png",
+    "/images/phones/apple-iphone-16-pro-max.jpg"
+  ],
+  "apple-iphone-17": [
+    "/images/phones/apple-iphone-17.png",
+    "/images/phones/apple-iphone-17.jpg"
+  ],
+  "apple-iphone-17-pro": [
+    "/images/phones/apple-iphone-17-pro.png",
+    "/images/phones/apple-iphone-17-pro.jpg"
+  ],
+  "apple-iphone-17-pro-max": [
+    "/images/phones/apple-iphone-17-pro-max.png",
+    "/images/phones/apple-iphone-17-pro-max.jpg"
+  ],
+  "google-pixel-9-pro": [
+    "/images/phones/google-pixel-9-pro.png",
+    "/images/phones/google-pixel-9-pro.jpg"
+  ],
+  "google-pixel-9a": [
+    "/images/phones/google-pixel-9a.png",
+    "/images/phones/google-pixel-9a.jpg"
+  ],
+  "infinix-hot-50i": [
+    "/images/phones/infinix-hot-50i.png",
+    "/images/phones/infinix-hot-50i.jpg"
+  ],
+  "iqoo-13-5g": [
+    "/images/phones/iqoo-13-5g.png",
+    "/images/phones/iqoo-13-5g.jpg"
+  ],
+  "iqoo-neo-10r": [
+    "/images/phones/iqoo-neo-10r.png",
+    "/images/phones/iqoo-neo-10r.jpg"
+  ],
+  "iqoo-z9-5g": [
+    "/images/phones/iqoo-z9-5g.png",
+    "/images/phones/iqoo-z9-5g.jpg"
+  ],
+  "nothing-phone-3a": [
+    "/images/phones/nothing-phone-3a.png",
+    "/images/phones/nothing-phone-3a.jpg"
+  ],
+  "nothing-phone-3a-pro": [
+    "/images/phones/nothing-phone-3a-pro.png",
+    "/images/phones/nothing-phone-3a-pro.jpg"
+  ],
+  "oneplus-13": [
+    "/images/phones/oneplus-13.png",
+    "/images/phones/oneplus-13.jpg"
+  ],
+  "oneplus-13r": [
+    "/images/phones/oneplus-13r.png",
+    "/images/phones/oneplus-13r.jpg"
+  ],
+  "oneplus-nord-6": [
+    "/images/phones/oneplus-nord-6.png",
+    "/images/phones/oneplus-nord-6.jpg"
+  ],
+  "oneplus-nord-ce5": [
+    "/images/phones/oneplus-nord-ce5.png"
+  ],
+  "poco-f7-5g": [
+    "/images/phones/poco-f7-5g.png",
+    "/images/phones/poco-f7-5g.jpg"
+  ],
+  "poco-x8-pro-max": [
+    "/images/phones/poco-x8-pro-max.png",
+    "/images/phones/poco-x8-pro-max.jpg"
+  ],
+  "realme-c75": [
+    "/images/phones/realme-c75.png",
+    "/images/phones/realme-c75.jpg"
+  ],
+  "realme-gt7-pro": [
+    "/images/phones/realme-gt7-pro.png",
+    "/images/phones/realme-gt7-pro.jpg"
+  ],
+  "realme-gt7t": [
+    "/images/phones/realme-gt7t.png",
+    "/images/phones/realme-gt7t.webp"
+  ],
+  "redmi-13c-5g": [
+    "/images/phones/redmi-13c-5g.png"
+  ],
+  "redmi-note-14-5g": [
+    "/images/phones/redmi-note-14-5g.png",
+    "/images/phones/redmi-note-14-5g.jpg"
+  ],
+  "samsung-galaxy-a26-5g": [
+    "/images/phones/samsung-galaxy-a26-5g.png",
+    "/images/phones/samsung-galaxy-a26-5g.jpg"
+  ],
+  "samsung-galaxy-a37-5g": [
+    "/images/phones/samsung-galaxy-a37-5g.png",
+    "/images/phones/samsung-galaxy-a37-5g.jpg"
+  ],
+  "samsung-galaxy-a57-5g": [
+    "/images/phones/samsung-galaxy-a57-5g.png",
+    "/images/phones/samsung-galaxy-a57-5g.jpg"
+  ],
+  "samsung-galaxy-m07": [
+    "/images/phones/samsung-galaxy-m07.png",
+    "/images/phones/samsung-galaxy-m07.jpg"
+  ],
+  "samsung-galaxy-s25": [
+    "/images/phones/samsung-galaxy-s25.png",
+    "/images/phones/samsung-galaxy-s25.jpg"
+  ],
+  "samsung-galaxy-s26": [
+    "/images/phones/samsung-galaxy-s26.png",
+    "/images/phones/samsung-galaxy-s26.jpg"
+  ],
+  "samsung-galaxy-s26-plus": [
+    "/images/phones/samsung-galaxy-s26-plus.png",
+    "/images/phones/samsung-galaxy-s26-plus.jpg"
+  ],
+  "samsung-galaxy-s26-ultra": [
+    "/images/phones/samsung-galaxy-s26-ultra.png",
+    "/images/phones/samsung-galaxy-s26-ultra.jpg"
+  ],
+  "samsung-galaxy-z-flip-7": [
+    "/images/phones/samsung-galaxy-z-flip-7.png",
+    "/images/phones/samsung-galaxy-z-flip-7.jpg"
+  ],
+  "samsung-galaxy-z-fold-7": [
+    "/images/phones/samsung-galaxy-z-fold-7.png",
+    "/images/phones/samsung-galaxy-z-fold-7.jpg"
+  ],
+  "tecno-spark-30c": [
+    "/images/phones/tecno-spark-30c.png"
+  ],
+  "vivo-t5x-5g": [
+    "/images/phones/vivo-t5x-5g.png",
+    "/images/phones/vivo-t5x-5g.jpg"
+  ],
+  "vivo-v70": [
+    "/images/phones/vivo-v70.png",
+    "/images/phones/vivo-v70.jpg"
+  ],
+  "vivo-v70-fe": [
+    "/images/phones/vivo-v70-fe.png",
+    "/images/phones/vivo-v70-fe.jpg"
+  ]
+}

@@ -147,7 +147,7 @@ const TrackHub = () => {
                                         <div className="p-6">
                                             <div className="flex justify-between items-start mb-6">
                                                 <div className="w-16 h-16 bg-white/5 rounded-xl p-2 flex items-center justify-center border border-white/5">
-                                                    <img src={resolveProductImage(alert.product?.image, alert.product?.name)} alt={alert.product?.name} className="max-w-full max-h-full object-contain" onError={(e) => e.target.src='/images/phones/apple-iphone-17-pro.jpg'} />
+                                                    <img src={resolveProductImage(alert.product?.image, alert.product?.name)} alt={alert.product?.name} className="max-w-full max-h-full object-contain" onError={(e) => e.target.src='/images/phones/apple-iphone-17-pro-max.png'} />
                                                 </div>
                                                 <div className="flex gap-2 relative z-20">
                                                     <button onClick={() => setEditingAlert(alert)} className="p-2 text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 rounded-lg transition-colors">

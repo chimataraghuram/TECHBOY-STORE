@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion as m, AnimatePresence } from 'framer-motion';
 import { Bell, X, Check, ArrowRight, Loader2, Target, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useMediaQuery } from '../hooks/useMediaQuery';
@@ -46,6 +47,14 @@ const PriceAlertModal = ({ isOpen, onClose, product, user: propUser, triggerRect
       setManualEmail('');
     }
   }, [isOpen, propUser, authUser, product]);
+
+  // Close on Escape while open
+  React.useEffect(() => {
+    if (!isOpen) return undefined;
+    const handleKey = (e) => { if (e.key === 'Escape') onClose?.(); };
+    document.addEventListener('keydown', handleKey);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, [isOpen, onClose]);
 
   const handleGoogleLogin = async () => {
     setLoading(true);
@@ -119,7 +128,7 @@ const PriceAlertModal = ({ isOpen, onClose, product, user: propUser, triggerRect
     borderRadius: '24px'
   };
 
-  return (
+  return createPortal(
     <m.div 
       className="price-alert-overlay" 
       onClick={onClose} 
@@ -319,7 +328,8 @@ const PriceAlertModal = ({ isOpen, onClose, product, user: propUser, triggerRect
             )}
           </div>
         </m.div>
-      </m.div>
+      </m.div>,
+    document.body
   );
 };
 

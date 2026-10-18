@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import {
     Heart, Bell, ArrowLeftRight, Star, ArrowRight,
     MemoryStick, Database, Camera, Smartphone, BatteryMedium,
-    Share2, Check
+    Share2, Check, ChevronLeft, ChevronRight
 } from 'lucide-react';
-import { resolveProductImage } from '../utils/imageResolver';
+import { resolveProductImage, getProductImages } from '../utils/imageResolver';
 import { parseSpecs } from '../utils/specsParser';
 import QuickViewModal from './QuickViewModal';
 import { feedback } from '../utils/haptics';
@@ -22,8 +22,50 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
     const [isSaved, setIsSaved] = useState(false);
     const [showQuick, setShowQuick] = useState(false);
     const [isCopied, setIsCopied] = useState(false);
+    const imgRef = useRef(null);
 
-    const imageSrc = resolveProductImage(!imgError ? product.image : null, product.name);
+    // Photo gallery — only shown when the product actually has more than one photo.
+    const images = useMemo(() => getProductImages(product), [product]);
+    const hasGallery = images.length > 1;
+    const [imgIndex, setImgIndex] = useState(0);
+    const touchStartX = useRef(null);
+
+    const showImage = (nextIndex) => {
+        if (!hasGallery) return;
+        const count = images.length;
+        setImgIndex(((nextIndex % count) + count) % count);
+        setImgLoaded(false);
+        setImgError(false);
+    };
+    const prevImage = (e) => { e.stopPropagation(); e.preventDefault(); showImage(imgIndex - 1); };
+    const nextImage = (e) => { e.stopPropagation(); e.preventDefault(); showImage(imgIndex + 1); };
+
+    const handleTouchStart = (e) => { touchStartX.current = e.changedTouches[0].clientX; };
+    const handleTouchEnd = (e) => {
+        if (touchStartX.current === null || !hasGallery) return;
+        const dx = e.changedTouches[0].clientX - touchStartX.current;
+        if (Math.abs(dx) > 35) {
+            if (dx < 0) showImage(imgIndex + 1);
+            else showImage(imgIndex - 1);
+        }
+        touchStartX.current = null;
+    };
+
+    useEffect(() => { setImgIndex(0); setImgLoaded(false); setImgError(false); }, [product.id]);
+
+    const imageSrc = imgError
+        ? resolveProductImage(null, product.name)
+        : (images[imgIndex] || resolveProductImage(product.image, product.name));
+
+    // If the image is already cached the browser may never fire onLoad on mount,
+    // which would leave the card stuck at opacity-0 (looks like a missing image).
+    useEffect(() => {
+        const img = imgRef.current;
+        if (img && img.complete) {
+            if (img.naturalWidth > 0) setImgLoaded(true);
+            else { setImgError(true); setImgLoaded(true); }
+        }
+    }, [imageSrc]);
 
     const currentPrice = product.price || product.current_price || 0;
     const prevPrice = product.prev_price || Math.round(currentPrice * 1.12);
@@ -128,7 +170,11 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                 <div className="absolute inset-0 pointer-events-none rounded-3xl bg-[radial-gradient(ellipse_at_top,rgba(255,31,61,0.08),transparent_60%)]" />
 
                 {/* ── Image stage ── */}
-                <div className="relative rounded-2xl overflow-hidden bg-gradient-to-b from-[#111118] via-[#09090e] to-[#060609] flex items-center justify-center h-[160px] min-[400px]:h-[185px] sm:h-[220px] md:h-[240px] border border-white/[0.04]">
+                <div
+                    className="relative group/stage rounded-2xl overflow-hidden bg-gradient-to-b from-[#111118] via-[#09090e] to-[#060609] flex items-center justify-center h-[160px] min-[400px]:h-[185px] sm:h-[220px] md:h-[240px] border border-white/[0.04]"
+                    onTouchStart={handleTouchStart}
+                    onTouchEnd={handleTouchEnd}
+                >
                     {/* Ambient studio stage glow & curved planet horizon glow */}
                     <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full bg-[radial-gradient(circle,rgba(255,31,61,0.18),transparent_70%)] blur-2xl" />
@@ -140,6 +186,9 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                     <img
                         src={imageSrc}
                         alt={product.name}
+                        ref={imgRef}
+                        loading="lazy"
+                        decoding="async"
                         className={`relative z-10 max-h-[88%] w-auto max-w-[90%] object-contain p-1 transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
                         style={{ filter: 'drop-shadow(0 16px 26px rgba(0,0,0,0.92))' }}
                         onLoad={() => setImgLoaded(true)}
@@ -160,7 +209,7 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                         </m.div>
                     )}
 
-                    {/* Top Right: Wishlist & Share buttons */}
+                    {/* Top Right: Share button */}
                     <div className="absolute top-3 right-3 z-20 flex items-center gap-1.5">
                         {/* Share link button */}
                         <m.button
@@ -177,35 +226,50 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                         >
                             {isCopied ? <Check size={12} className="stroke-[3]" /> : <Share2 size={12} />}
                         </m.button>
+                    </div>
 
-                        {/* Wishlist button */}
-                        <m.button
-                            whileHover={{ scale: 1.15 }}
-                            whileTap={{ scale: 0.82 }}
-                            onClick={handleSaveToWatchlist}
-                            aria-label={isSaved ? "Remove from wishlist" : "Add to wishlist"}
-                            className={`flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full backdrop-blur-md transition-all duration-300 ${
-                                isSaved
-                                    ? 'bg-red-500/25 border border-red-500/60 text-red-500 shadow-[0_0_12px_rgba(255,31,61,0.5)]'
-                                    : 'bg-black/60 border border-white/15 text-white hover:border-red-500/60 hover:text-red-400 hover:shadow-[0_0_10px_rgba(255,31,61,0.4)]'
-                            }`}
-                        >
-                            <m.div
-                                animate={isSaved ? { scale: [1, 1.35, 1] } : { scale: 1 }}
-                                transition={{ type: "spring", stiffness: 450, damping: 15 }}
+                    {/* Photo gallery navigation — only when a product has more than one photo */}
+                    {hasGallery && (
+                        <>
+                            <m.button
+                                type="button"
+                                whileHover={{ scale: 1.12 }}
+                                whileTap={{ scale: 0.88 }}
+                                onClick={prevImage}
+                                aria-label="Previous photo"
+                                className="absolute left-1.5 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/55 backdrop-blur-md border border-white/15 text-white hover:border-red-500/60 hover:text-red-400 transition-all duration-300 opacity-100 sm:opacity-0 sm:group-hover/stage:opacity-100"
                             >
-                                <Heart size={13} className={isSaved ? "fill-current" : ""} />
-                            </m.div>
-                        </m.button>
-                    </div>
+                                <ChevronLeft size={15} className="stroke-[2.5]" />
+                            </m.button>
+                            <m.button
+                                type="button"
+                                whileHover={{ scale: 1.12 }}
+                                whileTap={{ scale: 0.88 }}
+                                onClick={nextImage}
+                                aria-label="Next photo"
+                                className="absolute right-1.5 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/55 backdrop-blur-md border border-white/15 text-white hover:border-red-500/60 hover:text-red-400 transition-all duration-300 opacity-100 sm:opacity-0 sm:group-hover/stage:opacity-100"
+                            >
+                                <ChevronRight size={15} className="stroke-[2.5]" />
+                            </m.button>
 
-                    {/* Bottom Right: Mini pagination dots indicator (as in reference image) */}
-                    <div className="absolute bottom-2.5 right-3 z-20 flex items-center gap-1.5 pointer-events-none opacity-80">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#ff0d2d] shadow-[0_0_6px_rgba(255,13,45,0.8)]" />
-                        <span className="w-1.5 h-1.5 rounded-full bg-white/25" />
-                        <span className="w-1.5 h-1.5 rounded-full bg-white/25" />
-                        <span className="w-1.5 h-1.5 rounded-full bg-white/25" />
-                    </div>
+                            {/* Mini pagination dots reflecting the real photo count */}
+                            <div className="absolute bottom-2.5 right-3 z-20 flex items-center gap-1.5">
+                                {images.map((_, i) => (
+                                    <button
+                                        key={i}
+                                        type="button"
+                                        onClick={(e) => { e.stopPropagation(); showImage(i); }}
+                                        aria-label={`Go to photo ${i + 1}`}
+                                        className={`w-1.5 h-1.5 rounded-full transition-all ${
+                                            i === imgIndex
+                                                ? 'bg-[#ff0d2d] shadow-[0_0_6px_rgba(255,13,45,0.8)] scale-110'
+                                                : 'bg-white/30 hover:bg-white/60'
+                                        }`}
+                                    />
+                                ))}
+                            </div>
+                        </>
+                    )}
                 </div>
 
                 {/* ── Content Body ── */}

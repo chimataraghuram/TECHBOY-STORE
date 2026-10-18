@@ -122,12 +122,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CORS
 CORS_ALLOW_ALL_ORIGINS = True  # For dev, update in production
 
-# Caching Backend
+# Redis is optional in development. In production, set REDIS_URL (for example,
+# redis://redis:6379/1) to share RAG answers and product-list caches across workers.
+REDIS_URL = os.environ.get('REDIS_URL', '')
 CACHES = {
-    'default': {
+    'default': ({
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': REDIS_URL,
+    } if REDIS_URL else {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake',
-    }
+        'LOCATION': 'techboy-local-cache',
+    })
 }
 
 # Django REST Framework Settings

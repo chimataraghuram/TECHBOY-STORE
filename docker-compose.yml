@@ -12,6 +12,10 @@ services:
     ports:
       - "5432:5432"
 
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+
   backend:
     build:
       context: ./backend
@@ -35,9 +39,11 @@ services:
       - EMAIL_HOST_PASSWORD=your_gmail_app_password
       - DEFAULT_FROM_EMAIL=chimataraghuram02a@gmail.com
       - N8N_WEBHOOK_URL=http://n8n:5678/webhook/techboy-price-drop
+      - REDIS_URL=redis://redis:6379/1
     depends_on:
       - db
       - n8n
+      - redis
 
   worker:
     build:
@@ -56,9 +62,11 @@ services:
       - EMAIL_HOST_PASSWORD=your_gmail_app_password
       - DEFAULT_FROM_EMAIL=chimataraghuram02a@gmail.com
       - N8N_WEBHOOK_URL=http://n8n:5678/webhook/techboy-price-drop
+      - REDIS_URL=redis://redis:6379/1
     depends_on:
       - db
       - backend
+      - redis
 
   frontend:
     build:

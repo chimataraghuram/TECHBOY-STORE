@@ -157,7 +157,7 @@ const TechBoyTrends = () => {
         : alerts.filter(a => a.type === activeCategory);
 
     return (
-        <section id="trends" className="py-12 md:py-16 lg:py-20 bg-[#050505] relative overflow-hidden">
+        <section id="trends" className="scroll-mt-24 py-12 md:py-16 lg:py-20 bg-[#050505] relative overflow-hidden">
             <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[radial-gradient(circle,rgba(255,31,61,0.06),transparent_60%)] blur-[80px] pointer-events-none" />
 
             <div className="mx-auto max-w-[1560px] px-5 sm:px-8 lg:px-12 relative z-10">

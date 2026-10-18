@@ -14,10 +14,13 @@ import uuid
 from rest_framework import filters
 from rest_framework.decorators import action
 from django.db.models import Count
+from django.core.cache import cache
+from hashlib import sha256
 from django_filters.rest_framework import DjangoFilterBackend
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from .services import product_service, analytics_service
+from .services.rag_service import retrieve_products, build_context, local_answer
 from .models import Product, ClickTrack, PriceHistory, PriceAlert, Watchlist
 from .filters import ProductFilter
 from .serializers import (
@@ -32,6 +35,11 @@ from .serializers import (
 )
 
 User = get_user_model()
+
+# Live NVIDIA NIM model used for grounded summaries / chat.
+# Override with the NVIDIA_MODEL env var. The previous default
+# (meta/llama-3.1-8b-instruct) was retired on 2026-08-26 and returns HTTP 410.
+NVIDIA_CHAT_MODEL = os.environ.get('NVIDIA_MODEL', 'meta/llama-3.2-11b-vision-instruct')
 
 # Initialize Firebase Admin
 try:
@@ -194,7 +202,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
                     "Content-Type": "application/json"
                 }
                 data = {
-                    "model": "meta/llama-3.1-8b-instruct",
+                    "model": NVIDIA_CHAT_MODEL,
                     "messages": [
                         {"role": "system", "content": "You are TechBoy AI, an expert smartphone recommender. Keep your response to exactly one short, punchy sentence. Do NOT list any technical specifications or repeat the specs."},
                         {"role": "user", "content": f"Write a 1-sentence punchy verdict about the {product.name}. Focus on who this phone is best for, without listing specs."}
@@ -308,13 +316,22 @@ class ChatbotAPIView(APIView):
     permission_classes = [AllowAny]
     
     def post(self, request):
-        query = request.data.get('query', '').lower()
+        query = str(request.data.get('query', '')).strip()
         if not query:
             return Response({"response": "I'm ready to help! What kind of smartphone are you looking for?"})
-        
+
+        # Cache full grounded answers.  Configure REDIS_URL to share this cache
+        # between web workers; Django's local cache remains a safe no-setup fallback.
+        cache_key = f"rag-chat:{sha256(query.lower().encode()).hexdigest()}"
+        cached = cache.get(cache_key)
+        if cached:
+            return Response({**cached, 'cached': True})
+
+        retrieved = retrieve_products(query)
+        context = build_context(retrieved)
         nvidia_key = os.environ.get('NVIDIA_API_KEY')
-        ai_response = "I couldn't find a specific match, but you can explore our 'Analyst Picks' for the best-vetted options!"
-        
+        ai_response = local_answer(retrieved)
+
         if nvidia_key:
             try:
                 headers = {
@@ -322,40 +339,28 @@ class ChatbotAPIView(APIView):
                     "Content-Type": "application/json"
                 }
                 data = {
-                    "model": "meta/llama-3.1-8b-instruct",
+                    "model": NVIDIA_CHAT_MODEL,
                     "messages": [
-                        {"role": "system", "content": "You are TechBoy AI, an expert smartphone recommender. Be concise and conversational. Do not output markdown, just plain text."},
-                        {"role": "user", "content": query}
-                    ]
+                        {"role": "system", "content": "You are TechBoy AI. Answer only from the retrieved TechBoy catalog context. Never invent prices, specs, or availability. If the context lacks the answer, say so. Be concise, conversational, and use Markdown bullets when recommending phones."},
+                        {"role": "user", "content": f"Question: {query}\n\nRetrieved TechBoy catalog context:\n{context}"}
+                    ],
+                    "temperature": 0.2,
+                    "max_tokens": 350,
                 }
-                response = requests.post("https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=data, timeout=10)
+                response = requests.post("https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=data, timeout=30)
                 if response.status_code == 200:
                     ai_response = response.json()['choices'][0]['message']['content']
             except Exception as e:
                 print(f"NVIDIA API Error: {e}")
 
-        # Extract some mock products for the demo UI based on query if AI didn't explicitly return product objects
-        products = Product.objects.all()
-        matched = []
-        if 'gaming' in query:
-            matched = products.filter(description__icontains='gaming') | products.filter(tag__icontains='gaming')
-        elif 'budget' in query or 'cheap' in query:
-            matched = products.order_by('price')[:3]
-        elif 'camera' in query or 'photo' in query:
-            matched = products.filter(specs__icontains='MP') | products.filter(description__icontains='camera')
-        else:
-            matched = products.filter(name__icontains=query) | products.filter(category__icontains=query)
-        
-        recommendations = ProductSerializer(matched[:3], many=True).data if matched.exists() else []
-        
-        if not nvidia_key and matched.exists():
-            names = ", ".join([p['name'] for p in recommendations])
-            ai_response = f"Based on your interest, I recommend checking out: {names}. They offer great value in that category!"
-
-        return Response({
+        payload = {
             "response": ai_response,
-            "products": recommendations
-        })
+            "products": ProductSerializer(retrieved[:3], many=True).data,
+            "sources": [{"id": product.id, "name": product.name} for product in retrieved],
+            "retrieval": {"strategy": "hybrid_catalog", "count": len(retrieved)},
+        }
+        cache.set(cache_key, payload, timeout=300)
+        return Response(payload)
 
 class TriggerDealsCronAPIView(APIView):
     permission_classes = [AllowAny]

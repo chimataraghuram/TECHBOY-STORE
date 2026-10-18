@@ -151,6 +151,10 @@ class Hero3DBoundary extends Component {
 
 const HeroPhone3D = ({ className = '' }) => {
     const [inView, setInView] = useState(false);
+    // Once the canvas has been shown, keep it mounted. Repeatedly unmounting the
+    // Canvas on scroll disposes/recreates the WebGL context, which browsers
+    // report as "THREE.WebGLRenderer: Context Lost".
+    const [shouldRender, setShouldRender] = useState(false);
     const [supported, setSupported] = useState(true);
     const holderRef = useRef(null);
 
@@ -170,7 +174,10 @@ const HeroPhone3D = ({ className = '' }) => {
         const el = holderRef.current;
         if (!el) return;
         const observer = new IntersectionObserver(
-            ([entry]) => setInView(entry.isIntersecting),
+            ([entry]) => {
+                setInView(entry.isIntersecting);
+                if (entry.isIntersecting) setShouldRender(true);
+            },
             { threshold: 0.05 }
         );
         observer.observe(el);
@@ -181,10 +188,11 @@ const HeroPhone3D = ({ className = '' }) => {
 
     return (
         <div ref={holderRef} className={`pointer-events-auto ${className}`}>
-            {inView && (
+            {shouldRender && (
                 <Hero3DBoundary>
                     <Suspense fallback={null}>
                         <Canvas
+                            frameloop={inView ? 'always' : 'never'}
                             dpr={[1, 1.75]}
                             camera={{ position: [0, 0, 8.2], fov: 40 }}
                             gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}

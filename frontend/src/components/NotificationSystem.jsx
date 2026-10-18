@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import { Bell, TrendingDown, Rocket, Flame, Star, GitCompare } from 'lucide-react';
 import { PREDEFINED_NOTIFICATIONS } from './NotificationSystemData';
+import { resolveProductImage } from '../utils/imageResolver';
 
 export const refreshAlerts = () => {};
 
@@ -116,10 +117,10 @@ const NotificationSystem = () => {
                                     >
                                         <div className="w-10 h-10 rounded-lg bg-black/60 border border-white/5 flex items-center justify-center p-1 shrink-0">
                                             <img 
-                                                src={notif.image} 
+                                                src={resolveProductImage(notif.image, notif.title)} 
                                                 alt="alert" 
                                                 className="max-w-full max-h-full object-contain" 
-                                                onError={(e) => { e.target.src = '/images/phones/apple-iphone-17-pro-max.jpg'; }} 
+                                                onError={(e) => { e.target.src = '/images/phones/apple-iphone-17-pro-max.png'; }} 
                                             />
                                         </div>
                                         <div className="flex-1 min-w-0">

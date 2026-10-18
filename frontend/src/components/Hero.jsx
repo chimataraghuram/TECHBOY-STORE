@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { m } from 'framer-motion';
-import { Smartphone, Bell, Users, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Smartphone, Bell, Users, ShieldCheck, ArrowRight, TrendingDown, Star } from 'lucide-react';
 import { CountUp } from './AnimationEngine';
 import { feedback } from '../utils/haptics';
 
@@ -43,7 +43,7 @@ const Hero = ({ setCurrentView }) => {
     };
 
     return (
-        <section id="home" className="relative pt-20 sm:pt-28 lg:pt-32 pb-4 sm:pb-10 lg:pb-12 overflow-hidden bg-[#050505]">
+        <section id="home" className="scroll-mt-24 relative pt-20 sm:pt-28 lg:pt-32 pb-4 sm:pb-10 lg:pb-12 overflow-hidden bg-[#050505]">
             {/* Ambient cinematic glows */}
             <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
                 <div className="absolute -top-40 right-[-10%] w-[640px] h-[640px] bg-[radial-gradient(circle,rgba(255,31,61,0.16),transparent_65%)] blur-[40px]" />
@@ -114,35 +114,48 @@ const Hero = ({ setCurrentView }) => {
                                 <m.a
                                     href="#products"
                                     onClick={(e) => { e.preventDefault(); goProducts(); }}
-                                    className="absolute -right-2 top-2 z-20 w-[145px] rounded-2xl border border-white/15 bg-[#0d0d13]/85 backdrop-blur-xl p-2.5 shadow-[0_12px_35px_rgba(0,0,0,0.7),0_0_20px_rgba(255,31,61,0.15)] group"
+                                    className="group absolute -right-2 top-2 z-20 w-[158px] overflow-hidden rounded-2xl border border-white/12 bg-[#0c0c12]/85 shadow-[0_12px_35px_rgba(0,0,0,0.7),0_0_20px_rgba(255,31,61,0.15)] backdrop-blur-xl"
                                     animate={{ y: [-4, 4, -4] }}
                                     transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
                                 >
-                                    <div className="flex items-start justify-between mb-1">
-                                        <svg className="w-4 h-4 text-white fill-current" viewBox="0 0 24 24" aria-hidden="true">
-                                            <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8.98-.2 1.92-.86 3.24-.76 1.66.13 2.85.76 3.62 1.94-3.27 1.96-2.72 6.02.5 7.24-.65 1.7-1.5 3.37-2.44 3.75zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-                                        </svg>
-                                        <span className="flex items-center justify-center w-5 h-5 rounded-full bg-red-500/20 text-red-500">
-                                            <ArrowRight size={10} />
-                                        </span>
+                                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#ff1f3d]/70 to-transparent" />
+                                    <div className="p-2.5">
+                                        <div className="flex items-center justify-between">
+                                            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-white/10 ring-1 ring-white/15">
+                                                <svg className="h-3.5 w-3.5 fill-current text-white" viewBox="0 0 24 24" aria-hidden="true">
+                                                    <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8.98-.2 1.92-.86 3.24-.76 1.66.13 2.85.76 3.62 1.94-3.27 1.96-2.72 6.02.5 7.24-.65 1.7-1.5 3.37-2.44 3.75zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                                                </svg>
+                                            </span>
+                                            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#ff1f3d]/15 text-[#ff4d63] ring-1 ring-[#ff1f3d]/30 transition-all duration-300 group-hover:bg-[#ff1f3d] group-hover:text-white group-hover:shadow-[0_0_12px_rgba(255,31,61,0.6)]">
+                                                <ArrowRight size={10} />
+                                            </span>
+                                        </div>
+                                        <p className="mt-1.5 text-[11.5px] font-bold leading-tight text-white">iPhone 17 Pro Max</p>
+                                        <p className="mt-0.5 text-[9px] leading-snug text-gray-400">A19 Pro · 6.9″ · 256GB</p>
+                                        <div className="mt-1.5 flex items-center gap-1.5">
+                                            <span className="text-[11px] font-black leading-none text-white">₹1,49,900</span>
+                                            <span className="text-[8.5px] text-gray-500 line-through">₹1,64,900</span>
+                                            <span className="ml-auto rounded-full bg-[#ff1f3d]/15 px-1.5 py-0.5 text-[8px] font-bold text-[#ff5f74] ring-1 ring-[#ff1f3d]/25">-9%</span>
+                                        </div>
                                     </div>
-                                    <p className="text-white font-bold text-xs leading-tight">iPhone 17 Pro Max</p>
-                                    <p className="text-gray-400 text-[9.5px] mt-0.5">Titanium Power</p>
                                 </m.a>
 
                                 {/* Floating price chip — Mobile */}
                                 <m.div
-                                    className="absolute -left-2 bottom-2 z-20 flex items-center gap-2 rounded-xl border border-white/15 bg-[#0d0d13]/85 backdrop-blur-xl px-2.5 py-1.5 shadow-[0_12px_30px_rgba(0,0,0,0.7)]"
+                                    className="absolute -left-2 bottom-2 z-20 flex items-center gap-2 rounded-xl border border-white/12 bg-[#0c0c12]/85 px-2.5 py-2 shadow-[0_12px_30px_rgba(0,0,0,0.7)] backdrop-blur-xl"
                                     animate={{ y: [4, -4, 4] }}
                                     transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
                                 >
-                                    <span className="flex items-center justify-center w-6 h-6 rounded-lg bg-green-500/15 border border-green-500/25">
-                                        <Bell size={11} className="text-green-400" />
+                                    <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500/25 to-emerald-500/5 ring-1 ring-emerald-500/30">
+                                        <Bell size={12} className="text-emerald-400" />
                                     </span>
                                     <div className="leading-tight">
                                         <p className="text-white text-[10px] font-bold">Price Drop Alert</p>
-                                        <p className="text-green-400 text-[9px] font-extrabold">Galaxy S26 Ultra · −₹18,000</p>
+                                        <p className="text-gray-400 text-[8.5px]">Galaxy S26 Ultra</p>
                                     </div>
+                                    <span className="ml-0.5 flex items-center gap-0.5 rounded-full bg-emerald-500/10 px-1.5 py-0.5 text-[9px] font-black text-emerald-400 ring-1 ring-emerald-500/20">
+                                        <TrendingDown size={9} /> ₹18,000
+                                    </span>
                                 </m.div>
                             </m.div>
                         </div>
@@ -226,35 +239,60 @@ const Hero = ({ setCurrentView }) => {
                         <m.a
                             href="#products"
                             onClick={(e) => { e.preventDefault(); goProducts(); }}
-                            className="absolute right-[-1%] top-[4%] z-20 w-[205px] rounded-2xl border border-white/12 bg-[#0d0d13]/85 backdrop-blur-xl p-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.6),0_0_25px_rgba(255,31,61,0.12)] hover:border-red-500/40 hover:shadow-[0_20px_60px_rgba(0,0,0,0.7),0_0_35px_rgba(255,31,61,0.28)] transition-all duration-300 group"
+                            className="group absolute right-[-1%] top-[4%] z-20 w-[236px] overflow-hidden rounded-[20px] border border-white/10 bg-[#0c0c12]/80 shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-2xl transition-all duration-300 hover:border-red-500/40 hover:shadow-[0_20px_60px_rgba(0,0,0,0.7),0_0_35px_rgba(255,31,61,0.28)]"
                             animate={{ y: [-6, 6, -6] }}
                             transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.6 }}
                         >
-                            <div className="flex items-start justify-between mb-2">
-                                <svg className="w-6 h-6 text-white fill-current" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8.98-.2 1.92-.86 3.24-.76 1.66.13 2.85.76 3.62 1.94-3.27 1.96-2.72 6.02.5 7.24-.65 1.7-1.5 3.37-2.44 3.75zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-                                </svg>
-                                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-red-500/15 border border-red-500/30 text-red-500 transition-all duration-300 group-hover:bg-red-500 group-hover:text-white group-hover:shadow-[0_0_14px_rgba(255,31,61,0.6)]">
-                                    <ArrowRight size={13} />
-                                </span>
+                            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#ff1f3d]/70 to-transparent" />
+                            <div className="p-3.5">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/10 ring-1 ring-white/15">
+                                            <svg className="h-4 w-4 fill-current text-white" viewBox="0 0 24 24" aria-hidden="true">
+                                                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8.98-.2 1.92-.86 3.24-.76 1.66.13 2.85.76 3.62 1.94-3.27 1.96-2.72 6.02.5 7.24-.65 1.7-1.5 3.37-2.44 3.75zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                                            </svg>
+                                        </span>
+                                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-emerald-400 ring-1 ring-emerald-500/20">
+                                            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" /> In stock
+                                        </span>
+                                    </div>
+                                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#ff1f3d]/15 text-[#ff4d63] ring-1 ring-[#ff1f3d]/30 transition-all duration-300 group-hover:bg-[#ff1f3d] group-hover:text-white group-hover:shadow-[0_0_14px_rgba(255,31,61,0.6)]">
+                                        <ArrowRight size={13} />
+                                    </span>
+                                </div>
+                                <p className="mt-2.5 text-[14px] font-bold leading-tight text-white">iPhone 17 Pro Max</p>
+                                <p className="mt-0.5 text-[11px] leading-snug text-gray-400">A19 Pro · 6.9″ · 256GB</p>
+                                <div className="mt-2.5 flex items-end justify-between">
+                                    <div>
+                                        <p className="text-[15px] font-black leading-none text-white">₹1,49,900</p>
+                                        <p className="mt-0.5 text-[10px] text-gray-500 line-through">₹1,64,900</p>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <span className="inline-flex items-center gap-0.5 rounded-full bg-amber-500/10 px-1.5 py-0.5 text-[9px] font-bold text-amber-400 ring-1 ring-amber-500/20">
+                                            <Star size={9} className="fill-amber-400" /> 4.8
+                                        </span>
+                                        <span className="rounded-full bg-[#ff1f3d]/15 px-1.5 py-0.5 text-[9px] font-bold text-[#ff5f74] ring-1 ring-[#ff1f3d]/25">-9%</span>
+                                    </div>
+                                </div>
                             </div>
-                            <p className="text-white font-bold text-[14px] leading-tight">iPhone 17 Pro Max</p>
-                            <p className="text-gray-400 text-[11px] mt-0.5 leading-snug">A smarter, more powerful you.</p>
                         </m.a>
 
                         {/* Floating price chip */}
                         <m.div
-                            className="absolute left-[2%] bottom-[8%] z-20 flex items-center gap-2.5 rounded-2xl border border-white/12 bg-[#0d0d13]/85 backdrop-blur-xl px-3.5 py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.6)]"
+                            className="absolute left-[2%] bottom-[8%] z-20 flex items-center gap-3 rounded-2xl border border-white/12 bg-[#0c0c12]/80 px-3.5 py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.6)] backdrop-blur-2xl"
                             animate={{ y: [5, -5, 5] }}
                             transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
                         >
-                            <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-green-500/15 border border-green-500/25">
-                                <Bell size={13} className="text-green-400" />
+                            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500/25 to-emerald-500/5 ring-1 ring-emerald-500/30">
+                                <Bell size={13} className="text-emerald-400" />
                             </span>
                             <div className="leading-tight">
-                                <p className="text-white text-xs font-bold">Price Drop Alert</p>
-                                <p className="text-green-400 text-[10px] font-bold mt-0.5">Galaxy S26 Ultra · −₹18,000</p>
+                                <p className="text-white text-[11px] font-bold">Price Drop Alert</p>
+                                <p className="text-gray-400 text-[9.5px] mt-0.5">Galaxy S26 Ultra</p>
                             </div>
+                            <span className="ml-1 flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-1 text-[11px] font-black text-emerald-400 ring-1 ring-emerald-500/20">
+                                <TrendingDown size={11} /> ₹18,000
+                            </span>
                         </m.div>
                     </m.div>
                 </div>

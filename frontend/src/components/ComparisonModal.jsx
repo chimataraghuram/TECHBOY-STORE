@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { m } from 'framer-motion';
 import { parseSpecs, calculateValueScore } from '../utils/specsParser';
 import { X, Award, Zap, ExternalLink } from 'lucide-react';
@@ -9,6 +10,13 @@ const resolveImage = (src, name = '') => {
 };
 
 const ComparisonModal = ({ products, onClose }) => {
+    // Close on Escape
+    useEffect(() => {
+        const handleKey = (e) => { if (e.key === 'Escape') onClose?.(); };
+        document.addEventListener('keydown', handleKey);
+        return () => document.removeEventListener('keydown', handleKey);
+    }, [onClose]);
+
     // 1. Spec parsing & value scoring for compared products
     const analyzedProducts = products.map(p => {
         const specs = parseSpecs(p.description);
@@ -68,7 +76,7 @@ const ComparisonModal = ({ products, onClose }) => {
         value: getWinnerId('value', 'max')
     };
 
-    return (
+    return createPortal(
         <m.div 
             className="comparison-overlay" 
             onClick={onClose}
@@ -110,7 +118,7 @@ const ComparisonModal = ({ products, onClose }) => {
                         </div>
 
                         {/* Product Columns */}
-                        {analyzedProducts.map(p => {
+                        {analyzedProducts.map((p, index) => {
                             const amazonUrl = p.amazon_link || p.amazonLink;
                             const flipkartUrl = p.flipkart_link || p.flipkartLink;
                             
@@ -119,11 +127,11 @@ const ComparisonModal = ({ products, onClose }) => {
                             const isValueWinner = winners.value === p.id;
 
                             return (
-                                <div key={p.id} className="comparison-col">
+                                <div key={p.id ?? index} className="comparison-col">
                                     {/* Header cell */}
                                     <div className="col-header">
                                         <div className="comp-img-container">
-                                            <img src={resolveImage(p.image, p.name)} alt={p.name} />
+                                            <img src={resolveImage(p.image, p.name)} alt={p.name} onError={(e) => { e.currentTarget.src = '/images/phones/apple-iphone-17-pro-max.png'; }} />
                                         </div>
                                         <h4>{p.name}</h4>
                                         <span className="comp-category">{p.category}</span>
@@ -218,7 +226,8 @@ const ComparisonModal = ({ products, onClose }) => {
                     </div>
                 </div>
             </m.div>
-        </m.div>
+        </m.div>,
+        document.body
     );
 };
 

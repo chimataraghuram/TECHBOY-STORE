@@ -284,7 +284,7 @@ const TechAdvisorModal = ({ onClose }) => {
                                 <h3>Your Tailored AI Recommendations</h3>
                                 <div className="results-grid">
                                     {results.length > 0 ? results.map((phone, index) => (
-                                        <div key={phone.id} className={`result-card glass-card ${index === 0 ? 'top-match' : ''}`}>
+                                        <div key={phone.id ?? index} className={`result-card glass-card ${index === 0 ? 'top-match' : ''}`}>
                                             {index === 0 && <div className="top-match-badge">🥇 Recommended #1</div>}
                                             {index === 1 && <div className="match-badge">🥈 Option #2</div>}
                                             {index === 2 && <div className="match-badge">🥉 Option #3</div>}

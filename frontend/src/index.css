@@ -86,17 +86,22 @@ h1, h2, h3, h4 {
   letter-spacing: -0.02em;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-  transition: color 0.2s;
-}
+/* Element resets live in the `base` layer so Tailwind utility classes
+   (which are in the later `utilities` layer) can override them. Without this,
+   an unlayered `a { color: inherit }` beat every `text-*` utility on links. */
+@layer base {
+  a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s;
+  }
 
-button {
-  cursor: pointer;
-  border: none;
-  font-family: var(--font-main);
-  transition: all 0.3s ease;
+  button {
+    cursor: pointer;
+    border: none;
+    font-family: var(--font-main);
+    transition: all 0.3s ease;
+  }
 }
 
 img {

@@ -65,7 +65,7 @@ Experience the premium tech shopping journey yourself: [https://techboy-store.ve
 
 | Icon | Feature | Description |
 | :--- | :--- | :--- |
-| 🤖 | **TechBoy AI Chatbot** | Integrated NVIDIA NIM Llama 3.1 LLM that talks tech. It understands your budget, prioritizes gaming chips, and even works offline using a custom algorithmic fallback. |
+| 🤖 | **Catalog RAG Chatbot** | Server-side retrieval ranks the live TechBoy catalog before NVIDIA NIM generates an answer, so recommendations stay grounded in stored prices and specs. It also has a deterministic fallback. |
 | 📱 | **Analyst Picks** | Carefully curated smartphone tiers with an intuitive, unified filtering system that guarantees you find the best value at any price point. |
 | ⚖️ | **Smart Comparison** | A head-to-head evaluation tool designed to let you stack up to three devices against each other, comparing everything from sensors to screen refresh rates. |
 | 🌐 | **Dynamic 3D UI** | A visual masterpiece utilizing Three.js and custom particle configurations, providing users with a luxurious, app-like feel right in their browser. |
@@ -89,7 +89,7 @@ Experience the premium tech shopping journey yourself: [https://techboy-store.ve
 - **Django 6** - The bedrock of the backend, ensuring extreme stability
 - **DRF (REST Framework)** - Serving cleanly serialized JSON endpoints
 - **Service Layer Architecture** - Enterprise-grade logic separation keeping views incredibly thin
-- **Caching & Throttling** - Defending against spam and delivering cached data instantly via LocMem
+- **RAG + Redis caching** - Hybrid catalog retrieval keeps chatbot answers grounded; Redis caches repeated grounded answers across workers (with a no-setup local-cache fallback)
 - **SQLite / PostgreSQL** - Highly optimized, indexed database modeling
 - **Gunicorn** - Ensuring concurrent requests are processed securely in production
 

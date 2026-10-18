@@ -7,6 +7,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 django.setup()
 
 from api.models import Product, PriceHistory
+from phone_specs import enrich_specs
 
 # Curated, top-tier mobile phones for every single price category with authentic specs, tags & links
 CURATED_PHONES = [
@@ -586,6 +587,13 @@ CURATED_PHONES = [
     "specs": {"Processor": "Apple A18 Pro 3nm", "Display": "6.9\" 120Hz Super Retina XDR Titanium", "Camera": "48MP + 48MP + 12MP 5x Telephoto", "Battery": "4685mAh 27W Fast Qi", "RAM": "8GB", "Storage": "256GB"}
   }
 ]
+
+# Expand every phone's compact 6-key spec dict into a complete spec sheet
+# (GPU, selfie camera, video, software, build, weight, connectivity, colours).
+for _item in CURATED_PHONES:
+    _item["specs"] = enrich_specs(
+        _item["name"], _item.get("brand", ""), _item.get("price", 0), _item.get("specs", {})
+    )
 
 def populate_database_and_json():
     repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

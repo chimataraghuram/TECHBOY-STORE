@@ -21,7 +21,7 @@
     "react-dom": "^19.2.0",
     "react-virtuoso": "^4.18.7",
     "recharts": "^3.8.1",
-    "three": "^0.184.0"
+    "three": "0.182.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

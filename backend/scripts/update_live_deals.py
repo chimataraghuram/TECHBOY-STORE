@@ -206,6 +206,7 @@ def update_all_deals():
         pass
 
     from api.models import Product, PriceHistory
+    from phone_specs import enrich_specs
 
     updated_count = 0
     history_count = 0
@@ -227,7 +228,7 @@ def update_all_deals():
                 "amazon_link": amz_url,
                 "flipkart_link": fk_url,
                 "tag": meta["tag"],
-                "specs": meta.get("specs", {}),
+                "specs": enrich_specs(name, meta["brand"], new_price, meta.get("specs", {})),
                 "rating": 4.8 if "Ultra" in name or "Pro Max" in name else 4.6
             }
         )

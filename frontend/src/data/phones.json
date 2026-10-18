@@ -5,7 +5,7 @@
     "tag": "🎮 Best Gaming",
     "category": "Under ₹10K",
     "brand": "Tecno",
-    "price": 8500,
+    "price": 8200,
     "description": "Chip: Helio G88 | Display: 6.67\" 90Hz IPS | Camera: 50MP | Battery: 5000mAh 18W | RAM: 8GB | Storage: 128GB",
     "image": "/images/phones/tecno-spark-30c.png",
     "amazonLink": "https://www.amazon.in/s?k=Tecno+Spark+30C&tag=techboy-21",
@@ -13,11 +13,21 @@
     "rating": 4.3,
     "specs": {
       "Processor": "MediaTek Helio G88",
+      "GPU": "Mali-G52 MC2",
       "Display": "6.67\" 90Hz IPS LCD",
-      "Camera": "50MP AI Main",
-      "Battery": "5000mAh 18W",
+      "Rear Camera": "50MP AI Main",
+      "Selfie Camera": "8MP AI",
+      "Video": "1080p @ 30fps",
       "RAM": "8GB",
-      "Storage": "128GB"
+      "Storage": "128GB",
+      "Battery": "5000mAh",
+      "Charging": "18W",
+      "Operating System": "HiOS 14 (Android 14)",
+      "Software Updates": "2 OS upgrades + 3 years security",
+      "Build": "Plastic frame · IP54 · Panda glass",
+      "Weight": "187 g",
+      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Colors": "Magic Skin Green, Titanium Grey"
     }
   },
   {
@@ -26,7 +36,7 @@
     "tag": "📷 Best Camera",
     "category": "Under ₹10K",
     "brand": "Xiaomi",
-    "price": 9100,
+    "price": 8900,
     "description": "Chip: Dimensity 6100+ | Display: 6.74\" 90Hz LCD | Camera: 50MP AI | Battery: 5000mAh 18W | RAM: 4GB | Storage: 128GB",
     "image": "/images/phones/redmi-13c-5g.png",
     "amazonLink": "https://www.amazon.in/s?k=Redmi+13C+5G&tag=techboy-21",
@@ -34,11 +44,21 @@
     "rating": 4.4,
     "specs": {
       "Processor": "MediaTek Dimensity 6100+",
+      "GPU": "Mali-G57 MC2",
       "Display": "6.74\" 90Hz Dot Drop",
-      "Camera": "50MP AI Dual",
-      "Battery": "5000mAh 18W",
+      "Rear Camera": "50MP AI Dual",
+      "Selfie Camera": "5MP",
+      "Video": "1080p @ 30fps",
       "RAM": "4GB",
-      "Storage": "128GB"
+      "Storage": "128GB",
+      "Battery": "5000mAh",
+      "Charging": "18W",
+      "Operating System": "HyperOS 2 (Android 15)",
+      "Software Updates": "3 OS upgrades + 4 years security",
+      "Build": "Plastic frame · Splash resistant",
+      "Weight": "192 g",
+      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Colors": "Startrail Green, Startrail Silver, Stardust Black"
     }
   },
   {
@@ -55,11 +75,21 @@
     "rating": 4.3,
     "specs": {
       "Processor": "MediaTek Helio G99",
+      "GPU": "Mali-G57 MC2",
       "Display": "6.7\" 90Hz PLS LCD",
-      "Camera": "50MP + 2MP Depth",
-      "Battery": "6000mAh 25W",
+      "Rear Camera": "50MP + 2MP Depth",
+      "Selfie Camera": "8MP",
+      "Video": "1080p @ 30fps",
       "RAM": "6GB",
-      "Storage": "128GB"
+      "Storage": "128GB",
+      "Battery": "6000mAh",
+      "Charging": "25W",
+      "Operating System": "One UI 7 (Android 15)",
+      "Software Updates": "4 OS upgrades + 5 years security",
+      "Build": "Plastic frame · IP54",
+      "Weight": "191 g",
+      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Colors": "Black, Light Blue, Green"
     }
   },
   {
@@ -68,7 +98,7 @@
     "tag": "⭐ All-round Best",
     "category": "Under ₹10K",
     "brand": "Realme",
-    "price": 10000,
+    "price": 9700,
     "description": "Chip: Helio G91 | Display: 6.74\" 90Hz IPS | Camera: 50MP | Battery: 6000mAh 45W | RAM: 8GB | Storage: 128GB",
     "image": "/images/phones/realme-c75.png",
     "amazonLink": "https://www.amazon.in/s?k=Realme+C75&tag=techboy-21",
@@ -76,11 +106,21 @@
     "rating": 4.4,
     "specs": {
       "Processor": "MediaTek Helio G91",
+      "GPU": "Mali-G52 MC2",
       "Display": "6.74\" 90Hz IPS",
-      "Camera": "50MP AI Main",
-      "Battery": "6000mAh 45W SUPERVOOC",
+      "Rear Camera": "50MP AI Main",
+      "Selfie Camera": "8MP",
+      "Video": "1080p @ 30fps",
       "RAM": "8GB",
-      "Storage": "128GB"
+      "Storage": "128GB",
+      "Battery": "6000mAh",
+      "Charging": "45W SUPERVOOC",
+      "Operating System": "realme UI 6 (Android 15)",
+      "Software Updates": "2 OS upgrades + 3 years security",
+      "Build": "Plastic frame · IP69 military-grade",
+      "Weight": "196 g",
+      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Colors": "Lightning Gold, Storm Black"
     }
   },
   {
@@ -89,7 +129,7 @@
     "tag": "💰 Best Value",
     "category": "Under ₹10K",
     "brand": "Infinix",
-    "price": 7400,
+    "price": 7500,
     "description": "Chip: Helio G81 | Display: 6.7\" 120Hz IPS | Camera: 48MP Dual | Battery: 5000mAh 18W | RAM: 6GB | Storage: 128GB",
     "image": "/images/phones/infinix-hot-50i.png",
     "amazonLink": "https://www.amazon.in/s?k=Infinix+Hot+50i&tag=techboy-21",
@@ -97,11 +137,21 @@
     "rating": 4.2,
     "specs": {
       "Processor": "MediaTek Helio G81",
+      "GPU": "Mali-G52 MC2",
       "Display": "6.7\" 120Hz Punch-Hole",
-      "Camera": "48MP Dual Flash",
-      "Battery": "5000mAh 18W",
+      "Rear Camera": "48MP Dual Flash",
+      "Selfie Camera": "8MP",
+      "Video": "1080p @ 30fps",
       "RAM": "6GB",
-      "Storage": "128GB"
+      "Storage": "128GB",
+      "Battery": "5000mAh",
+      "Charging": "18W",
+      "Operating System": "XOS 14 (Android 14)",
+      "Software Updates": "2 OS upgrades + 3 years security",
+      "Build": "Plastic frame · IP54",
+      "Weight": "184 g",
+      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Colors": "Titanium Grey, Sleek Black, Sage Green, Dreamy Purple"
     }
   },
   {
@@ -110,7 +160,7 @@
     "tag": "🎮 Best Gaming",
     "category": "Under ₹20K",
     "brand": "iQOO",
-    "price": 17700,
+    "price": 16900,
     "description": "Chip: Dimensity 7200 | Display: 6.67\" 120Hz AMOLED | Camera: 50MP Sony OIS | Battery: 5000mAh 44W | RAM: 8GB | Storage: 128GB",
     "image": "/images/phones/iqoo-z9-5g.png",
     "amazonLink": "https://www.amazon.in/s?k=iQOO+Z9+5G&tag=techboy-21",
@@ -118,11 +168,21 @@
     "rating": 4.5,
     "specs": {
       "Processor": "MediaTek Dimensity 7200",
+      "GPU": "Mali-G610 MC4",
       "Display": "6.67\" 120Hz AMOLED 1800nits",
-      "Camera": "50MP Sony IMX882 OIS",
-      "Battery": "5000mAh 44W FlashCharge",
+      "Rear Camera": "50MP Sony IMX882 OIS",
+      "Selfie Camera": "16MP",
+      "Video": "4K @ 30fps, 1080p @ 60fps",
       "RAM": "8GB",
-      "Storage": "128GB"
+      "Storage": "128GB",
+      "Battery": "5000mAh",
+      "Charging": "44W FlashCharge",
+      "Operating System": "Funtouch OS 15 (Android 15)",
+      "Software Updates": "3 OS upgrades + 4 years security",
+      "Build": "Plastic frame · IP64 · Panda glass",
+      "Weight": "188 g",
+      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Colors": "Brushed Green, Graphene Blue"
     }
   },
   {
@@ -131,7 +191,7 @@
     "tag": "📷 Best Camera",
     "category": "Under ₹20K",
     "brand": "Xiaomi",
-    "price": 18600,
+    "price": 18200,
     "description": "Chip: Dimensity 7025 Ultra | Display: 6.67\" 120Hz AMOLED | Camera: 50MP Sony LYT-600 OIS | Battery: 5110mAh 45W | RAM: 8GB | Storage: 128GB",
     "image": "/images/phones/redmi-note-14-5g.png",
     "amazonLink": "https://www.amazon.in/s?k=Redmi+Note+14+5G&tag=techboy-21",
@@ -139,11 +199,21 @@
     "rating": 4.5,
     "specs": {
       "Processor": "Dimensity 7025 Ultra 6nm",
+      "GPU": "IMG BXM-8-256",
       "Display": "6.67\" 120Hz OLED 2100nits",
-      "Camera": "50MP Sony LYT-600 OIS",
-      "Battery": "5110mAh 45W HyperCharge",
+      "Rear Camera": "50MP Sony LYT-600 OIS",
+      "Selfie Camera": "16MP",
+      "Video": "4K @ 30fps, 1080p @ 60fps",
       "RAM": "8GB",
-      "Storage": "128GB"
+      "Storage": "128GB",
+      "Battery": "5110mAh",
+      "Charging": "45W HyperCharge",
+      "Operating System": "HyperOS 2 (Android 15)",
+      "Software Updates": "3 OS upgrades + 4 years security",
+      "Build": "Plastic frame · IP64 · Gorilla Glass 5",
+      "Weight": "190 g",
+      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Colors": "Midnight Black, Ocean Blue, Coral Green"
     }
   },
   {
@@ -152,7 +222,7 @@
     "tag": "✨ Best UI",
     "category": "Under ₹20K",
     "brand": "Samsung",
-    "price": 19600,
+    "price": 19000,
     "description": "Chip: Exynos 1380 | Display: 6.6\" 120Hz Super AMOLED | Camera: 50MP OIS | Battery: 5000mAh 25W | RAM: 8GB | Storage: 128GB",
     "image": "/images/phones/samsung-galaxy-a26-5g.png",
     "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+A26+5G&tag=techboy-21",
@@ -160,11 +230,21 @@
     "rating": 4.4,
     "specs": {
       "Processor": "Samsung Exynos 1380",
+      "GPU": "Mali-G68 MP5",
       "Display": "6.6\" 120Hz Super AMOLED",
-      "Camera": "50MP OIS + 8MP Ultra + 2MP Macro",
-      "Battery": "5000mAh 25W",
+      "Rear Camera": "50MP OIS + 8MP Ultra + 2MP Macro",
+      "Selfie Camera": "13MP",
+      "Video": "4K @ 30fps",
       "RAM": "8GB",
-      "Storage": "128GB"
+      "Storage": "128GB",
+      "Battery": "5000mAh",
+      "Charging": "25W",
+      "Operating System": "One UI 7 (Android 15)",
+      "Software Updates": "4 OS upgrades + 5 years security",
+      "Build": "Plastic frame · IP67 · Gorilla Glass Victus+",
+      "Weight": "200 g",
+      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Colors": "Black, Mint, Peach Pink, White"
     }
   },
   {
@@ -181,11 +261,21 @@
     "rating": 4.6,
     "specs": {
       "Processor": "MediaTek Dimensity 7200 Pro",
+      "GPU": "Mali-G610 MC4",
       "Display": "6.7\" 120Hz AMOLED Glyph",
-      "Camera": "50MP Main OIS + 50MP Ultra-wide",
-      "Battery": "5000mAh 45W Fast Charge",
+      "Rear Camera": "50MP Main OIS + 50MP Ultra-wide",
+      "Selfie Camera": "32MP",
+      "Video": "4K @ 30fps",
       "RAM": "8GB",
-      "Storage": "128GB"
+      "Storage": "128GB",
+      "Battery": "5000mAh",
+      "Charging": "45W Fast Charge",
+      "Operating System": "Nothing OS 3 (Android 15)",
+      "Software Updates": "3 OS upgrades + 4 years security",
+      "Build": "Glass back · IP64 · Panda glass",
+      "Weight": "201 g",
+      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Colors": "Black, White, Blue"
     }
   },
   {
@@ -194,7 +284,7 @@
     "tag": "💰 Best Value",
     "category": "Under ₹20K",
     "brand": "Vivo",
-    "price": 16000,
+    "price": 15300,
     "description": "Chip: Dimensity 6300 | Display: 6.72\" 120Hz FHD+ | Camera: 50MP AI | Battery: 6000mAh 44W | RAM: 8GB | Storage: 128GB",
     "image": "/images/phones/vivo-t5x-5g.png",
     "amazonLink": "https://www.amazon.in/s?k=vivo+T5x+5G&tag=techboy-21",
@@ -202,11 +292,21 @@
     "rating": 4.4,
     "specs": {
       "Processor": "MediaTek Dimensity 6300",
+      "GPU": "Mali-G57 MC2",
       "Display": "6.72\" 120Hz FHD+",
-      "Camera": "50MP Super Night AI",
-      "Battery": "6000mAh 44W FlashCharge",
+      "Rear Camera": "50MP Super Night AI",
+      "Selfie Camera": "16MP",
+      "Video": "1080p @ 30fps",
       "RAM": "8GB",
-      "Storage": "128GB"
+      "Storage": "128GB",
+      "Battery": "6000mAh",
+      "Charging": "44W FlashCharge",
+      "Operating System": "Funtouch OS 15 (Android 15)",
+      "Software Updates": "3 OS upgrades + 4 years security",
+      "Build": "Plastic frame · IP64",
+      "Weight": "199 g",
+      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Colors": "Sonic Black, Star Grey"
     }
   },
   {
@@ -215,7 +315,7 @@
     "tag": "🎮 Best Gaming",
     "category": "Under ₹30K",
     "brand": "iQOO",
-    "price": 28000,
+    "price": 27600,
     "description": "Chip: Snapdragon 8s Gen 3 | Display: 6.78\" 144Hz 1.5K AMOLED | Camera: 50MP Sony OIS | Battery: 5500mAh 120W | RAM: 8GB | Storage: 256GB",
     "image": "/images/phones/iqoo-neo-10r.png",
     "amazonLink": "https://www.amazon.in/s?k=iQOO+Neo+10R&tag=techboy-21",
@@ -223,11 +323,21 @@
     "rating": 4.6,
     "specs": {
       "Processor": "Snapdragon 8s Gen 3 4nm",
+      "GPU": "Adreno 735",
       "Display": "6.78\" 144Hz 1.5K AMOLED",
-      "Camera": "50MP Sony IMX920 OIS",
-      "Battery": "5500mAh 120W FlashCharge",
+      "Rear Camera": "50MP Sony IMX920 OIS",
+      "Selfie Camera": "16MP",
+      "Video": "4K @ 30fps, 1080p @ 60fps",
       "RAM": "8GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "5500mAh",
+      "Charging": "120W FlashCharge",
+      "Operating System": "Funtouch OS 15 (Android 15)",
+      "Software Updates": "3 OS upgrades + 4 years security",
+      "Build": "Plastic frame · IP65 · Schott glass",
+      "Weight": "198 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Raging Blue, Moonknight Titanium"
     }
   },
   {
@@ -236,7 +346,7 @@
     "tag": "📷 Best Camera",
     "category": "Under ₹30K",
     "brand": "Google",
-    "price": 30300,
+    "price": 29400,
     "description": "Chip: Google Tensor G4 | Display: 6.3\" 120Hz Actua OLED | Camera: 48MP Dual Pixel AI | Battery: 4700mAh 27W | RAM: 8GB | Storage: 128GB",
     "image": "/images/phones/google-pixel-9a.png",
     "amazonLink": "https://www.amazon.in/s?k=Google+Pixel+9a&tag=techboy-21",
@@ -244,11 +354,21 @@
     "rating": 4.6,
     "specs": {
       "Processor": "Google Tensor G4 AI",
+      "GPU": "Mali-G715 MC7",
       "Display": "6.3\" 120Hz Actua OLED",
-      "Camera": "48MP OIS + 13MP Ultra-wide AI",
-      "Battery": "4700mAh 27W Fast Charge",
+      "Rear Camera": "48MP OIS + 13MP Ultra-wide AI",
+      "Selfie Camera": "13MP",
+      "Video": "4K @ 60fps",
       "RAM": "8GB",
-      "Storage": "128GB"
+      "Storage": "128GB",
+      "Battery": "4700mAh",
+      "Charging": "27W Fast Charge",
+      "Operating System": "Android 15",
+      "Software Updates": "7 years of OS + security updates",
+      "Build": "Aluminium frame · IP68 · Gorilla Glass 3",
+      "Weight": "186 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Obsidian, Porcelain, Iris, Peony"
     }
   },
   {
@@ -257,7 +377,7 @@
     "tag": "✨ Best UI",
     "category": "Under ₹30K",
     "brand": "Nothing",
-    "price": 26000,
+    "price": 25100,
     "description": "Chip: Snapdragon 7s Gen 3 | Display: 6.7\" 120Hz Flexible OLED | Camera: 50MP Triple OIS | Battery: 5000mAh 45W | RAM: 12GB | Storage: 256GB",
     "image": "/images/phones/nothing-phone-3a-pro.png",
     "amazonLink": "https://www.amazon.in/s?k=Nothing+Phone+%283a%29+Pro&tag=techboy-21",
@@ -265,11 +385,21 @@
     "rating": 4.5,
     "specs": {
       "Processor": "Snapdragon 7s Gen 3",
+      "GPU": "Adreno 810",
       "Display": "6.7\" 120Hz Flexible OLED Glyph 2.0",
-      "Camera": "50MP OIS + 50MP Ultra + 50MP Tele",
-      "Battery": "5000mAh 45W",
+      "Rear Camera": "50MP OIS + 50MP Ultra + 50MP Tele",
+      "Selfie Camera": "32MP",
+      "Video": "4K @ 30fps",
       "RAM": "12GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "5000mAh",
+      "Charging": "45W",
+      "Operating System": "Nothing OS 3 (Android 15)",
+      "Software Updates": "3 OS upgrades + 4 years security",
+      "Build": "Glass back · IP64 · Panda glass",
+      "Weight": "211 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Black, Grey"
     }
   },
   {
@@ -278,7 +408,7 @@
     "tag": "⭐ All-round Best",
     "category": "Under ₹30K",
     "brand": "Realme",
-    "price": 25900,
+    "price": 25100,
     "description": "Chip: Snapdragon 8s Gen 3 | Display: 6.78\" 144Hz 1.5K 6000nits | Camera: 50MP Sony OIS | Battery: 5500mAh 120W | RAM: 12GB | Storage: 256GB",
     "image": "/images/phones/realme-gt7t.png",
     "amazonLink": "https://www.amazon.in/s?k=Realme+GT+7T&tag=techboy-21",
@@ -286,11 +416,21 @@
     "rating": 4.5,
     "specs": {
       "Processor": "Snapdragon 8s Gen 3",
+      "GPU": "Adreno 735",
       "Display": "6.78\" 144Hz 1.5K 6000nits",
-      "Camera": "50MP Sony IMX890 OIS",
-      "Battery": "5500mAh 120W SuperVOOC",
+      "Rear Camera": "50MP Sony IMX890 OIS",
+      "Selfie Camera": "32MP",
+      "Video": "4K @ 60fps",
       "RAM": "12GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "5500mAh",
+      "Charging": "120W SuperVOOC",
+      "Operating System": "realme UI 6 (Android 15)",
+      "Software Updates": "2 OS upgrades + 3 years security",
+      "Build": "Plastic frame · IP69 · Crystal glass",
+      "Weight": "196 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Racing Yellow, Storm Black"
     }
   },
   {
@@ -299,7 +439,7 @@
     "tag": "💰 Best Value",
     "category": "Under ₹30K",
     "brand": "Xiaomi",
-    "price": 24200,
+    "price": 23800,
     "description": "Chip: Snapdragon 8s Gen 3 | Display: 6.67\" 120Hz CrystalRes AMOLED | Camera: 50MP OIS | Battery: 6000mAh 90W | RAM: 12GB | Storage: 256GB",
     "image": "/images/phones/poco-f7-5g.png",
     "amazonLink": "https://www.amazon.in/s?k=POCO+F7+5G&tag=techboy-21",
@@ -307,11 +447,21 @@
     "rating": 4.5,
     "specs": {
       "Processor": "Snapdragon 8s Gen 3 4nm",
+      "GPU": "Adreno 735",
       "Display": "6.67\" 120Hz 1.5K Flow AMOLED",
-      "Camera": "50MP Light Hunter 800 OIS",
-      "Battery": "6000mAh 90W Turbo",
+      "Rear Camera": "50MP Light Hunter 800 OIS",
+      "Selfie Camera": "20MP",
+      "Video": "4K @ 60fps",
       "RAM": "12GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "6000mAh",
+      "Charging": "90W Turbo",
+      "Operating System": "HyperOS 2 (Android 15)",
+      "Software Updates": "3 OS upgrades + 4 years security",
+      "Build": "Aluminium frame · IP68 · Gorilla Glass 7i",
+      "Weight": "215 g",
+      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Colors": "Black, White, Green"
     }
   },
   {
@@ -320,7 +470,7 @@
     "tag": "🏆 Brand Value",
     "category": "Under ₹30K",
     "brand": "OnePlus",
-    "price": 28700,
+    "price": 28100,
     "description": "Chip: Snapdragon 7 Gen 3 | Display: 6.7\" 120Hz Fluid AMOLED | Camera: 50MP Sony OIS | Battery: 5500mAh 100W | RAM: 8GB | Storage: 256GB",
     "image": "/images/phones/oneplus-nord-ce5.png",
     "amazonLink": "https://www.amazon.in/s?k=OnePlus+Nord+CE+5&tag=techboy-21",
@@ -328,11 +478,21 @@
     "rating": 4.5,
     "specs": {
       "Processor": "Snapdragon 7 Gen 3",
+      "GPU": "Adreno 720",
       "Display": "6.7\" 120Hz Fluid AMOLED",
-      "Camera": "50MP Sony LYT-600 OIS",
-      "Battery": "5500mAh 100W SuperVOOC",
+      "Rear Camera": "50MP Sony LYT-600 OIS",
+      "Selfie Camera": "16MP",
+      "Video": "4K @ 30fps",
       "RAM": "8GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "5500mAh",
+      "Charging": "100W SuperVOOC",
+      "Operating System": "OxygenOS 15 (Android 15)",
+      "Software Updates": "4 OS upgrades + 6 years security",
+      "Build": "Plastic frame · IP65 · Reinforced glass",
+      "Weight": "196 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Nano Silver, Pastel Pink"
     }
   },
   {
@@ -341,7 +501,7 @@
     "tag": "🎮 Best Gaming",
     "category": "Under ₹40K",
     "brand": "Xiaomi",
-    "price": 39400,
+    "price": 38600,
     "description": "Chip: Snapdragon 8 Gen 3 | Display: 6.73\" 144Hz AMOLED | Camera: 50MP Triple OIS | Battery: 5500mAh 120W | RAM: 16GB | Storage: 512GB",
     "image": "/images/phones/poco-x8-pro-max.png",
     "amazonLink": "https://www.amazon.in/s?k=POCO+X8+Pro+Max&tag=techboy-21",
@@ -349,11 +509,21 @@
     "rating": 4.7,
     "specs": {
       "Processor": "Snapdragon 8 Gen 3",
+      "GPU": "Adreno 750",
       "Display": "6.73\" 144Hz 2K AMOLED",
-      "Camera": "50MP OIS + 50MP Ultra + 50MP Tele",
-      "Battery": "5500mAh 120W HyperCharge",
+      "Rear Camera": "50MP OIS + 50MP Ultra + 50MP Tele",
+      "Selfie Camera": "20MP",
+      "Video": "4K @ 60fps",
       "RAM": "16GB",
-      "Storage": "512GB"
+      "Storage": "512GB",
+      "Battery": "5500mAh",
+      "Charging": "120W HyperCharge",
+      "Operating System": "HyperOS 2 (Android 15)",
+      "Software Updates": "3 OS upgrades + 4 years security",
+      "Build": "Aluminium frame · IP68 · Gorilla Glass Victus",
+      "Weight": "213 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Black, Silver, Blue"
     }
   },
   {
@@ -362,7 +532,7 @@
     "tag": "📷 Best Camera",
     "category": "Under ₹40K",
     "brand": "Vivo",
-    "price": 37100,
+    "price": 34900,
     "description": "Chip: Dimensity 9200 | Display: 6.73\" 120Hz 1.5K AMOLED | Camera: 50MP ZEISS OIS Studio | Battery: 5000mAh 80W | RAM: 8GB | Storage: 256GB",
     "image": "/images/phones/vivo-v70-fe.png",
     "amazonLink": "https://www.amazon.in/s?k=vivo+V70+FE&tag=techboy-21",
@@ -370,11 +540,21 @@
     "rating": 4.6,
     "specs": {
       "Processor": "MediaTek Dimensity 9200",
+      "GPU": "Immortalis-G715 MC11",
       "Display": "6.73\" 120Hz 1.5K AMOLED Curved",
-      "Camera": "50MP ZEISS OIS + 50MP Telephoto",
-      "Battery": "5000mAh 80W FlashCharge",
+      "Rear Camera": "50MP ZEISS OIS + 50MP Telephoto",
+      "Selfie Camera": "50MP",
+      "Video": "4K @ 30fps",
       "RAM": "8GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "5000mAh",
+      "Charging": "80W FlashCharge",
+      "Operating System": "Funtouch OS 15 (Android 15)",
+      "Software Updates": "3 OS upgrades + 4 years security",
+      "Build": "Glass back · IP68 · Schott glass",
+      "Weight": "197 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Titanium Black, Moonlight White, Lavender"
     }
   },
   {
@@ -383,7 +563,7 @@
     "tag": "✨ Best UI",
     "category": "Under ₹40K",
     "brand": "Samsung",
-    "price": 34500,
+    "price": 33500,
     "description": "Chip: Exynos 1480 | Display: 6.5\" 120Hz Super AMOLED | Camera: 50MP OIS Triple | Battery: 5000mAh 25W | RAM: 8GB | Storage: 256GB",
     "image": "/images/phones/samsung-galaxy-a37-5g.png",
     "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+A37+5G&tag=techboy-21",
@@ -391,11 +571,21 @@
     "rating": 4.5,
     "specs": {
       "Processor": "Samsung Exynos 1480 4nm",
+      "GPU": "Xclipse 530",
       "Display": "6.5\" 120Hz Super AMOLED FHD+",
-      "Camera": "50MP OIS + 12MP Ultra-wide",
-      "Battery": "5000mAh 25W Fast Charge",
+      "Rear Camera": "50MP OIS + 12MP Ultra-wide",
+      "Selfie Camera": "13MP",
+      "Video": "4K @ 30fps",
       "RAM": "8GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "5000mAh",
+      "Charging": "25W Fast Charge",
+      "Operating System": "One UI 7 (Android 15)",
+      "Software Updates": "4 OS upgrades + 5 years security",
+      "Build": "Aluminium frame · IP68 · Gorilla Glass Victus+",
+      "Weight": "192 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Awesome Navy, Awesome Grey, Awesome Lilac"
     }
   },
   {
@@ -404,7 +594,7 @@
     "tag": "⭐ All-round Best",
     "category": "Under ₹40K",
     "brand": "OnePlus",
-    "price": 34600,
+    "price": 32900,
     "description": "Chip: Snapdragon 8s Gen 3 | Display: 6.77\" 120Hz ProXDR AMOLED | Camera: 50MP Sony LYT-700 OIS | Battery: 5500mAh 100W | RAM: 12GB | Storage: 256GB",
     "image": "/images/phones/oneplus-nord-6.png",
     "amazonLink": "https://www.amazon.in/s?k=OnePlus+Nord+6&tag=techboy-21",
@@ -412,11 +602,21 @@
     "rating": 4.6,
     "specs": {
       "Processor": "Snapdragon 8s Gen 3",
+      "GPU": "Adreno 735",
       "Display": "6.77\" 120Hz ProXDR AMOLED",
-      "Camera": "50MP Sony LYT-700 OIS",
-      "Battery": "5500mAh 100W SuperVOOC",
+      "Rear Camera": "50MP Sony LYT-700 OIS",
+      "Selfie Camera": "32MP",
+      "Video": "4K @ 60fps",
       "RAM": "12GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "5500mAh",
+      "Charging": "100W SuperVOOC",
+      "Operating System": "OxygenOS 15 (Android 15)",
+      "Software Updates": "4 OS upgrades + 6 years security",
+      "Build": "Aluminium frame · IP65 · Gorilla Glass 7i",
+      "Weight": "200 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Infinite Black, Glacier Blue"
     }
   },
   {
@@ -425,7 +625,7 @@
     "tag": "💰 Best Value",
     "category": "Under ₹40K",
     "brand": "Realme",
-    "price": 36900,
+    "price": 36300,
     "description": "Chip: Snapdragon 8 Elite | Display: 6.78\" 144Hz Eco² Sky OLED | Camera: 50MP Sony IMX906 OIS | Battery: 6500mAh 120W | RAM: 12GB | Storage: 256GB",
     "image": "/images/phones/realme-gt7-pro.png",
     "amazonLink": "https://www.amazon.in/s?k=Realme+GT+7+Pro&tag=techboy-21",
@@ -433,11 +633,21 @@
     "rating": 4.7,
     "specs": {
       "Processor": "Snapdragon 8 Elite 3nm",
+      "GPU": "Adreno 830",
       "Display": "6.78\" 144Hz Eco² Sky OLED",
-      "Camera": "50MP OIS + 50MP 3x Periscope",
-      "Battery": "6500mAh 120W Ultra Charge",
+      "Rear Camera": "50MP OIS + 50MP 3x Periscope",
+      "Selfie Camera": "16MP",
+      "Video": "4K @ 60fps, 8K @ 24fps",
       "RAM": "12GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "6500mAh",
+      "Charging": "120W Ultra Charge",
+      "Operating System": "realme UI 6 (Android 15)",
+      "Software Updates": "2 OS upgrades + 3 years security",
+      "Build": "Aluminium frame · IP69 · Crystal glass",
+      "Weight": "222 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Mars Orange, Galaxy Grey"
     }
   },
   {
@@ -446,7 +656,7 @@
     "tag": "🎮 Best Gaming",
     "category": "Under ₹50K",
     "brand": "iQOO",
-    "price": 46100,
+    "price": 45700,
     "description": "Chip: Snapdragon 8 Elite | Display: 6.82\" 144Hz 2K LTPO AMOLED | Camera: 50MP Sony OIS Triple | Battery: 6150mAh 120W | RAM: 16GB | Storage: 512GB",
     "image": "/images/phones/iqoo-13-5g.png",
     "amazonLink": "https://www.amazon.in/s?k=iQOO+13+5G&tag=techboy-21",
@@ -454,11 +664,21 @@
     "rating": 4.8,
     "specs": {
       "Processor": "Snapdragon 8 Elite + Supercomputing Chip Q2",
+      "GPU": "Adreno 830",
       "Display": "6.82\" 2K 144Hz LTPO AMOLED",
-      "Camera": "50MP + 50MP + 50MP Triple OIS",
-      "Battery": "6150mAh 120W FlashCharge",
+      "Rear Camera": "50MP + 50MP + 50MP Triple OIS",
+      "Selfie Camera": "32MP",
+      "Video": "8K @ 30fps, 4K @ 60fps",
       "RAM": "16GB",
-      "Storage": "512GB"
+      "Storage": "512GB",
+      "Battery": "6150mAh",
+      "Charging": "120W FlashCharge",
+      "Operating System": "Funtouch OS 15 (Android 15)",
+      "Software Updates": "3 OS upgrades + 4 years security",
+      "Build": "Aluminium frame · IP69 · Schott glass",
+      "Weight": "213 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Legend, Nardo Grey, Alpha"
     }
   },
   {
@@ -467,7 +687,7 @@
     "tag": "📷 Best Camera",
     "category": "Under ₹50K",
     "brand": "Vivo",
-    "price": 44600,
+    "price": 43300,
     "description": "Chip: Dimensity 9300+ | Display: 6.78\" 120Hz 1.5K AMOLED | Camera: 50MP ZEISS Triple Telephoto | Battery: 5500mAh 90W | RAM: 12GB | Storage: 256GB",
     "image": "/images/phones/vivo-v70.png",
     "amazonLink": "https://www.amazon.in/s?k=vivo+V70&tag=techboy-21",
@@ -475,11 +695,21 @@
     "rating": 4.7,
     "specs": {
       "Processor": "MediaTek Dimensity 9300+",
+      "GPU": "Immortalis-G720 MC12",
       "Display": "6.78\" 120Hz 1.5K AMOLED 3000nits",
-      "Camera": "50MP ZEISS OIS + 50MP ZEISS Telephoto",
-      "Battery": "5500mAh 90W FlashCharge",
+      "Rear Camera": "50MP ZEISS OIS + 50MP ZEISS Telephoto",
+      "Selfie Camera": "50MP",
+      "Video": "4K @ 60fps",
       "RAM": "12GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "5500mAh",
+      "Charging": "90W FlashCharge",
+      "Operating System": "Funtouch OS 15 (Android 15)",
+      "Software Updates": "3 OS upgrades + 4 years security",
+      "Build": "Aluminium frame · IP69 · Schott glass",
+      "Weight": "198 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Aurora Blue, Moonlight White, Titanium Grey"
     }
   },
   {
@@ -488,7 +718,7 @@
     "tag": "✨ Best UI",
     "category": "Under ₹50K",
     "brand": "Samsung",
-    "price": 49000,
+    "price": 47300,
     "description": "Chip: Exynos 1580 | Display: 6.6\" 120Hz Dynamic AMOLED 2X | Camera: 108MP OIS Triple | Battery: 5000mAh 45W | RAM: 12GB | Storage: 256GB",
     "image": "/images/phones/samsung-galaxy-a57-5g.png",
     "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+A57+5G&tag=techboy-21",
@@ -496,11 +726,21 @@
     "rating": 4.6,
     "specs": {
       "Processor": "Samsung Exynos 1580 4nm",
+      "GPU": "Xclipse 540",
       "Display": "6.6\" 120Hz Dynamic AMOLED 2X",
-      "Camera": "108MP OIS + 12MP Ultra-wide",
-      "Battery": "5000mAh 45W Fast Charge",
+      "Rear Camera": "108MP OIS + 12MP Ultra-wide",
+      "Selfie Camera": "12MP",
+      "Video": "4K @ 60fps",
       "RAM": "12GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "5000mAh",
+      "Charging": "45W Fast Charge",
+      "Operating System": "One UI 7 (Android 15)",
+      "Software Updates": "4 OS upgrades + 5 years security",
+      "Build": "Aluminium frame · IP68 · Gorilla Glass Victus+",
+      "Weight": "198 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Awesome Navy, Awesome Grey, Awesome Lilac"
     }
   },
   {
@@ -509,7 +749,7 @@
     "tag": "⭐ All-round Best",
     "category": "Under ₹50K",
     "brand": "OnePlus",
-    "price": 43000,
+    "price": 42400,
     "description": "Chip: Snapdragon 8 Gen 3 | Display: 6.78\" 120Hz 1.5K LTPO4 AMOLED | Camera: 50MP Sony OIS | Battery: 6000mAh 100W | RAM: 16GB | Storage: 256GB",
     "image": "/images/phones/oneplus-13r.png",
     "amazonLink": "https://www.amazon.in/s?k=OnePlus+13R&tag=techboy-21",
@@ -517,11 +757,21 @@
     "rating": 4.7,
     "specs": {
       "Processor": "Snapdragon 8 Gen 3 4nm",
+      "GPU": "Adreno 750",
       "Display": "6.78\" 1.5K 120Hz LTPO4 AMOLED",
-      "Camera": "50MP Sony IMX890 OIS",
-      "Battery": "6000mAh 100W SuperVOOC",
+      "Rear Camera": "50MP Sony IMX890 OIS",
+      "Selfie Camera": "16MP",
+      "Video": "4K @ 60fps",
       "RAM": "16GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "6000mAh",
+      "Charging": "100W SuperVOOC",
+      "Operating System": "OxygenOS 15 (Android 15)",
+      "Software Updates": "4 OS upgrades + 6 years security",
+      "Build": "Aluminium frame · IP65 · Gorilla Glass 7i",
+      "Weight": "206 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Astral Trail, Nebula Noir"
     }
   },
   {
@@ -530,7 +780,7 @@
     "tag": "🎮 Best Gaming",
     "category": "Under ₹60K",
     "brand": "OnePlus",
-    "price": 59000,
+    "price": 57500,
     "description": "Chip: Snapdragon 8 Elite | Display: 6.82\" 2K Oriental AMOLED 120Hz | Camera: 50MP Hasselblad Triple | Battery: 6000mAh 100W | RAM: 16GB | Storage: 512GB",
     "image": "/images/phones/oneplus-13.png",
     "amazonLink": "https://www.amazon.in/s?k=OnePlus+13&tag=techboy-21",
@@ -538,11 +788,21 @@
     "rating": 4.8,
     "specs": {
       "Processor": "Snapdragon 8 Elite 3nm",
+      "GPU": "Adreno 830",
       "Display": "6.82\" 2K 120Hz LTPO Oriental",
-      "Camera": "50MP + 50MP + 50MP Hasselblad Triple",
-      "Battery": "6000mAh 100W + 50W Wireless",
+      "Rear Camera": "50MP + 50MP + 50MP Hasselblad Triple",
+      "Selfie Camera": "32MP",
+      "Video": "8K @ 30fps, 4K @ 60fps Dolby Vision",
       "RAM": "16GB",
-      "Storage": "512GB"
+      "Storage": "512GB",
+      "Battery": "6000mAh",
+      "Charging": "100W + 50W Wireless",
+      "Operating System": "OxygenOS 15 (Android 15)",
+      "Software Updates": "4 OS upgrades + 6 years security",
+      "Build": "Aluminium frame · IP69 · Ceramic Guard",
+      "Weight": "210 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Midnight Ocean, Black Eclipse, Arctic Dawn"
     }
   },
   {
@@ -551,7 +811,7 @@
     "tag": "📷 Best Camera",
     "category": "Under ₹60K",
     "brand": "Google",
-    "price": 58200,
+    "price": 60000,
     "description": "Chip: Google Tensor G4 | Display: 6.3\" Super Actua OLED 120Hz | Camera: 50MP Triple 5x Telephoto | Battery: 4700mAh 27W | RAM: 16GB | Storage: 256GB",
     "image": "/images/phones/google-pixel-9-pro.png",
     "amazonLink": "https://www.amazon.in/s?k=Google+Pixel+9+Pro&tag=techboy-21",
@@ -559,11 +819,21 @@
     "rating": 4.8,
     "specs": {
       "Processor": "Google Tensor G4 AI",
+      "GPU": "Mali-G715 MC7",
       "Display": "6.3\" Super Actua OLED 120Hz 3000nits",
-      "Camera": "50MP OIS + 48MP Ultra + 48MP 5x Telephoto",
-      "Battery": "4700mAh 27W Fast Qi",
+      "Rear Camera": "50MP OIS + 48MP Ultra + 48MP 5x Telephoto",
+      "Selfie Camera": "42MP",
+      "Video": "8K @ 30fps, 4K @ 60fps",
       "RAM": "16GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "4700mAh",
+      "Charging": "27W Fast Qi",
+      "Operating System": "Android 15",
+      "Software Updates": "7 years of OS + security updates",
+      "Build": "Aluminium frame · IP68 · Gorilla Glass Victus 2",
+      "Weight": "199 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Obsidian, Porcelain, Hazel, Rose Quartz"
     }
   },
   {
@@ -572,7 +842,7 @@
     "tag": "✨ Best UI",
     "category": "Under ₹60K",
     "brand": "Samsung",
-    "price": 65400,
+    "price": 66100,
     "description": "Chip: Snapdragon 8 Elite | Display: 6.2\" Dynamic AMOLED 2X 120Hz | Camera: 50MP Triple OIS | Battery: 4000mAh 25W | RAM: 12GB | Storage: 256GB",
     "image": "/images/phones/samsung-galaxy-s25.png",
     "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+S25&tag=techboy-21",
@@ -580,11 +850,21 @@
     "rating": 4.7,
     "specs": {
       "Processor": "Snapdragon 8 Elite for Galaxy",
+      "GPU": "Adreno 830",
       "Display": "6.2\" Dynamic AMOLED 2X 120Hz",
-      "Camera": "50MP Dual Pixel OIS + 12MP + 10MP 3x",
-      "Battery": "4000mAh 25W Fast Wireless",
+      "Rear Camera": "50MP Dual Pixel OIS + 12MP + 10MP 3x",
+      "Selfie Camera": "12MP",
+      "Video": "8K @ 30fps, 4K @ 60fps",
       "RAM": "12GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "4000mAh",
+      "Charging": "25W Fast Wireless",
+      "Operating System": "One UI 7 (Android 15)",
+      "Software Updates": "4 OS upgrades + 5 years security",
+      "Build": "Titanium frame · IP68 · Gorilla Glass Victus 2",
+      "Weight": "162 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Icy Blue, Navy, Mint, Silver Shadow"
     }
   },
   {
@@ -593,7 +873,7 @@
     "tag": "⭐ All-round Best",
     "category": "Under ₹60K",
     "brand": "Apple",
-    "price": 56500,
+    "price": 55700,
     "description": "Chip: Apple A16 Bionic | Display: 6.1\" Super Retina XDR Dynamic Island | Camera: 48MP Dual Fusion | Battery: 3349mAh 20W | RAM: 6GB | Storage: 128GB",
     "image": "/images/phones/apple-iphone-15.png",
     "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+15&tag=techboy-21",
@@ -601,11 +881,21 @@
     "rating": 4.7,
     "specs": {
       "Processor": "Apple A16 Bionic 4nm",
+      "GPU": "Apple 5-core GPU",
       "Display": "6.1\" Super Retina XDR OLED",
-      "Camera": "48MP Dual Fusion 2x Telephoto",
-      "Battery": "3349mAh 20W MagSafe",
+      "Rear Camera": "48MP Dual Fusion 2x Telephoto",
+      "Selfie Camera": "12MP TrueDepth",
+      "Video": "4K @ 60fps Dolby Vision, Cinematic mode",
       "RAM": "6GB",
-      "Storage": "128GB"
+      "Storage": "128GB",
+      "Battery": "3349mAh",
+      "Charging": "20W MagSafe",
+      "Operating System": "iOS 19",
+      "Software Updates": "5+ years of iOS updates",
+      "Build": "Aluminium frame · IP68 · Ceramic Shield",
+      "Weight": "171 g",
+      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Colors": "Black, Blue, Green, Yellow, Pink"
     }
   },
   {
@@ -614,7 +904,7 @@
     "tag": "🎮 Best Gaming",
     "category": "Under ₹1 Lakh",
     "brand": "Samsung",
-    "price": 87300,
+    "price": 90900,
     "description": "Chip: Snapdragon 8 Elite | Display: 6.7\" QHD+ Dynamic AMOLED 2X 120Hz | Camera: 50MP Triple OIS | Battery: 4900mAh 45W | RAM: 12GB | Storage: 256GB",
     "image": "/images/phones/samsung-galaxy-s26-plus.png",
     "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+S26%2B&tag=techboy-21",
@@ -622,11 +912,21 @@
     "rating": 4.8,
     "specs": {
       "Processor": "Snapdragon 8 Elite Gen 2",
+      "GPU": "Adreno 840",
       "Display": "6.7\" QHD+ Dynamic AMOLED 2X 120Hz",
-      "Camera": "50MP OIS + 12MP Ultra + 10MP 3x",
-      "Battery": "4900mAh 45W Super Fast 2.0",
+      "Rear Camera": "50MP OIS + 12MP Ultra + 10MP 3x",
+      "Selfie Camera": "12MP",
+      "Video": "8K @ 30fps, 4K @ 60fps",
       "RAM": "12GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "4900mAh",
+      "Charging": "45W Super Fast 2.0",
+      "Operating System": "One UI 7 (Android 15)",
+      "Software Updates": "4 OS upgrades + 5 years security",
+      "Build": "Titanium frame · IP69 · Gorilla Glass Victus 3",
+      "Weight": "190 g",
+      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Colors": "Ice Blue, Black, Silver"
     }
   },
   {
@@ -643,11 +943,21 @@
     "rating": 4.8,
     "specs": {
       "Processor": "Apple A19 Bionic 3nm",
+      "GPU": "Apple 5-core GPU",
       "Display": "6.3\" 120Hz ProMotion Super Retina XDR",
-      "Camera": "48MP Dual Fusion OIS",
-      "Battery": "3600mAh 25W MagSafe",
+      "Rear Camera": "48MP Dual Fusion OIS",
+      "Selfie Camera": "18MP Center Stage",
+      "Video": "4K @ 60fps Dolby Vision, Cinematic mode",
       "RAM": "8GB",
-      "Storage": "128GB"
+      "Storage": "128GB",
+      "Battery": "3600mAh",
+      "Charging": "25W MagSafe",
+      "Operating System": "iOS 19",
+      "Software Updates": "5+ years of iOS updates",
+      "Build": "Aluminium frame · IP68 · Ceramic Shield 2",
+      "Weight": "177 g",
+      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Colors": "Black, Lavender, Sage, Mist Blue"
     }
   },
   {
@@ -656,7 +966,7 @@
     "tag": "✨ Best UI",
     "category": "Under ₹1 Lakh",
     "brand": "Samsung",
-    "price": 74600,
+    "price": 73800,
     "description": "Chip: Exynos 2600 / Snapdragon 8 Elite | Display: 6.36\" Dynamic AMOLED 120Hz | Camera: 50MP Triple | Battery: 4300mAh 25W | RAM: 12GB | Storage: 256GB",
     "image": "/images/phones/samsung-galaxy-s26.png",
     "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+S26&tag=techboy-21",
@@ -664,11 +974,21 @@
     "rating": 4.7,
     "specs": {
       "Processor": "Exynos 2600 / Snapdragon 8 Elite",
+      "GPU": "Adreno 830",
       "Display": "6.36\" Dynamic AMOLED 2X 120Hz",
-      "Camera": "50MP OIS + 12MP + 10MP 3x",
-      "Battery": "4300mAh 25W Fast Charge",
+      "Rear Camera": "50MP OIS + 12MP + 10MP 3x",
+      "Selfie Camera": "12MP",
+      "Video": "8K @ 30fps, 4K @ 60fps",
       "RAM": "12GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "4300mAh",
+      "Charging": "25W Fast Charge",
+      "Operating System": "One UI 7 (Android 15)",
+      "Software Updates": "4 OS upgrades + 5 years security",
+      "Build": "Titanium frame · IP69 · Gorilla Glass Victus 3",
+      "Weight": "168 g",
+      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Colors": "Ice Blue, Black, Silver"
     }
   },
   {
@@ -677,7 +997,7 @@
     "tag": "⭐ All-round Best",
     "category": "Under ₹1 Lakh",
     "brand": "Apple",
-    "price": 72900,
+    "price": 67900,
     "description": "Chip: Apple A18 | Display: 6.1\" Super Retina XDR OLED | Camera: 48MP Dual Fusion | Battery: 3561mAh 20W | RAM: 8GB | Storage: 128GB",
     "image": "/images/phones/apple-iphone-16.png",
     "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+16&tag=techboy-21",
@@ -685,11 +1005,21 @@
     "rating": 4.7,
     "specs": {
       "Processor": "Apple A18 3nm",
+      "GPU": "Apple 5-core GPU",
       "Display": "6.1\" Super Retina XDR Ceramic Shield",
-      "Camera": "48MP Dual Fusion + Spatial Photo",
-      "Battery": "3561mAh 20W Fast MagSafe",
+      "Rear Camera": "48MP Dual Fusion + Spatial Photo",
+      "Selfie Camera": "12MP TrueDepth",
+      "Video": "4K @ 60fps Dolby Vision, Spatial video",
       "RAM": "8GB",
-      "Storage": "128GB"
+      "Storage": "128GB",
+      "Battery": "3561mAh",
+      "Charging": "20W Fast MagSafe",
+      "Operating System": "iOS 19",
+      "Software Updates": "5+ years of iOS updates",
+      "Build": "Aluminium frame · IP68 · Ceramic Shield 2",
+      "Weight": "170 g",
+      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Colors": "Ultramarine, Teal, Pink, White, Black"
     }
   },
   {
@@ -698,7 +1028,7 @@
     "tag": "💰 Best Value",
     "category": "Under ₹1 Lakh",
     "brand": "Apple",
-    "price": 87200,
+    "price": 83700,
     "description": "Chip: Apple A17 Pro | Display: 6.7\" 120Hz ProMotion OLED | Camera: 48MP Triple 5x Telephoto | Battery: 4422mAh 27W | RAM: 8GB | Storage: 256GB",
     "image": "/images/phones/apple-iphone-15-pro-max.png",
     "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+15+Pro+Max&tag=techboy-21",
@@ -706,11 +1036,21 @@
     "rating": 4.8,
     "specs": {
       "Processor": "Apple A17 Pro 3nm",
+      "GPU": "Apple 6-core GPU",
       "Display": "6.7\" 120Hz Super Retina XDR Titanium",
-      "Camera": "48MP Quad + 12MP 5x Telephoto",
-      "Battery": "4422mAh 27W MagSafe",
+      "Rear Camera": "48MP Quad + 12MP 5x Telephoto",
+      "Selfie Camera": "12MP TrueDepth",
+      "Video": "4K @ 60fps ProRes, Log, Cinematic",
       "RAM": "8GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "4422mAh",
+      "Charging": "27W MagSafe",
+      "Operating System": "iOS 19",
+      "Software Updates": "5+ years of iOS updates",
+      "Build": "Titanium frame · IP68 · Ceramic Shield",
+      "Weight": "221 g",
+      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Colors": "Natural, Blue, White, Black Titanium"
     }
   },
   {
@@ -719,7 +1059,7 @@
     "tag": "🔥 Ultimate Android Flagship",
     "category": "Flagship 1L+",
     "brand": "Samsung",
-    "price": 115200,
+    "price": 120000,
     "description": "Chip: Snapdragon 8 Elite Gen 2 | Display: 6.9\" Dynamic AMOLED 2X 120Hz | Camera: 200MP Quad AI | Battery: 5500mAh 65W | RAM: 16GB | Storage: 512GB",
     "image": "/images/phones/samsung-galaxy-s26-ultra.png",
     "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+S26+Ultra&tag=techboy-21",
@@ -727,11 +1067,21 @@
     "rating": 4.9,
     "specs": {
       "Processor": "Snapdragon 8 Elite Gen 2",
+      "GPU": "Adreno 840",
       "Display": "6.9\" Dynamic AMOLED 2X 120Hz Gorilla Armor",
-      "Camera": "200MP Quad OIS + 50MP 5x Periscope",
-      "Battery": "5500mAh 65W Super Fast 2.0",
+      "Rear Camera": "200MP Quad OIS + 50MP 5x Periscope",
+      "Selfie Camera": "12MP",
+      "Video": "8K @ 30fps, 4K @ 120fps",
       "RAM": "16GB",
-      "Storage": "512GB"
+      "Storage": "512GB",
+      "Battery": "5500mAh",
+      "Charging": "65W Super Fast 2.0",
+      "Operating System": "One UI 7 (Android 15)",
+      "Software Updates": "4 OS upgrades + 5 years security",
+      "Build": "Titanium frame · IP69 · Gorilla Armor 2",
+      "Weight": "218 g",
+      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Colors": "Titanium Silver, Black, White, Jade Green"
     }
   },
   {
@@ -740,7 +1090,7 @@
     "tag": "⭐ Ultimate iOS Flagship",
     "category": "Flagship 1L+",
     "brand": "Apple",
-    "price": 145400,
+    "price": 143900,
     "description": "Chip: Apple A19 Pro | Display: 6.9\" 120Hz Super Retina XDR OLED | Camera: 48MP Quad 8x Telephoto | Battery: 4832mAh 35W | RAM: 12GB | Storage: 512GB",
     "image": "/images/phones/apple-iphone-17-pro-max.png",
     "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+17+Pro+Max&tag=techboy-21",
@@ -748,11 +1098,21 @@
     "rating": 4.9,
     "specs": {
       "Processor": "Apple A19 Pro 3nm",
+      "GPU": "Apple 6-core GPU",
       "Display": "6.9\" 120Hz Super Retina XDR 3000nits",
-      "Camera": "48MP Quad with 8x Telephoto + 48MP Ultra",
-      "Battery": "4832mAh 35W Fast MagSafe",
+      "Rear Camera": "48MP Quad with 8x Telephoto + 48MP Ultra",
+      "Selfie Camera": "18MP Center Stage",
+      "Video": "4K @ 120fps ProRes, Log, ProRAW",
       "RAM": "12GB",
-      "Storage": "512GB"
+      "Storage": "512GB",
+      "Battery": "4832mAh",
+      "Charging": "35W Fast MagSafe",
+      "Operating System": "iOS 19",
+      "Software Updates": "5+ years of iOS updates",
+      "Build": "Titanium frame · IP68 · Ceramic Shield 2",
+      "Weight": "233 g",
+      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Colors": "Cosmic Orange, Deep Blue, Silver"
     }
   },
   {
@@ -769,11 +1129,21 @@
     "rating": 4.9,
     "specs": {
       "Processor": "Snapdragon 8 Elite",
+      "GPU": "Adreno 830",
       "Display": "8.0\" Foldable QXGA+ 120Hz + 6.5\" Cover",
-      "Camera": "108MP + 12MP + 10MP 3x Telephoto",
-      "Battery": "4600mAh 45W",
+      "Rear Camera": "108MP + 12MP + 10MP 3x Telephoto",
+      "Selfie Camera": "10MP + 4MP under-display",
+      "Video": "8K @ 30fps, 4K @ 60fps",
       "RAM": "16GB",
-      "Storage": "512GB"
+      "Storage": "512GB",
+      "Battery": "4600mAh",
+      "Charging": "45W",
+      "Operating System": "One UI 7 (Android 15)",
+      "Software Updates": "4 OS upgrades + 5 years security",
+      "Build": "Titanium hinge · IP48 · Gorilla Glass Ceramic 2",
+      "Weight": "215 g",
+      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Colors": "Blue Shadow, Silver Shadow, Jet Black"
     }
   },
   {
@@ -782,7 +1152,7 @@
     "tag": "✨ Icon Clamshell",
     "category": "Flagship 1L+",
     "brand": "Samsung",
-    "price": 106700,
+    "price": 110000,
     "description": "Chip: Snapdragon 8 Elite | Display: 6.7\" Dynamic AMOLED 120Hz + 4.0\" Flex | Camera: 50MP Dual OIS | Battery: 4300mAh 25W | RAM: 12GB | Storage: 256GB",
     "image": "/images/phones/samsung-galaxy-z-flip-7.png",
     "amazonLink": "https://www.amazon.in/s?k=Samsung+Galaxy+Z+Flip+7&tag=techboy-21",
@@ -790,11 +1160,21 @@
     "rating": 4.8,
     "specs": {
       "Processor": "Snapdragon 8 Elite",
+      "GPU": "Adreno 830",
       "Display": "6.7\" FHD+ 120Hz + 4.0\" Outer Flex",
-      "Camera": "50MP Dual OIS",
-      "Battery": "4300mAh 25W Fast Wireless",
+      "Rear Camera": "50MP Dual OIS",
+      "Selfie Camera": "10MP",
+      "Video": "4K @ 60fps",
       "RAM": "12GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "4300mAh",
+      "Charging": "25W Fast Wireless",
+      "Operating System": "One UI 7 (Android 15)",
+      "Software Updates": "4 OS upgrades + 5 years security",
+      "Build": "Aluminium frame · IP48 · Gorilla Glass Victus 2",
+      "Weight": "188 g",
+      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Colors": "Blue Shadow, Mint, Jet Black, Coral Red"
     }
   },
   {
@@ -803,7 +1183,7 @@
     "tag": "🎯 Compact Pro Power",
     "category": "Flagship 1L+",
     "brand": "Apple",
-    "price": 118900,
+    "price": 114100,
     "description": "Chip: Apple A19 Pro | Display: 6.3\" 120Hz Super Retina XDR OLED | Camera: 48MP Quad 5x Telephoto | Battery: 3800mAh 30W | RAM: 12GB | Storage: 256GB",
     "image": "/images/phones/apple-iphone-17-pro.png",
     "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+17+Pro&tag=techboy-21",
@@ -811,11 +1191,21 @@
     "rating": 4.9,
     "specs": {
       "Processor": "Apple A19 Pro 3nm",
+      "GPU": "Apple 6-core GPU",
       "Display": "6.3\" 120Hz Super Retina XDR",
-      "Camera": "48MP Quad 5x Telephoto",
-      "Battery": "3800mAh 30W MagSafe",
+      "Rear Camera": "48MP Quad 5x Telephoto",
+      "Selfie Camera": "18MP Center Stage",
+      "Video": "4K @ 120fps ProRes, Log, ProRAW",
       "RAM": "12GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "3800mAh",
+      "Charging": "30W MagSafe",
+      "Operating System": "iOS 19",
+      "Software Updates": "5+ years of iOS updates",
+      "Build": "Titanium frame · IP68 · Ceramic Shield 2",
+      "Weight": "199 g",
+      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Colors": "Cosmic Orange, Deep Blue, Silver"
     }
   },
   {
@@ -824,7 +1214,7 @@
     "tag": "🏆 Pro Flagship Deal",
     "category": "Flagship 1L+",
     "brand": "Apple",
-    "price": 115100,
+    "price": 121100,
     "description": "Chip: Apple A18 Pro | Display: 6.9\" 120Hz Super Retina XDR OLED | Camera: 48MP Triple 5x | Battery: 4685mAh 27W | RAM: 8GB | Storage: 256GB",
     "image": "/images/phones/apple-iphone-16-pro-max.png",
     "amazonLink": "https://www.amazon.in/s?k=Apple+iPhone+16+Pro+Max&tag=techboy-21",
@@ -832,11 +1222,21 @@
     "rating": 4.9,
     "specs": {
       "Processor": "Apple A18 Pro 3nm",
+      "GPU": "Apple 6-core GPU",
       "Display": "6.9\" 120Hz Super Retina XDR Titanium",
-      "Camera": "48MP + 48MP + 12MP 5x Telephoto",
-      "Battery": "4685mAh 27W Fast Qi",
+      "Rear Camera": "48MP + 48MP + 12MP 5x Telephoto",
+      "Selfie Camera": "12MP TrueDepth",
+      "Video": "4K @ 120fps ProRes, Log, Cinematic",
       "RAM": "8GB",
-      "Storage": "256GB"
+      "Storage": "256GB",
+      "Battery": "4685mAh",
+      "Charging": "27W Fast Qi",
+      "Operating System": "iOS 19",
+      "Software Updates": "5+ years of iOS updates",
+      "Build": "Titanium frame · IP68 · Ceramic Shield 2",
+      "Weight": "227 g",
+      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Colors": "Desert Titanium, Natural, Black, White"
     }
   }
 ]

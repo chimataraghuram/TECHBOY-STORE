@@ -3,6 +3,8 @@
  * Resolves phone images to authentic local product cutouts in /images/phones/
  */
 
+import phoneGallery from '../data/phoneGallery.json';
+
 const LOCAL_PHONE_MAP = {
     'tecno-spark-30c': '/images/phones/tecno-spark-30c.png',
     'redmi-13c-5g': '/images/phones/redmi-13c-5g.png',
@@ -138,4 +140,32 @@ export const resolveProductImage = (imgSrc, name = '') => {
     }
 
     return DEFAULT_FALLBACK;
+};
+
+const slugFromLocalPath = (src = '') => {
+    const match = /\/images\/phones\/([^/]+)\.(png|jpe?g|webp)$/i.exec(src);
+    return match ? match[1] : '';
+};
+
+/**
+ * Returns every real photo available for a product, primary cutout first.
+ * Uses a generated manifest of the files that actually exist in
+ * /images/phones/ so the card only offers a gallery when there is more than
+ * one photo (no phantom dots or dead arrows).
+ */
+export const getProductImages = (product) => {
+    if (!product) return [];
+    const primary = resolveProductImage(product.image, product.name);
+    const slug = slugFromLocalPath(primary);
+    const gallery = (slug && phoneGallery[slug]) ? phoneGallery[slug] : [];
+
+    const images = [];
+    const seen = new Set();
+    for (const src of [primary, ...gallery]) {
+        if (src && !seen.has(src)) {
+            seen.add(src);
+            images.push(src);
+        }
+    }
+    return images.length ? images : [primary];
 };

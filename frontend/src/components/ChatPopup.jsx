@@ -3,8 +3,6 @@ import { m } from 'framer-motion';
 import logo from '../../images/logos/new-logo.jpg';
 import localPhonesData from '../data/phones.json';
 
-let NVIDIA_API_KEY = import.meta.env.VITE_NVIDIA_API_KEY || '';
-NVIDIA_API_KEY = NVIDIA_API_KEY.replace(/["']/g, "").trim();
 const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
 const money = (value) => `Rs ${Number(value || 0).toLocaleString()}`;
@@ -153,13 +151,6 @@ const inlineFormat = (text) => {
     });
 };
 
-/* Free models to try in order if one fails */
-const FREE_MODELS = [
-    'meta/llama-3.1-8b-instruct',
-    'mistralai/mixtral-8x22b-instruct-v0.1',
-    'google/gemma-2-9b-it',
-];
-
 const callBackend = async (text, phonesData) => {
     try {
         const res = await fetch(`${BACKEND_URL}/chat/`, {
@@ -174,7 +165,8 @@ const callBackend = async (text, phonesData) => {
         const requestedBrand = extractBrand(text, phonesData || localPhonesData);
         return {
             text: requestedBrand ? localAdvisor(text, phonesData) : (data.response || localAdvisor(text, phonesData)),
-            products: data.products || []
+            products: data.products || [],
+            sources: data.sources || []
         };
     } catch (err) {
         console.error(err);
@@ -196,8 +188,11 @@ const ChatPopup = ({ isOpen, onClose }) => {
     const messagesEndRef = useRef(null);
     const abortRef = useRef(null);
     const popupRef = useRef(null);
+    // Monotonic id generator for chat messages. Using Date.now() made fast
+    // consecutive sends collide on the same millisecond, producing duplicate
+    // React list keys (and mis-targeted message updates).
+    const msgIdRef = useRef(2);
     const [livePhonesData, setLivePhonesData] = useState(localPhonesData);
-    const [systemPrompt, setSystemPrompt] = useState('');
 
     useEffect(() => {
         const handleClickOutside = (e) => {
@@ -239,109 +234,11 @@ const ChatPopup = ({ isOpen, onClose }) => {
         return () => { mounted = false; };
     }, []);
 
-    useEffect(() => {
-        const catalogText = livePhonesData.map(p => {
-            const specsStr = Array.isArray(p.specs) ? p.specs.join(', ') : (p.specs || 'N/A');
-            return `[${p.category}] ${p.brand} ${p.name} (${p.tag}) — ₹${(p.price || 0).toLocaleString()} — Desc: ${p.description} — Specs: ${specsStr}`;
-        }).join('\n');
-        
-        setSystemPrompt(`You are TechBoy AI, an expert smartphone buying advisor for TechBoy Store — India's smartest phone recommendation platform.
-Help users find the perfect smartphone. Be concise, friendly, and specific.
-For recommendations, NEVER mix brands when the user names a brand. If they ask for Tecno, recommend Tecno only; if no matching model exists, say so clearly instead of substituting another brand.
-Use the RETRIEVED MATCHES supplied with each user question as the primary source for recommendations, prices, and specs. Rank those matches by the user's budget and use case before answering.
-Do not invent prices, availability, ratings, specifications, or online research results. Catalog prices are stored TechBoy prices, not guaranteed live marketplace prices; say when live verification is needed.
-If a user asks about a phone not in the catalog, you may discuss general knowledge, but label it as external knowledge and do not present it as a live TechBoy price.
-If the user asks about specific specs (like camera, processor, battery) for a phone, accurately quote the Specs field from the catalog.
-If a user asks for "gaming phones", prioritize phones with high-end processors (Snapdragon, Dimensity).
-If a user asks for "flagships" or "premium", recommend the absolute best phones in the highest price tiers.
-Use ₹ for prices. Bold important specs with **text**.
-Use bullet points (- item) for comparisons. Keep replies under 160 words unless a deep comparison is asked.
-If recommending, mention name, stored price, and why it fits. Suggest 1-3 phones max per reply.
-
-CRITICAL BUDGET RULES:
-1. "k" means thousand (e.g., "20k" = ₹20,000, "30k" = ₹30,000).
-2. When a budget is given, you MUST recommend phones priced as CLOSE as possible to the maximum budget. 
-3. For example, if the budget is 20k, recommend phones between ₹17,000 and ₹20,000. 
-4. ABSOLUTELY DO NOT recommend cheap phones (e.g., ₹10,000) when the user has a higher budget (e.g., ₹20,000). You must maximize their budget to give them the best performance possible!
-
-CATALOG:
-${catalogText}`);
-    }, [livePhonesData]);
-
     const scrollToBottom = useCallback(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, []);
 
     useEffect(() => { scrollToBottom(); }, [messages, scrollToBottom]);
-
-    /* ── Stream from NVIDIA NIM (tries models in order) ── */
-    const streamNvidia = async (history, onChunk) => {
-        // Check key is loaded
-        if (!NVIDIA_API_KEY) {
-            throw new Error('NO_API_KEY');
-        }
-
-        abortRef.current = new AbortController();
-        let lastError = null;
-
-        for (const model of FREE_MODELS) {
-            try {
-                const res = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${NVIDIA_API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        model,
-                        messages: [{ role: 'system', content: systemPrompt }, ...history],
-                        max_tokens: 320,
-                        temperature: 0.7,
-                        stream: true
-                    }),
-                    signal: abortRef.current.signal
-                });
-
-                if (!res.ok) {
-                    const errText = await res.text();
-                    console.warn(`Model ${model} failed (${res.status}):`, errText);
-                    lastError = new Error(`HTTP_${res.status}`);
-                    continue; // try next model
-                }
-
-                const reader = res.body.getReader();
-                const decoder = new TextDecoder();
-                let buffer = '';
-
-                while (true) {
-                    const { value, done } = await reader.read();
-                    if (done) break;
-                    buffer += decoder.decode(value, { stream: true });
-                    const lines = buffer.split('\n');
-                    buffer = lines.pop();
-
-                    for (const line of lines) {
-                        if (!line.startsWith('data: ')) continue;
-                        const data = line.slice(6).trim();
-                        if (data === '[DONE]') return;
-                        try {
-                            const json = JSON.parse(data);
-                            const chunk = json.choices?.[0]?.delta?.content || '';
-                            if (chunk) onChunk(chunk);
-                        } catch { /* skip malformed */ }
-                    }
-                }
-                return; // success — exit loop
-            } catch (err) {
-                if (err.name === 'AbortError') throw err;
-                console.warn(`Model ${model} threw:`, err.message);
-                lastError = err;
-            }
-        }
-
-        // All models failed
-        throw lastError || new Error('ALL_MODELS_FAILED');
-    };
 
     /* ── Send message ── */
     const handleSend = async (e) => {
@@ -349,41 +246,20 @@ ${catalogText}`);
         const text = inputValue.trim();
         if (!text || isStreaming) return;
 
-        const userMsg = { id: Date.now(), text, sender: 'user', done: true };
-        const aiId = Date.now() + 1;
+        const userId = msgIdRef.current++;
+        const aiId = msgIdRef.current++;
+        const userMsg = { id: userId, text, sender: 'user', done: true };
         const aiMsg = { id: aiId, text: '', sender: 'ai', done: false };
 
         setMessages(prev => [...prev, userMsg, aiMsg]);
         setInputValue('');
         setIsStreaming(true);
 
-        const retrieved = rankProducts(text, livePhonesData).slice(0, /compare|versus|vs\.?/.test(normalize(text)) ? 5 : 8);
-        const retrievedText = retrieved.length
-            ? retrieved.map((p) => `${p.brand} ${p.name} — ₹${Number(p.price || 0).toLocaleString()} — ${p.description || ''}`).join('\n')
-            : 'No matching catalog products were retrieved. Do not substitute another brand without saying so.';
-        const groundedUserMsg = {
-            ...userMsg,
-            text: `${userMsg.text}\n\n[RETRIEVED MATCHES — use these first]\n${retrievedText}`
-        };
-
-        const history = [...messages, groundedUserMsg]
-            .slice(-12)
-            .map(m => ({ role: m.sender === 'user' ? 'user' : 'assistant', content: m.text }));
-
         try {
-            if (NVIDIA_API_KEY) {
-                await streamNvidia(history, (chunk) => {
-                    setMessages(prev => prev.map(m =>
-                        m.id === aiId ? { ...m, text: m.text + chunk } : m
-                    ));
-                });
-            } else {
-                console.warn('No VITE_NVIDIA_API_KEY — trying backend');
-                const result = await callBackend(text, livePhonesData);
-                setMessages(prev => prev.map(m =>
-                    m.id === aiId ? { ...m, text: result.text || 'No response.' } : m
-                ));
-            }
+            const result = await callBackend(text, livePhonesData);
+            setMessages(prev => prev.map(m =>
+                m.id === aiId ? { ...m, text: result.text || 'No response.' } : m
+            ));
         } catch (err) {
             if (err.name === 'AbortError') {
                 setMessages(prev => prev.map(m => m.id === aiId ? { ...m, done: true } : m));
@@ -393,27 +269,9 @@ ${catalogText}`);
 
             console.error('NVIDIA NIM failed:', err.message);
 
-            // Friendly error messages per error type
-            let errMsg = "Sorry, I couldn't get a response right now. Please try again! 🔄";
-            if (err.message === 'NO_API_KEY') {
-                errMsg = "⚠️ API key not loaded. Please restart the dev server (`npm run dev`) and try again.";
-            } else if (err.message?.includes('429') || err.message?.includes('rate')) {
-                errMsg = "⏳ The free AI is rate-limited right now. Please wait 30 seconds and try again.";
-            } else if (err.message?.includes('401') || err.message?.includes('403')) {
-                errMsg = "🔑 API key error. Please check your .env file.";
-            }
-
-            // Try backend as final fallback
-            try {
-                const result = await callBackend(text, livePhonesData);
-                setMessages(prev => prev.map(m =>
-                    m.id === aiId ? { ...m, text: result.text } : m
-                ));
-            } catch {
-                setMessages(prev => prev.map(m =>
-                    m.id === aiId ? { ...m, text: errMsg } : m
-                ));
-            }
+            setMessages(prev => prev.map(m =>
+                m.id === aiId ? { ...m, text: localAdvisor(text, livePhonesData) } : m
+            ));
         } finally {
             setMessages(prev => prev.map(m => m.id === aiId ? { ...m, done: true } : m));
             setIsStreaming(false);
@@ -459,7 +317,7 @@ ${catalogText}`);
                         <p>
                             <span className="status-dot" />
                             {isStreaming ? 'Thinking...' : 'ONLINE & READY'}
-                            <span className="ai-model-tag">NVIDIA AI</span>
+                            <span className="ai-model-tag">CATALOG RAG</span>
                         </p>
                     </div>
                 </div>

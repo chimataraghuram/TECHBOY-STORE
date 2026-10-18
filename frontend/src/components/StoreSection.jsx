@@ -211,7 +211,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     };
 
     return (
-        <section id="products" className="pt-6 sm:pt-8 md:pt-10 pb-14 sm:pb-16 md:pb-20 bg-[#050505]">
+        <section id="products" className="scroll-mt-24 pt-6 sm:pt-8 md:pt-10 pb-14 sm:pb-16 md:pb-20 bg-[#050505]">
             <div className="mx-auto max-w-[1560px] px-5 sm:px-8 lg:px-12">
 
                 {/* Section Header — Top */}
@@ -350,7 +350,7 @@ const StoreSection = ({ searchTerm, onSearch }) => {
                                             if (item) {
                                                 return (
                                                     <m.div 
-                                                        key={item.id} 
+                                                        key={getCompareKey(item) || `slot-${slotIdx}`} 
                                                         initial={{ scale: 0.7, opacity: 0 }}
                                                         animate={{ scale: 1, opacity: 1 }}
                                                         exit={{ scale: 0.7, opacity: 0 }}
