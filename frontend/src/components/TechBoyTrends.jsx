@@ -52,13 +52,13 @@ const getTrendLabel = (type) => {
 
 const getTrendColor = (type) => {
     const colors = {
-        price_drop: 'bg-green-500/20 text-green-500 border-green-500/30',
-        trending: 'bg-orange-500/20 text-orange-500 border-orange-500/30',
-        launch: 'bg-blue-500/20 text-blue-500 border-blue-500/30',
-        pick: 'bg-purple-500/20 text-purple-500 border-purple-500/30',
-        comparison: 'bg-yellow-500/20 text-yellow-500 border-yellow-500/30'
+        price_drop: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30 shadow-[0_0_12px_rgba(16,185,129,0.25)]',
+        trending: 'bg-orange-500/15 text-orange-400 border-orange-500/30 shadow-[0_0_12px_rgba(249,115,22,0.25)]',
+        launch: 'bg-cyan-500/15 text-cyan-400 border-cyan-500/30 shadow-[0_0_12px_rgba(6,182,212,0.25)]',
+        pick: 'bg-purple-500/15 text-purple-400 border-purple-500/30 shadow-[0_0_12px_rgba(168,85,247,0.25)]',
+        comparison: 'bg-amber-500/15 text-amber-400 border-amber-500/30 shadow-[0_0_12px_rgba(245,158,11,0.25)]'
     };
-    return colors[type] || 'bg-red-500/20 text-red-500 border-red-500/30';
+    return colors[type] || 'bg-red-500/15 text-red-400 border-red-500/30 shadow-[0_0_12px_rgba(255,31,61,0.25)]';
 };
 
 const generateChartData = (alert) => {
@@ -251,24 +251,27 @@ const TechBoyTrends = () => {
                                     exit={{ opacity: 0, scale: 0.95, y: 15 }}
                                     transition={{ duration: 0.25 }}
                                     whileHover={{ y: -6, scale: 1.01 }}
-                                    className="group relative bg-[#0a0a0f] border border-red-500/20 hover:border-red-500/50 rounded-2xl overflow-hidden hover:shadow-[0_15px_45px_rgba(230,0,35,0.18)] shadow-[0_0_25px_rgba(255,31,61,0.06)] transition-all duration-300 p-2.5 sm:p-3 flex flex-col h-full max-w-[340px] min-[500px]:max-w-none mx-auto w-full"
+                                    className="group relative bg-[#09090f]/90 backdrop-blur-xl border border-white/[0.08] hover:border-red-500/40 rounded-[22px] overflow-hidden hover:shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(255,31,61,0.15)] shadow-[0_10px_30px_rgba(0,0,0,0.6)] transition-all duration-300 p-3 sm:p-3.5 flex flex-col h-full max-w-[340px] min-[500px]:max-w-none mx-auto w-full"
                                 >
+                                    {/* Top subtle red rim light on hover */}
+                                    <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-red-500/0 group-hover:via-red-500/60 to-transparent transition-all duration-500 pointer-events-none" />
+
                                     {/* ── Image Stage ── */}
-                                    <div className="relative rounded-xl overflow-hidden bg-gradient-to-b from-[#0e0e16] to-[#07070b] flex items-center justify-center h-[185px] sm:h-[195px] md:h-[205px] border border-white/[0.04]">
+                                    <div className="relative rounded-2xl overflow-hidden bg-gradient-to-b from-[#13131c] via-[#09090e] to-[#040407] flex items-center justify-center h-[175px] sm:h-[190px] md:h-[200px] border border-white/[0.06] group-hover:border-white/10 transition-colors">
                                         {/* Ambient radial glows */}
-                                        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,31,61,0.13),transparent_72%)]" />
-                                            <div className="absolute bottom-0 left-0 right-0 h-16 bg-[radial-gradient(ellipse_at_bottom,rgba(255,31,61,0.22),transparent_75%)]" />
+                                        <div className="absolute inset-0 pointer-events-none flex items-center justify-center" aria-hidden="true">
+                                            <div className="h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(255,31,61,0.18),transparent_70%)] blur-xl group-hover:scale-125 transition-transform duration-500" />
+                                            <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/80 to-transparent" />
                                         </div>
 
                                         {/* Trend Category Badge — Floating Top Left */}
-                                        <span className={`absolute top-2.5 left-2.5 z-20 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider backdrop-blur-md border ${getTrendColor(alert.type)}`}>
+                                        <span className={`absolute top-2.5 left-2.5 z-20 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider backdrop-blur-md border ${getTrendColor(alert.type)}`}>
                                             {getCategoryIcon(alert.type)}
                                             {getTrendLabel(alert.type)}
                                         </span>
 
                                         {/* Live Timestamp Pill — Floating Top Right */}
-                                        <span className="absolute top-2.5 right-2.5 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/60 border border-white/15 text-gray-400 text-[10px] font-medium backdrop-blur-md">
+                                        <span className="absolute top-2.5 right-2.5 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/60 border border-white/10 text-gray-400 text-[10px] font-semibold backdrop-blur-md">
                                             <Clock size={10} className="text-gray-400" />
                                             {alert.time}
                                         </span>
@@ -277,31 +280,30 @@ const TechBoyTrends = () => {
                                         <img
                                             src={imageSrc}
                                             alt={alert.name}
-                                            className="relative z-10 max-h-[90%] w-auto max-w-[92%] object-contain p-1.5 transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1"
-                                            style={{ filter: 'drop-shadow(0 14px 22px rgba(0,0,0,0.85))' }}
+                                            className="relative z-10 max-h-[88%] w-auto max-w-[88%] object-contain transition-transform duration-500 ease-out group-hover:scale-105 group-hover:-translate-y-1 drop-shadow-[0_14px_22px_rgba(0,0,0,0.9)]"
                                             onError={(e) => { e.target.src = '/images/phones/apple-iphone-17-pro-max.png'; }}
                                         />
                                     </div>
 
                                     {/* ── Content ── */}
-                                    <div className="px-1 pt-2.5 pb-1 flex flex-col flex-1">
-                                        <h3 className="text-white font-bold text-sm sm:text-base leading-snug line-clamp-1 group-hover:text-red-400 transition-colors mb-1">
+                                    <div className="pt-3 pb-1 flex flex-col flex-1">
+                                        <h3 className="text-white font-extrabold text-sm sm:text-base leading-snug line-clamp-1 group-hover:text-red-400 transition-colors mb-0.5">
                                             {alert.name}
                                         </h3>
-                                        <p className="text-gray-400 text-xs mb-3 line-clamp-1 leading-relaxed">
+                                        <p className="text-gray-400 text-[11px] sm:text-xs mb-3 line-clamp-1 leading-relaxed">
                                             {alert.desc}
                                         </p>
 
                                         {/* ── Mini Price & Market Graph Stage ── */}
-                                        <div className="mb-3 p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.08] hover:border-white/15 transition-all">
+                                        <div className="mb-3 p-2.5 sm:p-3 rounded-xl bg-white/[0.025] border border-white/[0.06] hover:border-white/12 transition-all">
                                             {/* Price Header & Trajectory Pill */}
-                                            <div className="flex items-center justify-between gap-1 mb-1">
+                                            <div className="flex items-center justify-between gap-1 mb-1.5">
                                                 <div>
-                                                    <span className="text-[9px] text-gray-500 uppercase font-bold tracking-wider block">
+                                                    <span className="text-[9px] text-gray-500 uppercase font-black tracking-wider block">
                                                         {chart.isPriceDrop ? 'Price Drop Record' : chart.isTrending ? 'Demand Surge' : '30-Day Trend'}
                                                     </span>
                                                     <div className="flex items-baseline gap-1.5 flex-wrap">
-                                                        <span className={`font-extrabold text-base sm:text-lg leading-tight ${chart.isPriceDrop ? 'text-emerald-400' : 'text-white'}`}>
+                                                        <span className={`font-black text-base sm:text-lg tracking-tight leading-tight ${chart.isPriceDrop ? 'text-emerald-400' : 'text-white'}`}>
                                                             ₹{alert.current?.toLocaleString('en-IN')}
                                                         </span>
                                                         {alert.prev && alert.prev > alert.current && (
@@ -313,11 +315,11 @@ const TechBoyTrends = () => {
                                                 </div>
 
                                                 {/* Status Pill Badge */}
-                                                <div className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-extrabold border shrink-0 ${
+                                                <div className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-black border shrink-0 ${
                                                     chart.isPriceDrop
-                                                        ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30 shadow-[0_0_10px_rgba(16,185,129,0.2)]'
+                                                        ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30 shadow-[0_0_12px_rgba(16,185,129,0.25)]'
                                                         : chart.isTrending
-                                                        ? 'bg-orange-500/15 text-orange-400 border-orange-500/30 shadow-[0_0_10px_rgba(249,115,22,0.2)]'
+                                                        ? 'bg-orange-500/15 text-orange-400 border-orange-500/30 shadow-[0_0_12px_rgba(249,115,22,0.25)]'
                                                         : 'bg-red-500/15 text-red-400 border-red-500/30'
                                                 }`}>
                                                     {chart.isPriceDrop ? (
@@ -370,16 +372,16 @@ const TechBoyTrends = () => {
                                         </div>
 
                                         {/* ── Modern Action Bar ── */}
-                                        <div className="pt-2 mt-auto flex items-center gap-2">
+                                        <div className="pt-1 mt-auto flex items-center gap-2">
                                             {/* View Details / Deal — Modern Specular Pill */}
                                             <button
                                                 onClick={() => setSelectedProduct({ ...alert, price: alert.current, image: imageSrc })}
-                                                className="relative group/btn overflow-hidden flex-1 h-[36px] rounded-xl bg-gradient-to-r from-[#ff1f3d] via-[#e60023] to-[#c7001e] hover:from-[#ff3350] hover:to-[#d6001c] text-white text-[11px] font-bold tracking-wide flex items-center justify-center gap-1.5 shadow-[0_4px_16px_rgba(230,0,35,0.35)] hover:shadow-[0_6px_24px_rgba(255,31,61,0.55)] transition-all active:scale-[0.97] border border-white/20"
+                                                className="relative group/btn overflow-hidden flex-1 h-[38px] rounded-xl bg-gradient-to-r from-[#ff1f3d] via-[#e60023] to-[#c7001e] hover:from-[#ff3350] hover:to-[#d6001c] text-white text-xs font-extrabold tracking-wide flex items-center justify-center gap-1.5 shadow-[0_4px_16px_rgba(230,0,35,0.35)] hover:shadow-[0_6px_24px_rgba(255,31,61,0.55)] transition-all active:scale-[0.97] border border-white/20 cursor-pointer"
                                             >
                                                 <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 pointer-events-none" />
                                                 <span className="relative z-10 font-bold">View Deal</span>
-                                                <span className="relative z-10 flex items-center justify-center w-4.5 h-4.5 rounded-full bg-white/15 transition-transform duration-300 group-hover/btn:translate-x-0.5">
-                                                    <ArrowRight size={10} className="stroke-[2.5]" />
+                                                <span className="relative z-10 flex items-center justify-center w-5 h-5 rounded-full bg-white/15 transition-transform duration-300 group-hover/btn:translate-x-0.5">
+                                                    <ArrowRight size={11} className="stroke-[2.5]" />
                                                 </span>
                                             </button>
 
@@ -389,7 +391,7 @@ const TechBoyTrends = () => {
                                                     e.stopPropagation();
                                                     setPriceAlertProduct({ product: { ...alert, price: alert.current, image: imageSrc }, rect: e.currentTarget.getBoundingClientRect() });
                                                 }}
-                                                className="group/track relative h-[36px] w-[36px] rounded-xl bg-white/[0.04] hover:bg-red-500/15 border border-white/10 hover:border-red-500/40 text-gray-300 hover:text-red-400 flex items-center justify-center transition-all duration-200 shrink-0 hover:shadow-[0_0_14px_rgba(255,31,61,0.25)] active:scale-[0.95]"
+                                                className="group/track relative h-[38px] w-[38px] rounded-xl bg-white/[0.04] hover:bg-red-500/15 border border-white/10 hover:border-red-500/40 text-gray-300 hover:text-red-400 flex items-center justify-center transition-all duration-200 shrink-0 hover:shadow-[0_0_14px_rgba(255,31,61,0.25)] active:scale-[0.95] cursor-pointer"
                                                 title="Track Price"
                                                 aria-label="Track Price"
                                             >
