@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
-import { TrendingDown, Flame, Rocket, Star, GitCompare, Bell, ArrowRight, TrendingUp, Activity, Clock } from 'lucide-react';
+import { TrendingDown, Flame, Rocket, Star, GitCompare, Bell, ArrowRight, TrendingUp, Activity, Clock, Heart } from 'lucide-react';
 import PriceAlertModal from './PriceAlertModal';
 import DealDetailsModal from './DealDetailsModal';
 import { PREDEFINED_NOTIFICATIONS } from './NotificationSystemData';
@@ -112,6 +112,53 @@ const TechBoyTrends = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [displayCount, setDisplayCount] = useState(8);
     const [liveProducts, setLiveProducts] = useState([]);
+    const [wishlistIds, setWishlistIds] = useState(new Set());
+
+    // Sync wishlist from localStorage
+    const loadWishlist = useCallback(() => {
+        try {
+            const stored = JSON.parse(localStorage.getItem('tb_wishlist') || '[]');
+            const ids = new Set(stored.map(p => p.id || p.name));
+            setWishlistIds(ids);
+        } catch (e) {
+            setWishlistIds(new Set());
+        }
+    }, []);
+
+    useEffect(() => {
+        loadWishlist();
+        window.addEventListener('tb_wishlist_updated', loadWishlist);
+        return () => window.removeEventListener('tb_wishlist_updated', loadWishlist);
+    }, [loadWishlist]);
+
+    const handleToggleWishlist = (e, alert, imageSrc) => {
+        e.stopPropagation();
+        e.preventDefault();
+        try {
+            feedback.heartPop();
+            const stored = JSON.parse(localStorage.getItem('tb_wishlist') || '[]');
+            const productObj = {
+                id: alert.id,
+                name: alert.name,
+                price: alert.current,
+                previous_price: alert.prev,
+                image: imageSrc,
+                desc: alert.desc
+            };
+            const exists = stored.some(p => p.id === alert.id || p.name === alert.name);
+            let updated;
+            if (exists) {
+                updated = stored.filter(p => p.id !== alert.id && p.name !== alert.name);
+            } else {
+                updated = [...stored, productObj];
+            }
+            localStorage.setItem('tb_wishlist', JSON.stringify(updated));
+            window.dispatchEvent(new Event('tb_wishlist_updated'));
+            loadWishlist();
+        } catch (err) {
+            console.warn('Wishlist toggle warning', err);
+        }
+    };
 
     useEffect(() => {
         let mounted = true;
@@ -240,6 +287,7 @@ const TechBoyTrends = () => {
                         {filteredAlerts.slice(0, displayCount).map((alert, idx) => {
                             const chart = generateChartData(alert);
                             const imageSrc = resolveProductImage(alert.image, alert.name);
+                            const isWishlisted = wishlistIds.has(alert.id) || wishlistIds.has(alert.name);
 
                             return (
                                 <m.div
@@ -270,11 +318,28 @@ const TechBoyTrends = () => {
                                             {getTrendLabel(alert.type)}
                                         </span>
 
-                                        {/* Live Timestamp Pill — Floating Top Right */}
-                                        <span className="absolute top-2.5 right-2.5 z-20 flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/60 border border-white/10 text-gray-400 text-[10px] font-semibold backdrop-blur-md">
-                                            <Clock size={10} className="text-gray-400" />
-                                            {alert.time}
-                                        </span>
+                                        {/* Top Right Group: Timestamp Pill + Wishlist Button */}
+                                        <div className="absolute top-2.5 right-2.5 z-20 flex items-center gap-1.5">
+                                            <span className="hidden min-[380px]:flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/60 border border-white/10 text-gray-400 text-[10px] font-semibold backdrop-blur-md">
+                                                <Clock size={10} className="text-gray-400" />
+                                                {alert.time}
+                                            </span>
+                                            <button
+                                                onClick={(e) => handleToggleWishlist(e, alert, imageSrc)}
+                                                className={`h-7 w-7 rounded-full flex items-center justify-center border backdrop-blur-md transition-all active:scale-90 cursor-pointer shadow-sm ${
+                                                    isWishlisted
+                                                        ? 'bg-pink-500/20 border-pink-500/50 text-pink-400 shadow-[0_0_12px_rgba(244,63,94,0.4)]'
+                                                        : 'bg-black/60 border-white/15 text-gray-400 hover:text-pink-400 hover:border-pink-500/40 hover:bg-black/80'
+                                                }`}
+                                                title={isWishlisted ? 'Remove from wishlist' : 'Save to wishlist'}
+                                                aria-label="Wishlist toggle"
+                                            >
+                                                <Heart
+                                                    size={13}
+                                                    className={`transition-transform duration-200 ${isWishlisted ? 'fill-pink-400 scale-110' : 'group-hover/heart:scale-110'}`}
+                                                />
+                                            </button>
+                                        </div>
 
                                         {/* Phone Cutout Image */}
                                         <img
