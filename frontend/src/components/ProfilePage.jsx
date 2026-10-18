@@ -356,32 +356,39 @@ const ProfilePage = ({ setCurrentView, initialTab, onSearch }) => {
                 </div>
             </m.div>
 
-            {/* ─── Tab Navigation ─── */}
-            <div className="flex items-center gap-1 mb-6 p-1 rounded-2xl bg-white/[0.03] border border-white/10 overflow-x-auto hide-scrollbar">
+            {/* ─── Modern Tab Navigation Filter Bar ─── */}
+            <div className="flex items-center gap-1.5 mb-6 sm:mb-8 p-1.5 rounded-2xl bg-[#0b0b12]/90 border border-white/10 backdrop-blur-xl overflow-x-auto hide-scrollbar shadow-[0_8px_30px_rgba(0,0,0,0.6)]">
                 {TABS.map(tab => {
                     const Icon = tab.icon;
                     const isActive = activeTab === tab.id;
                     return (
                         <button
                             key={tab.id}
-                            onClick={() => setActiveTab(tab.id)}
-                            className={`relative flex items-center gap-1.5 px-3 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all shrink-0 ${
+                            onClick={() => {
+                                feedback.click();
+                                setActiveTab(tab.id);
+                            }}
+                            className={`relative flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-[13px] font-black tracking-wide whitespace-nowrap transition-all shrink-0 cursor-pointer ${
                                 isActive
-                                    ? 'bg-gradient-to-r from-[#ff1f3d] to-[#e60023] text-white shadow-[0_2px_14px_rgba(230,0,35,0.45)]'
-                                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                    ? 'text-white shadow-[0_4px_20px_rgba(230,0,35,0.45)]'
+                                    : 'text-gray-400 hover:text-white hover:bg-white/[0.05]'
                             }`}
                         >
                             {isActive && (
                                 <m.div
                                     layoutId="profileTabPill"
-                                    className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#ff1f3d] to-[#e60023] -z-10"
-                                    transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+                                    className="absolute inset-0 rounded-xl bg-gradient-to-r from-[#ff1f3d] via-[#e60023] to-[#c7001e] border border-white/20 -z-10 shadow-[0_0_20px_rgba(255,31,61,0.4)]"
+                                    transition={{ type: 'spring', stiffness: 450, damping: 30 }}
                                 />
                             )}
-                            <Icon size={14} />
+                            <Icon size={15} className={`transition-transform ${isActive ? 'scale-110 text-white stroke-[2.5]' : 'text-gray-400'}`} />
                             <span>{tab.label}</span>
                             {tab.count !== undefined && tab.count > 0 && (
-                                <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-black ${isActive ? 'bg-white/25 text-white' : 'bg-red-500/20 text-red-400'}`}>
+                                <span className={`text-[10px] px-2 py-0.5 rounded-full font-black ${
+                                    isActive
+                                        ? 'bg-white/25 text-white shadow-sm'
+                                        : 'bg-red-500/15 text-red-400 border border-red-500/30'
+                                }`}>
                                     {tab.count}
                                 </span>
                             )}
