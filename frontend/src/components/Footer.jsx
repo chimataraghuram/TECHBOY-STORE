@@ -204,7 +204,7 @@ const Footer = ({ setCurrentView }) => {
                                 <m.a
                                     whileHover={{ scale: 1.02, y: -2 }}
                                     whileTap={{ scale: 0.97 }}
-                                    href="https://github.com/raghuram14"
+                                    href="https://github.com/chimataraghuram"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-white hover:bg-gray-100 text-[#09090e] font-black text-xs tracking-wider transition-all shadow-[0_4px_14px_rgba(255,255,255,0.15)] active:scale-[0.98]"
@@ -216,7 +216,7 @@ const Footer = ({ setCurrentView }) => {
                                 <m.a
                                     whileHover={{ scale: 1.02, y: -2 }}
                                     whileTap={{ scale: 0.97 }}
-                                    href="https://www.linkedin.com/in/chimata-raghuram-b23547285/"
+                                    href="https://www.linkedin.com/in/chimataraghuram"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#ff1f3d] via-[#e60023] to-[#c7001e] hover:from-[#ff3856] hover:to-[#d9001f] text-white font-black text-xs tracking-wider transition-all shadow-[0_4px_18px_rgba(230,0,35,0.45)] border border-white/20 active:scale-[0.98]"
@@ -231,7 +231,7 @@ const Footer = ({ setCurrentView }) => {
                         <m.a
                             whileHover={{ scale: 1.02, y: -2 }}
                             whileTap={{ scale: 0.97 }}
-                            href="https://raghuramchimata.vercel.app/"
+                            href="https://chimataraghuram.vercel.app/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="group flex items-center justify-between p-3.5 rounded-2xl bg-[#0c0d14]/90 border border-white/10 hover:border-red-500/40 hover:shadow-[0_8px_25px_rgba(255,31,61,0.15)] transition-all shadow-md"
@@ -262,7 +262,7 @@ const Footer = ({ setCurrentView }) => {
                     {/* Social Media Pill Badges */}
                     <div className="flex flex-wrap items-center justify-center gap-2">
                         <a
-                            href="https://www.linkedin.com/in/chimata-raghuram-b23547285/"
+                            href="https://www.linkedin.com/in/chimataraghuram"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] hover:bg-[#0077b5]/20 border border-white/10 hover:border-[#0077b5]/50 text-gray-300 hover:text-[#0077b5] text-xs font-bold transition-all"
@@ -272,7 +272,7 @@ const Footer = ({ setCurrentView }) => {
                         </a>
 
                         <a
-                            href="https://github.com/raghuram14"
+                            href="https://github.com/chimataraghuram"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/10 border border-white/10 hover:border-white/30 text-gray-300 hover:text-white text-xs font-bold transition-all"
@@ -282,7 +282,7 @@ const Footer = ({ setCurrentView }) => {
                         </a>
 
                         <a
-                            href="https://raghuramchimata.vercel.app/"
+                            href="https://chimataraghuram.vercel.app/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.04] hover:bg-red-500/15 border border-white/10 hover:border-red-500/40 text-gray-300 hover:text-red-400 text-xs font-bold transition-all"
