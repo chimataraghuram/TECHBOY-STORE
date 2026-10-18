@@ -14,7 +14,7 @@ const buildFallbackHistory = (currentPrice) => {
     });
 };
 
-const PriceHistoryChart = ({ productId, currentPrice }) => {
+const PriceHistoryChart = ({ productId, currentPrice, hideHeader = false, height = 150 }) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -24,9 +24,9 @@ const PriceHistoryChart = ({ productId, currentPrice }) => {
                 const res = await fetch(`${API_BASE_URL}/price-history/?product_id=${productId}`);
                 const history = await res.json();
                 
-                if (history.length > 0) {
+                if (history && history.length > 0) {
                     setData(history.map(h => ({
-                        date: new Date(h.timestamp).toLocaleDateString(),
+                        date: new Date(h.timestamp).toLocaleDateString([], { month: 'short', day: 'numeric' }),
                         price: h.price
                     })));
                 } else {
@@ -44,53 +44,74 @@ const PriceHistoryChart = ({ productId, currentPrice }) => {
         fetchHistory();
     }, [productId, currentPrice]);
 
-    if (loading) return <div className="chart-loading">Loading price trends...</div>;
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-full text-xs text-gray-500 animate-pulse">
+                Loading price trends...
+            </div>
+        );
+    }
+
+    const minPrice = data.length > 0 ? Math.min(...data.map(d => d.price)) : Number(currentPrice);
 
     return (
-        <div className="price-history-container">
-            <h4 className="chart-title">30-Day Price Trend</h4>
-            <div style={{ width: '100%', height: 200 }}>
-                <ResponsiveContainer>
-                    <AreaChart data={data}>
+        <div className="w-full flex flex-col justify-between h-full">
+            {!hideHeader && <h4 className="chart-title mb-2">30-Day Price Trend</h4>}
+            <div style={{ width: '100%', height }}>
+                <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={data} margin={{ top: 8, right: 8, left: -25, bottom: 0 }}>
                         <defs>
                             <linearGradient id="colorPrice" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="var(--accent-primary)" stopOpacity={0.3}/>
-                                <stop offset="95%" stopColor="var(--accent-primary)" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#ff1f3d" stopOpacity={0.35}/>
+                                <stop offset="95%" stopColor="#ff1f3d" stopOpacity={0.0}/>
                             </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.06)" />
                         <XAxis 
                              dataKey="date" 
-                             stroke="rgba(255,255,255,0.5)" 
-                             fontSize={10} 
+                             stroke="rgba(255,255,255,0.4)" 
+                             fontSize={9} 
                              tickLine={false} 
                              axisLine={false}
                         />
                         <YAxis 
-                            hide 
+                            stroke="rgba(255,255,255,0.3)"
+                            fontSize={9}
+                            tickLine={false}
+                            axisLine={false}
+                            tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}k`}
                             domain={['dataMin - 1000', 'dataMax + 1000']} 
                         />
                         <Tooltip 
                             contentStyle={{ 
-                                backgroundColor: 'rgba(20, 20, 20, 0.9)', 
-                                border: '1px solid var(--accent-primary)',
-                                borderRadius: '8px',
-                                fontSize: '12px'
+                                backgroundColor: 'rgba(15, 15, 22, 0.95)', 
+                                border: '1px solid rgba(255, 31, 61, 0.4)',
+                                borderRadius: '10px',
+                                fontSize: '11px',
+                                boxShadow: '0 8px 24px rgba(0,0,0,0.8)',
+                                padding: '6px 10px'
                             }}
-                            itemStyle={{ color: 'var(--accent-primary)' }}
+                            itemStyle={{ color: '#ff4258', fontWeight: 'bold' }}
+                            formatter={(value) => [`₹${Number(value).toLocaleString('en-IN')}`, 'Price']}
                         />
                         <Area 
                             type="monotone" 
                             dataKey="price" 
-                            stroke="var(--accent-primary)" 
+                            stroke="#ff1f3d" 
+                            strokeWidth={2}
                             fillOpacity={1} 
                             fill="url(#colorPrice)" 
-                            strokeWidth={2}
+                            dot={{ fill: '#ff1f3d', r: 2 }}
+                            activeDot={{ r: 5, fill: '#ff4258', stroke: '#fff', strokeWidth: 1.5 }}
                         />
                     </AreaChart>
                 </ResponsiveContainer>
             </div>
-            <p className="chart-footer-text">Lowest price in 30 days: ₹{Math.min(...data.map(d => d.price)).toLocaleString('en-IN')}</p>
+            {!hideHeader && (
+                <p className="text-[10px] text-gray-400 mt-1">
+                    Lowest in 30 days: <span className="text-emerald-400 font-bold">₹{minPrice.toLocaleString('en-IN')}</span>
+                </p>
+            )}
         </div>
     );
 };

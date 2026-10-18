@@ -37,7 +37,7 @@
 html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  scrollbar-color: #e60023 #0a0a0a;
+  scrollbar-color: rgba(255, 31, 61, 0.45) #0a0a0a;
 }
 
 body {
@@ -54,22 +54,39 @@ body {
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #080808;
+  background: #09090e;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #ff3d55, #c4001f);
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ff2038;
-  box-shadow: 0 0 10px rgba(255, 32, 56, 0.7);
+  background: rgba(255, 31, 61, 0.55);
+}
+
+.modal-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+.modal-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.modal-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.modal-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 9999px;
+}
+.modal-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 31, 61, 0.45);
 }
 
 ::selection {

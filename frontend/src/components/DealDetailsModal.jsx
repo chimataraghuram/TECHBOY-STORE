@@ -50,13 +50,13 @@ const DealDetailsModal = ({ product, onClose, onTrack }) => {
       aria-modal="true"
       aria-label={`${product.name} deal details`}
       style={{
-        background: 'radial-gradient(circle at 50% 15%, rgba(168,85,247,0.12), transparent 45rem), rgba(3,3,7,0.85)',
+        background: 'radial-gradient(circle at 50% 15%, rgba(255,31,61,0.08), transparent 45rem), rgba(3,3,7,0.85)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)'
       }}
     >
       <m.div
-        className="relative flex w-full max-h-[92dvh] sm:max-h-[85vh] sm:max-w-[580px] md:max-w-[760px] lg:max-w-[860px] flex-col overflow-hidden rounded-t-[26px] sm:rounded-[24px] border border-white/12 bg-[#0c0c12]/95 shadow-[0_25px_80px_rgba(0,0,0,0.9),0_0_35px_rgba(255,31,61,0.15)]"
+        className="relative flex w-full max-h-[92dvh] sm:max-h-[88vh] sm:max-w-[560px] md:max-w-[720px] lg:max-w-[780px] flex-col overflow-hidden rounded-t-[26px] sm:rounded-[24px] border border-white/10 bg-[#0b0b12]/95 shadow-[0_25px_80px_rgba(0,0,0,0.95),0_0_40px_rgba(255,31,61,0.12)]"
         initial={{ opacity: 0, y: 35, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 25, scale: 0.98 }}
@@ -64,13 +64,13 @@ const DealDetailsModal = ({ product, onClose, onTrack }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-[2px] bg-gradient-to-r from-transparent via-[#ff1f3d] to-transparent opacity-90" />
-        <div className="pointer-events-none absolute -top-16 left-1/2 h-36 w-80 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,31,61,0.22),transparent_70%)] blur-2xl" />
+        <div className="pointer-events-none absolute -top-16 left-1/2 h-32 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,31,61,0.2),transparent_70%)] blur-2xl" />
 
         {/* Mobile drag handle */}
         <div className="mx-auto mt-2 h-1 w-10 shrink-0 rounded-full bg-white/20 sm:hidden" aria-hidden="true" />
 
         {/* Top Header */}
-        <div className="relative z-20 flex shrink-0 items-center justify-between gap-3 border-b border-white/[0.08] bg-white/[0.02] px-4 py-2.5 sm:px-6 sm:py-3 backdrop-blur-md">
+        <div className="relative z-20 flex shrink-0 items-center justify-between gap-3 border-b border-white/[0.08] bg-white/[0.02] px-4 py-2.5 sm:px-5 sm:py-3 backdrop-blur-md">
           <div className="flex min-w-0 items-center gap-2">
             <span className="shrink-0 rounded-md border border-red-500/30 bg-red-500/10 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-widest text-[#ff4258]">
               {categoryLabel}
@@ -78,7 +78,7 @@ const DealDetailsModal = ({ product, onClose, onTrack }) => {
             <span className="hidden sm:flex items-center gap-1 text-[11px] font-semibold text-gray-400">
               <Clock size={11} /> {product.time || 'Live Deal'}
             </span>
-            <h2 className="truncate text-sm font-black text-white sm:hidden">
+            <h2 className="truncate text-xs font-black text-white sm:hidden">
               {product.name}
             </h2>
           </div>
@@ -91,21 +91,21 @@ const DealDetailsModal = ({ product, onClose, onTrack }) => {
             <button
               onClick={onClose}
               aria-label="Close deal modal"
-              className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-gray-300 hover:border-red-500/50 hover:bg-red-500/15 hover:text-white transition-all"
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-gray-300 hover:border-red-500/50 hover:bg-red-500/15 hover:text-white transition-all cursor-pointer"
             >
-              <X size={16} />
+              <X size={15} />
             </button>
           </div>
         </div>
 
-        {/* Scrollable Body */}
-        <div className="relative z-10 flex-1 overflow-y-auto overscroll-contain px-4 py-3.5 sm:px-6 sm:py-4.5 space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-[180px_minmax(0,1fr)] md:grid-cols-[220px_minmax(0,1fr)] gap-4 sm:gap-5 items-start">
+        {/* Scrollable Body with subtle modal-scrollbar */}
+        <div className="modal-scrollbar relative z-10 flex-1 overflow-y-auto overscroll-contain px-4 py-3.5 sm:px-5 sm:py-4 space-y-3.5">
+          <div className="grid grid-cols-1 sm:grid-cols-[170px_minmax(0,1fr)] md:grid-cols-[200px_minmax(0,1fr)] gap-3.5 sm:gap-4 items-center">
             {/* Visual Phone Card */}
-            <div className="relative flex h-[190px] sm:h-[230px] md:h-[260px] w-full items-center justify-center overflow-hidden rounded-xl border border-white/[0.07] bg-gradient-to-b from-[#14141e] via-[#0a0a10] to-[#050508] p-2">
+            <div className="relative flex h-[160px] sm:h-[190px] md:h-[210px] w-full items-center justify-center overflow-hidden rounded-xl border border-white/[0.08] bg-gradient-to-b from-[#14141e] via-[#090910] to-[#040407] p-3 shadow-inner">
               <div className="absolute inset-0 pointer-events-none flex items-center justify-center" aria-hidden="true">
-                <div className="h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(255,31,61,0.22),transparent_70%)] blur-xl" />
-                <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/80 to-transparent" />
+                <div className="h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(255,31,61,0.22),transparent_70%)] blur-xl" />
+                <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-black/80 to-transparent" />
               </div>
               <img
                 src={product.image || FALLBACK_IMAGE}
@@ -114,25 +114,25 @@ const DealDetailsModal = ({ product, onClose, onTrack }) => {
                 className="relative z-10 max-h-[92%] w-auto max-w-[92%] object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)] transition-transform duration-300 hover:scale-105"
               />
               {savings > 0 && (
-                <div className="absolute top-2 left-2 z-20 px-2 py-0.5 rounded-md bg-emerald-500/90 text-white text-[10px] font-black tracking-tight shadow-md">
+                <div className="absolute top-2 left-2 z-20 px-2 py-0.5 rounded-md bg-emerald-500/95 text-white text-[10px] font-black tracking-tight shadow-md">
                   Save ₹{savings.toLocaleString('en-IN')}
                 </div>
               )}
             </div>
 
             {/* Title, Prices, Deal Stats */}
-            <div className="flex flex-col gap-2.5 min-w-0">
+            <div className="flex flex-col gap-2 min-w-0">
               <div>
-                <h2 className="text-lg sm:text-xl md:text-2xl font-black text-white leading-tight">
+                <h2 className="text-base sm:text-lg md:text-xl font-black text-white leading-tight">
                   {product.name}
                 </h2>
-                <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">
-                  {product.desc || product.description || 'Live smartphone deal with price drop tracking.'}
+                <p className="text-[11px] text-gray-400 mt-0.5 line-clamp-1">
+                  {product.desc || product.description || 'Live smartphone deal with real-time price drop tracking.'}
                 </p>
               </div>
 
               {/* Price Row */}
-              <div className="flex items-baseline gap-2.5 flex-wrap pt-0.5">
+              <div className="flex items-baseline gap-2 flex-wrap pt-0.5">
                 <span className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                   ₹{current.toLocaleString('en-IN')}
                 </span>
@@ -150,16 +150,16 @@ const DealDetailsModal = ({ product, onClose, onTrack }) => {
 
               {/* Mini Highlights Cards */}
               <div className="grid grid-cols-2 gap-2">
-                <div className="rounded-lg border border-white/[0.07] bg-white/[0.02] p-2.5">
-                  <span className="text-[9px] uppercase tracking-wider text-gray-500 font-semibold block">Market Trend</span>
-                  <span className="text-xs font-bold text-white mt-0.5 flex items-center gap-1">
-                    <Check size={12} className="text-emerald-400" /> Lowest in 30 Days
+                <div className="rounded-lg border border-white/[0.07] bg-white/[0.02] p-2">
+                  <span className="text-[9px] uppercase tracking-wider text-gray-400 font-semibold block">Market Trend</span>
+                  <span className="text-[11px] font-bold text-white mt-0.5 flex items-center gap-1">
+                    <Check size={11} className="text-emerald-400" /> Lowest in 30 Days
                   </span>
                 </div>
-                <div className="rounded-lg border border-white/[0.07] bg-white/[0.02] p-2.5">
-                  <span className="text-[9px] uppercase tracking-wider text-gray-500 font-semibold block">Authenticity</span>
-                  <span className="text-xs font-bold text-white mt-0.5 flex items-center gap-1">
-                    <ShieldCheck size={12} className="text-red-400" /> Verified Seller
+                <div className="rounded-lg border border-white/[0.07] bg-white/[0.02] p-2">
+                  <span className="text-[9px] uppercase tracking-wider text-gray-400 font-semibold block">Authenticity</span>
+                  <span className="text-[11px] font-bold text-white mt-0.5 flex items-center gap-1">
+                    <ShieldCheck size={11} className="text-red-400" /> Verified Seller
                   </span>
                 </div>
               </div>
@@ -172,16 +172,16 @@ const DealDetailsModal = ({ product, onClose, onTrack }) => {
                     return (
                       <div
                         key={h.label}
-                        className="flex items-center gap-2 rounded-lg border border-white/[0.07] bg-white/[0.02] p-2 hover:border-white/15 transition-all"
+                        className="flex items-center gap-1.5 rounded-lg border border-white/[0.07] bg-white/[0.02] px-2 py-1.5 hover:border-white/15 transition-all"
                       >
-                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-white/[0.05] text-red-400">
-                          <Icon size={12} />
+                        <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-white/[0.05] text-red-400">
+                          <Icon size={11} />
                         </span>
                         <div className="min-w-0">
-                          <div className="text-[9px] uppercase tracking-wider text-gray-500 font-semibold leading-none">
+                          <div className="text-[8px] uppercase tracking-wider text-gray-500 font-semibold leading-none">
                             {h.label}
                           </div>
-                          <div className="text-[11px] font-bold text-white truncate mt-0.5">
+                          <div className="text-[10px] font-bold text-white truncate mt-0.5">
                             {h.value}
                           </div>
                         </div>
@@ -194,16 +194,16 @@ const DealDetailsModal = ({ product, onClose, onTrack }) => {
           </div>
 
           {/* Price History Chart */}
-          <div className="rounded-xl border border-white/[0.07] bg-white/[0.015] p-3 sm:p-4">
-            <div className="mb-2 flex items-center justify-between">
+          <div className="rounded-xl border border-white/[0.07] bg-white/[0.015] p-3">
+            <div className="mb-1.5 flex items-center justify-between">
               <span className="text-xs font-bold text-white flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                30-Day Price Movement & Sparkline
+                30-Day Price Trend & Analytics
               </span>
               <span className="text-[10px] text-gray-400">Live Tracker</span>
             </div>
-            <div className="h-[120px] sm:h-[140px]">
-              <PriceHistoryChart productId={product.product_id || product.id} currentPrice={current} />
+            <div className="h-[120px] sm:h-[135px]">
+              <PriceHistoryChart productId={product.product_id || product.id} currentPrice={current} hideHeader={true} height={120} />
             </div>
           </div>
 
@@ -212,7 +212,7 @@ const DealDetailsModal = ({ product, onClose, onTrack }) => {
             <div className="rounded-xl border border-white/[0.07] bg-white/[0.015] overflow-hidden">
               <button
                 onClick={() => setShowAllSpecs(!showAllSpecs)}
-                className="w-full flex items-center justify-between px-3.5 py-2.5 text-left text-xs font-bold text-gray-300 hover:text-white hover:bg-white/[0.02] transition-colors"
+                className="w-full flex items-center justify-between px-3.5 py-2.5 text-left text-xs font-bold text-gray-300 hover:text-white hover:bg-white/[0.02] transition-colors cursor-pointer"
               >
                 <span className="flex items-center gap-2">
                   <Layers size={13} className="text-red-400" />
@@ -231,20 +231,20 @@ const DealDetailsModal = ({ product, onClose, onTrack }) => {
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="border-t border-white/[0.06] p-3 sm:p-4 bg-black/20"
+                    className="border-t border-white/[0.06] p-3 bg-black/20"
                   >
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
                       {specGroups.map((group) => {
                         const GroupIcon = group.icon;
                         return (
                           <div key={group.title} className="rounded-lg border border-white/[0.05] bg-white/[0.015] p-2.5">
-                            <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-gray-400 mb-2">
-                              <GroupIcon size={12} className="text-red-400" />
+                            <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-gray-400 mb-1.5">
+                              <GroupIcon size={11} className="text-red-400" />
                               {group.title}
                             </div>
-                            <div className="space-y-1.5">
+                            <div className="space-y-1">
                               {group.rows.map((row, i) => (
-                                <div key={`${row.label}-${i}`} className="flex items-baseline justify-between gap-2 text-[11px]">
+                                <div key={`${row.label}-${i}`} className="flex items-baseline justify-between gap-2 text-[10px]">
                                   <span className="text-gray-500 font-medium shrink-0">{row.label}</span>
                                   <span className="text-white font-semibold text-right">{row.value}</span>
                                 </div>
