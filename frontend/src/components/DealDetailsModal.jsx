@@ -1,18 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { m } from 'framer-motion';
-import { Bell, Check, Clock, ExternalLink, TrendingDown, X } from 'lucide-react';
+import { m, AnimatePresence } from 'framer-motion';
+import { Bell, Check, Clock, ExternalLink, TrendingDown, X, Layers, ChevronDown, ChevronUp, ShieldCheck } from 'lucide-react';
 import PriceHistoryChart from './PriceHistoryChart';
 import { buildSpecGroups, buildHighlights, iconForLabel } from '../utils/specSheet';
 
 const FALLBACK_IMAGE = '/images/phones/apple-iphone-17-pro-max.png';
 
 const DealDetailsModal = ({ product, onClose, onTrack }) => {
-  // Close on Escape (kept above the null-guard so hooks always run)
+  const [showAllSpecs, setShowAllSpecs] = useState(false);
+
   useEffect(() => {
     const handleKey = (e) => { if (e.key === 'Escape') onClose?.(); };
     document.addEventListener('keydown', handleKey);
-    return () => document.removeEventListener('keydown', handleKey);
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = originalOverflow;
+    };
   }, [onClose]);
 
   if (!product) return null;
@@ -26,141 +32,158 @@ const DealDetailsModal = ({ product, onClose, onTrack }) => {
     .split('|')
     .map((item) => item.trim())
     .filter(Boolean)
-    .slice(0, 6);
-  const dealScore = product.type === 'price_drop' ? 91 : product.type === 'trending' ? 84 : 88;
+    .slice(0, 4);
+  const dealScore = product.type === 'price_drop' ? 92 : product.type === 'trending' ? 86 : 89;
   const isPriceDrop = product.type === 'price_drop';
-  const categoryLabel = isPriceDrop ? 'PRICE DROP' : product.type === 'launch' ? 'NEW LAUNCH' : product.type === 'pick' ? 'TOP PICK' : product.type === 'comparison' ? 'COMPARE' : 'LIVE DEAL';
-  const retailerUrl = product.amazonLink || product.amazon_url || product.amazon_link;
+  const categoryLabel = isPriceDrop ? 'PRICE DROP' : product.type === 'launch' ? 'NEW LAUNCH' : product.type === 'pick' ? 'TOP PICK' : 'LIVE DEAL';
+  const retailerUrl = product.amazonLink || product.amazon_url || product.amazon_link || product.flipkart_link;
 
   return createPortal(
     <m.div
-      className="tb-sheet-overlay fixed inset-0 z-[100000] flex items-end justify-center p-0 sm:items-center sm:p-4 lg:p-6"
+      className="fixed inset-0 z-[100000] flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.22 }}
+      transition={{ duration: 0.2 }}
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-label={`${product.name} deal details`}
       style={{
-        background: 'radial-gradient(circle at 50% 10%, rgba(168,85,247,0.16), transparent 34rem), rgba(2,2,7,0.88)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)'
+        background: 'radial-gradient(circle at 50% 15%, rgba(168,85,247,0.12), transparent 45rem), rgba(3,3,7,0.85)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)'
       }}
     >
       <m.div
-        className="relative flex max-h-[96dvh] w-full flex-col overflow-hidden rounded-t-[28px] border border-b-0 border-white/10 bg-[linear-gradient(160deg,#150a12_0%,#0a0a12_46%,#07070c_100%)] shadow-[0_-10px_60px_rgba(0,0,0,0.7)] sm:max-h-[92dvh] sm:max-w-[660px] sm:rounded-[30px] sm:border-b sm:shadow-[0_30px_90px_rgba(0,0,0,0.82),0_0_36px_rgba(255,31,61,0.14)] md:max-w-[900px] lg:max-h-[88dvh] lg:max-w-[1120px] xl:max-w-[1240px]"
-        initial={{ opacity: 0, y: 60 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 40 }}
-        transition={{ type: 'spring', damping: 30, stiffness: 320 }}
+        className="relative flex w-full max-h-[92dvh] sm:max-h-[85vh] sm:max-w-[580px] md:max-w-[760px] lg:max-w-[860px] flex-col overflow-hidden rounded-t-[26px] sm:rounded-[24px] border border-white/12 bg-[#0c0c12]/95 shadow-[0_25px_80px_rgba(0,0,0,0.9),0_0_35px_rgba(255,31,61,0.15)]"
+        initial={{ opacity: 0, y: 35, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 25, scale: 0.98 }}
+        transition={{ type: 'spring', damping: 28, stiffness: 340 }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-px bg-gradient-to-r from-transparent via-[#ff1f3d] to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-[2px] bg-gradient-to-r from-transparent via-[#ff1f3d] to-transparent opacity-90" />
+        <div className="pointer-events-none absolute -top-16 left-1/2 h-36 w-80 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,31,61,0.22),transparent_70%)] blur-2xl" />
 
         {/* Mobile drag handle */}
-        <div className="mx-auto mt-2.5 h-1.5 w-11 shrink-0 rounded-full bg-white/20 sm:hidden" aria-hidden="true" />
+        <div className="mx-auto mt-2 h-1 w-10 shrink-0 rounded-full bg-white/20 sm:hidden" aria-hidden="true" />
 
-        {/* Header */}
-        <div className="relative z-20 flex shrink-0 items-center justify-between gap-3 border-b border-white/[0.06] bg-white/[0.015] px-4 py-3 backdrop-blur-xl sm:px-6 sm:py-3.5 lg:px-8">
+        {/* Top Header */}
+        <div className="relative z-20 flex shrink-0 items-center justify-between gap-3 border-b border-white/[0.08] bg-white/[0.02] px-4 py-2.5 sm:px-6 sm:py-3 backdrop-blur-md">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="shrink-0 rounded-full border border-red-500/40 bg-red-500/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-[#ff5f74]">
+            <span className="shrink-0 rounded-md border border-red-500/30 bg-red-500/10 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-widest text-[#ff4258]">
               {categoryLabel}
             </span>
-            <span className="hidden items-center gap-1 truncate text-[11px] font-medium text-gray-500 sm:flex">
-              <Clock size={11} /> {product.time || 'just now'}
+            <span className="hidden sm:flex items-center gap-1 text-[11px] font-semibold text-gray-400">
+              <Clock size={11} /> {product.time || 'Live Deal'}
             </span>
-            <h2 className="truncate text-sm font-extrabold leading-tight text-white sm:hidden">
+            <h2 className="truncate text-sm font-black text-white sm:hidden">
               {product.name}
             </h2>
           </div>
+
           <div className="flex shrink-0 items-center gap-2">
-            <span className="hidden items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-2.5 py-1 text-[10px] font-medium text-gray-300 lg:flex">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" /> Live tracking
+            <span className="hidden sm:inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[11px] font-semibold text-gray-300">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+              Deal Score: <strong className="text-white ml-0.5">{dealScore}/100</strong>
             </span>
             <button
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-red-500/45 bg-red-500/15 text-[#ff5f74] transition-all hover:bg-red-500/25 hover:text-white sm:h-10 sm:w-10"
               onClick={onClose}
-              aria-label="Close deal details"
+              aria-label="Close deal modal"
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-gray-300 hover:border-red-500/50 hover:bg-red-500/15 hover:text-white transition-all"
             >
-              <X size={18} />
+              <X size={16} />
             </button>
           </div>
         </div>
 
-        {/* Scrollable content */}
-        <div className="relative z-10 flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6">
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-6 lg:gap-8">
-            {/* ── Media ── */}
-            <div className="relative flex h-[240px] items-center justify-center overflow-hidden rounded-2xl border border-white/[0.06] bg-[radial-gradient(circle_at_50%_45%,rgba(168,85,247,0.18),transparent_64%),#08080d] sm:h-[300px] md:sticky md:top-0 md:h-[320px] md:self-start lg:h-[390px] xl:h-[430px]">
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent" />
+        {/* Scrollable Body */}
+        <div className="relative z-10 flex-1 overflow-y-auto overscroll-contain px-4 py-3.5 sm:px-6 sm:py-4.5 space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-[180px_minmax(0,1fr)] md:grid-cols-[220px_minmax(0,1fr)] gap-4 sm:gap-5 items-start">
+            {/* Visual Phone Card */}
+            <div className="relative flex h-[190px] sm:h-[230px] md:h-[260px] w-full items-center justify-center overflow-hidden rounded-xl border border-white/[0.07] bg-gradient-to-b from-[#14141e] via-[#0a0a10] to-[#050508] p-2">
+              <div className="absolute inset-0 pointer-events-none flex items-center justify-center" aria-hidden="true">
+                <div className="h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(255,31,61,0.22),transparent_70%)] blur-xl" />
+                <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/80 to-transparent" />
+              </div>
               <img
                 src={product.image || FALLBACK_IMAGE}
                 alt={product.name}
                 onError={(e) => { e.currentTarget.src = FALLBACK_IMAGE; }}
-                className="relative z-10 max-h-[86%] w-auto max-w-[86%] object-contain transition-transform duration-500 hover:scale-105"
-                style={{ filter: 'drop-shadow(0 22px 34px rgba(0,0,0,0.85))' }}
+                className="relative z-10 max-h-[92%] w-auto max-w-[92%] object-contain drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)] transition-transform duration-300 hover:scale-105"
               />
-              <div className="absolute bottom-3 left-3 z-20 flex items-center gap-1.5 rounded-full border border-white/15 bg-black/60 px-2.5 py-1 text-[10px] font-medium text-gray-300 backdrop-blur-md">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
-                <Clock size={11} /> Updated {product.time || 'just now'}
-              </div>
+              {savings > 0 && (
+                <div className="absolute top-2 left-2 z-20 px-2 py-0.5 rounded-md bg-emerald-500/90 text-white text-[10px] font-black tracking-tight shadow-md">
+                  Save ₹{savings.toLocaleString('en-IN')}
+                </div>
+              )}
             </div>
 
-            {/* ── Details ── */}
-            <div className="flex min-w-0 flex-col gap-4 lg:gap-5">
+            {/* Title, Prices, Deal Stats */}
+            <div className="flex flex-col gap-2.5 min-w-0">
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-[#ff3d55]">
-                  TechBoy Deal Intelligence
-                </p>
-                <h2 className="mt-1 text-xl font-extrabold leading-tight text-white sm:text-2xl lg:text-3xl">
+                <h2 className="text-lg sm:text-xl md:text-2xl font-black text-white leading-tight">
                   {product.name}
                 </h2>
-                <p className="mt-1.5 text-sm leading-relaxed text-gray-400 lg:text-[15px]">
-                  {product.desc || 'Track this product’s price movement and make a confident buying decision.'}
+                <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">
+                  {product.desc || product.description || 'Live smartphone deal with price drop tracking.'}
                 </p>
               </div>
 
-              <div className="flex flex-wrap items-end gap-x-3 gap-y-2">
-                <span className={`bg-clip-text text-3xl font-black leading-none text-transparent sm:text-4xl lg:text-[2.75rem] ${isPriceDrop ? 'bg-gradient-to-r from-emerald-400 to-emerald-200' : 'bg-gradient-to-r from-[#ff3350] to-[#ff6b81]'}`}>
+              {/* Price Row */}
+              <div className="flex items-baseline gap-2.5 flex-wrap pt-0.5">
+                <span className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                   ₹{current.toLocaleString('en-IN')}
                 </span>
                 {previous > current && (
-                  <span className="text-sm font-semibold text-gray-500 line-through">
+                  <span className="text-xs sm:text-sm font-semibold text-gray-500 line-through">
                     ₹{previous.toLocaleString('en-IN')}
                   </span>
                 )}
-                <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-400">
-                  <TrendingDown size={12} /> {savings ? `Save ₹${savings.toLocaleString('en-IN')}` : 'Live price'}
-                </span>
+                {savings > 0 && (
+                  <span className="inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-400">
+                    <TrendingDown size={11} /> Best Price Right Now
+                  </span>
+                )}
               </div>
 
-              <div className="grid grid-cols-2 gap-2 lg:gap-3">
-                <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 lg:p-3.5">
-                  <p className="text-[10px] uppercase tracking-wide text-gray-500">Status</p>
-                  <p className="mt-0.5 flex items-center gap-1.5 text-[13px] font-semibold text-white">
-                    <Check size={13} className="text-emerald-400" /> {isPriceDrop ? 'Best price' : 'Tracking live'}
-                  </p>
+              {/* Mini Highlights Cards */}
+              <div className="grid grid-cols-2 gap-2">
+                <div className="rounded-lg border border-white/[0.07] bg-white/[0.02] p-2.5">
+                  <span className="text-[9px] uppercase tracking-wider text-gray-500 font-semibold block">Market Trend</span>
+                  <span className="text-xs font-bold text-white mt-0.5 flex items-center gap-1">
+                    <Check size={12} className="text-emerald-400" /> Lowest in 30 Days
+                  </span>
                 </div>
-                <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 lg:p-3.5">
-                  <p className="text-[10px] uppercase tracking-wide text-gray-500">Window</p>
-                  <p className="mt-0.5 text-[13px] font-semibold text-white">30 day history</p>
+                <div className="rounded-lg border border-white/[0.07] bg-white/[0.02] p-2.5">
+                  <span className="text-[9px] uppercase tracking-wider text-gray-500 font-semibold block">Authenticity</span>
+                  <span className="text-xs font-bold text-white mt-0.5 flex items-center gap-1">
+                    <ShieldCheck size={12} className="text-red-400" /> Verified Seller
+                  </span>
                 </div>
               </div>
 
+              {/* Top Feature Highlights */}
               {keyHighlights.length > 0 && (
-                <div className="grid grid-cols-2 gap-2">
-                  {keyHighlights.map((h) => {
+                <div className="grid grid-cols-2 gap-1.5 pt-0.5">
+                  {keyHighlights.slice(0, 4).map((h) => {
                     const Icon = iconForLabel(h.label);
                     return (
-                      <div key={h.label} className="flex items-start gap-2.5 rounded-xl border border-white/[0.06] bg-white/[0.02] p-2.5 lg:p-3">
-                        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/[0.05] text-[#ff4d63] lg:h-8 lg:w-8">
-                          <Icon size={15} />
+                      <div
+                        key={h.label}
+                        className="flex items-center gap-2 rounded-lg border border-white/[0.07] bg-white/[0.02] p-2 hover:border-white/15 transition-all"
+                      >
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-white/[0.05] text-red-400">
+                          <Icon size={12} />
                         </span>
                         <div className="min-w-0">
-                          <div className="text-[10px] uppercase tracking-wide text-gray-500">{h.label}</div>
-                          <div className="text-[13px] font-semibold leading-snug text-white">{h.value}</div>
+                          <div className="text-[9px] uppercase tracking-wider text-gray-500 font-semibold leading-none">
+                            {h.label}
+                          </div>
+                          <div className="text-[11px] font-bold text-white truncate mt-0.5">
+                            {h.value}
+                          </div>
                         </div>
                       </div>
                     );
@@ -170,114 +193,95 @@ const DealDetailsModal = ({ product, onClose, onTrack }) => {
             </div>
           </div>
 
-          {/* ── Dashboard ── */}
-          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4">
-            <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 sm:col-span-2 lg:col-span-2 lg:p-5">
-              <div className="mb-3 flex items-end justify-between">
-                <div>
-                  <p className="text-[10px] uppercase tracking-wide text-gray-500">Market movement</p>
-                  <h3 className="text-sm font-bold text-white">Price history</h3>
-                </div>
-                <span className="text-[11px] text-gray-500">Last 30 days</span>
-              </div>
-              <div className="h-[160px] sm:h-[180px] lg:h-[210px]">
-                <PriceHistoryChart productId={product.product_id || product.id} currentPrice={current} />
-              </div>
-            </section>
-
-            <section className="flex flex-col items-center justify-center rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 text-center lg:p-5">
-              <p className="text-[10px] uppercase tracking-wide text-gray-500">Deal score</p>
-              <div
-                className="relative mt-2 flex h-24 w-24 items-center justify-center rounded-full lg:h-28 lg:w-28"
-                style={{ background: `conic-gradient(#ff1f3d ${dealScore * 3.6}deg, rgba(255,255,255,0.08) 0deg)` }}
-              >
-                <div className="flex h-[80px] w-[80px] flex-col items-center justify-center rounded-full bg-[#0b0b12] lg:h-[94px] lg:w-[94px]">
-                  <strong className="text-2xl font-black text-white lg:text-[26px]">{dealScore}</strong>
-                  <span className="text-[10px] text-gray-500">/100</span>
-                </div>
-              </div>
-              <p className="mt-2 text-[13px] font-bold text-white">{dealScore > 89 ? 'Excellent deal' : 'Good value'}</p>
-              <p className="text-[11px] text-gray-500">Compared with recent market prices</p>
-            </section>
-
-            <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 lg:p-5">
-              <p className="text-[10px] uppercase tracking-wide text-gray-500">Compare prices</p>
-              <h3 className="mb-2 text-sm font-bold text-white">Market check</h3>
-              <div className="flex flex-col gap-1.5 text-[13px]">
-                <div className="flex items-center justify-between"><span className="text-gray-400">TechBoy price</span><b className="text-white">₹{current.toLocaleString('en-IN')}</b></div>
-                <div className="flex items-center justify-between"><span className="text-gray-400">Previous price</span><b className="text-white">{previous ? `₹${previous.toLocaleString('en-IN')}` : '—'}</b></div>
-                <div className="flex items-center justify-between"><span className="text-gray-400">Potential saving</span><b className="text-emerald-400">₹{savings.toLocaleString('en-IN')}</b></div>
-              </div>
-            </section>
-
-            <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 sm:col-span-2 lg:col-span-2 lg:p-5">
-              <p className="text-[10px] uppercase tracking-wide text-gray-500">Highlights</p>
-              <h3 className="mb-2 text-sm font-bold text-white">What stands out</h3>
-              <ul className="grid gap-1.5 sm:grid-cols-2">
-                {(highlights.length ? highlights : ['Strong everyday performance', 'Live price tracking enabled', 'Worth watching at this price']).map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-[13px] text-gray-300">
-                    <Check size={13} className="mt-0.5 shrink-0 text-emerald-400" /> {item}
-                  </li>
-                ))}
-              </ul>
-            </section>
+          {/* Price History Chart */}
+          <div className="rounded-xl border border-white/[0.07] bg-white/[0.015] p-3 sm:p-4">
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-xs font-bold text-white flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                30-Day Price Movement & Sparkline
+              </span>
+              <span className="text-[10px] text-gray-400">Live Tracker</span>
+            </div>
+            <div className="h-[120px] sm:h-[140px]">
+              <PriceHistoryChart productId={product.product_id || product.id} currentPrice={current} />
+            </div>
           </div>
 
+          {/* Expandable Specifications Sheet */}
           {specGroups.length > 0 && (
-            <section className="mt-4">
-              <div className="mb-3 flex items-center gap-2.5">
-                <span className="h-4 w-1 rounded-full bg-gradient-to-b from-[#ff1f3d] to-[#ff7d8f]" />
-                <div>
-                  <p className="text-[10px] uppercase tracking-wide text-gray-500">Technical details</p>
-                  <h3 className="text-sm font-bold text-white">Full specifications</h3>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
-                {specGroups.map((group) => {
-                  const GroupIcon = group.icon;
-                  return (
-                    <div key={group.title} className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-3.5 transition-colors hover:border-white/12 lg:p-4">
-                      <div className="mb-1.5 flex items-center gap-2">
-                        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#ff1f3d]/12 text-[#ff5f74]">
-                          <GroupIcon size={14} />
-                        </span>
-                        <h5 className="text-[10px] font-black uppercase tracking-[0.14em] text-gray-400">{group.title}</h5>
-                      </div>
-                      <dl className="flex flex-col divide-y divide-white/[0.05]">
-                        {group.rows.map((row, i) => (
-                          <div key={`${row.label}-${i}`} className="flex items-start justify-between gap-3 py-1.5">
-                            <dt className="shrink-0 text-[11px] uppercase tracking-wide text-gray-500">{row.label}</dt>
-                            <dd className="text-right text-[13px] font-semibold leading-snug text-white">{row.value}</dd>
+            <div className="rounded-xl border border-white/[0.07] bg-white/[0.015] overflow-hidden">
+              <button
+                onClick={() => setShowAllSpecs(!showAllSpecs)}
+                className="w-full flex items-center justify-between px-3.5 py-2.5 text-left text-xs font-bold text-gray-300 hover:text-white hover:bg-white/[0.02] transition-colors"
+              >
+                <span className="flex items-center gap-2">
+                  <Layers size={13} className="text-red-400" />
+                  Full Technical Specifications
+                </span>
+                <span className="flex items-center gap-1 text-[11px] text-red-400 font-semibold">
+                  {showAllSpecs ? 'Hide' : 'View all'}
+                  {showAllSpecs ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                </span>
+              </button>
+
+              <AnimatePresence>
+                {showAllSpecs && (
+                  <m.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="border-t border-white/[0.06] p-3 sm:p-4 bg-black/20"
+                  >
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                      {specGroups.map((group) => {
+                        const GroupIcon = group.icon;
+                        return (
+                          <div key={group.title} className="rounded-lg border border-white/[0.05] bg-white/[0.015] p-2.5">
+                            <div className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-wider text-gray-400 mb-2">
+                              <GroupIcon size={12} className="text-red-400" />
+                              {group.title}
+                            </div>
+                            <div className="space-y-1.5">
+                              {group.rows.map((row, i) => (
+                                <div key={`${row.label}-${i}`} className="flex items-baseline justify-between gap-2 text-[11px]">
+                                  <span className="text-gray-500 font-medium shrink-0">{row.label}</span>
+                                  <span className="text-white font-semibold text-right">{row.value}</span>
+                                </div>
+                              ))}
+                            </div>
                           </div>
-                        ))}
-                      </dl>
+                        );
+                      })}
                     </div>
-                  );
-                })}
-              </div>
-            </section>
+                  </m.div>
+                )}
+              </AnimatePresence>
+            </div>
           )}
         </div>
 
-        {/* Sticky action footer */}
+        {/* Action Footer */}
         <div
-          className="relative z-20 flex shrink-0 flex-col gap-2 border-t border-white/[0.06] bg-black/40 px-4 py-3 backdrop-blur-xl sm:flex-row sm:px-6 lg:px-8"
+          className="relative z-20 flex shrink-0 items-center gap-2 sm:gap-3 border-t border-white/[0.08] bg-[#08080e]/95 px-4 py-2.5 sm:px-6 sm:py-3 backdrop-blur-md"
           style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
         >
           <button
             onClick={() => onTrack?.(product)}
-            className="group flex flex-1 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#ff1f3d] via-[#e60023] to-[#c7001e] px-5 py-3 text-sm font-extrabold text-white shadow-[0_8px_24px_rgba(230,0,35,0.4)] transition-all hover:from-[#ff3856] hover:to-[#ff1030] active:scale-[0.98]"
+            className="group flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-white/15 bg-white/[0.05] hover:bg-white/[0.1] px-4 py-2.5 text-xs sm:text-sm font-bold text-white transition-all hover:border-red-500/40 active:scale-[0.98]"
           >
-            <Bell size={16} /> Track this price
+            <Bell size={13} />
+            <span>Track Price Drop</span>
           </button>
           {retailerUrl && (
             <a
               href={retailerUrl}
               target="_blank"
               rel="noreferrer"
-              className="group flex flex-1 items-center justify-center gap-2 rounded-2xl border border-white/12 bg-white/[0.05] px-5 py-3 text-sm font-bold text-white transition-all hover:border-red-500/40 hover:bg-white/[0.09] active:scale-[0.98]"
+              className="group flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-[#ff1f3d] via-[#e60023] to-[#c7001e] px-4 py-2.5 text-xs sm:text-sm font-extrabold text-white shadow-[0_4px_16px_rgba(230,0,35,0.4)] hover:shadow-[0_6px_22px_rgba(255,31,61,0.6)] hover:brightness-110 active:scale-[0.98] transition-all"
             >
-              <ExternalLink size={15} /> View retailer
+              <span>View Deal</span>
+              <ExternalLink size={13} className="transition-transform group-hover:translate-x-0.5" />
             </a>
           )}
         </div>
