@@ -324,9 +324,19 @@ const ProfilePage = ({ setCurrentView, initialTab, onSearch }) => {
                             )}
                         </div>
 
-                        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-xs text-gray-400">
-                            <span className="inline-flex items-center gap-1.5"><Mail size={13} className="text-red-400" />{user.email || 'Google Account'}</span>
-                            <span className="inline-flex items-center gap-1.5"><Calendar size={13} className="text-red-400" />Member since {memberSince}</span>
+                        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5 text-xs text-gray-400 mt-2">
+                            <span className="inline-flex items-center gap-1.5 bg-white/[0.04] px-2.5 py-1 rounded-lg border border-white/5">
+                                <Mail size={13} className="text-red-400 shrink-0" />
+                                <span className="truncate max-w-[200px] sm:max-w-none">{user.email || 'Google Account'}</span>
+                            </span>
+                            <span className="inline-flex items-center gap-1.5 bg-white/[0.04] px-2.5 py-1 rounded-lg border border-white/5">
+                                <Calendar size={13} className="text-red-400 shrink-0" />
+                                <span>Member since {memberSince}</span>
+                            </span>
+                            <span className="inline-flex items-center gap-1.5 bg-white/[0.04] px-2.5 py-1 rounded-lg border border-white/5">
+                                <Zap size={13} className="text-emerald-400 shrink-0" />
+                                <span className="text-emerald-400 font-bold">Active Account</span>
+                            </span>
                         </div>
                     </div>
 
