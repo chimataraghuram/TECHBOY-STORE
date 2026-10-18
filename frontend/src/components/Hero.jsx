@@ -121,7 +121,7 @@ const Hero = ({ setCurrentView }) => {
 
                     {/* ── DESKTOP ONLY: right visual stage ── */}
                     <m.div
-                        className="hidden lg:flex relative w-full lg:w-[46%] xl:w-[48%] justify-center items-center h-[500px] xl:h-[540px]"
+                        className="hidden lg:flex relative w-full lg:w-[46%] xl:w-[48%] justify-center items-center h-[520px] xl:h-[560px] -mt-10 xl:-mt-16"
                         initial={{ opacity: 0, scale: 0.94 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}

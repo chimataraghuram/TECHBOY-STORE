@@ -146,7 +146,7 @@ const HeroVisual = () => (
         {/* outer big ring */}
         <div className="absolute pointer-events-none" style={{
             width:460, height:460,
-            top:'50%', left:'52%',
+            top:'44%', left:'52%',
             transform:'translate(-50%,-50%) perspective(600px) rotateX(74deg)',
             borderRadius:'50%',
             border:'1.5px solid rgba(255,31,61,0.5)',
@@ -161,7 +161,7 @@ const HeroVisual = () => (
         {/* inner ring */}
         <div className="absolute pointer-events-none" style={{
             width:320, height:320,
-            top:'52%', left:'50%',
+            top:'46%', left:'50%',
             transform:'translate(-50%,-50%) perspective(600px) rotateX(74deg)',
             borderRadius:'50%',
             border:'1px solid rgba(255,31,61,0.28)',
@@ -171,14 +171,14 @@ const HeroVisual = () => (
 
         {/* ── red stage platform glow ── */}
         <div className="absolute pointer-events-none" style={{
-            width:200, height:35, bottom:'8%', left:'50%',
+            width:200, height:35, bottom:'14%', left:'50%',
             transform:'translateX(-50%)',
             borderRadius:'50%',
             background:'radial-gradient(ellipse, rgba(255,31,61,0.65) 0%, rgba(255,31,61,0.2) 45%, transparent 70%)',
             filter:'blur(10px)',
         }} />
         <div className="absolute pointer-events-none" style={{
-            width:130, height:18, bottom:'9%', left:'50%',
+            width:130, height:18, bottom:'15%', left:'50%',
             transform:'translateX(-50%)',
             borderRadius:'50%',
             background:'rgba(255,31,61,0.75)',
@@ -188,53 +188,53 @@ const HeroVisual = () => (
         {/* ══ PHONES — match reference layout ══ */}
 
         {/* Dark phone — far left */}
-        <P top="52%" left="9%" rotate={-8} scale={0.7} z={8} delay={0.5}>
+        <P top="46%" left="9%" rotate={-8} scale={0.7} z={8} delay={0.5}>
             <Phone color="#333" screenTop="#060608" screenBot="#111118" w={82} h={168} />
         </P>
 
         {/* Samsung — upper left */}
-        <P top="36%" left="26%" rotate={-4} scale={0.82} z={18} delay={0.3}>
+        <P top="30%" left="26%" rotate={-4} scale={0.82} z={18} delay={0.3}>
             <Phone color="#2244dd" screenTop="#02020e" screenBot="#040e38" w={84} h={172} />
         </P>
 
         {/* Xiaomi / Orange — lower left */}
-        <P top="68%" left="24%" rotate={-6} scale={0.78} z={14} delay={0.45}>
+        <P top="62%" left="24%" rotate={-6} scale={0.78} z={14} delay={0.45}>
             <Phone color="#e05000" screenTop="#0e0400" screenBot="#280e00" w={82} h={166} />
         </P>
 
         {/* ── Hero iPhone — center ── */}
-        <P top="47%" left="50%" rotate={0} scale={1.1} z={30} delay={0.1} float>
+        <P top="41%" left="50%" rotate={0} scale={1.1} z={30} delay={0.1} float>
             <Phone color="#ff1f3d" screenTop="#110006" screenBot="#2e000e" w={106} h={210} isHero />
         </P>
 
         {/* OnePlus — upper right */}
-        <P top="27%" left="70%" rotate={5} scale={0.82} z={20} delay={0.3}>
+        <P top="21%" left="70%" rotate={5} scale={0.82} z={20} delay={0.3}>
             <Phone color="#cc0000" screenTop="#0e0000" screenBot="#280000" w={84} h={172} />
         </P>
 
         {/* realme — right */}
-        <P top="58%" left="78%" rotate={8} scale={0.76} z={16} delay={0.4}>
+        <P top="52%" left="78%" rotate={8} scale={0.76} z={16} delay={0.4}>
             <Phone color="#b8a000" screenTop="#0a0900" screenBot="#221e00" w={82} h={166} />
         </P>
 
         {/* vivo — bottom center-right */}
-        <P top="78%" left="58%" rotate={5} scale={0.72} z={12} delay={0.55}>
+        <P top="72%" left="58%" rotate={5} scale={0.72} z={12} delay={0.55}>
             <Phone color="#2244ff" screenTop="#00020d" screenBot="#060a28" w={80} h={162} />
         </P>
 
         {/* ══ BRAND PILLS ══ */}
         <Pill brand="iPhone"  logo="🍎" color="#ff1f3d"
-            style={{ top:'5%',  left:'46%', transform:'translateX(-50%)' }} delay={0.75} />
+            style={{ top:'1%',  left:'46%', transform:'translateX(-50%)' }} delay={0.75} />
         <Pill brand="Samsung" logo="S"   color="#4466ff"
-            style={{ top:'14%', left:'2%' }} delay={0.85} />
+            style={{ top:'9%', left:'2%' }} delay={0.85} />
         <Pill brand="OnePlus" logo="1+"  color="#ff2222"
-            style={{ top:'5%',  right:'4%' }} delay={0.9} />
+            style={{ top:'1%',  right:'4%' }} delay={0.9} />
         <Pill brand="Xiaomi"  logo="mi"  color="#ff6900"
-            style={{ top:'65%', left:'0%' }} delay={1.0} />
+            style={{ top:'59%', left:'0%' }} delay={1.0} />
         <Pill brand="realme"  logo="R"   color="#ccaa00"
-            style={{ top:'46%', right:'1%' }} delay={1.05} />
+            style={{ top:'40%', right:'1%' }} delay={1.05} />
         <Pill brand="vivo"    logo="V"   color="#4455ff"
-            style={{ bottom:'10%', right:'8%' }} delay={1.1} />
+            style={{ bottom:'14%', right:'8%' }} delay={1.1} />
     </div>
 );
 
