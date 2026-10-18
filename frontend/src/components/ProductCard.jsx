@@ -228,42 +228,45 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                         </m.button>
                     </div>
 
-                    {/* Photo gallery navigation — only when a product has more than one photo */}
+                    {/* Photo gallery navigation — sleek modern carousel controls */}
                     {hasGallery && (
                         <>
+                            {/* Previous button — placed cleanly on the left edge with frosted backdrop */}
                             <m.button
                                 type="button"
-                                whileHover={{ scale: 1.12 }}
-                                whileTap={{ scale: 0.88 }}
+                                whileHover={{ scale: 1.1, backgroundColor: 'rgba(255, 31, 61, 0.85)' }}
+                                whileTap={{ scale: 0.9 }}
                                 onClick={prevImage}
                                 aria-label="Previous photo"
-                                className="absolute left-1.5 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/55 backdrop-blur-md border border-white/15 text-white hover:border-red-500/60 hover:text-red-400 transition-all duration-300 opacity-100 sm:opacity-0 sm:group-hover/stage:opacity-100"
+                                className="absolute left-2.5 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white hover:border-red-500 shadow-[0_4px_16px_rgba(0,0,0,0.6)] transition-all duration-200 cursor-pointer opacity-90 hover:opacity-100"
                             >
                                 <ChevronLeft size={15} className="stroke-[2.5]" />
                             </m.button>
+
+                            {/* Next button — placed cleanly on the right edge */}
                             <m.button
                                 type="button"
-                                whileHover={{ scale: 1.12 }}
-                                whileTap={{ scale: 0.88 }}
+                                whileHover={{ scale: 1.1, backgroundColor: 'rgba(255, 31, 61, 0.85)' }}
+                                whileTap={{ scale: 0.9 }}
                                 onClick={nextImage}
                                 aria-label="Next photo"
-                                className="absolute right-1.5 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/55 backdrop-blur-md border border-white/15 text-white hover:border-red-500/60 hover:text-red-400 transition-all duration-300 opacity-100 sm:opacity-0 sm:group-hover/stage:opacity-100"
+                                className="absolute right-2.5 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white hover:border-red-500 shadow-[0_4px_16px_rgba(0,0,0,0.6)] transition-all duration-200 cursor-pointer opacity-90 hover:opacity-100"
                             >
                                 <ChevronRight size={15} className="stroke-[2.5]" />
                             </m.button>
 
-                            {/* Mini pagination dots reflecting the real photo count */}
-                            <div className="absolute bottom-2.5 right-3 z-20 flex items-center gap-1.5">
+                            {/* Center-bottom modern pill indicator */}
+                            <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md border border-white/15 shadow-[0_4px_16px_rgba(0,0,0,0.7)] pointer-events-auto">
                                 {images.map((_, i) => (
                                     <button
                                         key={i}
                                         type="button"
                                         onClick={(e) => { e.stopPropagation(); showImage(i); }}
                                         aria-label={`Go to photo ${i + 1}`}
-                                        className={`w-1.5 h-1.5 rounded-full transition-all ${
+                                        className={`transition-all duration-300 rounded-full cursor-pointer ${
                                             i === imgIndex
-                                                ? 'bg-[#ff0d2d] shadow-[0_0_6px_rgba(255,13,45,0.8)] scale-110'
-                                                : 'bg-white/30 hover:bg-white/60'
+                                                ? 'w-4 h-1.5 bg-[#ff1f3d] shadow-[0_0_8px_rgba(255,31,61,0.9)]'
+                                                : 'w-1.5 h-1.5 bg-white/35 hover:bg-white/70'
                                         }`}
                                     />
                                 ))}
