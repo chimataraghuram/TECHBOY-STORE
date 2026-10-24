@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { m, AnimatePresence } from 'framer-motion';
 import { Bell, Check, Clock, ExternalLink, TrendingDown, X, Layers, ChevronDown, ChevronUp, ShieldCheck } from 'lucide-react';
 import PriceHistoryChart from './PriceHistoryChart';
+import PriceDropRadar from './PriceDropRadar';
 import { buildSpecGroups, buildHighlights, iconForLabel } from '../utils/specSheet';
 
 const FALLBACK_IMAGE = '/images/phones/apple-iphone-17-pro-max.png';
@@ -192,6 +193,14 @@ const DealDetailsModal = ({ product, onClose, onTrack }) => {
               )}
             </div>
           </div>
+
+          {/* AI Predictive Price Drop Radar */}
+          <PriceDropRadar
+            currentPrice={current}
+            prevPrice={previous}
+            discount={previous > current ? Math.round(((previous - current) / previous) * 100) : 0}
+            onSetAlert={onTrack ? () => onTrack(product) : undefined}
+          />
 
           {/* Price History Chart */}
           <div className="rounded-xl border border-white/[0.07] bg-white/[0.015] p-3">

@@ -8,6 +8,7 @@ import {
 import { resolveProductImage, getProductImages } from '../utils/imageResolver';
 import { parseSpecs } from '../utils/specsParser';
 import QuickViewModal from './QuickViewModal';
+import PriceDropRadar from './PriceDropRadar';
 import { feedback } from '../utils/haptics';
 import { copyPhoneShareLink } from '../utils/deepLink';
 
@@ -363,11 +364,14 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                         )}
                     </div>
 
-                    {/* Star Rating and Reviews Row */}
-                    <div className="flex items-center gap-1.5 mt-1.5 text-xs sm:text-sm text-gray-400">
-                        <Star size={14} className="fill-amber-400 text-amber-400 shrink-0" />
-                        <span className="text-white font-black">{rating}</span>
-                        <span className="text-gray-400 text-xs">({reviewCount} reviews)</span>
+                    {/* Star Rating, Reviews & AI Buy Radar Pill */}
+                    <div className="flex items-center justify-between gap-1.5 mt-1.5 flex-wrap">
+                        <div className="flex items-center gap-1.5 text-xs sm:text-sm text-gray-400">
+                            <Star size={14} className="fill-amber-400 text-amber-400 shrink-0" />
+                            <span className="text-white font-black">{rating}</span>
+                            <span className="text-gray-400 text-xs">({reviewCount})</span>
+                        </div>
+                        <PriceDropRadar currentPrice={currentPrice} prevPrice={prevPrice} discount={discount} compact={true} />
                     </div>
 
                     {/* Bottom Action Grid: Wishlist, Track Price, Compare, and View Details */}
