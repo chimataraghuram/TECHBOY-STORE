@@ -164,11 +164,11 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
                                     <img
                                         src={logo}
                                         alt="TECHBOY STORE"
-                                        className="h-9 w-9 sm:h-10 sm:w-10 md:h-11 md:w-11 rounded-full object-cover border border-red-500/60 shadow-[0_0_16px_rgba(255,31,61,0.4)] transition-transform duration-500 group-hover:scale-105 group-hover:shadow-[0_0_22px_rgba(255,31,61,0.65)]"
+                                        className="h-10 w-10 sm:h-11 sm:w-11 md:h-12 md:w-12 lg:h-[50px] lg:w-[50px] rounded-full object-cover border border-red-500/60 shadow-[0_0_16px_rgba(255,31,61,0.4)] transition-transform duration-500 group-hover:scale-105 group-hover:shadow-[0_0_22px_rgba(255,31,61,0.65)]"
                                     />
                                     <span className="absolute inset-0 rounded-full ring-1 ring-white/10 pointer-events-none" />
                                 </span>
-                                <span className="text-white font-extrabold tracking-wide text-[14px] sm:text-base md:text-lg whitespace-nowrap leading-none">
+                                <span className="text-white font-extrabold tracking-wide text-[15px] sm:text-lg md:text-xl lg:text-[22px] whitespace-nowrap leading-none">
                                     TECHBOY <span className="text-red-500 drop-shadow-[0_0_12px_rgba(255,31,61,0.6)]">STORE</span>
                                 </span>
                             </a>
