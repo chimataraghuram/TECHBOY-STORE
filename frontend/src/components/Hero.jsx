@@ -23,8 +23,19 @@ const Hero = ({ setCurrentView }) => {
     };
 
     const goProducts = () => {
-        setCurrentView('home');
-        setTimeout(() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' }), 60);
+        if (setCurrentView) setCurrentView('home');
+        setTimeout(() => {
+            const el = document.getElementById('products');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 80);
+    };
+
+    const goTrends = () => {
+        if (setCurrentView) setCurrentView('home');
+        setTimeout(() => {
+            const el = document.getElementById('trends');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 80);
     };
 
     return (
@@ -90,7 +101,7 @@ const Hero = ({ setCurrentView }) => {
                             </m.button>
 
                             <button
-                                onClick={goProducts}
+                                onClick={goTrends}
                                 className="group flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-red-500/40 text-xs text-gray-300 transition-all backdrop-blur-xl"
                             >
                                 <span className="text-sm">🔥</span>

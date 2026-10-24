@@ -1,0 +1,96 @@
+/* ============================================================
+   Hardware-Accelerated 60fps Micro-Animations & Smooth Scrolling
+   Optimized for Mobile, Tablet, and Desktop
+   ============================================================ */
+
+/* 1. Universal Butter-Smooth Interactive Buttons & Clickables */
+button, 
+a, 
+[role="button"],
+.interactive-btn {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  will-change: transform, opacity;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
+              background-color 0.2s ease, 
+              border-color 0.2s ease, 
+              color 0.15s ease;
+}
+
+button:active, 
+a:active, 
+[role="button"]:active {
+  transform: scale(0.96) translateY(1px) !important;
+}
+
+/* 2. Hardware-accelerated hover lift on devices with real pointers (Desktops/Laptops) */
+@media (hover: hover) and (pointer: fine) {
+  button:hover:not(:disabled),
+  a:hover:not(:disabled),
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* 3. Smooth GPU-accelerated Product Cards & Modals */
+.product-card,
+.glass-stage,
+.trend-card,
+.quick-prompt-btn {
+  will-change: transform, box-shadow;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* 4. Smooth 60fps Scroll Reveal Classes */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(20px) translateZ(0);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0) translateZ(0);
+}
+
+/* Stagger delays for children */
+.stagger-1 { transition-delay: 0.05s; }
+.stagger-2 { transition-delay: 0.1s; }
+.stagger-3 { transition-delay: 0.15s; }
+.stagger-4 { transition-delay: 0.2s; }
+
+/* 5. Fluid smooth scroll container */
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 6. Mobile & Tablet Touch Performance Fixes */
+@media (max-width: 1024px) {
+  /* Prevent touch lag & unwanted hover sticky states */
+  button:hover {
+    transform: none;
+  }
+  
+  /* Smooth inertia scrolling */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* 7. Respect Accessibility Preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
