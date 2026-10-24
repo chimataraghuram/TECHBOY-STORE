@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { m } from 'framer-motion';
+import { Sparkles, Bot, Send, Square, X, Compass } from 'lucide-react';
 import logo from '../../images/logos/new-logo.jpg';
 import localPhonesData from '../data/phones.json';
 
 const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
-const money = (value) => `Rs ${Number(value || 0).toLocaleString()}`;
+const money = (value) => `₹${Number(value || 0).toLocaleString()}`;
 
 const normalize = (value) => String(value || '')
     .toLowerCase()
@@ -61,8 +62,6 @@ const rankProducts = (query, products) => {
         .map(({ product }) => product);
 };
 
-/* ── Dynamic system prompt built inside component ── */
-
 const localAdvisor = (text, phonesData) => {
     const query = text.toLowerCase();
     const allPhones = [...(phonesData || localPhonesData)];
@@ -74,7 +73,6 @@ const localAdvisor = (text, phonesData) => {
         let budget = Number(budgetMatch[1]);
         if (budget < 1000) budget *= 1000;
         matches = matches.filter(p => Number(p.price) <= budget);
-        // Sort descending so the most expensive phone UNDER the budget is first (maximizing budget)
         matches.sort((a, b) => b.price - a.price);
     }
 
@@ -93,108 +91,120 @@ const localAdvisor = (text, phonesData) => {
 
     if (matches.length === 0) {
         return brand
-            ? `I couldn't find a ${brand} phone matching those requirements in the current catalog. Try a different budget or use case.`
-            : 'I could not find a matching phone in the current catalog. Try adding a brand, budget, or use case.';
+            ? `I couldn't find a ${brand} phone matching those requirements in our current verified catalog. Try a different budget or use case!`
+            : 'I could not find a matching phone in the current catalog. Try adding a brand, budget, or key feature.';
     }
 
     const picks = matches.slice(0, query.includes('compare') || query.includes('versus') ? 4 : 3);
-    const title = brand ? `Here are the best ${brand} matches I found:` : 'Here are my best TechBoy matches:';
-    return [
-        title,
-        ...picks.map(p => `- **${p.name}** - ${money(p.price)}: ${p.tag || 'Strong value'}; ${p.description}`),
-        'These recommendations are from the current TechBoy catalog. Open a phone to verify live availability and use Compare for a side-by-side view.'
-    ].join('\n');
+    const intro = brand
+        ? `Here are the top ${brand} recommendations from our live catalog:`
+        : `Based on your request, here are the best matches:`;
+
+    const items = picks.map((p, idx) => {
+        const specSummary = Object.entries(p.specs || {})
+            .slice(0, 3)
+            .map(([k, v]) => `${k}: ${v}`)
+            .join(' • ');
+        return `**${idx + 1}. ${p.name}** — ${money(p.price)}\n${p.tag ? `*${p.tag}* • ` : ''}${p.description}${specSummary ? `\n> ${specSummary}` : ''}`;
+    }).join('\n\n');
+
+    return `${intro}\n\n${items}\n\nAsk me if you want full side-by-side specs, camera comparisons, or live price-drop alerts!`;
 };
 
-/* ── Simple markdown → JSX renderer ── */
 const renderMarkdown = (text) => {
     if (!text) return null;
-    const lines = text.split('\n');
-    const elements = [];
-    let key = 0;
-
-    for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        if (!line.trim()) { elements.push(<br key={key++} />); continue; }
-
-        // Bullet point
-        if (/^[-*]\s/.test(line)) {
-            const content = line.replace(/^[-*]\s/, '');
-            elements.push(
-                <div key={key++} className="md-bullet">
-                    <span className="md-dot">▸</span>
-                    <span>{inlineFormat(content)}</span>
-                </div>
-            );
-            continue;
-        }
-
-        // Heading ##
-        if (/^##\s/.test(line)) {
-            elements.push(<p key={key++} className="md-heading">{line.replace(/^##\s/, '')}</p>);
-            continue;
-        }
-
-        elements.push(<p key={key++} className="md-para">{inlineFormat(line)}</p>);
-    }
-    return elements;
+    return text.split('\n\n').map((block, bi) => {
+        const lines = block.split('\n');
+        return (
+            <div key={bi} className="mb-2.5 last:mb-0 leading-relaxed text-[13.5px]">
+                {lines.map((line, li) => {
+                    if (line.startsWith('### ')) {
+                        return <h4 key={li} className="text-white font-bold text-sm mt-2 mb-1 text-red-400">{line.replace('### ', '')}</h4>;
+                    }
+                    if (line.startsWith('## ') || line.startsWith('# ')) {
+                        return <h3 key={li} className="text-white font-black text-[15px] mt-2 mb-1.5">{line.replace(/^#+\s/, '')}</h3>;
+                    }
+                    if (line.startsWith('> ')) {
+                        return (
+                            <blockquote key={li} className="border-l-2 border-red-500/50 pl-2.5 py-0.5 my-1.5 text-xs text-gray-400 bg-white/[0.02] rounded-r">
+                                {line.replace('> ', '')}
+                            </blockquote>
+                        );
+                    }
+                    if (line.startsWith('- ') || line.startsWith('* ')) {
+                        return (
+                            <div key={li} className="flex items-start gap-2 my-0.5 ml-1">
+                                <span className="text-red-500 text-xs mt-0.5">•</span>
+                                <span className="text-gray-200">{formatInline(line.replace(/^[-*]\s/, ''))}</span>
+                            </div>
+                        );
+                    }
+                    return <p key={li} className="text-gray-200 my-0.5">{formatInline(line)}</p>;
+                })}
+            </div>
+        );
+    });
 };
 
-const inlineFormat = (text) => {
-    // Split on **bold** markers
-    const parts = text.split(/(\*\*[^*]+\*\*)/g);
-    return parts.map((part, i) => {
-        if (/^\*\*.*\*\*$/.test(part)) {
-            return <strong key={i}>{part.slice(2, -2)}</strong>;
+const formatInline = (str) => {
+    const parts = str.split(/(\*\*.*?\*\*|\*.*?\*|`.*?`)/g);
+    return parts.map((part, idx) => {
+        if (part.startsWith('**') && part.endsWith('**')) {
+            return <strong key={idx} className="font-extrabold text-white">{part.slice(2, -2)}</strong>;
+        }
+        if (part.startsWith('*') && part.endsWith('*')) {
+            return <em key={idx} className="text-red-300 not-italic font-medium">{part.slice(1, -1)}</em>;
+        }
+        if (part.startsWith('`') && part.endsWith('`')) {
+            return <code key={idx} className="bg-red-500/10 text-red-400 px-1.5 py-0.5 rounded text-xs font-mono border border-red-500/20">{part.slice(1, -1)}</code>;
         }
         return part;
     });
 };
 
-const callBackend = async (text, phonesData) => {
-    try {
-        const res = await fetch(`${BACKEND_URL}/chat/`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query: text })
-        });
-        if (!res.ok) throw new Error('Backend failed');
-        const data = await res.json();
-        // Keep brand-scoped questions deterministic even when the backend model
-        // tries to broaden the recommendation beyond the requested brand.
-        const requestedBrand = extractBrand(text, phonesData || localPhonesData);
-        return {
-            text: requestedBrand ? localAdvisor(text, phonesData) : (data.response || localAdvisor(text, phonesData)),
-            products: data.products || [],
-            sources: data.sources || []
-        };
-    } catch (err) {
-        console.error(err);
-        return { text: localAdvisor(text, phonesData) };
-    }
-};
-
 const ChatPopup = ({ isOpen, onClose }) => {
     const [messages, setMessages] = useState([
         {
-            id: 1,
-            text: "Hi! I'm **TechBoy AI** 🤖 — your expert smartphone advisor.\nTell me your **budget** or **use case** and I'll find you the perfect phone!",
+            id: 0,
+            text: "Hi! I'm **TechBoy AI** — your next-gen smartphone advisor.\n\nTell me your **budget, brand, or use case** (e.g. *best camera under ₹30K*, *gaming phone*, *iPhone vs Galaxy*) and I'll find you the perfect deal!",
             sender: 'ai',
             done: true
         }
     ]);
     const [inputValue, setInputValue] = useState('');
     const [isStreaming, setIsStreaming] = useState(false);
-    const messagesEndRef = useRef(null);
-    const abortRef = useRef(null);
-    const popupRef = useRef(null);
-    // Monotonic id generator for chat messages. Using Date.now() made fast
-    // consecutive sends collide on the same millisecond, producing duplicate
-    // React list keys (and mis-targeted message updates).
-    const msgIdRef = useRef(2);
     const [livePhonesData, setLivePhonesData] = useState(localPhonesData);
+    const messagesEndRef = useRef(null);
+    const popupRef = useRef(null);
+    const abortRef = useRef(null);
+    const msgIdRef = useRef(1);
+
+    const callBackend = async (userText, phones) => {
+        abortRef.current = new AbortController();
+        const timeoutId = setTimeout(() => abortRef.current.abort(), 12000);
+
+        try {
+            const res = await fetch(`${BACKEND_URL}/chat/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: userText }),
+                signal: abortRef.current.signal
+            });
+            clearTimeout(timeoutId);
+
+            if (res.ok) {
+                const data = await res.json();
+                return { text: data.reply || data.response || localAdvisor(userText, phones) };
+            }
+            throw new Error(`Backend returned status ${res.status}`);
+        } catch (err) {
+            clearTimeout(timeoutId);
+            throw err;
+        }
+    };
 
     useEffect(() => {
+        if (!isOpen) return;
         const handleClickOutside = (e) => {
             if (popupRef.current && !popupRef.current.contains(e.target)) {
                 if (e.target.closest('button[aria-label="TechBoy AI"]')) return;
@@ -212,7 +222,7 @@ const ChatPopup = ({ isOpen, onClose }) => {
             document.removeEventListener('touchstart', handleClickOutside);
             document.removeEventListener('keydown', handleEsc);
         };
-    }, [onClose]);
+    }, [isOpen, onClose]);
 
     useEffect(() => {
         let mounted = true;
@@ -240,7 +250,6 @@ const ChatPopup = ({ isOpen, onClose }) => {
 
     useEffect(() => { scrollToBottom(); }, [messages, scrollToBottom]);
 
-    /* ── Send message ── */
     const handleSend = async (e) => {
         e?.preventDefault();
         const text = inputValue.trim();
@@ -266,9 +275,6 @@ const ChatPopup = ({ isOpen, onClose }) => {
                 setIsStreaming(false);
                 return;
             }
-
-            console.error('NVIDIA NIM failed:', err.message);
-
             setMessages(prev => prev.map(m =>
                 m.id === aiId ? { ...m, text: localAdvisor(text, livePhonesData) } : m
             ));
@@ -287,10 +293,18 @@ const ChatPopup = ({ isOpen, onClose }) => {
     };
 
     const handleKeyDown = (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
+        if (e.key === 'Enter' && !e.shiftKey) { 
+            e.preventDefault(); 
+            handleSend(); 
+        }
     };
 
-    const suggestions = ['📱 Best under ₹15K', '🎮 Best gaming phone', '📷 Best camera phone', '🔋 Longest battery life'];
+    const suggestions = [
+        { label: 'Under ₹15K', query: 'Best phone under 15000', icon: '📱' },
+        { label: 'Gaming Beast', query: 'Best gaming smartphone', icon: '🎮' },
+        { label: 'Pro Camera', query: 'Best camera phone with OIS', icon: '📷' },
+        { label: 'Battery King', query: 'Phone with best battery backup', icon: '🔋' },
+    ];
 
     const isFirstMessage = messages.length <= 1;
 
@@ -299,92 +313,135 @@ const ChatPopup = ({ isOpen, onClose }) => {
     return (
         <m.div
             ref={popupRef}
-            className="chat-popup glass-card"
-            initial={{ opacity: 0, scale: 0.9, y: 16 }}
+            className="fixed inset-x-3 bottom-3 top-auto sm:inset-x-auto sm:bottom-6 sm:right-6 w-auto sm:w-[350px] md:w-[365px] h-[500px] max-h-[calc(100vh-100px)] z-[9995] flex flex-col rounded-2xl sm:rounded-3xl border border-white/[0.12] bg-[#09080e]/95 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.85),0_0_28px_rgba(255,31,61,0.2)] overflow-hidden"
+            initial={{ opacity: 0, scale: 0.94, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 16 }}
-            transition={{ type: "spring", stiffness: 360, damping: 25 }}
+            exit={{ opacity: 0, scale: 0.94, y: 20 }}
+            transition={{ type: "spring", stiffness: 380, damping: 28 }}
         >
-            {/* Header */}
-            <div className="chat-header">
-                <div className="chat-header-info">
-                    <div className="chat-bot-logo">
-                        <img src={logo} alt="TECHBOY AI" />
-                        <span className="ai-live-dot" />
+            {/* Top glowing ambient highlight */}
+            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-red-500/80 to-transparent pointer-events-none" />
+            <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-48 h-24 bg-red-500/20 blur-2xl pointer-events-none" />
+
+            {/* ── HEADER ── */}
+            <div className="relative px-4 py-3.5 flex items-center justify-between border-b border-white/[0.08] bg-white/[0.02]">
+                <div className="flex items-center gap-3">
+                    <div className="relative">
+                        <img 
+                            src={logo} 
+                            alt="TECHBOY AI" 
+                            className="w-10 h-10 rounded-2xl object-cover border border-red-500/60 shadow-[0_0_12px_rgba(255,31,61,0.4)]"
+                        />
+                        <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 border-2 border-[#09080e] shadow-[0_0_8px_#10b981]" />
                     </div>
-                    <div className="chat-brand-info">
-                        <h3>TECHBOY AI</h3>
-                        <p>
-                            <span className="status-dot" />
-                            {isStreaming ? 'Thinking...' : 'ONLINE & READY'}
-                            <span className="ai-model-tag">CATALOG RAG</span>
-                        </p>
+                    <div>
+                        <div className="flex items-center gap-2">
+                            <h3 className="text-white font-black text-sm tracking-wide">TECHBOY AI</h3>
+                            <span className="text-[10px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-red-500/15 border border-red-500/30 text-red-400">
+                                RAG v2
+                            </span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-[11px] text-gray-400 mt-0.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                            <span>{isStreaming ? 'Analyzing catalog...' : 'Live Advisor Online'}</span>
+                        </div>
                     </div>
                 </div>
-                <button className="chat-close-btn" onClick={onClose} aria-label="Close">
-                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+
+                <button 
+                    onClick={onClose} 
+                    className="w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 transition-all cursor-pointer"
+                    aria-label="Close"
+                >
+                    <X size={16} />
                 </button>
             </div>
 
-            {/* Messages */}
-            <div className="chat-messages">
+            {/* ── MESSAGES CONTAINER ── */}
+            <div className="flex-1 p-4 overflow-y-auto space-y-3.5 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
                 {messages.map(msg => (
-                    <div key={msg.id} className={`message ${msg.sender}`}>
+                    <div 
+                        key={msg.id} 
+                        className={`flex gap-2.5 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
                         {msg.sender === 'ai' && (
-                            <div className="ai-avatar">🤖</div>
-                        )}
-                        <div className="message-bubble">
-                            <div className="msg-content">
-                                {renderMarkdown(msg.text)}
-                                {!msg.done && <span className="stream-cursor" />}
+                            <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-red-500/20 to-red-500/5 border border-red-500/30 flex items-center justify-center text-xs shrink-0 mt-0.5 shadow-[0_0_10px_rgba(255,31,61,0.2)]">
+                                <Bot size={14} className="text-red-400" />
                             </div>
+                        )}
+                        <div 
+                            className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-relaxed shadow-lg ${
+                                msg.sender === 'user'
+                                    ? 'bg-gradient-to-r from-red-600 to-red-500 text-white font-medium rounded-tr-sm shadow-[0_4px_18px_rgba(255,31,61,0.3)]'
+                                    : 'bg-white/[0.04] border border-white/[0.08] text-gray-100 rounded-tl-sm backdrop-blur-md'
+                            }`}
+                        >
+                            {renderMarkdown(msg.text)}
+                            {!msg.done && (
+                                <span className="inline-block w-1.5 h-3.5 ml-1 bg-red-400 animate-pulse rounded-sm align-middle" />
+                            )}
                         </div>
                     </div>
                 ))}
                 <div ref={messagesEndRef} />
             </div>
 
-            {/* Suggestion chips — only on first load */}
+            {/* ── SUGGESTION PILLS (When starting) ── */}
             {isFirstMessage && (
-                <div className="chat-suggestions">
-                    {suggestions.map((s, i) => (
-                        <button
-                            key={i}
-                            className="suggestion-chip"
-                            onClick={() => {
-                                setInputValue(s.replace(/^\S+\s/, ''));
-                            }}
-                        >
-                            {s}
-                        </button>
-                    ))}
+                <div className="px-4 pb-2 pt-1">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2 flex items-center gap-1.5">
+                        <Sparkles size={11} className="text-red-400" />
+                        Quick Prompts
+                    </p>
+                    <div className="grid grid-cols-2 gap-1.5">
+                        {suggestions.map((s, i) => (
+                            <button
+                                key={i}
+                                type="button"
+                                onClick={() => {
+                                    setInputValue(s.query);
+                                }}
+                                className="flex items-center gap-1.5 px-2.5 py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] hover:border-red-500/40 text-[11.5px] font-semibold text-gray-300 hover:text-white transition-all text-left group cursor-pointer"
+                            >
+                                <span className="text-sm">{s.icon}</span>
+                                <span className="truncate">{s.label}</span>
+                            </button>
+                        ))}
+                    </div>
                 </div>
             )}
 
-            {/* Footer */}
-            <form className="chat-footer" onSubmit={handleSend}>
-                <textarea
-                    className="chat-input"
-                    rows={1}
-                    placeholder="Ask about gaming, camera, budget phones..."
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    disabled={isStreaming}
-                />
+            {/* ── FOOTER INPUT ── */}
+            <form onSubmit={handleSend} className="p-3 bg-white/[0.02] border-t border-white/[0.08] flex items-center gap-2">
+                <div className="relative flex-1 flex items-center">
+                    <input
+                        type="text"
+                        placeholder="Ask about budget, gaming, camera..."
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        disabled={isStreaming}
+                        className="w-full bg-white/[0.05] border border-white/[0.12] focus:border-red-500/60 focus:bg-white/[0.08] text-white text-[13px] rounded-2xl px-3.5 py-2.5 pr-2 outline-none transition-all placeholder:text-gray-500 font-medium"
+                    />
+                </div>
+
                 {isStreaming ? (
-                    <button type="button" className="send-btn stop-btn" onClick={handleStop} title="Stop">
-                        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
-                            <rect x="4" y="4" width="16" height="16" rx="2" />
-                        </svg>
+                    <button
+                        type="button"
+                        onClick={handleStop}
+                        className="w-10 h-10 rounded-2xl bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 flex items-center justify-center text-red-400 transition-all shrink-0 cursor-pointer"
+                        title="Stop"
+                    >
+                        <Square size={14} className="fill-current" />
                     </button>
                 ) : (
-                    <button type="submit" className="send-btn" disabled={!inputValue.trim()} aria-label="Send">
-                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-                        </svg>
+                    <button
+                        type="submit"
+                        disabled={!inputValue.trim()}
+                        className="w-10 h-10 rounded-2xl bg-gradient-to-br from-red-500 to-red-600 hover:from-red-400 hover:to-red-500 disabled:opacity-30 disabled:pointer-events-none text-white flex items-center justify-center transition-all shadow-[0_4px_16px_rgba(255,31,61,0.4)] shrink-0 cursor-pointer"
+                        aria-label="Send"
+                    >
+                        <Send size={15} className="translate-x-[1px]" />
                     </button>
                 )}
             </form>

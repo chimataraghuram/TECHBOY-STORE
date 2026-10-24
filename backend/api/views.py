@@ -21,6 +21,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from .services import product_service, analytics_service
 from .services.rag_service import retrieve_products, build_context, local_answer
+from .services.email_service import send_welcome_email, send_login_notification_email
 from .models import Product, ClickTrack, PriceHistory, PriceAlert, Watchlist
 from .filters import ProductFilter
 from .serializers import (
@@ -71,6 +72,11 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        try:
+            user_display = getattr(user, 'display_name', '') or user.username
+            send_welcome_email(user.email, user_display)
+        except Exception as e:
+            print(f'[RegisterView] Welcome email error: {e}')
         refresh = RefreshToken.for_user(user)
         return Response({
             "token": str(refresh.access_token),
@@ -79,6 +85,20 @@ class RegisterView(APIView):
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        if response.status_code == 200:
+            try:
+                username = request.data.get('username')
+                user = User.objects.filter(username=username).first() or User.objects.filter(email=username).first()
+                if user and user.email:
+                    ip = request.META.get('HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR', 'Unknown'))
+                    ua = request.META.get('HTTP_USER_AGENT', 'Web Browser')
+                    send_login_notification_email(user.email, user.display_name or user.username, ip, ua)
+            except Exception as e:
+                print(f'[LoginView] Login notification error: {e}')
+        return response
 
 class GoogleAuthView(APIView):
     permission_classes = [AllowAny]
@@ -111,12 +131,24 @@ class GoogleAuthView(APIView):
                 'profile_picture': picture
             })
 
+            ip = request.META.get('HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR', 'Unknown'))
+            ua = request.META.get('HTTP_USER_AGENT', 'Web Browser')
+
             if not created:
                 user.google_id = uid
                 user.firebase_uid = uid
                 user.display_name = name
                 user.profile_picture = picture
                 user.save(update_fields=['google_id', 'firebase_uid', 'display_name', 'profile_picture'])
+                try:
+                    send_login_notification_email(user.email, user.display_name or user.username, ip, ua)
+                except Exception as e:
+                    print(f'[GoogleAuth] Login alert error: {e}')
+            else:
+                try:
+                    send_welcome_email(user.email, user.display_name or user.username)
+                except Exception as e:
+                    print(f'[GoogleAuth] Welcome email error: {e}')
 
             # Issue our own JWT token
             refresh = RefreshToken.for_user(user)
@@ -316,7 +348,7 @@ class ChatbotAPIView(APIView):
     permission_classes = [AllowAny]
     
     def post(self, request):
-        query = str(request.data.get('query', '')).strip()
+        query = str(request.data.get('query') or request.data.get('message') or '').strip()
         if not query:
             return Response({"response": "I'm ready to help! What kind of smartphone are you looking for?"})
 
