@@ -152,12 +152,16 @@ Distributed under the **MIT License**. See `LICENSE` for more information.
 
 ---
 
-## 👨‍💻 Author
-**Chimata Raghuram**  
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/chimataraghuram)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/chimataraghuram)
+## 👥 Team
+
+| # | Name / Contributor | Profile Links |
+| :-: | :--- | :--- |
+| **1** | **Chimata Raghuram** *(Lead)* | [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/chimataraghuram) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/chimataraghuram) |
+| **2** | **bchakradharreddy** | [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bchakradharreddy) |
+| **3** | **Ramesh7075** | [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Ramesh7075) |
+| **4** | **shalemshalem250-bot** | [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/shalemshalem250-bot) |
 
 <div align="center">
   <br />
-  <b>COOKED BY RAGHU</b> ❤️
+  <b>COOKED BY RAGHU & TEAM</b> ❤️
 </div>
