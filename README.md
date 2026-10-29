@@ -152,14 +152,99 @@ Distributed under the **MIT License**. See `LICENSE` for more information.
 
 ---
 
-## 👥 Team
+## 👥 Core Engineering Team
 
-| # | Name / Contributor | Profile Links |
-| :-: | :--- | :--- |
-| **1** | **Chimata Raghuram** *(Lead)* | [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/chimataraghuram) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/chimataraghuram) |
-| **2** | **bchakradharreddy** | [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bchakradharreddy) |
-| **3** | **Ramesh7075** | [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Ramesh7075) |
-| **4** | **shalemshalem250-bot** | [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/shalemshalem250-bot) |
+<table width="100%" style="width: 100%; border-collapse: collapse; text-align: left;">
+  <thead>
+    <tr style="border-bottom: 2px solid rgba(255, 31, 61, 0.4); background-color: rgba(255, 31, 61, 0.06);">
+      <th align="center" width="80" style="padding: 14px 10px; font-size: 14px;">Avatar</th>
+      <th align="left" style="padding: 14px 16px; font-size: 14px;">Contributor & Role</th>
+      <th align="left" style="padding: 14px 16px; font-size: 14px;">Specialization</th>
+      <th align="center" width="220" style="padding: 14px 16px; font-size: 14px;">Connect</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+      <td align="center" style="padding: 14px 10px;">
+        <a href="https://github.com/chimataraghuram">
+          <img src="https://github.com/chimataraghuram.png?size=80" width="52" height="52" style="border-radius: 50%; border: 2px solid #ff1f3d; box-shadow: 0 0 14px rgba(255, 31, 61, 0.4);" alt="Chimata Raghuram" />
+        </a>
+      </td>
+      <td style="padding: 14px 16px;">
+        <strong style="font-size: 15px; color: #ffffff;">Chimata Raghuram</strong> <span style="font-size: 11px; padding: 2px 8px; border-radius: 12px; background: rgba(255, 31, 61, 0.2); color: #ff4d66; border: 1px solid rgba(255, 31, 61, 0.4); font-weight: bold; margin-left: 6px;">PROJECT LEAD</span><br />
+        <span style="font-size: 12px; color: #9ca3af;">@chimataraghuram</span>
+      </td>
+      <td style="padding: 14px 16px; font-size: 13px; color: #d1d5db;">
+        Full-Stack Architecture, AI/RAG Pipelines & Core Product Design
+      </td>
+      <td align="center" style="padding: 14px 16px;">
+        <a href="https://github.com/chimataraghuram">
+          <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+        </a>
+        <a href="https://linkedin.com/in/chimataraghuram">
+          <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" />
+        </a>
+      </td>
+    </tr>
+    <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+      <td align="center" style="padding: 14px 10px;">
+        <a href="https://github.com/bchakradharreddy">
+          <img src="https://github.com/bchakradharreddy.png?size=80" width="52" height="52" style="border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.25); box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);" alt="bchakradharreddy" />
+        </a>
+      </td>
+      <td style="padding: 14px 16px;">
+        <strong style="font-size: 15px; color: #ffffff;">B. Chakradhar Reddy</strong> <span style="font-size: 11px; padding: 2px 8px; border-radius: 12px; background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); font-weight: bold; margin-left: 6px;">CONTRIBUTOR</span><br />
+        <span style="font-size: 12px; color: #9ca3af;">@bchakradharreddy</span>
+      </td>
+      <td style="padding: 14px 16px; font-size: 13px; color: #d1d5db;">
+        Backend Services, Data Integrity & API Optimizations
+      </td>
+      <td align="center" style="padding: 14px 16px;">
+        <a href="https://github.com/bchakradharreddy">
+          <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+        </a>
+      </td>
+    </tr>
+    <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+      <td align="center" style="padding: 14px 10px;">
+        <a href="https://github.com/Ramesh7075">
+          <img src="https://github.com/Ramesh7075.png?size=80" width="52" height="52" style="border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.25); box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);" alt="Ramesh7075" />
+        </a>
+      </td>
+      <td style="padding: 14px 16px;">
+        <strong style="font-size: 15px; color: #ffffff;">Ramesh</strong> <span style="font-size: 11px; padding: 2px 8px; border-radius: 12px; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); font-weight: bold; margin-left: 6px;">CONTRIBUTOR</span><br />
+        <span style="font-size: 12px; color: #9ca3af;">@Ramesh7075</span>
+      </td>
+      <td style="padding: 14px 16px; font-size: 13px; color: #d1d5db;">
+        Frontend Testing, Component Optimization & Micro-Interactions
+      </td>
+      <td align="center" style="padding: 14px 16px;">
+        <a href="https://github.com/Ramesh7075">
+          <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" style="padding: 14px 10px;">
+        <a href="https://github.com/shalemshalem250-bot">
+          <img src="https://github.com/shalemshalem250-bot.png?size=80" width="52" height="52" style="border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.25); box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);" alt="shalemshalem250-bot" />
+        </a>
+      </td>
+      <td style="padding: 14px 16px;">
+        <strong style="font-size: 15px; color: #ffffff;">shalemshalem250-bot</strong> <span style="font-size: 11px; padding: 2px 8px; border-radius: 12px; background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); font-weight: bold; margin-left: 6px;">AUTOMATION / BOT</span><br />
+        <span style="font-size: 12px; color: #9ca3af;">@shalemshalem250-bot</span>
+      </td>
+      <td style="padding: 14px 16px; font-size: 13px; color: #d1d5db;">
+        Automated Workflows, CI Maintenance & Notification Bots
+      </td>
+      <td align="center" style="padding: 14px 16px;">
+        <a href="https://github.com/shalemshalem250-bot">
+          <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <div align="center">
   <br />
