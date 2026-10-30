@@ -382,3 +382,8 @@ section.animate-in, .footer-section.animate-in {
   }
 }
 
+/* -- Voice Search Waveform Animation --------------------------- */
+@keyframes voiceWave {
+  0%   { transform: scaleY(0.35); opacity: 0.6; }
+  100% { transform: scaleY(1);    opacity: 1;   }
+}

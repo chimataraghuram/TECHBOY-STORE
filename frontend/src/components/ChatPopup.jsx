@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { m } from 'framer-motion';
-import { Sparkles, Bot, Send, Square, X, Compass } from 'lucide-react';
+import { Sparkles, Bot, Send, Square, X, Compass, Mic, MicOff } from 'lucide-react';
 import logo from '../../images/logos/new-logo.jpg';
+import useVoiceSearch from '../hooks/useVoiceSearch';
 import localPhonesData from '../data/phones.json';
 
 const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
@@ -178,6 +179,11 @@ const ChatPopup = ({ isOpen, onClose }) => {
     const popupRef = useRef(null);
     const abortRef = useRef(null);
     const msgIdRef = useRef(1);
+
+    // Voice search
+    const { isListening: isVoiceListening, interim: voiceInterim,
+            toggleListening: toggleVoice, supported: voiceSupported } =
+        useVoiceSearch((transcript) => setInputValue(transcript));
 
     const callBackend = async (userText, phones) => {
         abortRef.current = new AbortController();
@@ -416,14 +422,33 @@ const ChatPopup = ({ isOpen, onClose }) => {
                 <div className="relative flex-1 flex items-center">
                     <input
                         type="text"
-                        placeholder="Ask about budget, gaming, camera..."
-                        value={inputValue}
+                        placeholder={isVoiceListening ? '🎤 Listening… speak now' : 'Ask about budget, gaming, camera...'}
+                        value={isVoiceListening && voiceInterim ? voiceInterim : inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                         onKeyDown={handleKeyDown}
                         disabled={isStreaming}
                         className="w-full bg-white/[0.05] border border-white/[0.12] focus:border-red-500/60 focus:bg-white/[0.08] text-white text-[13px] rounded-2xl px-3.5 py-2.5 pr-2 outline-none transition-all placeholder:text-gray-500 font-medium"
                     />
                 </div>
+
+                {/* 🎙️ Voice search mic button */}
+                {voiceSupported && (
+                    <m.button
+                        type="button"
+                        onClick={toggleVoice}
+                        whileTap={{ scale: 0.88 }}
+                        aria-label={isVoiceListening ? 'Stop voice input' : 'Voice input — speak your query'}
+                        title={isVoiceListening ? 'Stop listening' : '🎤 Voice search'}
+                        className={`w-10 h-10 rounded-2xl border flex items-center justify-center transition-all shrink-0 cursor-pointer relative ${
+                            isVoiceListening
+                                ? 'bg-red-500/25 border-red-500/60 text-red-400 shadow-[0_0_14px_rgba(255,31,61,0.5)]'
+                                : 'bg-white/[0.04] border-white/[0.12] text-gray-400 hover:border-red-500/40 hover:text-red-400 hover:bg-red-500/10'
+                        }`}
+                    >
+                        {isVoiceListening && <span className="absolute inset-0 rounded-2xl animate-ping bg-red-500/20 pointer-events-none" />}
+                        {isVoiceListening ? <MicOff size={15} className="relative z-10" /> : <Mic size={15} className="relative z-10" />}
+                    </m.button>
+                )}
 
                 {isStreaming ? (
                     <button

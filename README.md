@@ -75,6 +75,7 @@ Experience the premium tech shopping journey yourself: [https://techboy-store.ve
 | 📈 | **30-Day Price Trend Charts** | Interactive historical price tracking graphs showing market trends, all-time lows, and price drops across major retailers. |
 | 🔐 | **Firebase + Django REST Auth** | Google sign-in through Firebase Authentication paired with token-based Django REST API security and personalized profiles. |
 | 🔔 | **Real-Time Price Alerts** | Guest and signed-in alert subscriptions with duplicate suppression, target thresholds, and automated alert dispatches. |
+| 🎙️ | **"Hey TechBoy" Voice Search** | Hands-free natural language voice search powered by the native Web Speech API. Speak queries like *"best camera phone under 30k"* directly into Search and the AI Chatbot — zero dependencies, instant recognition in Chrome, Edge, Safari, and Android. Live waveform visualization while listening. |
 
 ---
 
@@ -132,6 +133,7 @@ TECHBOY-STORE/
 - [x] **Transactional Emails**: Resend API integration for security login alerts and price drop notifications.
 - [x] **Global Price Alerts**: Multi-channel alerts letting users track hardware price depreciation.
 - [x] **User Profiles & Watchlists**: Save, track, and manage smartphone preferences.
+- [x] **Voice Search**: "Hey TechBoy" hands-free voice search with live waveform visualization across Search modal and AI chatbot. Zero dependencies via native Web Speech API.
 - [ ] **Battle Arena**: Interactive side-by-side benchmark scoring and AI-determined device winner.
 - [ ] **Exchange Value Calculator**: Instant trade-in bonus estimation for old smartphones.
 

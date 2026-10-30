@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
-import { Search, X, Loader, TrendingUp, Sparkles, ChevronRight } from 'lucide-react';
+import { Search, X, Loader, TrendingUp, Sparkles, ChevronRight, Mic, MicOff } from 'lucide-react';
 import { resolveProductImage } from '../utils/imageResolver';
 import { matchesSearch, filterProducts, TRENDING_SEARCHES } from '../utils/searchHelper';
 import localPhonesData from '../data/phones.json';
+import useVoiceSearch from '../hooks/useVoiceSearch';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
@@ -13,6 +14,12 @@ const SearchModal = ({ isOpen, onClose, onSelectResult }) => {
     const [isLoading, setIsLoading] = useState(false);
     const inputRef = useRef(null);
 
+    // ── Voice Search ──────────────────────────────────────────────
+    const { isListening, interim, error: voiceError, supported: voiceSupported, toggleListening, stopListening } =
+        useVoiceSearch((transcript) => {
+            setQuery(transcript);
+        });
+
     useEffect(() => {
         if (isOpen && inputRef.current) {
             setTimeout(() => inputRef.current.focus(), 120);
@@ -20,6 +27,7 @@ const SearchModal = ({ isOpen, onClose, onSelectResult }) => {
         if (!isOpen) {
             setQuery('');
             setResults([]);
+            stopListening();
         }
     }, [isOpen]);
 
@@ -91,28 +99,32 @@ const SearchModal = ({ isOpen, onClose, onSelectResult }) => {
                     className="relative w-full max-w-2xl bg-[#0b0c12] border border-white/15 rounded-2xl sm:rounded-3xl shadow-[0_25px_70px_rgba(0,0,0,0.9),0_0_30px_rgba(255,31,61,0.15)] overflow-hidden"
                 >
                     {/* Search Input Bar */}
-                    <div className="flex items-center gap-3 p-3.5 sm:p-4.5 border-b border-white/10 bg-white/[0.02]">
+                    <div className="flex items-center gap-3 p-3.5 sm:p-4 border-b border-white/10 bg-white/[0.02]">
                         <Search className="w-5 h-5 sm:w-6 sm:h-6 text-red-500 shrink-0" />
-                        <input
-                            ref={inputRef}
-                            type="text"
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Search phones, brands, 5G, specs..."
-                            className="flex-1 min-w-0 bg-transparent border-none outline-none text-white text-base sm:text-lg placeholder:text-gray-500"
-                            onKeyDown={(e) => {
-                                if (e.key === 'Escape') onClose();
-                                if (e.key === 'Enter' && query) {
-                                    if (results.length > 0) {
-                                        onSelectResult(results[0]);
-                                    } else {
-                                        onSelectResult({ name: query });
+                        <div className="relative flex-1 min-w-0">
+                            <input
+                                ref={inputRef}
+                                type="text"
+                                value={isListening && interim ? interim : query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                placeholder={isListening ? '🎙️ Listening... speak now' : 'Search phones, brands, 5G, specs...'}
+                                className={`w-full bg-transparent border-none outline-none text-base sm:text-lg placeholder:text-gray-500 transition-colors ${isListening ? 'text-red-300 placeholder:text-red-500/60' : 'text-white'}`}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Escape') onClose();
+                                    if (e.key === 'Enter' && query) {
+                                        if (results.length > 0) {
+                                            onSelectResult(results[0]);
+                                        } else {
+                                            onSelectResult({ name: query });
+                                        }
+                                        onClose();
                                     }
-                                    onClose();
-                                }
-                            }}
-                        />
-                        {query && (
+                                }}
+                            />
+                        </div>
+
+                        {/* Clear button */}
+                        {query && !isListening && (
                             <button
                                 onClick={() => setQuery('')}
                                 className="p-1 text-gray-400 hover:text-white transition-colors"
@@ -121,6 +133,31 @@ const SearchModal = ({ isOpen, onClose, onSelectResult }) => {
                                 <X className="w-4 h-4" />
                             </button>
                         )}
+
+                        {/* Voice Search mic button */}
+                        {voiceSupported && (
+                            <m.button
+                                onClick={toggleListening}
+                                aria-label={isListening ? 'Stop voice search' : 'Start voice search — Hey TechBoy'}
+                                title={isListening ? 'Stop listening' : '🎙️ Hey TechBoy — voice search'}
+                                whileTap={{ scale: 0.88 }}
+                                className={`relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full border transition-all duration-300 shrink-0 ${
+                                    isListening
+                                        ? 'bg-red-500/25 border-red-500/70 text-red-400 shadow-[0_0_18px_rgba(255,31,61,0.55)]'
+                                        : 'bg-white/[0.04] border-white/15 text-gray-400 hover:border-red-500/50 hover:text-red-400 hover:bg-red-500/10'
+                                }`}
+                            >
+                                {/* Animated ripple ring while listening */}
+                                {isListening && (
+                                    <span className="absolute inset-0 rounded-full animate-ping bg-red-500/25 pointer-events-none" />
+                                )}
+                                {isListening
+                                    ? <MicOff className="w-3.5 h-3.5 relative z-10" />
+                                    : <Mic className="w-3.5 h-3.5 relative z-10" />
+                                }
+                            </m.button>
+                        )}
+
                         <button
                             onClick={onClose}
                             className="p-1.5 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors text-xs font-semibold"
@@ -129,10 +166,56 @@ const SearchModal = ({ isOpen, onClose, onSelectResult }) => {
                         </button>
                     </div>
 
+                    {/* Voice listening status bar */}
+                    <AnimatePresence>
+                        {isListening && (
+                            <m.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.2 }}
+                                className="overflow-hidden"
+                            >
+                                <div className="flex items-center gap-3 px-4 py-2.5 bg-red-500/[0.07] border-b border-red-500/20">
+                                    {/* Animated waveform bars */}
+                                    <div className="flex items-center gap-[3px] shrink-0">
+                                        {[...Array(5)].map((_, i) => (
+                                            <span
+                                                key={i}
+                                                className="w-[3px] rounded-full bg-red-500"
+                                                style={{
+                                                    animation: `voiceWave 0.8s ease-in-out ${i * 0.12}s infinite alternate`,
+                                                    height: '14px'
+                                                }}
+                                            />
+                                        ))}
+                                    </div>
+                                    <span className="text-xs font-semibold text-red-400">
+                                        {interim ? `"${interim}"` : 'Hey TechBoy — listening...'}
+                                    </span>
+                                    <span className="ml-auto text-[10px] text-gray-500">Tap mic to stop</span>
+                                </div>
+                            </m.div>
+                        )}
+                        {voiceError === 'no-mic' && (
+                            <m.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                className="overflow-hidden"
+                            >
+                                <div className="px-4 py-2 bg-amber-500/[0.08] border-b border-amber-500/20 text-xs text-amber-400 flex items-center gap-2">
+                                    <MicOff size={13} />
+                                    Microphone permission denied. Please allow mic access in your browser settings.
+                                </div>
+                            </m.div>
+                        )}
+                    </AnimatePresence>
+
                     {/* Results / Suggestions Container */}
                     <div className="max-h-[65vh] overflow-y-auto divide-y divide-white/5 hide-scrollbar">
                         {/* Empty input state: Trending searches */}
-                        {!query && (
+                        {!query && !isListening && (
                             <div className="p-5 sm:p-6">
                                 <div className="flex items-center gap-2 text-xs font-bold text-gray-400 tracking-wider uppercase mb-3.5">
                                     <TrendingUp size={14} className="text-red-500" />
@@ -154,7 +237,7 @@ const SearchModal = ({ isOpen, onClose, onSelectResult }) => {
                                     <Sparkles size={14} className="text-red-500" />
                                     <span>Popular Brands</span>
                                 </div>
-                                <div className="flex flex-wrap gap-2">
+                                <div className="flex flex-wrap gap-2 mb-6">
                                     {['Apple', 'Samsung', 'OnePlus', 'Xiaomi', 'Realme', 'iQOO', 'Nothing', 'Vivo', 'Oppo'].map((b) => (
                                         <button
                                             key={b}
@@ -165,6 +248,21 @@ const SearchModal = ({ isOpen, onClose, onSelectResult }) => {
                                         </button>
                                     ))}
                                 </div>
+
+                                {/* Voice search hint when mic is supported */}
+                                {voiceSupported && (
+                                    <div className="flex items-center gap-2.5 p-3 rounded-xl bg-red-500/[0.06] border border-red-500/20">
+                                        <div className="flex items-center justify-center w-8 h-8 rounded-full bg-red-500/15 border border-red-500/30 text-red-400 shrink-0">
+                                            <Mic size={15} />
+                                        </div>
+                                        <div>
+                                            <p className="text-xs font-bold text-white">🎙️ Try Voice Search</p>
+                                            <p className="text-[11px] text-gray-400 mt-0.5">
+                                                Tap the mic and say: <span className="text-red-400 italic">"Best camera phones under 30k"</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         )}
 
