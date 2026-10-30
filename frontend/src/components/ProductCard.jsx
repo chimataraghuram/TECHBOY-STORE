@@ -8,6 +8,7 @@ import {
 import { resolveProductImage, getProductImages } from '../utils/imageResolver';
 import { parseSpecs } from '../utils/specsParser';
 import QuickViewModal from './QuickViewModal';
+import ShareDealModal from './ShareDealModal';
 import PriceDropRadar from './PriceDropRadar';
 import { feedback } from '../utils/haptics';
 import { copyPhoneShareLink } from '../utils/deepLink';
@@ -22,6 +23,7 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
     const [imgError, setImgError] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
     const [showQuick, setShowQuick] = useState(false);
+    const [showShareModal, setShowShareModal] = useState(false);
     const [isCopied, setIsCopied] = useState(false);
     const imgRef = useRef(null);
 
@@ -146,15 +148,11 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
         }
     };
 
-    const handleShareClick = async (e) => {
+    const handleShareClick = (e) => {
         e.stopPropagation();
         e.preventDefault();
-        feedback.shareSuccess();
-        const res = await copyPhoneShareLink(product);
-        if (res.success) {
-            setIsCopied(true);
-            setTimeout(() => setIsCopied(false), 2000);
-        }
+        feedback.shareSuccess?.();
+        setShowShareModal(true);
     };
 
     return (
@@ -217,8 +215,8 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                             whileHover={{ scale: 1.15 }}
                             whileTap={{ scale: 0.85 }}
                             onClick={handleShareClick}
-                            aria-label="Share smartphone link"
-                            title={isCopied ? "Link copied!" : "Share smartphone"}
+                            aria-label="Share deal card and viral links"
+                            title="Share deal card & viral links"
                             className={`flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full backdrop-blur-md transition-all duration-300 ${
                                 isCopied
                                     ? 'bg-green-500/25 border border-green-500/60 text-green-400 shadow-[0_0_12px_rgba(34,197,94,0.5)]'
@@ -434,7 +432,17 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
 
             <AnimatePresence>
                 {showQuick && (
-                    <QuickViewModal product={product} onClose={() => setShowQuick(false)} />
+                    <QuickViewModal
+                        product={product}
+                        onClose={() => setShowQuick(false)}
+                        onOpenShare={() => setShowShareModal(true)}
+                    />
+                )}
+                {showShareModal && (
+                    <ShareDealModal
+                        product={product}
+                        onClose={() => setShowShareModal(false)}
+                    />
                 )}
             </AnimatePresence>
         </>

@@ -38,7 +38,7 @@ const buildLocalSummary = (product) => {
     return `AI Verdict: The ${product.name} is a standout ${tag} at ₹${Number(product.price || 0).toLocaleString('en-IN')}, delivering top-tier performance, stellar display, and enduring battery life.`;
 };
 
-const QuickViewModal = ({ product, onClose }) => {
+const QuickViewModal = ({ product, onClose, onOpenShare }) => {
     const [aiSummary, setAiSummary] = useState(null);
     const [isLoadingAi, setIsLoadingAi] = useState(false);
     const [viewMode, setViewMode] = useState('2d'); // '2d' or '3d'
@@ -183,23 +183,25 @@ const QuickViewModal = ({ product, onClose }) => {
                     <div className="flex shrink-0 items-center gap-2">
                         {/* Share Button */}
                         <button
-                            onClick={async () => {
-                                feedback.shareSuccess();
-                                const res = await copyPhoneShareLink(product);
-                                if (res.success) {
-                                    setIsCopied(true);
-                                    setTimeout(() => setIsCopied(false), 2000);
+                            onClick={() => {
+                                feedback.shareSuccess?.();
+                                if (onOpenShare) {
+                                    onOpenShare();
+                                } else {
+                                    copyPhoneShareLink(product).then(res => {
+                                        if (res.success) {
+                                            setIsCopied(true);
+                                            setTimeout(() => setIsCopied(false), 2000);
+                                        }
+                                    });
                                 }
                             }}
-                            title={isCopied ? 'Link copied!' : 'Share smartphone'}
-                            aria-label="Share smartphone"
-                            className={`flex h-9 w-9 items-center justify-center rounded-xl border transition-all ${
-                                isCopied
-                                    ? 'border-green-500/60 bg-green-500/20 text-green-400'
-                                    : 'border-white/10 bg-white/[0.04] text-gray-300 hover:border-red-500/50 hover:text-white hover:bg-white/[0.08]'
-                            }`}
+                            title="Share Deal Card & Viral Links"
+                            aria-label="Share Deal Card and Viral Links"
+                            className="flex h-9 items-center gap-1.5 px-2.5 rounded-xl border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-white transition-all text-xs font-bold shadow-[0_0_12px_rgba(255,20,50,0.2)]"
                         >
-                            {isCopied ? <Check size={15} strokeWidth={3} /> : <Share2 size={15} />}
+                            <Share2 size={14} />
+                            <span className="hidden sm:inline">Share Deal</span>
                         </button>
 
                         {/* Close Modal Button */}
