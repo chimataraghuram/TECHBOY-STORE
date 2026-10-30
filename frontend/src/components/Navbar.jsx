@@ -1,12 +1,13 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { m, AnimatePresence } from 'framer-motion';
-import { Search, Bot, X, Menu, TrendingUp, ChevronRight, Home, Smartphone, Flame, Activity, User, LogOut } from 'lucide-react';
+import { Search, Bot, X, Menu, TrendingUp, ChevronRight, Home, Smartphone, Flame, Activity, User, LogOut, Swords, Calculator } from 'lucide-react';
 import logo from '../../images/logos/new-logo.jpg';
 import { useAuth } from '../context/AuthContext';
 import AuthDropdown from './AuthDropdown';
 import NotificationSystem from './NotificationSystem';
 import SearchModal from './SearchModal';
+import ExchangeCalculator from './ExchangeCalculator';
 import { resolveProductImage } from '../utils/imageResolver';
 import { filterProducts, TRENDING_SEARCHES } from '../utils/searchHelper';
 import localPhonesData from '../data/phones.json';
@@ -29,6 +30,7 @@ const scrollToSection = (sectionId) => {
 const NAV_ITEMS = [
     { id: 'home', label: 'Home', icon: Home },
     { id: 'products', label: 'Products', icon: Smartphone },
+    { id: 'battle', label: 'Battle', icon: Swords },
     { id: 'trends', label: 'Trends', icon: Flame },
     { id: 'trackhub', label: 'TrackHub', icon: Activity }
 ];
@@ -37,6 +39,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
     const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+    const [isExchangeOpen, setIsExchangeOpen] = useState(false);
     const [isSearchFocused, setIsSearchFocused] = useState(false);
     const [isMobileProfileOpen, setIsMobileProfileOpen] = useState(false);
     const [products, setProducts] = useState(localPhonesData);
@@ -118,7 +121,11 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
         if (e && e.preventDefault) e.preventDefault();
         setIsMenuOpen(false);
         setIsSearchFocused(false);
-        if (sectionId === 'trackhub') {
+        if (sectionId === 'battle') {
+            setCurrentView('battle');
+            setActiveSection('battle');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (sectionId === 'trackhub') {
             setCurrentView('trackhub');
             setActiveSection('trackhub');
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -177,7 +184,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
                             <div className="hidden xl:flex items-center gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/[0.08] backdrop-blur-md shrink-0">
                                 {NAV_ITEMS.map(item => {
                                     const Icon = item.icon;
-                                    const isActive = currentView === 'trackhub' ? item.id === 'trackhub' : (currentView === 'home' && activeSection === item.id);
+                                    const isActive = currentView === 'trackhub' ? item.id === 'trackhub' : currentView === 'battle' ? item.id === 'battle' : (currentView === 'home' && activeSection === item.id);
                                     return (
                                         <a
                                             key={item.id}
@@ -203,6 +210,17 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
 
                             {/* RIGHT CLUSTER */}
                             <div className="flex items-center justify-end gap-1.5 sm:gap-2.5 flex-1 xl:flex-none">
+
+                                {/* Exchange Value Calculator Button */}
+                                <button
+                                    type="button"
+                                    onClick={() => setIsExchangeOpen(true)}
+                                    className="text-gray-300 hover:text-white p-2 sm:p-2.5 rounded-full hover:bg-white/[0.08] border border-white/10 hover:border-red-500/40 transition-all flex items-center justify-center shadow-sm hover:shadow-[0_0_15px_rgba(255,31,61,0.2)]"
+                                    aria-label="Exchange Value Calculator"
+                                    title="Exchange Value Calculator"
+                                >
+                                    <Calculator size={18} className="text-gray-300 hover:text-amber-400 transition-colors" />
+                                </button>
 
                                 {/* Sleek Search Icon Button (opens search modal) */}
                                 <button
@@ -259,6 +277,11 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
                         setTimeout(() => scrollToSection('products'), 100);
                     }}
                 />
+
+                <ExchangeCalculator
+                    isOpen={isExchangeOpen}
+                    onClose={() => setIsExchangeOpen(false)}
+                />
             </nav>
 
             {/* MOBILE & TABLET FLOATING DOCK NAVBAR — DIRECT BODY PORTAL WITH LIQUID GLASS JELLY PHYSICS */}
@@ -270,7 +293,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
                         boxShadow: '0 20px 50px rgba(0, 0, 0, 0.88), 0 0 30px rgba(255, 31, 61, 0.22), inset 0 1.5px 1px rgba(255, 255, 255, 0.35), inset 0 -1.5px 2px rgba(0, 0, 0, 0.6)'
                     }}
                 >
-                    <div className="grid grid-cols-5 items-center justify-items-center gap-1">
+                    <div className="grid grid-cols-6 items-center justify-items-center gap-0.5">
                         {NAV_ITEMS.map((item) => {
                             const Icon = item.icon;
                             const isActive = currentView === 'trackhub' ? item.id === 'trackhub' : (currentView === 'home' && activeSection === item.id);

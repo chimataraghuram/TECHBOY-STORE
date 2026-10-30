@@ -15,6 +15,7 @@ const Footer = lazy(() => import('./components/Footer'))
 
 const TechAdvisorModal = lazy(() => import('./components/TechAdvisorModal'))
 const TrackHub = lazy(() => import('./components/TrackHub'))
+const BattleArena = lazy(() => import('./components/BattleArena'))
 const ProfilePage = lazy(() => import('./components/ProfilePage'))
 
 function App() {
@@ -122,6 +123,18 @@ function App() {
                   <StoreSection searchTerm={searchTerm} onSearch={setSearchTerm} />
                   <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '300px', margin: '40px 0', borderRadius: '16px'}}></div>}>
                     <TechBoyTrends />
+                  </Suspense>
+                </m.div>
+              ) : currentView === 'battle' ? (
+                <m.div
+                  key="battle"
+                  initial={{ opacity: 0, y: 12, filter: 'blur(3px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  exit={{ opacity: 0, y: -8, filter: 'blur(3px)' }}
+                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '500px', margin: '120px 20px', borderRadius: '16px'}}></div>}>
+                    <BattleArena />
                   </Suspense>
                 </m.div>
               ) : currentView === 'trackhub' ? (
