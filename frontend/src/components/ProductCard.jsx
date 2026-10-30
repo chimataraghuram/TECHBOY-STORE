@@ -235,7 +235,7 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                                 type="button"
                                 onClick={prevImage}
                                 aria-label="Previous photo"
-                                className="absolute left-2 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white hover:border-red-500 hover:bg-red-600/80 shadow-[0_4px_16px_rgba(0,0,0,0.7)] transition-all duration-200 cursor-pointer active:scale-90"
+                                className="!absolute !left-2 !top-1/2 !-translate-y-1/2 !right-auto !bottom-auto z-20 flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white hover:border-red-500 hover:bg-red-600/80 shadow-[0_4px_16px_rgba(0,0,0,0.7)] transition-all duration-200 cursor-pointer active:scale-90"
                             >
                                 <ChevronLeft size={15} className="stroke-[2.5]" />
                             </button>
@@ -245,13 +245,13 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                                 type="button"
                                 onClick={nextImage}
                                 aria-label="Next photo"
-                                className="absolute right-2 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white hover:border-red-500 hover:bg-red-600/80 shadow-[0_4px_16px_rgba(0,0,0,0.7)] transition-all duration-200 cursor-pointer active:scale-90"
+                                className="!absolute !right-2 !top-1/2 !-translate-y-1/2 !left-auto !bottom-auto z-20 flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white hover:border-red-500 hover:bg-red-600/80 shadow-[0_4px_16px_rgba(0,0,0,0.7)] transition-all duration-200 cursor-pointer active:scale-90"
                             >
                                 <ChevronRight size={15} className="stroke-[2.5]" />
                             </button>
 
                             {/* Center-bottom clean indicator bar */}
-                            <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/15 shadow-[0_4px_16px_rgba(0,0,0,0.8)] pointer-events-auto">
+                            <div className="!absolute !bottom-2.5 !left-1/2 !-translate-x-1/2 !top-auto !right-auto z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/15 shadow-[0_4px_16px_rgba(0,0,0,0.8)] pointer-events-auto">
                                 {images.map((_, i) => (
                                     <button
                                         key={i}
