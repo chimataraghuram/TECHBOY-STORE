@@ -256,4 +256,47 @@ const useVoiceSearch = (onResult, { lang = 'en-IN', continuous = false, interimR
     };
 };
 
+
+/**
+ * Speaks a natural, conversational reply using Google Gemini Voice Model (gemini-2.5-flash).
+ * @param {string} userQuery - Spoken speech transcript from user
+ * @param {Function} [speakCallback] - Optional callback receiving the plain text answer
+ */
+export const queryGeminiVoice = async (userQuery, speakCallback) => {
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    if (!apiKey || !userQuery?.trim()) return null;
+
+    try {
+        const prompt = `You are TechBoy Voice Assistant for TECHBOY-STORE.
+The customer asked via voice: "${userQuery.trim()}"
+Instructions:
+1. Provide a direct, natural 1-2 sentence spoken reply (under 25 words).
+2. Recommend the best matching smartphone or answer the question concisely.
+3. Strictly plain conversational text for speech synthesis: no emojis, no asterisks, no bullets.`;
+
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: prompt }] }],
+                generationConfig: {
+                    temperature: 0.3,
+                    maxOutputTokens: 60
+                }
+            })
+        });
+
+        if (!response.ok) return null;
+        const data = await response.json();
+        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text?.replace(/[*#_`>]/g, '')?.trim();
+        if (text && typeof speakCallback === 'function') {
+            speakCallback(text);
+        }
+        return text;
+    } catch (err) {
+        console.warn('Gemini Voice query error:', err);
+        return null;
+    }
+};
+
 export default useVoiceSearch;

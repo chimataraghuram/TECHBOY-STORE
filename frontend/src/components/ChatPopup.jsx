@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { m } from 'framer-motion';
 import { Sparkles, Bot, Send, Square, X, Compass, Mic, MicOff, Volume2, VolumeX } from 'lucide-react';
 import logo from '../../images/logos/new-logo.jpg';
-import useVoiceSearch from '../hooks/useVoiceSearch';
+import useVoiceSearch, { queryGeminiVoice } from '../hooks/useVoiceSearch';
 import localPhonesData from '../data/phones.json';
 
 const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
@@ -186,7 +186,15 @@ const ChatPopup = ({ isOpen, onClose }) => {
     const { isListening: isVoiceListening, interim: voiceInterim,
             toggleListening: toggleVoice, supported: voiceSupported,
             speakText, stopSpeaking } =
-        useVoiceSearch((transcript) => setInputValue(transcript));
+        useVoiceSearch(async (transcript) => {
+            setInputValue(transcript);
+            // If user used voice input and voice output is enabled, query Gemini Voice model for instant spoken verdict
+            if (isTtsEnabled && transcript.trim()) {
+                queryGeminiVoice(transcript, (spokenReply) => {
+                    speakText(spokenReply);
+                });
+            }
+        });
 
     const callBackend = async (userText, phones) => {
         abortRef.current = new AbortController();
