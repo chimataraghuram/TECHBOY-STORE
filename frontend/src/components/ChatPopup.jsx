@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { m } from 'framer-motion';
-import { Sparkles, Bot, Send, Square, X, Compass, Mic, MicOff } from 'lucide-react';
+import { Sparkles, Bot, Send, Square, X, Compass, Mic, MicOff, Volume2, VolumeX } from 'lucide-react';
 import logo from '../../images/logos/new-logo.jpg';
 import useVoiceSearch from '../hooks/useVoiceSearch';
 import localPhonesData from '../data/phones.json';
@@ -181,8 +181,11 @@ const ChatPopup = ({ isOpen, onClose }) => {
     const msgIdRef = useRef(1);
 
     // Voice search
+        // Voice search & speech response
+    const [isTtsEnabled, setIsTtsEnabled] = useState(true);
     const { isListening: isVoiceListening, interim: voiceInterim,
-            toggleListening: toggleVoice, supported: voiceSupported } =
+            toggleListening: toggleVoice, supported: voiceSupported,
+            speakText, stopSpeaking } =
         useVoiceSearch((transcript) => setInputValue(transcript));
 
     const callBackend = async (userText, phones) => {
@@ -272,9 +275,13 @@ const ChatPopup = ({ isOpen, onClose }) => {
 
         try {
             const result = await callBackend(text, livePhonesData);
+            const replyText = result.text || 'No response.';
             setMessages(prev => prev.map(m =>
-                m.id === aiId ? { ...m, text: result.text || 'No response.' } : m
+                m.id === aiId ? { ...m, text: replyText } : m
             ));
+            if (isTtsEnabled) {
+                speakText(replyText);
+            }
         } catch (err) {
             if (err.name === 'AbortError') {
                 setMessages(prev => prev.map(m => m.id === aiId ? { ...m, done: true } : m));
@@ -354,13 +361,34 @@ const ChatPopup = ({ isOpen, onClose }) => {
                     </div>
                 </div>
 
-                <button 
-                    onClick={onClose} 
-                    className="w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 transition-all cursor-pointer"
-                    aria-label="Close"
-                >
-                    <X size={16} />
-                </button>
+                <div className="flex items-center gap-1.5">
+                    <button
+                        type="button"
+                        onClick={() => {
+                            if (isTtsEnabled) stopSpeaking();
+                            setIsTtsEnabled(!isTtsEnabled);
+                        }}
+                        className={`w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer border ${
+                            isTtsEnabled 
+                                ? 'bg-red-500/15 border-red-500/40 text-red-400' 
+                                : 'bg-white/[0.05] border-white/10 text-gray-400 hover:text-white'
+                        }`}
+                        title={isTtsEnabled ? 'Voice output: ON (Click to mute)' : 'Voice output: OFF (Click to unmute)'}
+                        aria-label="Toggle voice output"
+                    >
+                        {isTtsEnabled ? <Volume2 size={15} /> : <VolumeX size={15} />}
+                    </button>
+                    <button 
+                        onClick={() => {
+                            stopSpeaking();
+                            onClose();
+                        }} 
+                        className="w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 transition-all cursor-pointer"
+                        aria-label="Close"
+                    >
+                        <X size={16} />
+                    </button>
+                </div>
             </div>
 
             {/* ── MESSAGES CONTAINER ── */}

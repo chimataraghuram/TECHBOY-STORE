@@ -15,7 +15,7 @@ const SearchModal = ({ isOpen, onClose, onSelectResult }) => {
     const inputRef = useRef(null);
 
     // ── Voice Search ──────────────────────────────────────────────
-    const { isListening, interim, error: voiceError, supported: voiceSupported, toggleListening, stopListening } =
+    const { isListening, interim, error: voiceError, supported: voiceSupported, audioLevel, toggleListening, stopListening } =
         useVoiceSearch((transcript) => {
             setQuery(transcript);
         });
@@ -179,16 +179,18 @@ const SearchModal = ({ isOpen, onClose, onSelectResult }) => {
                                 <div className="flex items-center gap-3 px-4 py-2.5 bg-red-500/[0.07] border-b border-red-500/20">
                                     {/* Animated waveform bars */}
                                     <div className="flex items-center gap-[3px] shrink-0">
-                                        {[...Array(5)].map((_, i) => (
-                                            <span
-                                                key={i}
-                                                className="w-[3px] rounded-full bg-red-500"
-                                                style={{
-                                                    animation: `voiceWave 0.8s ease-in-out ${i * 0.12}s infinite alternate`,
-                                                    height: '14px'
-                                                }}
-                                            />
-                                        ))}
+                                                                                  {[...Array(5)].map((_, i) => {
+                                              const dynamicHeight = Math.max(6, Math.min(22, 8 + Math.round((audioLevel || 20) * (0.15 + (i % 3) * 0.08))));
+                                              return (
+                                                  <span
+                                                      key={i}
+                                                      className="w-[3px] rounded-full bg-gradient-to-t from-red-600 to-rose-400 transition-all duration-75"
+                                                      style={{
+                                                          height: `${dynamicHeight}px`
+                                                      }}
+                                                  />
+                                              );
+                                          })}
                                     </div>
                                     <span className="text-xs font-semibold text-red-400">
                                         {interim ? `"${interim}"` : 'Hey TechBoy — listening...'}
