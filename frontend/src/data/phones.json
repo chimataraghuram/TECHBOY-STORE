@@ -2,8 +2,8 @@
   {
     "id": 1,
     "name": "Tecno Spark 30C",
-    "tag": "🎮 Best Gaming",
-    "category": "Under ₹10K",
+    "tag": "\ud83c\udfae Best Gaming",
+    "category": "Under \u20b910K",
     "brand": "Tecno",
     "price": 8200,
     "description": "Chip: Helio G88 | Display: 6.67\" 90Hz IPS | Camera: 50MP | Battery: 5000mAh 18W | RAM: 8GB | Storage: 128GB",
@@ -24,17 +24,24 @@
       "Charging": "18W",
       "Operating System": "HiOS 14 (Android 14)",
       "Software Updates": "2 OS upgrades + 3 years security",
-      "Build": "Plastic frame · IP54 · Panda glass",
+      "Build": "Plastic frame \u00b7 IP54 \u00b7 Panda glass",
       "Weight": "187 g",
-      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 5 \u00b7 Bluetooth 5.2 \u00b7 USB-C \u00b7 GPS",
       "Colors": "Magic Skin Green, Titanium Grey"
-    }
+    },
+    "gallery": [
+      "/images/phones/tecno-spark-30c.png",
+      "/images/phones/tecno-spark-30c-back.png",
+      "/images/phones/tecno-spark-30c-angle-left.png",
+      "/images/phones/tecno-spark-30c-angle-right.png",
+      "/images/phones/tecno-spark-30c-side.png"
+    ]
   },
   {
     "id": 2,
     "name": "Redmi 13C 5G",
-    "tag": "📷 Best Camera",
-    "category": "Under ₹10K",
+    "tag": "\ud83d\udcf7 Best Camera",
+    "category": "Under \u20b910K",
     "brand": "Xiaomi",
     "price": 8900,
     "description": "Chip: Dimensity 6100+ | Display: 6.74\" 90Hz LCD | Camera: 50MP AI | Battery: 5000mAh 18W | RAM: 4GB | Storage: 128GB",
@@ -55,17 +62,24 @@
       "Charging": "18W",
       "Operating System": "HyperOS 2 (Android 15)",
       "Software Updates": "3 OS upgrades + 4 years security",
-      "Build": "Plastic frame · Splash resistant",
+      "Build": "Plastic frame \u00b7 Splash resistant",
       "Weight": "192 g",
-      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 5 \u00b7 Bluetooth 5.2 \u00b7 USB-C \u00b7 GPS",
       "Colors": "Startrail Green, Startrail Silver, Stardust Black"
-    }
+    },
+    "gallery": [
+      "/images/phones/redmi-13c-5g.png",
+      "/images/phones/redmi-13c-5g-back.png",
+      "/images/phones/redmi-13c-5g-angle-left.png",
+      "/images/phones/redmi-13c-5g-angle-right.png",
+      "/images/phones/redmi-13c-5g-side.png"
+    ]
   },
   {
     "id": 3,
     "name": "Samsung Galaxy M07",
-    "tag": "✨ Best UI",
-    "category": "Under ₹10K",
+    "tag": "\u2728 Best UI",
+    "category": "Under \u20b910K",
     "brand": "Samsung",
     "price": 9200,
     "description": "Chip: Helio G99 | Display: 6.7\" 90Hz PLS LCD | Camera: 50MP Dual | Battery: 6000mAh 25W | RAM: 6GB | Storage: 128GB",
@@ -86,17 +100,24 @@
       "Charging": "25W",
       "Operating System": "One UI 7 (Android 15)",
       "Software Updates": "4 OS upgrades + 5 years security",
-      "Build": "Plastic frame · IP54",
+      "Build": "Plastic frame \u00b7 IP54",
       "Weight": "191 g",
-      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 5 \u00b7 Bluetooth 5.2 \u00b7 USB-C \u00b7 GPS",
       "Colors": "Black, Light Blue, Green"
-    }
+    },
+    "gallery": [
+      "/images/phones/samsung-galaxy-m07.png",
+      "/images/phones/samsung-galaxy-m07-back.png",
+      "/images/phones/samsung-galaxy-m07-angle-left.png",
+      "/images/phones/samsung-galaxy-m07-angle-right.png",
+      "/images/phones/samsung-galaxy-m07-side.png"
+    ]
   },
   {
     "id": 4,
     "name": "Realme C75",
-    "tag": "⭐ All-round Best",
-    "category": "Under ₹10K",
+    "tag": "\u2b50 All-round Best",
+    "category": "Under \u20b910K",
     "brand": "Realme",
     "price": 9700,
     "description": "Chip: Helio G91 | Display: 6.74\" 90Hz IPS | Camera: 50MP | Battery: 6000mAh 45W | RAM: 8GB | Storage: 128GB",
@@ -117,17 +138,24 @@
       "Charging": "45W SUPERVOOC",
       "Operating System": "realme UI 6 (Android 15)",
       "Software Updates": "2 OS upgrades + 3 years security",
-      "Build": "Plastic frame · IP69 military-grade",
+      "Build": "Plastic frame \u00b7 IP69 military-grade",
       "Weight": "196 g",
-      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 5 \u00b7 Bluetooth 5.2 \u00b7 USB-C \u00b7 GPS",
       "Colors": "Lightning Gold, Storm Black"
-    }
+    },
+    "gallery": [
+      "/images/phones/realme-c75.png",
+      "/images/phones/realme-c75-back.png",
+      "/images/phones/realme-c75-angle-left.png",
+      "/images/phones/realme-c75-angle-right.png",
+      "/images/phones/realme-c75-side.png"
+    ]
   },
   {
     "id": 5,
     "name": "Infinix Hot 50i",
-    "tag": "💰 Best Value",
-    "category": "Under ₹10K",
+    "tag": "\ud83d\udcb0 Best Value",
+    "category": "Under \u20b910K",
     "brand": "Infinix",
     "price": 7500,
     "description": "Chip: Helio G81 | Display: 6.7\" 120Hz IPS | Camera: 48MP Dual | Battery: 5000mAh 18W | RAM: 6GB | Storage: 128GB",
@@ -148,17 +176,24 @@
       "Charging": "18W",
       "Operating System": "XOS 14 (Android 14)",
       "Software Updates": "2 OS upgrades + 3 years security",
-      "Build": "Plastic frame · IP54",
+      "Build": "Plastic frame \u00b7 IP54",
       "Weight": "184 g",
-      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 5 \u00b7 Bluetooth 5.2 \u00b7 USB-C \u00b7 GPS",
       "Colors": "Titanium Grey, Sleek Black, Sage Green, Dreamy Purple"
-    }
+    },
+    "gallery": [
+      "/images/phones/infinix-hot-50i.png",
+      "/images/phones/infinix-hot-50i-back.png",
+      "/images/phones/infinix-hot-50i-angle-left.png",
+      "/images/phones/infinix-hot-50i-angle-right.png",
+      "/images/phones/infinix-hot-50i-side.png"
+    ]
   },
   {
     "id": 6,
     "name": "iQOO Z9 5G",
-    "tag": "🎮 Best Gaming",
-    "category": "Under ₹20K",
+    "tag": "\ud83c\udfae Best Gaming",
+    "category": "Under \u20b920K",
     "brand": "iQOO",
     "price": 16900,
     "description": "Chip: Dimensity 7200 | Display: 6.67\" 120Hz AMOLED | Camera: 50MP Sony OIS | Battery: 5000mAh 44W | RAM: 8GB | Storage: 128GB",
@@ -179,17 +214,24 @@
       "Charging": "44W FlashCharge",
       "Operating System": "Funtouch OS 15 (Android 15)",
       "Software Updates": "3 OS upgrades + 4 years security",
-      "Build": "Plastic frame · IP64 · Panda glass",
+      "Build": "Plastic frame \u00b7 IP64 \u00b7 Panda glass",
       "Weight": "188 g",
-      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 5 \u00b7 Bluetooth 5.2 \u00b7 USB-C \u00b7 GPS",
       "Colors": "Brushed Green, Graphene Blue"
-    }
+    },
+    "gallery": [
+      "/images/phones/iqoo-z9-5g.png",
+      "/images/phones/iqoo-z9-5g-back.png",
+      "/images/phones/iqoo-z9-5g-angle-left.png",
+      "/images/phones/iqoo-z9-5g-angle-right.png",
+      "/images/phones/iqoo-z9-5g-side.png"
+    ]
   },
   {
     "id": 7,
     "name": "Redmi Note 14 5G",
-    "tag": "📷 Best Camera",
-    "category": "Under ₹20K",
+    "tag": "\ud83d\udcf7 Best Camera",
+    "category": "Under \u20b920K",
     "brand": "Xiaomi",
     "price": 18200,
     "description": "Chip: Dimensity 7025 Ultra | Display: 6.67\" 120Hz AMOLED | Camera: 50MP Sony LYT-600 OIS | Battery: 5110mAh 45W | RAM: 8GB | Storage: 128GB",
@@ -210,17 +252,24 @@
       "Charging": "45W HyperCharge",
       "Operating System": "HyperOS 2 (Android 15)",
       "Software Updates": "3 OS upgrades + 4 years security",
-      "Build": "Plastic frame · IP64 · Gorilla Glass 5",
+      "Build": "Plastic frame \u00b7 IP64 \u00b7 Gorilla Glass 5",
       "Weight": "190 g",
-      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 5 \u00b7 Bluetooth 5.2 \u00b7 USB-C \u00b7 GPS",
       "Colors": "Midnight Black, Ocean Blue, Coral Green"
-    }
+    },
+    "gallery": [
+      "/images/phones/redmi-note-14-5g.png",
+      "/images/phones/redmi-note-14-5g-back.png",
+      "/images/phones/redmi-note-14-5g-angle-left.png",
+      "/images/phones/redmi-note-14-5g-angle-right.png",
+      "/images/phones/redmi-note-14-5g-side.png"
+    ]
   },
   {
     "id": 8,
     "name": "Samsung Galaxy A26 5G",
-    "tag": "✨ Best UI",
-    "category": "Under ₹20K",
+    "tag": "\u2728 Best UI",
+    "category": "Under \u20b920K",
     "brand": "Samsung",
     "price": 19000,
     "description": "Chip: Exynos 1380 | Display: 6.6\" 120Hz Super AMOLED | Camera: 50MP OIS | Battery: 5000mAh 25W | RAM: 8GB | Storage: 128GB",
@@ -241,17 +290,24 @@
       "Charging": "25W",
       "Operating System": "One UI 7 (Android 15)",
       "Software Updates": "4 OS upgrades + 5 years security",
-      "Build": "Plastic frame · IP67 · Gorilla Glass Victus+",
+      "Build": "Plastic frame \u00b7 IP67 \u00b7 Gorilla Glass Victus+",
       "Weight": "200 g",
-      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 5 \u00b7 Bluetooth 5.2 \u00b7 USB-C \u00b7 GPS",
       "Colors": "Black, Mint, Peach Pink, White"
-    }
+    },
+    "gallery": [
+      "/images/phones/samsung-galaxy-a26-5g.png",
+      "/images/phones/samsung-galaxy-a26-5g-back.png",
+      "/images/phones/samsung-galaxy-a26-5g-angle-left.png",
+      "/images/phones/samsung-galaxy-a26-5g-angle-right.png",
+      "/images/phones/samsung-galaxy-a26-5g-side.png"
+    ]
   },
   {
     "id": 9,
     "name": "Nothing Phone (3a)",
-    "tag": "⭐ All-round Best",
-    "category": "Under ₹20K",
+    "tag": "\u2b50 All-round Best",
+    "category": "Under \u20b920K",
     "brand": "Nothing",
     "price": 20200,
     "description": "Chip: Dimensity 7200 Pro | Display: 6.7\" 120Hz Flexible AMOLED | Camera: 50MP Dual OIS | Battery: 5000mAh 45W | RAM: 8GB | Storage: 128GB",
@@ -272,17 +328,24 @@
       "Charging": "45W Fast Charge",
       "Operating System": "Nothing OS 3 (Android 15)",
       "Software Updates": "3 OS upgrades + 4 years security",
-      "Build": "Glass back · IP64 · Panda glass",
+      "Build": "Glass back \u00b7 IP64 \u00b7 Panda glass",
       "Weight": "201 g",
-      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 5 \u00b7 Bluetooth 5.2 \u00b7 USB-C \u00b7 GPS",
       "Colors": "Black, White, Blue"
-    }
+    },
+    "gallery": [
+      "/images/phones/nothing-phone-3a.png",
+      "/images/phones/nothing-phone-3a-back.png",
+      "/images/phones/nothing-phone-3a-angle-left.png",
+      "/images/phones/nothing-phone-3a-angle-right.png",
+      "/images/phones/nothing-phone-3a-side.png"
+    ]
   },
   {
     "id": 10,
     "name": "vivo T5x 5G",
-    "tag": "💰 Best Value",
-    "category": "Under ₹20K",
+    "tag": "\ud83d\udcb0 Best Value",
+    "category": "Under \u20b920K",
     "brand": "Vivo",
     "price": 15300,
     "description": "Chip: Dimensity 6300 | Display: 6.72\" 120Hz FHD+ | Camera: 50MP AI | Battery: 6000mAh 44W | RAM: 8GB | Storage: 128GB",
@@ -303,17 +366,24 @@
       "Charging": "44W FlashCharge",
       "Operating System": "Funtouch OS 15 (Android 15)",
       "Software Updates": "3 OS upgrades + 4 years security",
-      "Build": "Plastic frame · IP64",
+      "Build": "Plastic frame \u00b7 IP64",
       "Weight": "199 g",
-      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 5 \u00b7 Bluetooth 5.2 \u00b7 USB-C \u00b7 GPS",
       "Colors": "Sonic Black, Star Grey"
-    }
+    },
+    "gallery": [
+      "/images/phones/vivo-t5x-5g.png",
+      "/images/phones/vivo-t5x-5g-back.png",
+      "/images/phones/vivo-t5x-5g-angle-left.png",
+      "/images/phones/vivo-t5x-5g-angle-right.png",
+      "/images/phones/vivo-t5x-5g-side.png"
+    ]
   },
   {
     "id": 11,
     "name": "iQOO Neo 10R",
-    "tag": "🎮 Best Gaming",
-    "category": "Under ₹30K",
+    "tag": "\ud83c\udfae Best Gaming",
+    "category": "Under \u20b930K",
     "brand": "iQOO",
     "price": 27600,
     "description": "Chip: Snapdragon 8s Gen 3 | Display: 6.78\" 144Hz 1.5K AMOLED | Camera: 50MP Sony OIS | Battery: 5500mAh 120W | RAM: 8GB | Storage: 256GB",
@@ -334,17 +404,24 @@
       "Charging": "120W FlashCharge",
       "Operating System": "Funtouch OS 15 (Android 15)",
       "Software Updates": "3 OS upgrades + 4 years security",
-      "Build": "Plastic frame · IP65 · Schott glass",
+      "Build": "Plastic frame \u00b7 IP65 \u00b7 Schott glass",
       "Weight": "198 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Raging Blue, Moonknight Titanium"
-    }
+    },
+    "gallery": [
+      "/images/phones/iqoo-neo-10r.png",
+      "/images/phones/iqoo-neo-10r-back.png",
+      "/images/phones/iqoo-neo-10r-angle-left.png",
+      "/images/phones/iqoo-neo-10r-angle-right.png",
+      "/images/phones/iqoo-neo-10r-side.png"
+    ]
   },
   {
     "id": 12,
     "name": "Google Pixel 9a",
-    "tag": "📷 Best Camera",
-    "category": "Under ₹30K",
+    "tag": "\ud83d\udcf7 Best Camera",
+    "category": "Under \u20b930K",
     "brand": "Google",
     "price": 29400,
     "description": "Chip: Google Tensor G4 | Display: 6.3\" 120Hz Actua OLED | Camera: 48MP Dual Pixel AI | Battery: 4700mAh 27W | RAM: 8GB | Storage: 128GB",
@@ -365,17 +442,24 @@
       "Charging": "27W Fast Charge",
       "Operating System": "Android 15",
       "Software Updates": "7 years of OS + security updates",
-      "Build": "Aluminium frame · IP68 · Gorilla Glass 3",
+      "Build": "Aluminium frame \u00b7 IP68 \u00b7 Gorilla Glass 3",
       "Weight": "186 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Obsidian, Porcelain, Iris, Peony"
-    }
+    },
+    "gallery": [
+      "/images/phones/google-pixel-9a.png",
+      "/images/phones/google-pixel-9a-back.png",
+      "/images/phones/google-pixel-9a-angle-left.png",
+      "/images/phones/google-pixel-9a-angle-right.png",
+      "/images/phones/google-pixel-9a-side.png"
+    ]
   },
   {
     "id": 13,
     "name": "Nothing Phone (3a) Pro",
-    "tag": "✨ Best UI",
-    "category": "Under ₹30K",
+    "tag": "\u2728 Best UI",
+    "category": "Under \u20b930K",
     "brand": "Nothing",
     "price": 25100,
     "description": "Chip: Snapdragon 7s Gen 3 | Display: 6.7\" 120Hz Flexible OLED | Camera: 50MP Triple OIS | Battery: 5000mAh 45W | RAM: 12GB | Storage: 256GB",
@@ -396,17 +480,24 @@
       "Charging": "45W",
       "Operating System": "Nothing OS 3 (Android 15)",
       "Software Updates": "3 OS upgrades + 4 years security",
-      "Build": "Glass back · IP64 · Panda glass",
+      "Build": "Glass back \u00b7 IP64 \u00b7 Panda glass",
       "Weight": "211 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Black, Grey"
-    }
+    },
+    "gallery": [
+      "/images/phones/nothing-phone-3a-pro.png",
+      "/images/phones/nothing-phone-3a-pro-back.png",
+      "/images/phones/nothing-phone-3a-pro-angle-left.png",
+      "/images/phones/nothing-phone-3a-pro-angle-right.png",
+      "/images/phones/nothing-phone-3a-pro-side.png"
+    ]
   },
   {
     "id": 14,
     "name": "Realme GT 7T",
-    "tag": "⭐ All-round Best",
-    "category": "Under ₹30K",
+    "tag": "\u2b50 All-round Best",
+    "category": "Under \u20b930K",
     "brand": "Realme",
     "price": 25100,
     "description": "Chip: Snapdragon 8s Gen 3 | Display: 6.78\" 144Hz 1.5K 6000nits | Camera: 50MP Sony OIS | Battery: 5500mAh 120W | RAM: 12GB | Storage: 256GB",
@@ -427,17 +518,24 @@
       "Charging": "120W SuperVOOC",
       "Operating System": "realme UI 6 (Android 15)",
       "Software Updates": "2 OS upgrades + 3 years security",
-      "Build": "Plastic frame · IP69 · Crystal glass",
+      "Build": "Plastic frame \u00b7 IP69 \u00b7 Crystal glass",
       "Weight": "196 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Racing Yellow, Storm Black"
-    }
+    },
+    "gallery": [
+      "/images/phones/realme-gt7t.png",
+      "/images/phones/realme-gt7t-back.png",
+      "/images/phones/realme-gt7t-angle-left.png",
+      "/images/phones/realme-gt7t-angle-right.png",
+      "/images/phones/realme-gt7t-side.png"
+    ]
   },
   {
     "id": 15,
     "name": "POCO F7 5G",
-    "tag": "💰 Best Value",
-    "category": "Under ₹30K",
+    "tag": "\ud83d\udcb0 Best Value",
+    "category": "Under \u20b930K",
     "brand": "Xiaomi",
     "price": 23800,
     "description": "Chip: Snapdragon 8s Gen 3 | Display: 6.67\" 120Hz CrystalRes AMOLED | Camera: 50MP OIS | Battery: 6000mAh 90W | RAM: 12GB | Storage: 256GB",
@@ -458,17 +556,24 @@
       "Charging": "90W Turbo",
       "Operating System": "HyperOS 2 (Android 15)",
       "Software Updates": "3 OS upgrades + 4 years security",
-      "Build": "Aluminium frame · IP68 · Gorilla Glass 7i",
+      "Build": "Aluminium frame \u00b7 IP68 \u00b7 Gorilla Glass 7i",
       "Weight": "215 g",
-      "Connectivity": "5G · Wi-Fi 5 · Bluetooth 5.2 · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 5 \u00b7 Bluetooth 5.2 \u00b7 USB-C \u00b7 GPS",
       "Colors": "Black, White, Green"
-    }
+    },
+    "gallery": [
+      "/images/phones/poco-f7-5g.png",
+      "/images/phones/poco-f7-5g-back.png",
+      "/images/phones/poco-f7-5g-angle-left.png",
+      "/images/phones/poco-f7-5g-angle-right.png",
+      "/images/phones/poco-f7-5g-side.png"
+    ]
   },
   {
     "id": 16,
     "name": "OnePlus Nord CE 5",
-    "tag": "🏆 Brand Value",
-    "category": "Under ₹30K",
+    "tag": "\ud83c\udfc6 Brand Value",
+    "category": "Under \u20b930K",
     "brand": "OnePlus",
     "price": 28100,
     "description": "Chip: Snapdragon 7 Gen 3 | Display: 6.7\" 120Hz Fluid AMOLED | Camera: 50MP Sony OIS | Battery: 5500mAh 100W | RAM: 8GB | Storage: 256GB",
@@ -489,17 +594,24 @@
       "Charging": "100W SuperVOOC",
       "Operating System": "OxygenOS 15 (Android 15)",
       "Software Updates": "4 OS upgrades + 6 years security",
-      "Build": "Plastic frame · IP65 · Reinforced glass",
+      "Build": "Plastic frame \u00b7 IP65 \u00b7 Reinforced glass",
       "Weight": "196 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Nano Silver, Pastel Pink"
-    }
+    },
+    "gallery": [
+      "/images/phones/oneplus-nord-ce5.png",
+      "/images/phones/oneplus-nord-ce5-back.png",
+      "/images/phones/oneplus-nord-ce5-angle-left.png",
+      "/images/phones/oneplus-nord-ce5-angle-right.png",
+      "/images/phones/oneplus-nord-ce5-side.png"
+    ]
   },
   {
     "id": 17,
     "name": "POCO X8 Pro Max",
-    "tag": "🎮 Best Gaming",
-    "category": "Under ₹40K",
+    "tag": "\ud83c\udfae Best Gaming",
+    "category": "Under \u20b940K",
     "brand": "Xiaomi",
     "price": 38600,
     "description": "Chip: Snapdragon 8 Gen 3 | Display: 6.73\" 144Hz AMOLED | Camera: 50MP Triple OIS | Battery: 5500mAh 120W | RAM: 16GB | Storage: 512GB",
@@ -520,17 +632,24 @@
       "Charging": "120W HyperCharge",
       "Operating System": "HyperOS 2 (Android 15)",
       "Software Updates": "3 OS upgrades + 4 years security",
-      "Build": "Aluminium frame · IP68 · Gorilla Glass Victus",
+      "Build": "Aluminium frame \u00b7 IP68 \u00b7 Gorilla Glass Victus",
       "Weight": "213 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Black, Silver, Blue"
-    }
+    },
+    "gallery": [
+      "/images/phones/poco-x8-pro-max.png",
+      "/images/phones/poco-x8-pro-max-back.png",
+      "/images/phones/poco-x8-pro-max-angle-left.png",
+      "/images/phones/poco-x8-pro-max-angle-right.png",
+      "/images/phones/poco-x8-pro-max-side.png"
+    ]
   },
   {
     "id": 18,
     "name": "vivo V70 FE",
-    "tag": "📷 Best Camera",
-    "category": "Under ₹40K",
+    "tag": "\ud83d\udcf7 Best Camera",
+    "category": "Under \u20b940K",
     "brand": "Vivo",
     "price": 34900,
     "description": "Chip: Dimensity 9200 | Display: 6.73\" 120Hz 1.5K AMOLED | Camera: 50MP ZEISS OIS Studio | Battery: 5000mAh 80W | RAM: 8GB | Storage: 256GB",
@@ -551,17 +670,24 @@
       "Charging": "80W FlashCharge",
       "Operating System": "Funtouch OS 15 (Android 15)",
       "Software Updates": "3 OS upgrades + 4 years security",
-      "Build": "Glass back · IP68 · Schott glass",
+      "Build": "Glass back \u00b7 IP68 \u00b7 Schott glass",
       "Weight": "197 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Titanium Black, Moonlight White, Lavender"
-    }
+    },
+    "gallery": [
+      "/images/phones/vivo-v70-fe.png",
+      "/images/phones/vivo-v70-fe-back.png",
+      "/images/phones/vivo-v70-fe-angle-left.png",
+      "/images/phones/vivo-v70-fe-angle-right.png",
+      "/images/phones/vivo-v70-fe-side.png"
+    ]
   },
   {
     "id": 19,
     "name": "Samsung Galaxy A37 5G",
-    "tag": "✨ Best UI",
-    "category": "Under ₹40K",
+    "tag": "\u2728 Best UI",
+    "category": "Under \u20b940K",
     "brand": "Samsung",
     "price": 33500,
     "description": "Chip: Exynos 1480 | Display: 6.5\" 120Hz Super AMOLED | Camera: 50MP OIS Triple | Battery: 5000mAh 25W | RAM: 8GB | Storage: 256GB",
@@ -582,17 +708,24 @@
       "Charging": "25W Fast Charge",
       "Operating System": "One UI 7 (Android 15)",
       "Software Updates": "4 OS upgrades + 5 years security",
-      "Build": "Aluminium frame · IP68 · Gorilla Glass Victus+",
+      "Build": "Aluminium frame \u00b7 IP68 \u00b7 Gorilla Glass Victus+",
       "Weight": "192 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Awesome Navy, Awesome Grey, Awesome Lilac"
-    }
+    },
+    "gallery": [
+      "/images/phones/samsung-galaxy-a37-5g.png",
+      "/images/phones/samsung-galaxy-a37-5g-back.png",
+      "/images/phones/samsung-galaxy-a37-5g-angle-left.png",
+      "/images/phones/samsung-galaxy-a37-5g-angle-right.png",
+      "/images/phones/samsung-galaxy-a37-5g-side.png"
+    ]
   },
   {
     "id": 20,
     "name": "OnePlus Nord 6",
-    "tag": "⭐ All-round Best",
-    "category": "Under ₹40K",
+    "tag": "\u2b50 All-round Best",
+    "category": "Under \u20b940K",
     "brand": "OnePlus",
     "price": 32900,
     "description": "Chip: Snapdragon 8s Gen 3 | Display: 6.77\" 120Hz ProXDR AMOLED | Camera: 50MP Sony LYT-700 OIS | Battery: 5500mAh 100W | RAM: 12GB | Storage: 256GB",
@@ -613,20 +746,27 @@
       "Charging": "100W SuperVOOC",
       "Operating System": "OxygenOS 15 (Android 15)",
       "Software Updates": "4 OS upgrades + 6 years security",
-      "Build": "Aluminium frame · IP65 · Gorilla Glass 7i",
+      "Build": "Aluminium frame \u00b7 IP65 \u00b7 Gorilla Glass 7i",
       "Weight": "200 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Infinite Black, Glacier Blue"
-    }
+    },
+    "gallery": [
+      "/images/phones/oneplus-nord-6.png",
+      "/images/phones/oneplus-nord-6-back.png",
+      "/images/phones/oneplus-nord-6-angle-left.png",
+      "/images/phones/oneplus-nord-6-angle-right.png",
+      "/images/phones/oneplus-nord-6-side.png"
+    ]
   },
   {
     "id": 21,
     "name": "Realme GT 7 Pro",
-    "tag": "💰 Best Value",
-    "category": "Under ₹40K",
+    "tag": "\ud83d\udcb0 Best Value",
+    "category": "Under \u20b940K",
     "brand": "Realme",
     "price": 36300,
-    "description": "Chip: Snapdragon 8 Elite | Display: 6.78\" 144Hz Eco² Sky OLED | Camera: 50MP Sony IMX906 OIS | Battery: 6500mAh 120W | RAM: 12GB | Storage: 256GB",
+    "description": "Chip: Snapdragon 8 Elite | Display: 6.78\" 144Hz Eco\u00b2 Sky OLED | Camera: 50MP Sony IMX906 OIS | Battery: 6500mAh 120W | RAM: 12GB | Storage: 256GB",
     "image": "/images/phones/realme-gt7-pro.png",
     "amazonLink": "https://www.amazon.in/s?k=Realme+GT+7+Pro&tag=techboy-21",
     "flipkartLink": "https://www.flipkart.com/search?q=Realme+GT+7+Pro&affid=techboy",
@@ -634,7 +774,7 @@
     "specs": {
       "Processor": "Snapdragon 8 Elite 3nm",
       "GPU": "Adreno 830",
-      "Display": "6.78\" 144Hz Eco² Sky OLED",
+      "Display": "6.78\" 144Hz Eco\u00b2 Sky OLED",
       "Rear Camera": "50MP OIS + 50MP 3x Periscope",
       "Selfie Camera": "16MP",
       "Video": "4K @ 60fps, 8K @ 24fps",
@@ -644,17 +784,24 @@
       "Charging": "120W Ultra Charge",
       "Operating System": "realme UI 6 (Android 15)",
       "Software Updates": "2 OS upgrades + 3 years security",
-      "Build": "Aluminium frame · IP69 · Crystal glass",
+      "Build": "Aluminium frame \u00b7 IP69 \u00b7 Crystal glass",
       "Weight": "222 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Mars Orange, Galaxy Grey"
-    }
+    },
+    "gallery": [
+      "/images/phones/realme-gt7-pro.png",
+      "/images/phones/realme-gt7-pro-back.png",
+      "/images/phones/realme-gt7-pro-angle-left.png",
+      "/images/phones/realme-gt7-pro-angle-right.png",
+      "/images/phones/realme-gt7-pro-side.png"
+    ]
   },
   {
     "id": 22,
     "name": "iQOO 13 5G",
-    "tag": "🎮 Best Gaming",
-    "category": "Under ₹50K",
+    "tag": "\ud83c\udfae Best Gaming",
+    "category": "Under \u20b950K",
     "brand": "iQOO",
     "price": 45700,
     "description": "Chip: Snapdragon 8 Elite | Display: 6.82\" 144Hz 2K LTPO AMOLED | Camera: 50MP Sony OIS Triple | Battery: 6150mAh 120W | RAM: 16GB | Storage: 512GB",
@@ -675,17 +822,24 @@
       "Charging": "120W FlashCharge",
       "Operating System": "Funtouch OS 15 (Android 15)",
       "Software Updates": "3 OS upgrades + 4 years security",
-      "Build": "Aluminium frame · IP69 · Schott glass",
+      "Build": "Aluminium frame \u00b7 IP69 \u00b7 Schott glass",
       "Weight": "213 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Legend, Nardo Grey, Alpha"
-    }
+    },
+    "gallery": [
+      "/images/phones/iqoo-13-5g.png",
+      "/images/phones/iqoo-13-5g-back.png",
+      "/images/phones/iqoo-13-5g-angle-left.png",
+      "/images/phones/iqoo-13-5g-angle-right.png",
+      "/images/phones/iqoo-13-5g-side.png"
+    ]
   },
   {
     "id": 23,
     "name": "vivo V70",
-    "tag": "📷 Best Camera",
-    "category": "Under ₹50K",
+    "tag": "\ud83d\udcf7 Best Camera",
+    "category": "Under \u20b950K",
     "brand": "Vivo",
     "price": 43300,
     "description": "Chip: Dimensity 9300+ | Display: 6.78\" 120Hz 1.5K AMOLED | Camera: 50MP ZEISS Triple Telephoto | Battery: 5500mAh 90W | RAM: 12GB | Storage: 256GB",
@@ -706,17 +860,24 @@
       "Charging": "90W FlashCharge",
       "Operating System": "Funtouch OS 15 (Android 15)",
       "Software Updates": "3 OS upgrades + 4 years security",
-      "Build": "Aluminium frame · IP69 · Schott glass",
+      "Build": "Aluminium frame \u00b7 IP69 \u00b7 Schott glass",
       "Weight": "198 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Aurora Blue, Moonlight White, Titanium Grey"
-    }
+    },
+    "gallery": [
+      "/images/phones/vivo-v70.png",
+      "/images/phones/vivo-v70-back.png",
+      "/images/phones/vivo-v70-angle-left.png",
+      "/images/phones/vivo-v70-angle-right.png",
+      "/images/phones/vivo-v70-side.png"
+    ]
   },
   {
     "id": 24,
     "name": "Samsung Galaxy A57 5G",
-    "tag": "✨ Best UI",
-    "category": "Under ₹50K",
+    "tag": "\u2728 Best UI",
+    "category": "Under \u20b950K",
     "brand": "Samsung",
     "price": 47300,
     "description": "Chip: Exynos 1580 | Display: 6.6\" 120Hz Dynamic AMOLED 2X | Camera: 108MP OIS Triple | Battery: 5000mAh 45W | RAM: 12GB | Storage: 256GB",
@@ -737,17 +898,24 @@
       "Charging": "45W Fast Charge",
       "Operating System": "One UI 7 (Android 15)",
       "Software Updates": "4 OS upgrades + 5 years security",
-      "Build": "Aluminium frame · IP68 · Gorilla Glass Victus+",
+      "Build": "Aluminium frame \u00b7 IP68 \u00b7 Gorilla Glass Victus+",
       "Weight": "198 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Awesome Navy, Awesome Grey, Awesome Lilac"
-    }
+    },
+    "gallery": [
+      "/images/phones/samsung-galaxy-a57-5g.png",
+      "/images/phones/samsung-galaxy-a57-5g-back.png",
+      "/images/phones/samsung-galaxy-a57-5g-angle-left.png",
+      "/images/phones/samsung-galaxy-a57-5g-angle-right.png",
+      "/images/phones/samsung-galaxy-a57-5g-side.png"
+    ]
   },
   {
     "id": 25,
     "name": "OnePlus 13R",
-    "tag": "⭐ All-round Best",
-    "category": "Under ₹50K",
+    "tag": "\u2b50 All-round Best",
+    "category": "Under \u20b950K",
     "brand": "OnePlus",
     "price": 42400,
     "description": "Chip: Snapdragon 8 Gen 3 | Display: 6.78\" 120Hz 1.5K LTPO4 AMOLED | Camera: 50MP Sony OIS | Battery: 6000mAh 100W | RAM: 16GB | Storage: 256GB",
@@ -768,17 +936,24 @@
       "Charging": "100W SuperVOOC",
       "Operating System": "OxygenOS 15 (Android 15)",
       "Software Updates": "4 OS upgrades + 6 years security",
-      "Build": "Aluminium frame · IP65 · Gorilla Glass 7i",
+      "Build": "Aluminium frame \u00b7 IP65 \u00b7 Gorilla Glass 7i",
       "Weight": "206 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Astral Trail, Nebula Noir"
-    }
+    },
+    "gallery": [
+      "/images/phones/oneplus-13r.png",
+      "/images/phones/oneplus-13r-back.png",
+      "/images/phones/oneplus-13r-angle-left.png",
+      "/images/phones/oneplus-13r-angle-right.png",
+      "/images/phones/oneplus-13r-side.png"
+    ]
   },
   {
     "id": 26,
     "name": "OnePlus 13",
-    "tag": "🎮 Best Gaming",
-    "category": "Under ₹60K",
+    "tag": "\ud83c\udfae Best Gaming",
+    "category": "Under \u20b960K",
     "brand": "OnePlus",
     "price": 59600,
     "description": "Chip: Snapdragon 8 Elite | Display: 6.82\" 2K Oriental AMOLED 120Hz | Camera: 50MP Hasselblad Triple | Battery: 6000mAh 100W | RAM: 16GB | Storage: 512GB",
@@ -799,17 +974,24 @@
       "Charging": "100W + 50W Wireless",
       "Operating System": "OxygenOS 15 (Android 15)",
       "Software Updates": "4 OS upgrades + 6 years security",
-      "Build": "Aluminium frame · IP69 · Ceramic Guard",
+      "Build": "Aluminium frame \u00b7 IP69 \u00b7 Ceramic Guard",
       "Weight": "210 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Midnight Ocean, Black Eclipse, Arctic Dawn"
-    }
+    },
+    "gallery": [
+      "/images/phones/oneplus-13.png",
+      "/images/phones/oneplus-13-back.png",
+      "/images/phones/oneplus-13-angle-left.png",
+      "/images/phones/oneplus-13-angle-right.png",
+      "/images/phones/oneplus-13-side.png"
+    ]
   },
   {
     "id": 27,
     "name": "Google Pixel 9 Pro",
-    "tag": "📷 Best Camera",
-    "category": "Under ₹60K",
+    "tag": "\ud83d\udcf7 Best Camera",
+    "category": "Under \u20b960K",
     "brand": "Google",
     "price": 59100,
     "description": "Chip: Google Tensor G4 | Display: 6.3\" Super Actua OLED 120Hz | Camera: 50MP Triple 5x Telephoto | Battery: 4700mAh 27W | RAM: 16GB | Storage: 256GB",
@@ -830,17 +1012,24 @@
       "Charging": "27W Fast Qi",
       "Operating System": "Android 15",
       "Software Updates": "7 years of OS + security updates",
-      "Build": "Aluminium frame · IP68 · Gorilla Glass Victus 2",
+      "Build": "Aluminium frame \u00b7 IP68 \u00b7 Gorilla Glass Victus 2",
       "Weight": "199 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Obsidian, Porcelain, Hazel, Rose Quartz"
-    }
+    },
+    "gallery": [
+      "/images/phones/google-pixel-9-pro.png",
+      "/images/phones/google-pixel-9-pro-back.png",
+      "/images/phones/google-pixel-9-pro-angle-left.png",
+      "/images/phones/google-pixel-9-pro-angle-right.png",
+      "/images/phones/google-pixel-9-pro-side.png"
+    ]
   },
   {
     "id": 28,
     "name": "Samsung Galaxy S25",
-    "tag": "✨ Best UI",
-    "category": "Under ₹60K",
+    "tag": "\u2728 Best UI",
+    "category": "Under \u20b960K",
     "brand": "Samsung",
     "price": 68100,
     "description": "Chip: Snapdragon 8 Elite | Display: 6.2\" Dynamic AMOLED 2X 120Hz | Camera: 50MP Triple OIS | Battery: 4000mAh 25W | RAM: 12GB | Storage: 256GB",
@@ -861,17 +1050,24 @@
       "Charging": "25W Fast Wireless",
       "Operating System": "One UI 7 (Android 15)",
       "Software Updates": "4 OS upgrades + 5 years security",
-      "Build": "Titanium frame · IP68 · Gorilla Glass Victus 2",
+      "Build": "Titanium frame \u00b7 IP68 \u00b7 Gorilla Glass Victus 2",
       "Weight": "162 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Icy Blue, Navy, Mint, Silver Shadow"
-    }
+    },
+    "gallery": [
+      "/images/phones/samsung-galaxy-s25.png",
+      "/images/phones/samsung-galaxy-s25-back.png",
+      "/images/phones/samsung-galaxy-s25-angle-left.png",
+      "/images/phones/samsung-galaxy-s25-angle-right.png",
+      "/images/phones/samsung-galaxy-s25-side.png"
+    ]
   },
   {
     "id": 29,
     "name": "Apple iPhone 15",
-    "tag": "⭐ All-round Best",
-    "category": "Under ₹60K",
+    "tag": "\u2b50 All-round Best",
+    "category": "Under \u20b960K",
     "brand": "Apple",
     "price": 55700,
     "description": "Chip: Apple A16 Bionic | Display: 6.1\" Super Retina XDR Dynamic Island | Camera: 48MP Dual Fusion | Battery: 3349mAh 20W | RAM: 6GB | Storage: 128GB",
@@ -892,17 +1088,24 @@
       "Charging": "20W MagSafe",
       "Operating System": "iOS 19",
       "Software Updates": "5+ years of iOS updates",
-      "Build": "Aluminium frame · IP68 · Ceramic Shield",
+      "Build": "Aluminium frame \u00b7 IP68 \u00b7 Ceramic Shield",
       "Weight": "171 g",
-      "Connectivity": "5G · Wi-Fi 6 · Bluetooth 5.3 · NFC · USB-C · GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 6 \u00b7 Bluetooth 5.3 \u00b7 NFC \u00b7 USB-C \u00b7 GPS",
       "Colors": "Black, Blue, Green, Yellow, Pink"
-    }
+    },
+    "gallery": [
+      "/images/phones/apple-iphone-15.png",
+      "/images/phones/apple-iphone-15-back.png",
+      "/images/phones/apple-iphone-15-angle-left.png",
+      "/images/phones/apple-iphone-15-angle-right.png",
+      "/images/phones/apple-iphone-15-side.png"
+    ]
   },
   {
     "id": 30,
     "name": "Samsung Galaxy S26+",
-    "tag": "🎮 Best Gaming",
-    "category": "Under ₹1 Lakh",
+    "tag": "\ud83c\udfae Best Gaming",
+    "category": "Under \u20b91 Lakh",
     "brand": "Samsung",
     "price": 87300,
     "description": "Chip: Snapdragon 8 Elite | Display: 6.7\" QHD+ Dynamic AMOLED 2X 120Hz | Camera: 50MP Triple OIS | Battery: 4900mAh 45W | RAM: 12GB | Storage: 256GB",
@@ -923,17 +1126,24 @@
       "Charging": "45W Super Fast 2.0",
       "Operating System": "One UI 7 (Android 15)",
       "Software Updates": "4 OS upgrades + 5 years security",
-      "Build": "Titanium frame · IP69 · Gorilla Glass Victus 3",
+      "Build": "Titanium frame \u00b7 IP69 \u00b7 Gorilla Glass Victus 3",
       "Weight": "190 g",
-      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 7 \u00b7 Bluetooth 5.4 \u00b7 NFC \u00b7 USB-C 3.2 \u00b7 Dual-band GPS",
       "Colors": "Ice Blue, Black, Silver"
-    }
+    },
+    "gallery": [
+      "/images/phones/samsung-galaxy-s26-plus.png",
+      "/images/phones/samsung-galaxy-s26-plus-back.png",
+      "/images/phones/samsung-galaxy-s26-plus-angle-left.png",
+      "/images/phones/samsung-galaxy-s26-plus-angle-right.png",
+      "/images/phones/samsung-galaxy-s26-plus-side.png"
+    ]
   },
   {
     "id": 31,
     "name": "Apple iPhone 17",
-    "tag": "📷 Best Camera",
-    "category": "Under ₹1 Lakh",
+    "tag": "\ud83d\udcf7 Best Camera",
+    "category": "Under \u20b91 Lakh",
     "brand": "Apple",
     "price": 80400,
     "description": "Chip: Apple A19 | Display: 6.3\" 120Hz ProMotion Super Retina XDR | Camera: 48MP Dual Fusion | Battery: 3600mAh 25W | RAM: 8GB | Storage: 128GB",
@@ -954,17 +1164,24 @@
       "Charging": "25W MagSafe",
       "Operating System": "iOS 19",
       "Software Updates": "5+ years of iOS updates",
-      "Build": "Aluminium frame · IP68 · Ceramic Shield 2",
+      "Build": "Aluminium frame \u00b7 IP68 \u00b7 Ceramic Shield 2",
       "Weight": "177 g",
-      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 7 \u00b7 Bluetooth 5.4 \u00b7 NFC \u00b7 USB-C 3.2 \u00b7 Dual-band GPS",
       "Colors": "Black, Lavender, Sage, Mist Blue"
-    }
+    },
+    "gallery": [
+      "/images/phones/apple-iphone-17.png",
+      "/images/phones/apple-iphone-17-back.png",
+      "/images/phones/apple-iphone-17-angle-left.png",
+      "/images/phones/apple-iphone-17-angle-right.png",
+      "/images/phones/apple-iphone-17-side.png"
+    ]
   },
   {
     "id": 32,
     "name": "Samsung Galaxy S26",
-    "tag": "✨ Best UI",
-    "category": "Under ₹1 Lakh",
+    "tag": "\u2728 Best UI",
+    "category": "Under \u20b91 Lakh",
     "brand": "Samsung",
     "price": 75700,
     "description": "Chip: Exynos 2600 / Snapdragon 8 Elite | Display: 6.36\" Dynamic AMOLED 120Hz | Camera: 50MP Triple | Battery: 4300mAh 25W | RAM: 12GB | Storage: 256GB",
@@ -985,17 +1202,24 @@
       "Charging": "25W Fast Charge",
       "Operating System": "One UI 7 (Android 15)",
       "Software Updates": "4 OS upgrades + 5 years security",
-      "Build": "Titanium frame · IP69 · Gorilla Glass Victus 3",
+      "Build": "Titanium frame \u00b7 IP69 \u00b7 Gorilla Glass Victus 3",
       "Weight": "168 g",
-      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 7 \u00b7 Bluetooth 5.4 \u00b7 NFC \u00b7 USB-C 3.2 \u00b7 Dual-band GPS",
       "Colors": "Ice Blue, Black, Silver"
-    }
+    },
+    "gallery": [
+      "/images/phones/samsung-galaxy-s26.png",
+      "/images/phones/samsung-galaxy-s26-back.png",
+      "/images/phones/samsung-galaxy-s26-angle-left.png",
+      "/images/phones/samsung-galaxy-s26-angle-right.png",
+      "/images/phones/samsung-galaxy-s26-side.png"
+    ]
   },
   {
     "id": 33,
     "name": "Apple iPhone 16",
-    "tag": "⭐ All-round Best",
-    "category": "Under ₹1 Lakh",
+    "tag": "\u2b50 All-round Best",
+    "category": "Under \u20b91 Lakh",
     "brand": "Apple",
     "price": 67900,
     "description": "Chip: Apple A18 | Display: 6.1\" Super Retina XDR OLED | Camera: 48MP Dual Fusion | Battery: 3561mAh 20W | RAM: 8GB | Storage: 128GB",
@@ -1016,17 +1240,24 @@
       "Charging": "20W Fast MagSafe",
       "Operating System": "iOS 19",
       "Software Updates": "5+ years of iOS updates",
-      "Build": "Aluminium frame · IP68 · Ceramic Shield 2",
+      "Build": "Aluminium frame \u00b7 IP68 \u00b7 Ceramic Shield 2",
       "Weight": "170 g",
-      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 7 \u00b7 Bluetooth 5.4 \u00b7 NFC \u00b7 USB-C 3.2 \u00b7 Dual-band GPS",
       "Colors": "Ultramarine, Teal, Pink, White, Black"
-    }
+    },
+    "gallery": [
+      "/images/phones/apple-iphone-16.png",
+      "/images/phones/apple-iphone-16-back.png",
+      "/images/phones/apple-iphone-16-angle-left.png",
+      "/images/phones/apple-iphone-16-angle-right.png",
+      "/images/phones/apple-iphone-16-side.png"
+    ]
   },
   {
     "id": 34,
     "name": "Apple iPhone 15 Pro Max",
-    "tag": "💰 Best Value",
-    "category": "Under ₹1 Lakh",
+    "tag": "\ud83d\udcb0 Best Value",
+    "category": "Under \u20b91 Lakh",
     "brand": "Apple",
     "price": 83700,
     "description": "Chip: Apple A17 Pro | Display: 6.7\" 120Hz ProMotion OLED | Camera: 48MP Triple 5x Telephoto | Battery: 4422mAh 27W | RAM: 8GB | Storage: 256GB",
@@ -1047,16 +1278,23 @@
       "Charging": "27W MagSafe",
       "Operating System": "iOS 19",
       "Software Updates": "5+ years of iOS updates",
-      "Build": "Titanium frame · IP68 · Ceramic Shield",
+      "Build": "Titanium frame \u00b7 IP68 \u00b7 Ceramic Shield",
       "Weight": "221 g",
-      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 7 \u00b7 Bluetooth 5.4 \u00b7 NFC \u00b7 USB-C 3.2 \u00b7 Dual-band GPS",
       "Colors": "Natural, Blue, White, Black Titanium"
-    }
+    },
+    "gallery": [
+      "/images/phones/apple-iphone-15-pro-max.png",
+      "/images/phones/apple-iphone-15-pro-max-back.png",
+      "/images/phones/apple-iphone-15-pro-max-angle-left.png",
+      "/images/phones/apple-iphone-15-pro-max-angle-right.png",
+      "/images/phones/apple-iphone-15-pro-max-side.png"
+    ]
   },
   {
     "id": 35,
     "name": "Samsung Galaxy S26 Ultra",
-    "tag": "🔥 Ultimate Android Flagship",
+    "tag": "\ud83d\udd25 Ultimate Android Flagship",
     "category": "Flagship 1L+",
     "brand": "Samsung",
     "price": 116400,
@@ -1078,16 +1316,23 @@
       "Charging": "65W Super Fast 2.0",
       "Operating System": "One UI 7 (Android 15)",
       "Software Updates": "4 OS upgrades + 5 years security",
-      "Build": "Titanium frame · IP69 · Gorilla Armor 2",
+      "Build": "Titanium frame \u00b7 IP69 \u00b7 Gorilla Armor 2",
       "Weight": "218 g",
-      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 7 \u00b7 Bluetooth 5.4 \u00b7 NFC \u00b7 USB-C 3.2 \u00b7 Dual-band GPS",
       "Colors": "Titanium Silver, Black, White, Jade Green"
-    }
+    },
+    "gallery": [
+      "/images/phones/samsung-galaxy-s26-ultra.png",
+      "/images/phones/samsung-galaxy-s26-ultra-back.png",
+      "/images/phones/samsung-galaxy-s26-ultra-angle-left.png",
+      "/images/phones/samsung-galaxy-s26-ultra-angle-right.png",
+      "/images/phones/samsung-galaxy-s26-ultra-side.png"
+    ]
   },
   {
     "id": 36,
     "name": "Apple iPhone 17 Pro Max",
-    "tag": "⭐ Ultimate iOS Flagship",
+    "tag": "\u2b50 Ultimate iOS Flagship",
     "category": "Flagship 1L+",
     "brand": "Apple",
     "price": 145400,
@@ -1109,16 +1354,23 @@
       "Charging": "35W Fast MagSafe",
       "Operating System": "iOS 19",
       "Software Updates": "5+ years of iOS updates",
-      "Build": "Titanium frame · IP68 · Ceramic Shield 2",
+      "Build": "Titanium frame \u00b7 IP68 \u00b7 Ceramic Shield 2",
       "Weight": "233 g",
-      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 7 \u00b7 Bluetooth 5.4 \u00b7 NFC \u00b7 USB-C 3.2 \u00b7 Dual-band GPS",
       "Colors": "Cosmic Orange, Deep Blue, Silver"
-    }
+    },
+    "gallery": [
+      "/images/phones/apple-iphone-17-pro-max.png",
+      "/images/phones/apple-iphone-17-pro-max-back.png",
+      "/images/phones/apple-iphone-17-pro-max-angle-left.png",
+      "/images/phones/apple-iphone-17-pro-max-angle-right.png",
+      "/images/phones/apple-iphone-17-pro-max-side.png"
+    ]
   },
   {
     "id": 37,
     "name": "Samsung Galaxy Z Fold 7",
-    "tag": "📱 Next-Gen Foldable",
+    "tag": "\ud83d\udcf1 Next-Gen Foldable",
     "category": "Flagship 1L+",
     "brand": "Samsung",
     "price": 155000,
@@ -1140,16 +1392,23 @@
       "Charging": "45W",
       "Operating System": "One UI 7 (Android 15)",
       "Software Updates": "4 OS upgrades + 5 years security",
-      "Build": "Titanium hinge · IP48 · Gorilla Glass Ceramic 2",
+      "Build": "Titanium hinge \u00b7 IP48 \u00b7 Gorilla Glass Ceramic 2",
       "Weight": "215 g",
-      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 7 \u00b7 Bluetooth 5.4 \u00b7 NFC \u00b7 USB-C 3.2 \u00b7 Dual-band GPS",
       "Colors": "Blue Shadow, Silver Shadow, Jet Black"
-    }
+    },
+    "gallery": [
+      "/images/phones/samsung-galaxy-z-fold-7.png",
+      "/images/phones/samsung-galaxy-z-fold-7-back.png",
+      "/images/phones/samsung-galaxy-z-fold-7-angle-left.png",
+      "/images/phones/samsung-galaxy-z-fold-7-angle-right.png",
+      "/images/phones/samsung-galaxy-z-fold-7-side.png"
+    ]
   },
   {
     "id": 38,
     "name": "Samsung Galaxy Z Flip 7",
-    "tag": "✨ Icon Clamshell",
+    "tag": "\u2728 Icon Clamshell",
     "category": "Flagship 1L+",
     "brand": "Samsung",
     "price": 106700,
@@ -1171,16 +1430,23 @@
       "Charging": "25W Fast Wireless",
       "Operating System": "One UI 7 (Android 15)",
       "Software Updates": "4 OS upgrades + 5 years security",
-      "Build": "Aluminium frame · IP48 · Gorilla Glass Victus 2",
+      "Build": "Aluminium frame \u00b7 IP48 \u00b7 Gorilla Glass Victus 2",
       "Weight": "188 g",
-      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 7 \u00b7 Bluetooth 5.4 \u00b7 NFC \u00b7 USB-C 3.2 \u00b7 Dual-band GPS",
       "Colors": "Blue Shadow, Mint, Jet Black, Coral Red"
-    }
+    },
+    "gallery": [
+      "/images/phones/samsung-galaxy-z-flip-7.png",
+      "/images/phones/samsung-galaxy-z-flip-7-back.png",
+      "/images/phones/samsung-galaxy-z-flip-7-angle-left.png",
+      "/images/phones/samsung-galaxy-z-flip-7-angle-right.png",
+      "/images/phones/samsung-galaxy-z-flip-7-side.png"
+    ]
   },
   {
     "id": 39,
     "name": "Apple iPhone 17 Pro",
-    "tag": "🎯 Compact Pro Power",
+    "tag": "\ud83c\udfaf Compact Pro Power",
     "category": "Flagship 1L+",
     "brand": "Apple",
     "price": 115300,
@@ -1202,16 +1468,23 @@
       "Charging": "30W MagSafe",
       "Operating System": "iOS 19",
       "Software Updates": "5+ years of iOS updates",
-      "Build": "Titanium frame · IP68 · Ceramic Shield 2",
+      "Build": "Titanium frame \u00b7 IP68 \u00b7 Ceramic Shield 2",
       "Weight": "199 g",
-      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 7 \u00b7 Bluetooth 5.4 \u00b7 NFC \u00b7 USB-C 3.2 \u00b7 Dual-band GPS",
       "Colors": "Cosmic Orange, Deep Blue, Silver"
-    }
+    },
+    "gallery": [
+      "/images/phones/apple-iphone-17-pro.png",
+      "/images/phones/apple-iphone-17-pro-back.png",
+      "/images/phones/apple-iphone-17-pro-angle-left.png",
+      "/images/phones/apple-iphone-17-pro-angle-right.png",
+      "/images/phones/apple-iphone-17-pro-side.png"
+    ]
   },
   {
     "id": 40,
     "name": "Apple iPhone 16 Pro Max",
-    "tag": "🏆 Pro Flagship Deal",
+    "tag": "\ud83c\udfc6 Pro Flagship Deal",
     "category": "Flagship 1L+",
     "brand": "Apple",
     "price": 119900,
@@ -1233,10 +1506,17 @@
       "Charging": "27W Fast Qi",
       "Operating System": "iOS 19",
       "Software Updates": "5+ years of iOS updates",
-      "Build": "Titanium frame · IP68 · Ceramic Shield 2",
+      "Build": "Titanium frame \u00b7 IP68 \u00b7 Ceramic Shield 2",
       "Weight": "227 g",
-      "Connectivity": "5G · Wi-Fi 7 · Bluetooth 5.4 · NFC · USB-C 3.2 · Dual-band GPS",
+      "Connectivity": "5G \u00b7 Wi-Fi 7 \u00b7 Bluetooth 5.4 \u00b7 NFC \u00b7 USB-C 3.2 \u00b7 Dual-band GPS",
       "Colors": "Desert Titanium, Natural, Black, White"
-    }
+    },
+    "gallery": [
+      "/images/phones/apple-iphone-16-pro-max.png",
+      "/images/phones/apple-iphone-16-pro-max-back.png",
+      "/images/phones/apple-iphone-16-pro-max-angle-left.png",
+      "/images/phones/apple-iphone-16-pro-max-angle-right.png",
+      "/images/phones/apple-iphone-16-pro-max-side.png"
+    ]
   }
 ]

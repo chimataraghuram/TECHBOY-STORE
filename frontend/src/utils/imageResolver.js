@@ -155,6 +155,13 @@ const slugFromLocalPath = (src = '') => {
  */
 export const getProductImages = (product) => {
     if (!product) return [];
+    
+    // 1. If product has an explicit gallery array with images, use it directly
+    if (Array.isArray(product.gallery) && product.gallery.length > 0) {
+        return product.gallery;
+    }
+
+    // 2. Resolve primary image and find matching phoneGallery entry
     const primary = resolveProductImage(product.image, product.name);
     const slug = slugFromLocalPath(primary);
     const gallery = (slug && phoneGallery[slug]) ? phoneGallery[slug] : [];

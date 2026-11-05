@@ -46,10 +46,30 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     score = serializers.SerializerMethodField()
+    gallery = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'price', 'description', 'image', 'amazon_link', 'flipkart_link', 'category', 'brand', 'rating', 'tag', 'specs', 'score']
+        fields = ['id', 'name', 'price', 'description', 'image', 'amazon_link', 'flipkart_link', 'category', 'brand', 'rating', 'tag', 'specs', 'score', 'gallery']
+
+    def get_gallery(self, obj):
+        import re, json, os
+        from django.conf import settings
+        
+        # Extract slug from product image
+        src = obj.image or ''
+        m = re.search(r'/images/phones/([^/]+)\.(png|jpe?g|webp)', src, re.I)
+        slug = m.group(1) if m else ''
+        if not slug:
+            return [src] if src else []
+            
+        return [
+            f'/images/phones/{slug}.png',
+            f'/images/phones/{slug}-back.png',
+            f'/images/phones/{slug}-angle-left.png',
+            f'/images/phones/{slug}-angle-right.png',
+            f'/images/phones/{slug}-side.png'
+        ]
 
     def get_score(self, obj):
         if obj.price and obj.price > 0 and isinstance(obj.specs, dict):
