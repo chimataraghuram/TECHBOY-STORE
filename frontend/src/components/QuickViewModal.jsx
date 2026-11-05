@@ -269,14 +269,14 @@ const QuickViewModal = ({ product, onClose, onOpenShare }) => {
                                                 <button
                                                     onClick={handlePrevImg}
                                                     aria-label="Previous image"
-                                                    className="absolute left-2.5 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-black/60 border border-white/15 text-white flex items-center justify-center hover:bg-red-600 hover:border-red-500 transition-all shadow-md active:scale-90"
+                                                    className="!absolute !left-2.5 !top-1/2 !-translate-y-1/2 !right-auto !bottom-auto z-20 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-red-600 hover:border-red-500 transition-all shadow-[0_4px_16px_rgba(0,0,0,0.7)] active:scale-90 cursor-pointer"
                                                 >
                                                     <ChevronLeft size={16} />
                                                 </button>
                                                 <button
                                                     onClick={handleNextImg}
                                                     aria-label="Next image"
-                                                    className="absolute right-2.5 top-1/2 -translate-y-1/2 z-20 w-7 h-7 rounded-full bg-black/60 border border-white/15 text-white flex items-center justify-center hover:bg-red-600 hover:border-red-500 transition-all shadow-md active:scale-90"
+                                                    className="!absolute !right-2.5 !top-1/2 !-translate-y-1/2 !left-auto !bottom-auto z-20 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-red-600 hover:border-red-500 transition-all shadow-[0_4px_16px_rgba(0,0,0,0.7)] active:scale-90 cursor-pointer"
                                                 >
                                                     <ChevronRight size={16} />
                                                 </button>
