@@ -97,13 +97,10 @@ html {
   box-shadow: var(--redline-shadow);
   backdrop-filter: blur(12px) saturate(1.25) !important;
   -webkit-backdrop-filter: blur(12px) saturate(1.25) !important;
-  will-change: transform, backdrop-filter;
+  will-change: transform;
   transform: translateZ(0);
 }
 
-.glass-card {
-  transform-style: preserve-3d;
-}
 
 .glass-card:hover {
   border-color: var(--redline-border-hot) !important;
@@ -869,7 +866,6 @@ html {
 }
 
 .product-grid {
-  perspective: 1500px;
   gap: 32px !important;
 }
 
@@ -880,7 +876,6 @@ html {
   background:
     radial-gradient(circle at 50% 0%, rgba(255, 31, 61, 0.15), transparent 42%),
     linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(15, 2, 4, 0.9)) !important;
-  transform-style: preserve-3d;
 }
 
 .product-card::before {
@@ -902,7 +897,7 @@ html {
   bottom: -28px;
   height: 54px;
   background: radial-gradient(ellipse, rgba(255, 31, 61, 0.36), transparent 70%);
-  filter: blur(18px);
+  filter: blur(8px);
   pointer-events: none;
 }
 

@@ -10,7 +10,6 @@ a,
 .interactive-btn {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
-  will-change: transform, opacity;
   transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
               box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1), 
               background-color 0.2s ease, 
@@ -38,7 +37,6 @@ a:active,
 .glass-stage,
 .trend-card,
 .quick-prompt-btn {
-  will-change: transform, box-shadow;
   transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -50,7 +48,6 @@ a:active,
   transform: translateY(20px) translateZ(0);
   transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), 
               transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
 }
 
 .scroll-reveal.is-visible {
@@ -79,8 +76,11 @@ html {
     transform: none;
   }
   
-  /* Smooth inertia scrolling */
-  * {
+  /* Smooth momentum scrolling restricted to scroll containers */
+  .overflow-x-auto,
+  .overflow-y-auto,
+  .overflow-auto,
+  [data-scrollable="true"] {
     -webkit-overflow-scrolling: touch;
   }
 }
@@ -93,4 +93,12 @@ html {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Isolated layout & paint containment to prevent scroll layout recalculations */
+.scroll-optimized-card {
+  contain: layout style paint;
+  content-visibility: auto;
+  contain-intrinsic-size: 380px;
+  transform: translateZ(0);
 }
