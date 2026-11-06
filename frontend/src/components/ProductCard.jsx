@@ -158,7 +158,7 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
     return (
         <>
             <m.div
-                className={`group relative bg-[#09090d] border border-red-500/35 hover:border-red-500/70 rounded-3xl overflow-hidden shadow-[0_0_25px_rgba(255,20,50,0.12)] hover:shadow-[0_0_40px_rgba(255,20,50,0.3)] transition-all duration-300 flex flex-col h-full p-2.5 sm:p-4 w-full ${isComparing ? 'ring-2 ring-red-500' : ''}`}
+                className={`group relative scroll-optimized-card bg-[#09090d] border border-red-500/35 hover:border-red-500/70 rounded-3xl overflow-hidden shadow-[0_0_25px_rgba(255,20,50,0.12)] hover:shadow-[0_0_40px_rgba(255,20,50,0.3)] transition-all duration-300 flex flex-col h-full p-2.5 sm:p-4 w-full ${isComparing ? 'ring-2 ring-red-500' : ''}`}
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
