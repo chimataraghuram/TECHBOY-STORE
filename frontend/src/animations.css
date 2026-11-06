@@ -102,3 +102,22 @@ html {
   contain-intrinsic-size: 380px;
   transform: translateZ(0);
 }
+
+/* Ultra-smooth hardware-accelerated animations */
+.glow-pulse-subtle {
+  animation: glowPulseSubtle 3s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulseSubtle {
+  0% { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.02); }
+}
+
+/* Smooth transition presets */
+.smooth-hover-lift {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.smooth-hover-lift:hover {
+  transform: translateY(-4px);
+}

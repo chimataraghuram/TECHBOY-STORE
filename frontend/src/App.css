@@ -1133,8 +1133,7 @@
 
 /* 3D Tilt & Card Shine */
 .product-card {
-  transform-style: preserve-3d;
-  will-change: transform;
+  /* transform-style removed for scrolling performance */
 }
 
 .card-shine {
@@ -2483,7 +2482,6 @@
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   border-radius: 30px !important;
   overflow: visible !important;
-  will-change: transform, opacity;
 }
 
 .product-card::after {
@@ -3161,11 +3159,9 @@ html {
 .particle-canvas-global {
   pointer-events: none;
   z-index: -1;
-  will-change: transform;
 }
 
 .glass-card {
-  will-change: transform, opacity;
   transform: translateZ(0); /* Force GPU acceleration */
 }
 

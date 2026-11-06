@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import Particles, { ParticlesProvider } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
@@ -7,6 +7,25 @@ const initParticlesEngine = async (engine) => {
 };
 
 const ParticleBackground = () => {
+    const [isScrolling, setIsScrolling] = useState(false);
+
+    useEffect(() => {
+        let scrollTimer = null;
+        const handleScroll = () => {
+            if (!isScrolling) setIsScrolling(true);
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => {
+                setIsScrolling(false);
+            }, 150);
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            clearTimeout(scrollTimer);
+        };
+    }, [isScrolling]);
+
     const options = useMemo(() => ({
         fullScreen: { 
             enable: true, 
@@ -17,7 +36,7 @@ const ParticleBackground = () => {
                 value: "transparent",
             },
         },
-        fpsLimit: 60,
+        fpsLimit: 40,
         interactivity: {
             events: {
                 onClick: { enable: false },
@@ -33,28 +52,26 @@ const ParticleBackground = () => {
             },
             move: {
                 direction: "none",
-                enable: true,
+                enable: !isScrolling,
                 outModes: {
                     default: "out",
                 },
                 random: true,
-                speed: 0.3,
+                speed: 0.25,
                 straight: false,
             },
             number: {
                 density: {
                     enable: true,
-                    width: 800,
-                    height: 800,
+                    width: 900,
+                    height: 900,
                 },
-                value: 15,
+                value: 12,
             },
             opacity: {
                 value: 0.15,
                 animation: {
-                    enable: true,
-                    speed: 0.5,
-                    sync: false,
+                    enable: false,
                 },
             },
             shape: {
@@ -64,8 +81,8 @@ const ParticleBackground = () => {
                 value: { min: 1, max: 2 },
             },
         },
-        detectRetina: true,
-    }), []);
+        detectRetina: false,
+    }), [isScrolling]);
 
     return (
         <ParticlesProvider init={initParticlesEngine}>
