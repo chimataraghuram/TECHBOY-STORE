@@ -334,7 +334,7 @@ const ChatPopup = ({ isOpen, onClose }) => {
     return (
         <m.div
             ref={popupRef}
-            className="fixed inset-x-3 bottom-3 top-auto sm:inset-x-auto sm:bottom-6 sm:right-6 w-auto sm:w-[350px] md:w-[365px] h-[500px] max-h-[calc(100vh-100px)] z-[9995] flex flex-col rounded-2xl sm:rounded-3xl border border-white/[0.12] bg-[#09080e]/95 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.85),0_0_28px_rgba(255,31,61,0.2)] overflow-hidden"
+            className="chat-popup fixed left-3 bottom-3 sm:left-6 sm:bottom-6 right-auto w-[calc(100vw-24px)] max-w-[340px] sm:max-w-[365px] h-[500px] max-h-[calc(100dvh-90px)] sm:max-h-[calc(100vh-100px)] z-[9995] flex flex-col rounded-2xl sm:rounded-3xl border border-white/[0.12] bg-[#09080e]/95 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.85),0_0_28px_rgba(255,31,61,0.2)] overflow-hidden"
             initial={{ opacity: 0, scale: 0.94, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.94, y: 20 }}

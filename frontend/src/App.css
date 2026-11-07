@@ -1691,7 +1691,8 @@
 .chat-popup {
   position: fixed;
   bottom: 24px;
-  right: 24px;
+  left: 24px;
+  right: auto;
   width: 360px;
   height: 520px;
   max-height: calc(100vh - 48px);
@@ -2090,8 +2091,8 @@
 @media (max-width: 480px) {
   .chat-popup {
     bottom: 84px !important;
-    right: 12px !important;
-    left: auto !important;
+    left: 12px !important;
+    right: auto !important;
     width: 320px !important;
     max-width: calc(100vw - 24px) !important;
     height: 460px !important;
@@ -3494,8 +3495,8 @@ html {
   }
   .chat-popup {
     bottom: 84px !important;
-    right: 14px !important;
-    left: auto !important;
+    left: 14px !important;
+    right: auto !important;
     width: 330px !important;
     max-width: calc(100vw - 28px) !important;
     height: 480px !important;
@@ -3905,8 +3906,8 @@ html {
   /* Chat */
   .chat-popup {
     bottom: 84px !important;
-    right: 14px !important;
-    left: auto !important;
+    left: 14px !important;
+    right: auto !important;
     width: 330px !important;
     max-width: calc(100vw - 28px) !important;
     height: 480px !important;
@@ -3974,8 +3975,8 @@ html {
   /* Chat popup */
   .chat-popup {
     bottom: 84px !important;
-    right: 12px !important;
-    left: auto !important;
+    left: 12px !important;
+    right: auto !important;
     width: 320px !important;
     max-width: calc(100vw - 24px) !important;
     height: 460px !important;
