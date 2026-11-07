@@ -313,20 +313,20 @@ const TechBoyTrends = () => {
                                         </div>
 
                                         {/* Trend Category Badge — Floating Top Left */}
-                                        <span className={`absolute top-2.5 left-2.5 z-20 inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-wider backdrop-blur-md border ${getTrendColor(alert.type)}`}>
+                                        <span className={`absolute top-2.5 left-2.5 z-20 inline-flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded-full text-[8.5px] sm:text-[9px] font-extrabold uppercase tracking-wider backdrop-blur-md border shadow-sm max-w-[calc(100%-48px)] truncate ${getTrendColor(alert.type)}`}>
                                             {getCategoryIcon(alert.type)}
-                                            {getTrendLabel(alert.type)}
+                                            <span className="truncate">{getTrendLabel(alert.type)}</span>
                                         </span>
 
-                                        {/* Top Right Group: Timestamp Pill + Wishlist Button */}
+                                        {/* Top Right Group: Timestamp Pill (Desktop/Tablet) + Wishlist Button */}
                                         <div className="absolute top-2.5 right-2.5 z-20 flex items-center gap-1.5">
-                                            <span className="hidden min-[380px]:flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/60 border border-white/10 text-gray-400 text-[10px] font-semibold backdrop-blur-md">
+                                            <span className="hidden md:flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/60 border border-white/10 text-gray-400 text-[10px] font-semibold backdrop-blur-md">
                                                 <Clock size={10} className="text-gray-400" />
                                                 {alert.time}
                                             </span>
                                             <button
                                                 onClick={(e) => handleToggleWishlist(e, alert, imageSrc)}
-                                                className={`h-7 w-7 rounded-full flex items-center justify-center border backdrop-blur-md transition-all active:scale-90 cursor-pointer shadow-sm ${
+                                                className={`wishlist-btn !min-h-0 !min-w-0 h-7 w-7 rounded-full flex items-center justify-center border backdrop-blur-md transition-all active:scale-90 cursor-pointer shadow-sm ${
                                                     isWishlisted
                                                         ? 'bg-pink-500/20 border-pink-500/50 text-pink-400 shadow-[0_0_12px_rgba(244,63,94,0.4)]'
                                                         : 'bg-black/60 border-white/15 text-gray-400 hover:text-pink-400 hover:border-pink-500/40 hover:bg-black/80'
