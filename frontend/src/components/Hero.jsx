@@ -81,8 +81,8 @@ const Hero = ({ setCurrentView }) => {
                         </m.p>
 
                         {/* ── VISUAL FOR MOBILE (below subtitle) ── */}
-                        <div className="lg:hidden w-full my-2 flex justify-center items-center">
-                            <div className="relative w-full max-w-[360px] h-[300px]">
+                        <div className="lg:hidden w-full my-3 sm:my-4 flex justify-center items-center">
+                            <div className="relative w-full max-w-[340px] h-[260px] sm:h-[300px] overflow-hidden rounded-2xl">
                                 <HeroVisual />
                             </div>
                         </div>
