@@ -229,7 +229,7 @@ Distributed under the **MIT License**. See `LICENSE` for more information.
         </a>
       </td>
     </tr>
-    <tr>
+    <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
       <td align="center" style="padding: 14px 10px;">
         <a href="https://github.com/shalemshalem250-bot">
           <img src="https://github.com/shalemshalem250-bot.png?size=80" width="52" height="52" style="border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.25); box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);" alt="shalemshalem250-bot" />
@@ -244,6 +244,25 @@ Distributed under the **MIT License**. See `LICENSE` for more information.
       </td>
       <td align="center" style="padding: 14px 16px;">
         <a href="https://github.com/shalemshalem250-bot">
+          <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" style="padding: 14px 10px;">
+        <a href="https://github.com/hari7477">
+          <img src="https://github.com/hari7477.png?size=80" width="52" height="52" style="border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.25); box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);" alt="hari7477" />
+        </a>
+      </td>
+      <td style="padding: 14px 16px;">
+        <strong style="font-size: 15px; color: #ffffff;">Hari</strong> <span style="font-size: 11px; padding: 2px 8px; border-radius: 12px; background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); font-weight: bold; margin-left: 6px;">CONTRIBUTOR</span><br />
+        <span style="font-size: 12px; color: #9ca3af;">@hari7477</span>
+      </td>
+      <td style="padding: 14px 16px; font-size: 13px; color: #d1d5db;">
+        Frontend Engineering, UI/UX Review & Cross-Device Compatibility
+      </td>
+      <td align="center" style="padding: 14px 16px;">
+        <a href="https://github.com/hari7477">
           <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" />
         </a>
       </td>
