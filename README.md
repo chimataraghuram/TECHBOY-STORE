@@ -75,7 +75,7 @@ Experience the premium tech shopping journey yourself: [https://techboy-store.ve
 | 📈 | **30-Day Price Trend Charts** | Interactive historical price tracking graphs showing market trends, all-time lows, and price drops across major retailers. |
 | 🔐 | **Firebase + Django REST Auth** | Google sign-in through Firebase Authentication paired with token-based Django REST API security and personalized profiles. |
 | 🔔 | **Real-Time Price Alerts** | Guest and signed-in alert subscriptions with duplicate suppression, target thresholds, and automated alert dispatches. |
-| 🎙️ | **"Hey TechBoy" Voice Engine (Google Gemini AI)** | Hands-free natural language voice assistant powered by Google Gemini 2.5 Flash API (`VITE_GEMINI_API_KEY`) and Web Speech API. Features real-time Web Audio API amplitude waveforms, phone-domain phonetic auto-correction, and zero-latency spoken verdicts via SpeechSynthesis. |
+| 🎙️ | **"Hey TechBoy" Voice Engine (Trained Google Gemini AI)** | Hands-free conversational voice concierge trained on TECHBOY-STORE smartphone catalog specs & pricing via Google Gemini 2.5 Flash API (`VITE_GEMINI_API_KEY`). Features few-shot dialogue tuning, domain acoustic phonetic correction, real-time Web Audio waveforms, and ultra-crisp SpeechSynthesis audio verdicts. |
 | ⚔️ | **Battle Arena (Head-to-Head)** | Interactive side-by-side flagship showdown with category benchmarks (Gaming, Camera, Battery, Display, Value) and automated AI verdict computation. |
 | 🧮 | **Smart Exchange Calculator** | Instant trade-in appraisal engine assessing physical condition, age depreciation, and brand retention to calculate residual exchange bonus. |
 
@@ -136,7 +136,7 @@ TECHBOY-STORE/
 - [x] **Transactional Emails**: Resend API integration for security login alerts and price drop notifications.
 - [x] **Global Price Alerts**: Multi-channel alerts letting users track hardware price depreciation.
 - [x] **User Profiles & Watchlists**: Save, track, and manage smartphone preferences.
-- [x] **Voice Model & Assistant**: "Hey TechBoy" voice engine powered by Google Gemini 2.5 Flash API (`VITE_GEMINI_API_KEY`), live Web Audio waveforms, smartphone phonetic normalization, and SpeechSynthesis audio verdicts.
+- [x] **Voice Model & Assistant**: Trained "Hey TechBoy" voice model powered by Google Gemini 2.5 Flash API (`VITE_GEMINI_API_KEY` & `GEMINI_API_KEY`) with catalog grounding, few-shot dialogue examples, acoustic phonetic correction, live Web Audio waveforms, and SpeechSynthesis verdicts.
 - [x] **Battle Arena**: Interactive side-by-side benchmark scoring and AI-determined device winner.
 - [x] **Exchange Value Calculator**: Instant trade-in bonus estimation for old smartphones.
 

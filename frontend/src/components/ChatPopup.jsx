@@ -188,11 +188,11 @@ const ChatPopup = ({ isOpen, onClose }) => {
             speakText, stopSpeaking } =
         useVoiceSearch(async (transcript) => {
             setInputValue(transcript);
-            // If user used voice input and voice output is enabled, query Gemini Voice model for instant spoken verdict
+            // If user used voice input and voice output is enabled, query trained Gemini Voice model with catalog grounding
             if (isTtsEnabled && transcript.trim()) {
                 queryGeminiVoice(transcript, (spokenReply) => {
                     speakText(spokenReply);
-                });
+                }, livePhonesData);
             }
         });
 

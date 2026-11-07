@@ -224,9 +224,32 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     @action(detail=True, methods=['get'])
     def ai_summary(self, request, pk=None):
         product = self.get_object()
+        gemini_key = os.environ.get('GEMINI_API_KEY')
         nvidia_key = os.environ.get('NVIDIA_API_KEY')
         ai_response = f"AI Verdict: The {product.name} offers great value with a focus on core performance and reliability in its price segment."
         
+        # 1. Primary: Google Gemini 2.5 Flash API
+        if gemini_key:
+            try:
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={gemini_key}"
+                prompt = (
+                    f"You are TechBoy AI, an expert smartphone recommender. Write a 1-sentence punchy verdict "
+                    f"about the {product.name} (Price: ₹{product.price:,}, Brand: {product.brand}). "
+                    f"Focus on who this phone is best for, without listing technical specs. Keep under 25 words."
+                )
+                res = requests.post(url, json={
+                    "contents": [{"parts": [{"text": prompt}]}],
+                    "generationConfig": {"temperature": 0.25, "maxOutputTokens": 60}
+                }, timeout=10)
+                if res.status_code == 200:
+                    raw_text = res.json().get('candidates', [{}])[0].get('content', {}).get('parts', [{}])[0].get('text', '')
+                    cleaned = raw_text.replace('*', '').strip()
+                    if cleaned:
+                        return Response({"summary": f"AI Verdict: {cleaned}"})
+            except Exception as e:
+                print(f"Gemini API Error in ai_summary: {e}")
+
+        # 2. Secondary Fallback: NVIDIA NIM API
         if nvidia_key:
             try:
                 headers = {
@@ -361,10 +384,41 @@ class ChatbotAPIView(APIView):
 
         retrieved = retrieve_products(query)
         context = build_context(retrieved)
+        gemini_key = os.environ.get('GEMINI_API_KEY')
         nvidia_key = os.environ.get('NVIDIA_API_KEY')
         ai_response = local_answer(retrieved)
 
-        if nvidia_key:
+        # 1. Primary: Google Gemini 2.5 Flash API with Catalog Grounding & Strict Persona
+        if gemini_key:
+            try:
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={gemini_key}"
+                system_instruction = (
+                    "You are TechBoy AI, the official intelligent smartphone advisor for TECHBOY-STORE. "
+                    "Answer only from the retrieved TechBoy catalog context. Never invent prices, specs, or availability. "
+                    "If the context lacks the answer, say so. Be concise, conversational, and use Markdown bullets when recommending phones."
+                )
+                payload = {
+                    "system_instruction": {"parts": [{"text": system_instruction}]},
+                    "contents": [{
+                        "parts": [{
+                            "text": f"Customer Question: {query}\n\nRetrieved Verified TechBoy Catalog Context:\n{context}"
+                        }]
+                    }],
+                    "generationConfig": {
+                        "temperature": 0.2,
+                        "maxOutputTokens": 400
+                    }
+                }
+                res = requests.post(url, json=payload, timeout=20)
+                if res.status_code == 200:
+                    raw_text = res.json().get('candidates', [{}])[0].get('content', {}).get('parts', [{}])[0].get('text', '')
+                    if raw_text.strip():
+                        ai_response = raw_text.strip()
+            except Exception as e:
+                print(f"Gemini API Error in chat: {e}")
+
+        # 2. Secondary Fallback: NVIDIA NIM API
+        elif nvidia_key:
             try:
                 headers = {
                     "Authorization": f"Bearer {nvidia_key}",
