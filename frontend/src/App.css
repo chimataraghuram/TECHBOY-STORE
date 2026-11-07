@@ -4061,9 +4061,11 @@ html {
   font-size: clamp(1.4rem, 3vw, 2.2rem);
 }
 
-/* -- Improve tap targets on mobile -- */
+/* -- Improve tap targets on mobile (exclude micro-indicators, pills, dots) -- */
 @media (max-width: 768px) {
-  button, a, .nav-pill-item {
+  button:not(.carousel-dot):not([role="tab"]):not(.gallery-indicator-dot):not(.action-btn-circle):not(.spec-chip),
+  a:not(.inline-link),
+  .nav-pill-item {
     min-height: 44px;
     min-width: 44px;
   }
@@ -4073,6 +4075,12 @@ html {
   }
   .price-tab {
     min-height: 40px;
+  }
+  .carousel-dot {
+    min-height: 0 !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    border-radius: 9999px !important;
   }
 }
 

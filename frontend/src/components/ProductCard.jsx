@@ -251,18 +251,19 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                             </button>
 
                             {/* Center-bottom clean indicator bar */}
-                            <div className="!absolute !bottom-2.5 !left-1/2 !-translate-x-1/2 !top-auto !right-auto z-20 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/15 shadow-[0_4px_16px_rgba(0,0,0,0.8)] pointer-events-auto">
+                            <div className="!absolute !bottom-2 !left-1/2 !-translate-x-1/2 !top-auto !right-auto z-20 flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/85 backdrop-blur-md border border-white/20 shadow-[0_4px_16px_rgba(0,0,0,0.9)] pointer-events-auto">
                                 {images.map((_, i) => (
                                     <button
                                         key={i}
                                         type="button"
                                         onClick={(e) => { e.stopPropagation(); showImage(i); }}
                                         aria-label={`Go to photo ${i + 1}`}
-                                        className={`transition-all duration-300 rounded-full cursor-pointer ${
+                                        className={`carousel-dot transition-all duration-300 cursor-pointer !p-0 !border-0 !outline-none ${
                                             i === imgIndex
-                                                ? 'w-4 h-1.5 bg-[#ff1f3d] shadow-[0_0_8px_rgba(255,31,61,0.9)]'
-                                                : 'w-1.5 h-1.5 bg-white/30 hover:bg-white/60'
+                                                ? '!w-3.5 !h-1 sm:!w-4 sm:!h-1.5 !rounded-full bg-[#ff1f3d] shadow-[0_0_8px_rgba(255,31,61,0.9)]'
+                                                : '!w-1 !h-1 sm:!w-1.5 sm:!h-1.5 !rounded-full bg-white/40 hover:bg-white/70'
                                         }`}
+                                        style={{ minWidth: 0, minHeight: 0, width: i === imgIndex ? '14px' : '4px', height: '4px' }}
                                     />
                                 ))}
                             </div>
