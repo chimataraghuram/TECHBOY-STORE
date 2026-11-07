@@ -72,7 +72,7 @@ Experience the premium tech shopping journey yourself: [https://techboy-store.ve
 | 📱 | **Analyst Picks & Specs** | Carefully curated smartphone tiers with unified filtering (Brand, Budget, 5G, Camera, RAM) and 5-point mini spec grids on every card. |
 | ⚖️ | **Smart Comparison** | Head-to-head evaluation tool designed to stack devices against each other, comparing everything from chipsets to fast-charging wattage. |
 | 🌐 | **Dynamic 3D UI & 60fps Micro-Animations** | Visual excellence using Three.js particle backgrounds, GPU-accelerated micro-animations, and responsive glassmorphism across desktop, tablet, and mobile. |
-| 📈 | **30-Day Price Trend Charts** | Interactive historical price tracking graphs showing market trends, all-time lows, and price drops across major retailers. |
+| 📈 | **30-Day Price Trend Charts** | Interactive historical price tracking graphs showing market trends, all-time lows, price drops, and head-to-head comparison shortcuts. |
 | 🔐 | **Firebase + Django REST Auth** | Google sign-in through Firebase Authentication paired with token-based Django REST API security and personalized profiles. |
 | 🔔 | **Real-Time Price Alerts** | Guest and signed-in alert subscriptions with duplicate suppression, target thresholds, and automated alert dispatches. |
 | 🎙️ | **"Hey TechBoy" Voice Engine (Trained Google Gemini AI)** | Hands-free conversational voice concierge trained on TECHBOY-STORE smartphone catalog specs & pricing via Google Gemini 2.5 Flash API (`VITE_GEMINI_API_KEY`). Features few-shot dialogue tuning, domain acoustic phonetic correction, real-time Web Audio waveforms, and ultra-crisp SpeechSynthesis audio verdicts. |
