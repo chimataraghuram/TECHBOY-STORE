@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
-import { TrendingDown, Flame, Rocket, Star, GitCompare, Bell, ArrowRight, TrendingUp, Activity, Clock, Heart } from 'lucide-react';
+import { TrendingDown, Flame, Rocket, Star, GitCompare, Bell, ArrowRight, TrendingUp, Activity, Clock, Heart, ArrowLeftRight } from 'lucide-react';
 import PriceAlertModal from './PriceAlertModal';
 import DealDetailsModal from './DealDetailsModal';
 import { PREDEFINED_NOTIFICATIONS } from './NotificationSystemData';
@@ -113,6 +113,61 @@ const TechBoyTrends = () => {
     const [displayCount, setDisplayCount] = useState(8);
     const [liveProducts, setLiveProducts] = useState([]);
     const [wishlistIds, setWishlistIds] = useState(new Set());
+    const [compareList, setCompareList] = useState(() => {
+        try {
+            return JSON.parse(localStorage.getItem('tb_compare_list') || '[]');
+        } catch {
+            return [];
+        }
+    });
+
+    const syncCompare = useCallback(() => {
+        try {
+            const stored = JSON.parse(localStorage.getItem('tb_compare_list') || '[]');
+            setCompareList(stored);
+        } catch (e) {}
+    }, []);
+
+    useEffect(() => {
+        syncCompare();
+        window.addEventListener('tb_compare_updated', syncCompare);
+        return () => window.removeEventListener('tb_compare_updated', syncCompare);
+    }, [syncCompare]);
+
+    const handleToggleCompare = (e, alert, imageSrc) => {
+        e.stopPropagation();
+        e.preventDefault();
+        try {
+            feedback.click();
+            const stored = JSON.parse(localStorage.getItem('tb_compare_list') || '[]');
+            const key = String(alert.id ?? alert.name ?? '');
+            const exists = stored.some(p => String(p.id ?? p.name ?? '') === key);
+            let updated;
+            if (exists) {
+                updated = stored.filter(p => String(p.id ?? p.name ?? '') !== key);
+            } else {
+                if (stored.length >= 3) {
+                    updated = stored;
+                } else {
+                    const productObj = {
+                        id: alert.id,
+                        name: alert.name,
+                        brand: alert.brand || (alert.name ? alert.name.split(' ')[0] : 'SMARTPHONE'),
+                        price: alert.current,
+                        prev_price: alert.prev,
+                        image: imageSrc,
+                        description: alert.desc || `${alert.name} smartphone`
+                    };
+                    updated = [...stored, productObj];
+                }
+            }
+            localStorage.setItem('tb_compare_list', JSON.stringify(updated));
+            window.dispatchEvent(new Event('tb_compare_updated'));
+            setCompareList(updated);
+        } catch (err) {
+            console.warn('Compare toggle warning', err);
+        }
+    };
 
     // Sync wishlist from localStorage
     const loadWishlist = useCallback(() => {
@@ -288,6 +343,8 @@ const TechBoyTrends = () => {
                             const chart = generateChartData(alert);
                             const imageSrc = resolveProductImage(alert.image, alert.name);
                             const isWishlisted = wishlistIds.has(alert.id) || wishlistIds.has(alert.name);
+                            const alertKey = String(alert.id ?? alert.name ?? '');
+                            const isComparing = compareList.some(p => String(p.id ?? p.name ?? '') === alertKey);
 
                             return (
                                 <m.div
@@ -437,17 +494,31 @@ const TechBoyTrends = () => {
                                         </div>
 
                                         {/* ── Modern Action Bar ── */}
-                                        <div className="pt-1 mt-auto flex items-center gap-2">
+                                        <div className="pt-1 mt-auto flex items-center gap-1.5">
                                             {/* View Details / Deal — Modern Specular Pill */}
                                             <button
                                                 onClick={() => setSelectedProduct({ ...alert, price: alert.current, image: imageSrc })}
-                                                className="relative group/btn overflow-hidden flex-1 h-[38px] rounded-xl bg-gradient-to-r from-[#ff1f3d] via-[#e60023] to-[#c7001e] hover:from-[#ff3350] hover:to-[#d6001c] text-white text-xs font-extrabold tracking-wide flex items-center justify-center gap-1.5 shadow-[0_4px_16px_rgba(230,0,35,0.35)] hover:shadow-[0_6px_24px_rgba(255,31,61,0.55)] transition-all active:scale-[0.97] border border-white/20 cursor-pointer"
+                                                className="relative group/btn overflow-hidden flex-1 h-[38px] rounded-xl bg-gradient-to-r from-[#ff1f3d] via-[#e60023] to-[#c7001e] hover:from-[#ff3350] hover:to-[#d6001c] text-white text-xs font-extrabold tracking-wide flex items-center justify-center gap-1 shadow-[0_4px_16px_rgba(230,0,35,0.35)] hover:shadow-[0_6px_24px_rgba(255,31,61,0.55)] transition-all active:scale-[0.97] border border-white/20 cursor-pointer min-w-0"
                                             >
                                                 <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 pointer-events-none" />
-                                                <span className="relative z-10 font-bold">View Deal</span>
-                                                <span className="relative z-10 flex items-center justify-center w-5 h-5 rounded-full bg-white/15 transition-transform duration-300 group-hover/btn:translate-x-0.5">
-                                                    <ArrowRight size={11} className="stroke-[2.5]" />
+                                                <span className="relative z-10 font-bold truncate">View</span>
+                                                <span className="relative z-10 flex items-center justify-center w-4 h-4 rounded-full bg-white/15 transition-transform duration-300 group-hover/btn:translate-x-0.5 shrink-0">
+                                                    <ArrowRight size={10} className="stroke-[2.5]" />
                                                 </span>
+                                            </button>
+
+                                            {/* Compare — Frosted Icon Button with Active Pulse */}
+                                            <button
+                                                onClick={(e) => handleToggleCompare(e, alert, imageSrc)}
+                                                className={`group/compare relative h-[38px] w-[38px] rounded-xl border flex items-center justify-center transition-all duration-200 shrink-0 cursor-pointer active:scale-[0.95] ${
+                                                    isComparing
+                                                        ? 'bg-red-500/20 border-red-500/60 text-red-400 shadow-[0_0_12px_rgba(255,31,61,0.35)]'
+                                                        : 'bg-white/[0.04] hover:bg-white/[0.08] border-white/10 hover:border-red-500/40 text-gray-300 hover:text-white'
+                                                }`}
+                                                title={isComparing ? 'Remove from compare' : 'Compare phone'}
+                                                aria-label="Compare phone"
+                                            >
+                                                <ArrowLeftRight size={14} className={`transition-transform duration-200 ${isComparing ? 'scale-110' : 'group-hover/compare:scale-110'}`} />
                                             </button>
 
                                             {/* Track Price — Frosted Icon Button */}
