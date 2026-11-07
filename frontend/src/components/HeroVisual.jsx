@@ -203,22 +203,22 @@ const HeroVisual = () => (
         </P>
 
         {/* ── Hero iPhone — center ── */}
-        <P top="41%" left="50%" rotate={0} scale={1.1} z={30} delay={0.1} float>
+        <P top="38%" left="50%" rotate={0} scale={1.05} z={30} delay={0.1} float>
             <Phone color="#ff1f3d" screenTop="#110006" screenBot="#2e000e" w={106} h={210} isHero />
         </P>
 
         {/* OnePlus — upper right */}
-        <P top="21%" left="70%" rotate={5} scale={0.82} z={20} delay={0.3}>
+        <P top="20%" left="70%" rotate={5} scale={0.82} z={20} delay={0.3}>
             <Phone color="#cc0000" screenTop="#0e0000" screenBot="#280000" w={84} h={172} />
         </P>
 
         {/* realme — right */}
-        <P top="52%" left="78%" rotate={8} scale={0.76} z={16} delay={0.4}>
+        <P top="50%" left="78%" rotate={8} scale={0.76} z={16} delay={0.4}>
             <Phone color="#b8a000" screenTop="#0a0900" screenBot="#221e00" w={82} h={166} />
         </P>
 
         {/* vivo — bottom center-right */}
-        <P top="72%" left="58%" rotate={5} scale={0.72} z={12} delay={0.55}>
+        <P top="67%" left="58%" rotate={5} scale={0.70} z={12} delay={0.55}>
             <Phone color="#2244ff" screenTop="#00020d" screenBot="#060a28" w={80} h={162} />
         </P>
 
@@ -234,7 +234,7 @@ const HeroVisual = () => (
         <Pill brand="realme"  logo="R"   color="#ccaa00"
             style={{ top:'38%', right:'4%' }} delay={1.05} />
         <Pill brand="vivo"    logo="V"   color="#4455ff"
-            style={{ bottom:'16%', right:'8%' }} delay={1.1} />
+            style={{ bottom:'20%', right:'8%' }} delay={1.1} />
     </div>
 );
 

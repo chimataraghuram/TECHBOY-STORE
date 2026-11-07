@@ -81,14 +81,16 @@ const Hero = ({ setCurrentView }) => {
                         </m.p>
 
                         {/* ── VISUAL FOR MOBILE (below subtitle) ── */}
-                        <div className="lg:hidden w-full my-3 sm:my-4 flex justify-center items-center">
-                            <div className="relative w-full max-w-[340px] h-[260px] sm:h-[300px] overflow-hidden rounded-2xl">
-                                <HeroVisual />
+                        <div className="lg:hidden w-full my-1 sm:my-2 flex justify-center items-center relative z-0">
+                            <div className="relative w-full max-w-[340px] h-[225px] sm:h-[260px] flex items-center justify-center">
+                                <div className="scale-[0.80] sm:scale-[0.92] origin-center w-[360px] h-[280px] pointer-events-none">
+                                    <HeroVisual />
+                                </div>
                             </div>
                         </div>
 
                         {/* CTA Buttons */}
-                        <m.div variants={itemVariants} className="flex flex-col min-[420px]:flex-row items-stretch min-[420px]:items-center gap-2.5 sm:gap-3.5 mb-5 sm:mb-8 w-full sm:w-auto">
+                        <m.div variants={itemVariants} className="relative z-10 flex flex-col min-[420px]:flex-row items-stretch min-[420px]:items-center gap-2.5 sm:gap-3.5 mb-5 sm:mb-8 w-full sm:w-auto">
                             <m.button
                                 whileHover={{ scale: 1.02, y: -2 }}
                                 whileTap={{ scale: 0.98 }}
