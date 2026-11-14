@@ -61,7 +61,14 @@ const WatchlistModal = ({ isOpen, onClose }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="modal-overlay" onClick={onClose} style={{ zIndex: 1000 }}>
+        <div 
+            className="modal-overlay" 
+            onClick={onClose} 
+            role="dialog"
+            aria-modal="true"
+            aria-label="Your Watchlist"
+            style={{ zIndex: 1000 }}
+        >
             <m.div 
                 className="modal-content glass-card watchlist-modal"
                 onClick={e => e.stopPropagation()}
@@ -72,7 +79,7 @@ const WatchlistModal = ({ isOpen, onClose }) => {
             >
                 <div className="modal-header" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
                     <h2 style={{ margin: 0 }}>Your Watchlist</h2>
-                    <button className="close-btn" style={{ background: 'none', border: 'none', color: 'white', fontSize: '24px', cursor: 'pointer'}} onClick={onClose}>&times;</button>
+                    <button type="button" aria-label="Close watchlist" className="close-btn" style={{ background: 'none', border: 'none', color: 'white', fontSize: '24px', cursor: 'pointer'}} onClick={onClose}>&times;</button>
                 </div>
                 <div className="modal-body watchlist-body">
                     {loading ? (
@@ -88,10 +95,10 @@ const WatchlistModal = ({ isOpen, onClose }) => {
                                     </div>
                                     <div className="watchlist-item-info" style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                         <h4 style={{ margin: '0 0 8px 0' }}>{item.product_details.name}</h4>
-                                        <span className="price text-gradient" style={{ fontWeight: 'bold', marginBottom: '8px' }}>Rs {(item.product_details.price || 0).toLocaleString('en-IN')}</span>
+                                        <span className="price text-gradient" style={{ fontWeight: 'bold', marginBottom: '8px' }}>₹{(item.product_details.price || 0).toLocaleString('en-IN')}</span>
                                         <a href={item.product_details.amazon_link || item.product_details.amazonLink || '#'} target="_blank" rel="noopener noreferrer" className="jelly-btn" style={{ padding: '6px 12px', fontSize: '12px', alignSelf: 'flex-start' }}>Get Deal</a>
                                     </div>
-                                    <button className="remove-btn" onClick={() => handleRemove(item.id)} title="Remove" style={{ position: 'absolute', top: '8px', right: '8px', background: 'rgba(255,0,0,0.2)', border: 'none', color: 'white', borderRadius: '50%', width: '24px', height: '24px', cursor: 'pointer' }}>
+                                    <button type="button" className="remove-btn" onClick={() => handleRemove(item.id)} title="Remove" aria-label={`Remove ${item.product_details.name} from watchlist`} style={{ position: 'absolute', top: '8px', right: '8px', background: 'rgba(255,0,0,0.2)', border: 'none', color: 'white', borderRadius: '50%', width: '28px', height: '28px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                         &times;
                                     </button>
                                 </div>

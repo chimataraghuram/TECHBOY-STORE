@@ -334,7 +334,10 @@ const ChatPopup = ({ isOpen, onClose }) => {
     return (
         <m.div
             ref={popupRef}
-            className="chat-popup fixed left-3 bottom-3 sm:left-6 sm:bottom-6 right-auto w-[calc(100vw-24px)] max-w-[340px] sm:max-w-[365px] h-[500px] max-h-[calc(100dvh-90px)] sm:max-h-[calc(100vh-100px)] z-[9995] flex flex-col rounded-2xl sm:rounded-3xl border border-white/[0.12] bg-[#09080e]/95 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.85),0_0_28px_rgba(255,31,61,0.2)] overflow-hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="TECHBOY AI Smartphone Advisor"
+            className="chat-popup fixed left-3 bottom-[84px] sm:left-6 sm:bottom-6 right-auto w-[calc(100vw-24px)] max-w-[340px] sm:max-w-[365px] h-[500px] max-h-[calc(100dvh-170px)] sm:max-h-[calc(100vh-100px)] z-[9995] flex flex-col rounded-2xl sm:rounded-3xl border border-white/[0.12] bg-[#09080e]/95 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.85),0_0_28px_rgba(255,31,61,0.2)] overflow-hidden"
             initial={{ opacity: 0, scale: 0.94, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.94, y: 20 }}
@@ -454,7 +457,7 @@ const ChatPopup = ({ isOpen, onClose }) => {
             )}
 
             {/* ── FOOTER INPUT ── */}
-            <form onSubmit={handleSend} className="p-3 bg-white/[0.02] border-t border-white/[0.08] flex items-center gap-2">
+            <form onSubmit={handleSend} aria-label="Ask TechBoy AI" className="p-3 bg-white/[0.02] border-t border-white/[0.08] flex items-center gap-2">
                 <div className="relative flex-1 flex items-center">
                     <input
                         type="text"

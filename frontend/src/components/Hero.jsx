@@ -103,8 +103,9 @@ const Hero = ({ setCurrentView }) => {
                             </m.button>
 
                             <button
+                                type="button"
                                 onClick={goTrends}
-                                className="group flex items-center justify-center gap-2 px-4 py-3 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-red-500/40 text-xs text-gray-300 transition-all backdrop-blur-xl"
+                                className="group flex items-center justify-center gap-2 px-5 py-3.5 sm:py-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-red-500/40 text-xs sm:text-sm text-gray-300 transition-all backdrop-blur-xl cursor-pointer"
                             >
                                 <span className="text-sm">🔥</span>
                                 <span className="font-semibold text-gray-200">Price Drop Deals</span>

@@ -95,7 +95,7 @@ const TrackHub = () => {
     }
 
     return (
-        <div className="min-h-screen bg-[#060101] pt-24 sm:pt-32 md:pt-42 pb-mobile-dock pb-24 px-4 sm:px-6 md:px-12 xl:px-16">
+        <div className="min-h-screen bg-[#060101] pt-24 sm:pt-32 md:pt-[168px] pb-mobile-dock pb-24 px-4 sm:px-6 md:px-12 xl:px-16">
             <div className="max-w-[1600px] mx-auto">
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 gap-3 sm:gap-4">
                     <div>

@@ -80,6 +80,9 @@ const ComparisonModal = ({ products, onClose }) => {
         <m.div 
             className="comparison-overlay" 
             onClick={onClose}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Smartphone Comparison"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
