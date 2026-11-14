@@ -10,6 +10,7 @@ import { useAuth } from '../context/AuthContext';
 import { resolveProductImage } from '../utils/imageResolver';
 import { getRecentlyViewed, clearRecentlyViewed } from '../utils/recentViews';
 import QuickViewModal from './QuickViewModal';
+import { feedback } from '../utils/haptics';
 
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 

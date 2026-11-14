@@ -78,9 +78,9 @@ const Footer = ({ setCurrentView }) => {
                         <p className="text-gray-300 text-xs sm:text-[13.5px] leading-relaxed mb-3">
                             <strong className="text-white font-bold">TechBoy Store</strong> is an AI-powered smartphone intelligence workspace built for tech enthusiasts. It combines real-time price tracking, automated drop alerts, live market trends, 3D interactive phone inspection, and intelligent side-by-side spec comparisons in one seamless hub.
                         </p>
-                        <p className="text-gray-400 text-xs sm:text-[13px] leading-relaxed mb-6">
-                            Use <button onClick={() => scrollTo('products')} className="text-red-400 font-bold hover:underline transition-all">Smartphone Catalog</button> to filter devices across top brands and price brackets, or visit <button onClick={() => scrollTo('trends')} className="text-red-400 font-bold hover:underline transition-all">TechBoy Trends</button> for verified market movements and analyst picks.
-                        </p>
+                        <div className="text-gray-400 text-xs sm:text-[13px] leading-relaxed mb-6">
+                            Use <button type="button" onClick={() => scrollTo('products')} className="text-red-400 font-bold hover:underline transition-all inline cursor-pointer">Smartphone Catalog</button> to filter devices across top brands and price brackets, or visit <button type="button" onClick={() => scrollTo('trends')} className="text-red-400 font-bold hover:underline transition-all inline cursor-pointer">TechBoy Trends</button> for verified market movements and analyst picks.
+                        </div>
 
                         {/* 3 Quick Highlight Tiles */}
                         <div className="grid grid-cols-3 gap-2.5 mb-6">

@@ -2280,7 +2280,7 @@
 }
 
 .spec-val.winner::after {
-  content: "??";
+  content: "🏆";
   position: absolute;
   top: -10px;
   right: -10px;
@@ -4547,5 +4547,51 @@ img { max-width: 100%; height: auto; }
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
 }
+
+/* --- Utility & Animation Additions --- */
+
+/* Hide scrollbar across browsers */
+.hide-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Mobile dock bottom padding */
+.pb-mobile-dock {
+  padding-bottom: max(88px, calc(72px + env(safe-area-inset-bottom, 16px))) !important;
+}
+
+@media (min-width: 1024px) {
+  .pb-mobile-dock {
+    padding-bottom: 0 !important;
+  }
+}
+
+/* Modal overlay fallback */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* 3D orbital rings continuous rotation */
+@keyframes tb-spin-slow {
+  from {
+    transform: translate(-50%, -50%) perspective(600px) rotateX(74deg) rotateZ(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) perspective(600px) rotateX(74deg) rotateZ(360deg);
+  }
+}
+
 
 

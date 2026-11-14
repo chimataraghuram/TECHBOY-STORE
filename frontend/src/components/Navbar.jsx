@@ -286,10 +286,11 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
 
             {/* MOBILE & TABLET FLOATING DOCK NAVBAR — DIRECT BODY PORTAL WITH LIQUID GLASS JELLY PHYSICS */}
             {typeof document !== 'undefined' && createPortal(
-                <div 
+                <nav 
+                    aria-label="Mobile Navigation"
                     className="xl:hidden fixed left-1/2 -translate-x-1/2 z-[9990] w-[calc(100%-20px)] sm:w-[calc(100%-32px)] max-w-[420px] rounded-full bg-gradient-to-b from-[#1c1c2a]/80 via-[#0e0e18]/90 to-[#07070d]/95 backdrop-blur-3xl border border-white/25 p-1.5 ring-1 ring-white/10 pointer-events-auto select-none"
                     style={{
-                        bottom: 'max(14px, env(safe-area-inset-bottom, 14px))',
+                        bottom: 'max(14px, env(safe-area-inset-bottom))',
                         boxShadow: '0 20px 50px rgba(0, 0, 0, 0.88), 0 0 30px rgba(255, 31, 61, 0.22), inset 0 1.5px 1px rgba(255, 255, 255, 0.35), inset 0 -1.5px 2px rgba(0, 0, 0, 0.6)'
                     }}
                 >
@@ -349,7 +350,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
                             >
                                 {currentView === 'profile' && (
                                     <m.div
-                                        layoutId="mobileBottomNavPill"
+                                        layoutId="mobileBottomProfilePill"
                                         className="absolute inset-0 rounded-full bg-gradient-to-b from-[#ff3856] via-[#e60023] to-[#ad0017] border border-white/35 -z-10"
                                         style={{
                                             boxShadow: '0 4px 18px rgba(230, 0, 35, 0.7), 0 0 25px rgba(255, 31, 61, 0.4), inset 0 1.5px 1px rgba(255, 255, 255, 0.6), inset 0 -2px 3px rgba(0, 0, 0, 0.45)'
@@ -380,7 +381,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
                             </button>
                         </div>
                     </div>
-                </div>,
+                </nav>,
                 document.body
             )}
         </>
