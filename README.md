@@ -33,31 +33,31 @@ Experience the premium tech shopping journey yourself: [https://techboy-store.ve
 <div align="center">
   <h3>🚀 Hero Experience & Live Deals</h3>
   <p>An immersive gateway featuring 3D particle physics, neon typography, dual CTA quick-jumps to products and live trends, and fluid Framer Motion transitions.</p>
-  <img src="https://placehold.co/800x400/0a0a12/ff1f3d?text=Hero+Dynamic+Dashboard" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 31, 61, 0.25);">
+  <img src="images/showcase/hero-experience.png" width="800" alt="TechBoy Hero Experience & Live Deals" style="border-radius: 12px; border: 1px solid rgba(255, 31, 61, 0.25);">
   
   <br /><br />
   
   <h3>🤖 RAG-Powered AI Concierge</h3>
   <p>Compact, responsive assistant optimized for mobile, tablet, and desktop. Retrieves live catalog specs with budget parsing, multi-intent scoring, and deterministic fallback.</p>
-  <img src="https://placehold.co/800x400/0a0a12/ff1f3d?text=RAG+AI+Chatbot+Assistant" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 31, 61, 0.25);">
+  <img src="images/showcase/ai-concierge.png" width="800" alt="TechBoy AI RAG Concierge" style="border-radius: 12px; border: 1px solid rgba(255, 31, 61, 0.25);">
 
   <br /><br />
   
   <h3>🎯 Predictive Price Drop Radar</h3>
   <p>Instant AI buy-wait signal for every smartphone: BUY NOW alerts for all-time lows (≥18% drop), GOOD DEAL markers (≥8% drop), and WAIT & TRACK alerts with confidence scores.</p>
-  <img src="https://placehold.co/800x400/0a0a12/ff1f3d?text=AI+Price+Drop+Radar" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 31, 61, 0.25);">
+  <img src="images/showcase/price-drop-radar.jpg" width="800" alt="Predictive Price Drop Radar & Market Trends" style="border-radius: 12px; border: 1px solid rgba(255, 31, 61, 0.25);">
   
   <br /><br />
   
   <h3>⚖️ Head-to-Head Comparison Engine</h3>
   <p>A frosted-glass overlay that dissects devices side-by-side, analyzing processors, camera arrays, display refresh rates, and battery metrics instantly.</p>
-  <img src="https://placehold.co/800x400/0a0a12/ff1f3d?text=Comparison+Engine+Modal" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 31, 61, 0.25);">
+  <img src="images/showcase/comparison-engine.png" width="800" alt="Head-to-Head Comparison Engine" style="border-radius: 12px; border: 1px solid rgba(255, 31, 61, 0.25);">
   
   <br /><br />
   
   <h3>🔐 Secure Auth & Transactional Resend Emails</h3>
   <p>Google OAuth via Firebase + Django REST API authentication, protected by automated branded HTML emails for welcomes, login alerts, and price drops.</p>
-  <img src="https://placehold.co/800x400/0a0a12/ff1f3d?text=Premium+Identity+System" width="800" style="border-radius: 12px; border: 1px solid rgba(255, 31, 61, 0.25);">
+  <img src="images/showcase/secure-auth-profile.png" width="800" alt="Secure Profile & Identity Dashboard" style="border-radius: 12px; border: 1px solid rgba(255, 31, 61, 0.25);">
 </div>
 
 ---
