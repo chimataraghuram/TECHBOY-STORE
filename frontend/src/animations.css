@@ -17,10 +17,11 @@ a,
               color 0.15s ease;
 }
 
-button:active, 
-a:active, 
-[role="button"]:active {
-  transform: scale(0.96) translateY(1px) !important;
+/* Only apply active-press scale to NON-Framer-Motion buttons
+   (Framer Motion handles whileTap via inline styles — !important breaks it) */
+button:not([data-framer-motion]):active, 
+[role="button"]:not([data-framer-motion]):active {
+  transform: scale(0.96) translateY(1px);
 }
 
 /* 2. Hardware-accelerated hover lift on devices with real pointers (Desktops/Laptops) */
@@ -29,6 +30,14 @@ a:active,
   a:hover:not(:disabled),
   .hover-lift:hover {
     transform: translateY(-2px);
+  }
+
+  /* Pre-promote compositing layers before hover to avoid jank on first hover */
+  .product-card,
+  .glass-card,
+  .trend-card,
+  .hover-lift {
+    will-change: transform;
   }
 }
 

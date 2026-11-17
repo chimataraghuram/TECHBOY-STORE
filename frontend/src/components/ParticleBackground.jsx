@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useRef, useEffect } from 'react';
 import Particles, { ParticlesProvider } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
@@ -7,16 +7,20 @@ const initParticlesEngine = async (engine) => {
 };
 
 const ParticleBackground = () => {
-    const [isScrolling, setIsScrolling] = useState(false);
+    // Use a ref so scroll events never trigger React re-renders / options recomputation
+    const particlesRef = useRef(null);
 
     useEffect(() => {
         let scrollTimer = null;
         const handleScroll = () => {
-            if (!isScrolling) setIsScrolling(true);
+            // Pause particles during scroll by directly toggling playback on the container
+            // without touching React state at all
+            const canvas = document.querySelector('#tsparticles canvas');
+            if (canvas) canvas.style.opacity = '0';
             clearTimeout(scrollTimer);
             scrollTimer = setTimeout(() => {
-                setIsScrolling(false);
-            }, 150);
+                if (canvas) canvas.style.opacity = '1';
+            }, 200);
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
@@ -24,8 +28,9 @@ const ParticleBackground = () => {
             window.removeEventListener('scroll', handleScroll);
             clearTimeout(scrollTimer);
         };
-    }, [isScrolling]);
+    }, []);
 
+    // options is now completely stable — no isScrolling dep that triggers re-init
     const options = useMemo(() => ({
         fullScreen: { 
             enable: true, 
@@ -36,7 +41,7 @@ const ParticleBackground = () => {
                 value: "transparent",
             },
         },
-        fpsLimit: 40,
+        fpsLimit: 30,
         interactivity: {
             events: {
                 onClick: { enable: false },
@@ -52,24 +57,24 @@ const ParticleBackground = () => {
             },
             move: {
                 direction: "none",
-                enable: !isScrolling,
+                enable: true,
                 outModes: {
                     default: "out",
                 },
                 random: true,
-                speed: 0.25,
+                speed: 0.2,
                 straight: false,
             },
             number: {
                 density: {
                     enable: true,
-                    width: 900,
-                    height: 900,
+                    width: 1200,
+                    height: 1200,
                 },
-                value: 12,
+                value: 10,
             },
             opacity: {
-                value: 0.15,
+                value: 0.12,
                 animation: {
                     enable: false,
                 },
@@ -82,7 +87,7 @@ const ParticleBackground = () => {
             },
         },
         detectRetina: false,
-    }), [isScrolling]);
+    }), []);
 
     return (
         <ParticlesProvider init={initParticlesEngine}>

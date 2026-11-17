@@ -107,6 +107,7 @@ const generateChartData = (alert) => {
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
 const TechBoyTrends = () => {
+    const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
     const [activeCategory, setActiveCategory] = useState('all');
     const [priceAlertProduct, setPriceAlertProduct] = useState(null);
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -355,8 +356,8 @@ const TechBoyTrends = () => {
                                     animate={{ opacity: 1, scale: 1, y: 0 }}
                                     exit={{ opacity: 0, scale: 0.95, y: 15 }}
                                     transition={{ duration: 0.25 }}
-                                    whileHover={{ y: -6, scale: 1.01 }}
-                                    className="group relative bg-[#09090f]/90 backdrop-blur-xl border border-white/[0.08] hover:border-red-500/40 rounded-[22px] overflow-hidden hover:shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(255,31,61,0.15)] shadow-[0_10px_30px_rgba(0,0,0,0.6)] transition-all duration-300 p-3 sm:p-3.5 flex flex-col h-full max-w-[340px] min-[500px]:max-w-none mx-auto w-full"
+                                    whileHover={isTouchDevice ? {} : { y: -6, scale: 1.01 }}
+                                    className="group relative bg-[#09090f]/90 backdrop-blur-md border border-white/[0.08] hover:border-red-500/40 rounded-[22px] overflow-hidden hover:shadow-[0_20px_50px_rgba(0,0,0,0.8),0_0_30px_rgba(255,31,61,0.15)] shadow-[0_10px_30px_rgba(0,0,0,0.6)] transition-all duration-300 p-3 sm:p-3.5 flex flex-col h-full max-w-[340px] min-[500px]:max-w-none mx-auto w-full"
                                 >
                                     {/* Top subtle red rim light on hover */}
                                     <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-red-500/0 group-hover:via-red-500/60 to-transparent transition-all duration-500 pointer-events-none" />

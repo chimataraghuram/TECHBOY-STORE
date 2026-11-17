@@ -19,6 +19,7 @@ const stripEmoji = (text = '') =>
     text.replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}]/gu, '').trim();
 
 const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) => {
+    const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
     const [imgLoaded, setImgLoaded] = useState(false);
     const [imgError, setImgError] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
@@ -163,7 +164,7 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.35, delay: (index % 8) * 0.04 }}
-                whileHover={{ y: -4 }}
+                whileHover={isTouchDevice ? {} : { y: -4 }}
             >
                 {/* Outer subtle red neon edge gradient overlay */}
                 <div className="absolute inset-0 pointer-events-none rounded-3xl bg-[radial-gradient(ellipse_at_top,rgba(255,31,61,0.08),transparent_60%)]" />
@@ -212,7 +213,7 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                     <div className="absolute top-3 right-3 z-20 flex items-center gap-1.5">
                         {/* Share link button */}
                         <m.button
-                            whileHover={{ scale: 1.15 }}
+                            whileHover={isTouchDevice ? {} : { scale: 1.15 }}
                             whileTap={{ scale: 0.85 }}
                             onClick={handleShareClick}
                             aria-label="Share deal card and viral links"
@@ -377,7 +378,7 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                     <div className="grid grid-cols-4 gap-1.5 sm:gap-2 mt-3.5 pt-1">
                         {/* Wishlist */}
                         <m.button
-                            whileHover={{ scale: 1.05, y: -1 }}
+                            whileHover={isTouchDevice ? {} : { scale: 1.05, y: -1 }}
                             whileTap={{ scale: 0.92 }}
                             onClick={handleSaveToWatchlist}
                             className={`flex flex-col items-center justify-center py-2 px-1 rounded-xl border transition-all ${
@@ -392,7 +393,7 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
 
                         {/* Track Price */}
                         <m.button
-                            whileHover={{ scale: 1.05, y: -1 }}
+                            whileHover={isTouchDevice ? {} : { scale: 1.05, y: -1 }}
                             whileTap={{ scale: 0.92 }}
                             onClick={(e) => { e.stopPropagation(); onPriceAlert && onPriceAlert(product, e.currentTarget.getBoundingClientRect()); }}
                             className="flex flex-col items-center justify-center py-2 px-1 rounded-xl bg-[#121219]/90 border border-white/[0.08] text-gray-300 hover:border-red-500/40 hover:text-red-400 hover:bg-white/[0.04] transition-all"
@@ -403,7 +404,7 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
 
                         {/* Compare */}
                         <m.button
-                            whileHover={{ scale: 1.05, y: -1 }}
+                            whileHover={isTouchDevice ? {} : { scale: 1.05, y: -1 }}
                             whileTap={{ scale: 0.92 }}
                             onClick={(e) => { e.stopPropagation(); onCompare && onCompare(product); }}
                             className={`flex flex-col items-center justify-center py-2 px-1 rounded-xl border transition-all ${
@@ -418,7 +419,7 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
 
                         {/* View Details — Solid Red Capsule Button with hover shine */}
                         <m.button
-                            whileHover={{ scale: 1.05, y: -1 }}
+                            whileHover={isTouchDevice ? {} : { scale: 1.05, y: -1 }}
                             whileTap={{ scale: 0.94 }}
                             onClick={() => setShowQuick(true)}
                             className="group/btn relative overflow-hidden flex items-center justify-center gap-1 rounded-xl bg-gradient-to-r from-[#ff0d2d] to-[#e60023] hover:from-[#ff2642] hover:to-[#ff0d2d] text-white font-bold px-2 py-2 text-[10.5px] sm:text-xs shadow-[0_4px_16px_rgba(255,13,45,0.45)] hover:shadow-[0_4px_22px_rgba(255,13,45,0.7)] transition-all"

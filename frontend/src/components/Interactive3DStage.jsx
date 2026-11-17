@@ -13,6 +13,18 @@ const Interactive3DStage = ({ imageUrl, productName = 'Smartphone' }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [isHologram, setIsHologram] = useState(false);
     const [autoSpin, setAutoSpin] = useState(true);
+    const isVisibleRef = useRef(false);
+
+    // Pause animation entirely when the card is scrolled off-screen
+    useEffect(() => {
+        if (!stageRef.current) return;
+        const observer = new IntersectionObserver(
+            ([entry]) => { isVisibleRef.current = entry.isIntersecting; },
+            { threshold: 0.05 }
+        );
+        observer.observe(stageRef.current);
+        return () => observer.disconnect();
+    }, []);
 
     // Auto-levitation and gentle breathing animation when idle
     useEffect(() => {
@@ -20,7 +32,7 @@ const Interactive3DStage = ({ imageUrl, productName = 'Smartphone' }) => {
         let startTime = Date.now();
 
         const loop = () => {
-            if (autoSpin && !isHovered) {
+            if (autoSpin && !isHovered && isVisibleRef.current) {
                 const elapsed = (Date.now() - startTime) / 1000;
                 // Gentle floating sine motion
                 const angleY = Math.sin(elapsed * 0.9) * 16;
@@ -121,10 +133,12 @@ const Interactive3DStage = ({ imageUrl, productName = 'Smartphone' }) => {
 
             {/* 3D Levitating Device Stage Container */}
             <div 
-                className="relative z-20 flex items-center justify-center transition-transform duration-100 ease-out will-change-transform"
+                className="relative z-20 flex items-center justify-center will-change-transform"
                 style={{
                     transform: `rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateZ(20px)`,
-                    transformStyle: 'preserve-3d'
+                    transformStyle: 'preserve-3d',
+                    transition: 'transform 80ms linear',
+                    contain: 'layout paint',
                 }}
             >
                 {/* 3D Realistic Phone Shadow underneath */}
