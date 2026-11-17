@@ -2318,6 +2318,9 @@
   pointer-events: none;
   z-index: -1;
   background: transparent;
+  will-change: opacity;
+  transition: opacity 0.2s ease;
+  contain: strict;
 }
 
 /* Phone DNA Radar Chart */

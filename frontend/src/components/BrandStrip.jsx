@@ -91,10 +91,12 @@ const BRANDS = [
 ];
 
 const BrandStrip = ({ activeBrand, onChange }) => {
+    const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
     return (
         <div id="brands" className="w-full">
             <m.div
                 className="flex flex-nowrap sm:flex-wrap gap-2 sm:gap-2.5 md:gap-3 items-center justify-start overflow-x-auto pb-2 sm:pb-1 hide-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0"
+                style={{ touchAction: 'pan-x' }}
                 initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -115,7 +117,7 @@ const BrandStrip = ({ activeBrand, onChange }) => {
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.025 }}
-                            whileHover={{ y: -3, scale: 1.04 }}
+                            whileHover={isTouchDevice ? {} : { y: -3, scale: 1.04 }}
                             whileTap={{ scale: 0.94 }}
                         >
                             <span className={`flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl transition-all duration-300 ${

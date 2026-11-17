@@ -95,11 +95,13 @@ const Pill = ({ brand, logo, color, style, delay = 0 }) => (
         style={{
             ...style,
             padding: '5px 12px 5px 5px', borderRadius: 24,
-            background: 'rgba(6,6,14,0.92)',
+            background: 'rgba(6,6,14,0.95)',
             border: '1px solid rgba(255,255,255,0.1)',
             boxShadow: '0 8px 32px rgba(0,0,0,0.8), 0 0 16px rgba(255,31,61,0.07)',
-            backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
+            backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
             whiteSpace: 'nowrap',
+            willChange: 'transform, opacity',
+            contain: 'layout paint',
         }}
         initial={{ opacity:0, scale:0.7, y:6 }}
         animate={{ opacity:1, scale:1, y:0 }}
@@ -152,6 +154,8 @@ const HeroVisual = () => (
             border:'1.5px solid rgba(255,31,61,0.5)',
             boxShadow:'0 0 22px rgba(255,31,61,0.35), inset 0 0 22px rgba(255,31,61,0.06)',
             animation:'tb-spin-slow 20s linear infinite',
+            willChange: 'transform',
+            contain: 'layout paint',
         }}>
             <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full"
                 style={{ background:'#ff1f3d', boxShadow:'0 0 16px 5px rgba(255,31,61,0.95)' }} />
@@ -167,6 +171,8 @@ const HeroVisual = () => (
             border:'1px solid rgba(255,31,61,0.28)',
             boxShadow:'0 0 14px rgba(255,31,61,0.2)',
             animation:'tb-spin-slow 30s linear infinite reverse',
+            willChange: 'transform',
+            contain: 'layout paint',
         }} />
 
         {/* ── red stage platform glow ── */}

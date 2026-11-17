@@ -50,6 +50,7 @@ body {
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  touch-action: pan-y;
 }
 
 /* Scrollbar */
@@ -240,17 +241,23 @@ section, .footer-section {
   opacity: 0;
   transform: translateY(26px);
   transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+  contain: layout style;
 }
 
 section.animate-in, .footer-section.animate-in {
   opacity: 1;
   transform: translateY(0);
+  will-change: auto;
+  contain: none;
 }
 
 /* Hero must never be hidden behind the reveal animation */
 #home {
   opacity: 1;
   transform: none;
+  will-change: auto;
+  contain: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -281,6 +288,11 @@ section.animate-in, .footer-section.animate-in {
 
 @keyframes tb-spin-slow {
   to { transform: rotate(360deg); }
+}
+
+/* Ensure CSS-animated elements that spin are promoted to their own GPU layer */
+[style*="tb-spin-slow"] {
+  will-change: transform;
 }
 
 .img-shimmer {
@@ -379,6 +391,22 @@ section.animate-in, .footer-section.animate-in {
   /* Ensure smooth bottom clearance for mobile dock */
   .pb-mobile-dock {
     padding-bottom: calc(76px + env(safe-area-inset-bottom, 16px)) !important;
+  }
+
+  /* Prevent overscroll rubber-band from triggering layout recalcs */
+  body {
+    overscroll-behavior-y: contain;
+  }
+
+  /* Disable hover-based CSS transforms on touch — prevents sticky hover */
+  .glass-card:hover {
+    transform: none;
+  }
+
+  /* On mobile, whileHover from Framer Motion creates sticky states.
+     Force the card back to normal after touch ends. */
+  .product-card {
+    transform: translateZ(0) !important;
   }
 }
 
