@@ -76,10 +76,10 @@ const Footer = ({ setCurrentView }) => {
 
                         {/* Description */}
                         <p className="text-gray-300 text-xs sm:text-[13.5px] leading-relaxed mb-3">
-                            <strong className="text-white font-bold">TechBoy Store</strong> is an AI-powered smartphone intelligence workspace built for tech enthusiasts. It combines real-time price tracking, automated drop alerts, live market trends, 3D interactive phone inspection, and intelligent side-by-side spec comparisons in one seamless hub.
+                            <strong className="text-white font-bold">TechBoy Store</strong> is an AI-driven smartphone intelligence platform built for modern tech buyers. It brings together live price tracking across Amazon and Flipkart, predictive price drop radar, 3D interactive phone inspection, automated WhatsApp/Email alerts, and head-to-head AI Battle Arena hardware scoring.
                         </p>
                         <div className="text-gray-400 text-xs sm:text-[13px] leading-relaxed mb-6">
-                            Use <button type="button" onClick={() => scrollTo('products')} className="text-red-400 font-bold hover:underline transition-all inline cursor-pointer">Smartphone Catalog</button> to filter devices across top brands and price brackets, or visit <button type="button" onClick={() => scrollTo('trends')} className="text-red-400 font-bold hover:underline transition-all inline cursor-pointer">TechBoy Trends</button> for verified market movements and analyst picks.
+                            Browse the <button type="button" onClick={() => scrollTo('products')} className="text-red-400 font-bold hover:underline transition-all inline cursor-pointer">Smartphone Catalog</button> for verified specs &amp; deal ratings, explore <button type="button" onClick={() => scrollTo('trends')} className="text-red-400 font-bold hover:underline transition-all inline cursor-pointer">TechBoy Trends</button> for 30-day price drops, or pit flagships against each other in the <button type="button" onClick={() => { if (setCurrentView) setCurrentView('battle'); }} className="text-red-400 font-bold hover:underline transition-all inline cursor-pointer">AI Battle Arena</button>.
                         </div>
 
                         {/* 3 Quick Highlight Tiles */}
@@ -167,10 +167,10 @@ const Footer = ({ setCurrentView }) => {
                                 </div>
                                 <div>
                                     <h5 className="text-white text-xs font-black tracking-wide uppercase">
-                                        2. COMPARE &amp; INSPECT 3D
+                                        2. COMPARE &amp; BATTLE ARENA
                                     </h5>
                                     <p className="text-gray-400 text-[11px] leading-relaxed mt-1">
-                                        Select up to 3 phones to view direct spec verdicts, or launch Quick View to interact with full 3D phone models.
+                                        Compare up to 3 phones side-by-side in 3D, or run deep-learning benchmark showdowns with our interactive 5-axis Spec Radar.
                                     </p>
                                 </div>
                             </div>
@@ -182,10 +182,10 @@ const Footer = ({ setCurrentView }) => {
                                 </div>
                                 <div>
                                     <h5 className="text-white text-xs font-black tracking-wide uppercase">
-                                        3. TRACK &amp; SAVE DEALS
+                                        3. AI RADAR &amp; TRACKHUB
                                     </h5>
                                     <p className="text-gray-400 text-[11px] leading-relaxed mt-1">
-                                        Set automated price drop alerts, save items to your personal wishlist, and consult the TechBoy AI assistant anytime.
+                                        Monitor 30-day price trends, get AI Buy/Wait recommendations, and set target price drop alerts delivered to your inbox.
                                     </p>
                                 </div>
                             </div>
@@ -200,7 +200,7 @@ const Footer = ({ setCurrentView }) => {
                                 <User size={16} />
                             </div>
                             <h4 className="text-white font-black text-sm tracking-wide uppercase leading-tight">
-                                DEVELOPER
+                                LEAD ARCHITECT &amp; ENGINEERING
                             </h4>
                         </div>
 
@@ -216,10 +216,14 @@ const Footer = ({ setCurrentView }) => {
                                     </h4>
                                     <p className="text-[10px] text-amber-400 font-black tracking-[0.22em] uppercase mt-1.5 flex items-center gap-1.5">
                                         <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                                        FULL STACK AI DEVELOPER
+                                        FULL STACK AI &amp; PRODUCT ARCHITECT
                                     </p>
                                 </div>
                             </div>
+
+                            <p className="text-gray-400 text-xs leading-relaxed mb-4">
+                                Architect of TechBoy Store's RAG neural search, 3D interactive stage, and real-time smartphone price prediction pipeline.
+                            </p>
 
                             <div className="space-y-2.5">
                                 <m.a
@@ -270,6 +274,77 @@ const Footer = ({ setCurrentView }) => {
                                 <ArrowUpRight size={15} />
                             </div>
                         </m.a>
+
+                        {/* Engineering Contributors Card */}
+                        <div className="mt-3.5 p-3.5 rounded-2xl bg-[#0b0b12]/95 border border-white/[0.08]">
+                            <div className="flex items-center justify-between mb-2.5">
+                                <span className="text-[10px] font-black tracking-widest text-gray-400 uppercase flex items-center gap-1.5">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                                    ENGINEERING CONTRIBUTORS
+                                </span>
+                                <span className="text-[10px] text-gray-400 font-bold">5 CONTRIBUTORS</span>
+                            </div>
+                            <div className="grid grid-cols-2 gap-2 text-[11px]">
+                                {/* chimataraghuram (Lead) */}
+                                <a
+                                    href="https://github.com/chimataraghuram"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="col-span-2 flex items-center justify-between px-3 py-1.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-white transition-all group"
+                                    title="chimataraghuram (Lead Architect)"
+                                >
+                                    <div className="flex items-center gap-2">
+                                        <GithubIcon size={12} className="text-red-400 group-hover:scale-110 transition-transform shrink-0" />
+                                        <span className="font-bold text-[11px]">chimataraghuram</span>
+                                    </div>
+                                    <span className="text-[9px] font-black uppercase tracking-wider text-red-400 bg-red-500/20 px-2 py-0.5 rounded-md border border-red-500/30">
+                                        Lead
+                                    </span>
+                                </a>
+
+                                {/* Co-Contributors */}
+                                <a
+                                    href="https://github.com/bchakradharreddy"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/5 hover:border-cyan-500/30 text-gray-300 hover:text-white transition-all group"
+                                    title="bchakradharreddy"
+                                >
+                                    <GithubIcon size={11} className="text-gray-400 group-hover:text-cyan-400 shrink-0" />
+                                    <span className="truncate font-semibold text-[10.5px]">bchakradharreddy</span>
+                                </a>
+                                <a
+                                    href="https://github.com/Ramesh7075"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/5 hover:border-cyan-500/30 text-gray-300 hover:text-white transition-all group"
+                                    title="Ramesh7075"
+                                >
+                                    <GithubIcon size={11} className="text-gray-400 group-hover:text-cyan-400 shrink-0" />
+                                    <span className="truncate font-semibold text-[10.5px]">Ramesh7075</span>
+                                </a>
+                                <a
+                                    href="https://github.com/shalemshalem250-bot"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/5 hover:border-cyan-500/30 text-gray-300 hover:text-white transition-all group"
+                                    title="shalemshalem250-bot"
+                                >
+                                    <GithubIcon size={11} className="text-gray-400 group-hover:text-cyan-400 shrink-0" />
+                                    <span className="truncate font-semibold text-[10.5px]">shalemshalem250-bot</span>
+                                </a>
+                                <a
+                                    href="https://github.com/hari7477"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/5 hover:border-cyan-500/30 text-gray-300 hover:text-white transition-all group"
+                                    title="hari7477"
+                                >
+                                    <GithubIcon size={11} className="text-gray-400 group-hover:text-cyan-400 shrink-0" />
+                                    <span className="truncate font-semibold text-[10.5px]">hari7477</span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
