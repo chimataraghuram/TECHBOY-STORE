@@ -205,6 +205,16 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = self.get_serializer(featured_products, many=True)
         return Response(serializer.data)
 
+    @action(detail=False, methods=['get'])
+    def categories(self, request):
+        categories = list(Product.objects.values_list('category', flat=True).distinct())
+        return Response([c for c in categories if c])
+
+    @action(detail=False, methods=['get'])
+    def brands(self, request):
+        brands = list(Product.objects.values_list('brand', flat=True).distinct())
+        return Response([b for b in brands if b])
+
     @action(detail=True, methods=['get'])
     def recommendations(self, request, pk=None):
         product = self.get_object()
@@ -274,7 +284,7 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
 class CompareAPIView(APIView):
     permission_classes = [AllowAny]
     def post(self, request):
-        product_ids = request.data.get('products', [])
+        product_ids = request.data.get('products') or request.data.get('product_ids') or []
         if not isinstance(product_ids, list):
             return Response({"error": "Invalid request. 'products' should be a list of IDs."}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -306,6 +316,11 @@ class AnalyticsAPIView(APIView):
             return Response(analytics_service.get_top_products())
         elif action == 'sources':
             return Response(analytics_service.get_source_breakdown())
+        elif not action:
+            return Response({
+                "top_products": analytics_service.get_top_products(),
+                "sources": analytics_service.get_source_breakdown()
+            })
         return Response({"error": "Invalid action parameter"}, status=400)
 
 # --- New Feature Views ---
