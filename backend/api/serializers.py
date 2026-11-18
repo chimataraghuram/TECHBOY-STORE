@@ -85,6 +85,7 @@ class ClickTrackSerializer(serializers.ModelSerializer):
     product_id = serializers.PrimaryKeyRelatedField(
         queryset=Product.objects.all(), source='product', required=False, write_only=True
     )
+    source = serializers.CharField()
 
     class Meta:
         model = ClickTrack
@@ -99,7 +100,7 @@ class ClickTrackSerializer(serializers.ModelSerializer):
             return 'amazon'
         if 'flip' in val:
             return 'flipkart'
-        return val
+        raise serializers.ValidationError(f"Invalid source '{value}'. Must be 'amazon' or 'flipkart'.")
 
     def validate(self, attrs):
         if 'product' not in attrs:
