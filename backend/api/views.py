@@ -314,6 +314,7 @@ class PriceHistoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = PriceHistory.objects.all()
     serializer_class = PriceHistorySerializer
     permission_classes = [AllowAny]
+    pagination_class = None
     
     def get_queryset(self):
         product_id = self.request.query_params.get('product_id')

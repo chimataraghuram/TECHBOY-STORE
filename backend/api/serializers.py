@@ -79,14 +79,32 @@ class ProductSerializer(serializers.ModelSerializer):
         return 0.0
 
 class ClickTrackSerializer(serializers.ModelSerializer):
-    # accept product_id instead of full product object for ease of posting
+    product = serializers.PrimaryKeyRelatedField(
+        queryset=Product.objects.all(), required=False
+    )
     product_id = serializers.PrimaryKeyRelatedField(
-        queryset=Product.objects.all(), source='product', write_only=True
+        queryset=Product.objects.all(), source='product', required=False, write_only=True
     )
 
     class Meta:
         model = ClickTrack
-        fields = ['product_id', 'source']
+        fields = ['product', 'product_id', 'source']
+
+    def validate_source(self, value):
+        val = str(value).lower().strip()
+        valid = [c[0] for c in ClickTrack.SOURCE_CHOICES]
+        if val in valid:
+            return val
+        if 'am' in val:
+            return 'amazon'
+        if 'flip' in val:
+            return 'flipkart'
+        return val
+
+    def validate(self, attrs):
+        if 'product' not in attrs:
+            raise serializers.ValidationError({'product_id': 'Either product or product_id is required.'})
+        return attrs
 
 class PriceHistorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -101,6 +119,7 @@ class PriceAlertSerializer(serializers.ModelSerializer):
         model = PriceAlert
         fields = ['id', 'user', 'email', 'product', 'product_name', 'current_price', 'alert_type', 'product_details', 'target_price', 'alert_sent', 'is_active', 'last_notified_price', 'last_notified_at', 'created_at']
         read_only_fields = ['user', 'product_name', 'current_price', 'alert_sent', 'last_notified_price', 'last_notified_at', 'created_at']
+        validators = []  # Allow update_or_create to update existing alerts seamlessly
 
     def validate(self, attrs):
         alert_type = attrs.get('alert_type', 'ANY')

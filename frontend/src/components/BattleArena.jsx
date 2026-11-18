@@ -6,6 +6,8 @@ import { resolveProductImage } from '../utils/imageResolver';
 import { parseSpecs } from '../utils/specsParser';
 import logo from '../../images/logos/new-logo.jpg';
 
+const phones = Array.isArray(localPhonesData) ? localPhonesData : (localPhonesData?.phones || []);
+
 const scorePhone = (phone) => {
     if (!phone) return { perf: 50, cam: 50, bat: 50, disp: 50, val: 50, overall: 50 };
     const desc = (phone.description || '').toLowerCase();
@@ -112,6 +114,12 @@ const generateVerdict = (phoneA, phoneB, scoresA, scoresB) => {
 const BattleArena = () => {
     const [activeTab, setActiveTab] = useState('radar'); // 'radar' | 'specs'
 
+    const [phoneAId, setPhoneAId] = useState(phones[0]?.id || 1);
+    const [phoneBId, setPhoneBId] = useState(phones[1]?.id || (phones[phones.length - 1]?.id || 2));
+
+    const phoneA = useMemo(() => phones.find(p => p.id === Number(phoneAId)) || phones[0], [phones, phoneAId]);
+    const phoneB = useMemo(() => phones.find(p => p.id === Number(phoneBId)) || phones[1], [phones, phoneBId]);
+
     const specsA = useMemo(() => parseSpecs(phoneA?.description || ''), [phoneA]);
     const specsB = useMemo(() => parseSpecs(phoneB?.description || ''), [phoneB]);
 
@@ -125,11 +133,6 @@ const BattleArena = () => {
         { label: 'Internal Storage', icon: HardDrive, valA: specsA.storage, valB: specsB.storage, key: 'perf' },
         { label: 'Official Store Price', icon: DollarSign, valA: `₹${Number(phoneA?.price).toLocaleString('en-IN')}`, valB: `₹${Number(phoneB?.price).toLocaleString('en-IN')}`, key: 'val' }
     ];
-    const [phoneAId, setPhoneAId] = useState(phones[0]?.id || 1);
-    const [phoneBId, setPhoneBId] = useState(phones[1]?.id || (phones[phones.length - 1]?.id || 2));
-
-    const phoneA = useMemo(() => phones.find(p => p.id === Number(phoneAId)) || phones[0], [phones, phoneAId]);
-    const phoneB = useMemo(() => phones.find(p => p.id === Number(phoneBId)) || phones[1], [phones, phoneBId]);
 
     const scoresA = useMemo(() => scorePhone(phoneA), [phoneA]);
     const scoresB = useMemo(() => scorePhone(phoneB), [phoneB]);

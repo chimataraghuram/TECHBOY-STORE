@@ -22,7 +22,8 @@ const PriceHistoryChart = ({ productId, currentPrice, hideHeader = false, height
         const fetchHistory = async () => {
             try {
                 const res = await fetch(`${API_BASE_URL}/price-history/?product_id=${productId}`);
-                const history = await res.json();
+                const json = await res.json();
+                const history = Array.isArray(json) ? json : (json?.results || []);
                 
                 if (history && history.length > 0) {
                     setData(history.map(h => ({
