@@ -63,6 +63,33 @@ class ProductAPITests(APITestCase):
         self.assertIn('name', response.data)
         self.assertIn('price', response.data)
 
+    def test_product_categories_distinct(self):
+        """Test categories action returns distinct list of categories."""
+        url = reverse('product-categories')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIsInstance(response.data, list)
+        self.assertIn("Mid-Range", response.data)
+        self.assertIn("Flagship", response.data)
+
+    def test_product_brands_distinct(self):
+        """Test brands action returns distinct list of brands."""
+        url = reverse('product-brands')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIsInstance(response.data, list)
+        self.assertIn("Alpha", response.data)
+        self.assertIn("Beta", response.data)
+
+    def test_product_filter_by_brand_and_price(self):
+        """Test filtering products by brand and min/max price."""
+        url = f"{reverse('product-list')}?brand=Alpha&min_price=10000&max_price=20000"
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        results = response.data.get('results', response.data)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0]['brand'], 'Alpha')
+
 class FeatureAPITests(APITestCase):
     def setUp(self):
         self.phone = Product.objects.create(
@@ -129,6 +156,35 @@ class FeatureAPITests(APITestCase):
         url = reverse('profile')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_compare_api_flexible_payload(self):
+        """Test compare endpoint handles both 'products' and 'product_ids' lists."""
+        url = reverse('compare')
+        phone2 = Product.objects.create(
+            name="Delta Comparison Phone",
+            price=25000,
+            brand="Delta",
+            category="Upper Mid-Range",
+            description="Chip: Dimensity 8200"
+        )
+        
+        # Test using 'products'
+        res1 = self.client.post(url, data={"products": [self.phone.id, phone2.id]}, format='json')
+        self.assertEqual(res1.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(res1.data.get('products', [])), 2)
+
+        # Test using 'product_ids'
+        res2 = self.client.post(url, data={"product_ids": [self.phone.id, phone2.id]}, format='json')
+        self.assertEqual(res2.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(res2.data.get('products', [])), 2)
+
+    def test_analytics_default_overview(self):
+        """Test analytics endpoint without action parameter returns full overview."""
+        url = reverse('analytics')
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertIn('top_products', res.data)
+        self.assertIn('sources', res.data)
 
 class ChatbotAPITests(APITestCase):
     def setUp(self):
