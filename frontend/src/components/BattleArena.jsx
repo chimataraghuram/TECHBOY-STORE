@@ -233,11 +233,118 @@ const BattleArena = () => {
                 </div>
             </div>
 
-            {/* Score Comparison Bars */}
+            {/* Score Comparison Bars & Interactive Radar Chart */}
             <div className="p-6 sm:p-8 rounded-3xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-xl mb-10">
-                <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                    <Trophy size={18} className="text-amber-400" /> Category Breakdown
-                </h3>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                    <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                        <Trophy size={18} className="text-amber-400" /> Category Breakdown & Spec Radar
+                    </h3>
+                    <div className="flex items-center gap-4 text-xs font-semibold">
+                        <span className="flex items-center gap-1.5 text-red-400">
+                            <span className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(255,31,61,0.8)]" />
+                            {phoneA?.name?.split(' ')[0] || 'Contender A'}
+                        </span>
+                        <span className="flex items-center gap-1.5 text-cyan-400">
+                            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
+                            {phoneB?.name?.split(' ')[0] || 'Contender B'}
+                        </span>
+                    </div>
+                </div>
+
+                {/* 5-Axis Dual Cyberpunk Radar Chart */}
+                <div className="flex justify-center mb-8 py-2">
+                    <svg viewBox="0 0 280 280" className="w-56 h-56 sm:w-64 sm:h-64 overflow-visible select-none">
+                        <defs>
+                            <radialGradient id="radarGlowA" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stopColor="#ff1f3d" stopOpacity="0.4" />
+                                <stop offset="100%" stopColor="#ff1f3d" stopOpacity="0.05" />
+                            </radialGradient>
+                            <radialGradient id="radarGlowB" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.4" />
+                                <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.05" />
+                            </radialGradient>
+                        </defs>
+                        {/* Background Web Polygons */}
+                        {[0.25, 0.5, 0.75, 1].map((scale, sIdx) => {
+                            const r = 95 * scale;
+                            const pts = [0, 1, 2, 3, 4].map(i => {
+                                const angle = (Math.PI * 2 * i) / 5 - Math.PI / 2;
+                                return `${140 + r * Math.cos(angle)},${140 + r * Math.sin(angle)}`;
+                            }).join(' ');
+                            return (
+                                <polygon
+                                    key={sIdx}
+                                    points={pts}
+                                    fill="none"
+                                    stroke="rgba(255, 255, 255, 0.08)"
+                                    strokeWidth="1"
+                                    strokeDasharray={scale === 1 ? 'none' : '2 2'}
+                                />
+                            );
+                        })}
+                        {/* Spokes & Axis Labels */}
+                        {[0, 1, 2, 3, 4].map(i => {
+                            const angle = (Math.PI * 2 * i) / 5 - Math.PI / 2;
+                            const x2 = 140 + 95 * Math.cos(angle);
+                            const y2 = 140 + 95 * Math.sin(angle);
+                            const lx = 140 + 118 * Math.cos(angle);
+                            const ly = 140 + 118 * Math.sin(angle);
+                            const labels = ['Gaming', 'Camera', 'Battery', 'Display', 'Value'];
+                            return (
+                                <g key={i}>
+                                    <line x1="140" y1="140" x2={x2} y2={y2} stroke="rgba(255, 255, 255, 0.12)" strokeWidth="1" />
+                                    <text
+                                        x={lx}
+                                        y={ly}
+                                        fill="#9aa0ab"
+                                        fontSize="9.5"
+                                        fontWeight="700"
+                                        textAnchor="middle"
+                                        dominantBaseline="central"
+                                    >
+                                        {labels[i]}
+                                    </text>
+                                </g>
+                            );
+                        })}
+                        {/* Polygon Phone B (Cyan) */}
+                        {(() => {
+                            const bKeys = ['perf', 'cam', 'bat', 'disp', 'val'];
+                            const pts = bKeys.map((k, i) => {
+                                const angle = (Math.PI * 2 * i) / 5 - Math.PI / 2;
+                                const r = (scoresB[k] / 100) * 95;
+                                return `${140 + r * Math.cos(angle)},${140 + r * Math.sin(angle)}`;
+                            }).join(' ');
+                            return (
+                                <polygon
+                                    points={pts}
+                                    fill="url(#radarGlowB)"
+                                    stroke="#06b6d4"
+                                    strokeWidth="2"
+                                    strokeLinejoin="round"
+                                />
+                            );
+                        })()}
+                        {/* Polygon Phone A (Red) */}
+                        {(() => {
+                            const aKeys = ['perf', 'cam', 'bat', 'disp', 'val'];
+                            const pts = aKeys.map((k, i) => {
+                                const angle = (Math.PI * 2 * i) / 5 - Math.PI / 2;
+                                const r = (scoresA[k] / 100) * 95;
+                                return `${140 + r * Math.cos(angle)},${140 + r * Math.sin(angle)}`;
+                            }).join(' ');
+                            return (
+                                <polygon
+                                    points={pts}
+                                    fill="url(#radarGlowA)"
+                                    stroke="#ff1f3d"
+                                    strokeWidth="2"
+                                    strokeLinejoin="round"
+                                />
+                            );
+                        })()}
+                    </svg>
+                </div>
 
                 <div className="space-y-6">
                     {categories.map((cat) => {

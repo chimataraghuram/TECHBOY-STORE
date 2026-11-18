@@ -62,6 +62,7 @@ const PriceAlertModal = ({ isOpen, onClose, product, user: propUser, triggerRect
     try {
       const authedUser = await loginWithGoogle();
       setEmail(authedUser.email || '');
+      setError('');
       setStep(2);
     } catch (err) {
       setError(err.message || 'Google sign-in failed. Please try again.');
@@ -206,7 +207,10 @@ const PriceAlertModal = ({ isOpen, onClose, product, user: propUser, triggerRect
                       placeholder="Enter Email (for n8n automation)" 
                       className="price-alert-input"
                       value={manualEmail}
-                      onChange={(e) => setManualEmail(e.target.value)}
+                      onChange={(e) => {
+                        setManualEmail(e.target.value);
+                        if (error) setError('');
+                      }}
                     />
                     <button 
                       type="button" 
@@ -216,6 +220,7 @@ const PriceAlertModal = ({ isOpen, onClose, product, user: propUser, triggerRect
                           setError('Please enter a valid email address.');
                           return;
                         }
+                        setError('');
                         setEmail(manualEmail);
                         setIsN8nMode(true);
                         setStep(2);

@@ -1040,7 +1040,8 @@ html {
 .auth-overlay {
   background:
     radial-gradient(circle at 50% 20%, rgba(255, 31, 61, 0.18), transparent 30rem),
-    rgba(1, 0, 0, 0.78) !important;
+    rgba(1, 0, 0, 0.85) !important;
+  z-index: 100000 !important;
 }
 
 .quickview-content,
