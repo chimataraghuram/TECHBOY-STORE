@@ -368,17 +368,46 @@ class WatchlistViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+def _format_gemini_contents(history, current_prompt):
+    """
+    Ensures strict alternation of 'user' and 'model' turns for Gemini 2.5 Flash API.
+    """
+    turns = []
+    if isinstance(history, list):
+        for item in history[-6:]:
+            role = "user" if item.get('role') in ('user', 'human') else "model"
+            text = str(item.get('text') or item.get('content') or '').strip()
+            if not text:
+                continue
+            if turns and turns[-1]['role'] == role:
+                turns[-1]['parts'][0]['text'] += f"\n{text}"
+            else:
+                turns.append({"role": role, "parts": [{"text": text}]})
+    
+    while turns and turns[0]['role'] != 'user':
+        turns.pop(0)
+
+    if turns and turns[-1]['role'] == 'user':
+        turns[-1]['parts'][0]['text'] += f"\n\n{current_prompt}"
+    else:
+        turns.append({"role": "user", "parts": [{"text": current_prompt}]})
+    return turns
+
 class ChatbotAPIView(APIView):
     permission_classes = [AllowAny]
     
     def post(self, request):
         query = str(request.data.get('query') or request.data.get('message') or '').strip()
-        if not query:
-            return Response({"response": "I'm ready to help! What kind of smartphone are you looking for?"})
+        user_name = str(request.data.get('user_name') or request.data.get('user') or '').strip()
+        history = request.data.get('history') or []
 
-        # Cache full grounded answers.  Configure REDIS_URL to share this cache
-        # between web workers; Django's local cache remains a safe no-setup fallback.
-        cache_key = f"rag-chat:{sha256(query.lower().encode()).hexdigest()}"
+        if not query:
+            greeting = f"Hey {user_name}! " if user_name else "I'm ready to help! "
+            return Response({"response": f"{greeting}What kind of smartphone are you looking for?"})
+
+        # Cache key incorporates query, user_name, and conversational context
+        cache_salt = f"{query.lower()}:{user_name}:{len(history)}"
+        cache_key = f"rag-chat:{sha256(cache_salt.encode()).hexdigest()}"
         cached = cache.get(cache_key)
         if cached:
             return Response({**cached, 'cached': True})
@@ -387,27 +416,34 @@ class ChatbotAPIView(APIView):
         context = build_context(retrieved)
         gemini_key = os.environ.get('GEMINI_API_KEY')
         nvidia_key = os.environ.get('NVIDIA_API_KEY')
-        ai_response = local_answer(retrieved)
+        ai_response = local_answer(retrieved, query=query)
 
-        # 1. Primary: Google Gemini 2.5 Flash API with Catalog Grounding & Strict Persona
+        # Build personalized customer prompt
+        customer_header = f"Customer Name: {user_name}\n" if user_name else ""
+        current_prompt = f"{customer_header}Customer Question: {query}\n\nRetrieved Verified TechBoy Catalog Context:\n{context}"
+
+        # 1. Primary: Google Gemini 2.5 Flash API with Catalog Grounding & Multi-Scenario Training
         if gemini_key:
             try:
                 url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={gemini_key}"
                 system_instruction = (
-                    "You are TechBoy AI, the official intelligent smartphone advisor for TECHBOY-STORE. "
-                    "Answer only from the retrieved TechBoy catalog context. Never invent prices, specs, or availability. "
-                    "If the context lacks the answer, say so. Be concise, conversational, and use Markdown bullets when recommending phones."
+                    "You are TechBoy AI, the elite smartphone engineering advisor for TECHBOY-STORE.\n"
+                    "Your core guidelines:\n"
+                    "1. GROUNDING: Answer strictly from the retrieved TechBoy catalog context. Never fabricate specs or unlisted prices.\n"
+                    "2. PERSONALIZATION: When the customer name is provided, address them warmly (e.g., 'Hey [Name]!').\n"
+                    "3. SCENARIOS:\n"
+                    "   • Gaming (BGMI/CoD/Genshin): Distinguish sustained 90/120 FPS capable silicon from entry-level chips; emphasize cooling chambers and refresh rates.\n"
+                    "   • Content Creation & Optics: Highlight OIS, sensor quality (Sony IMX), and 4K recording capabilities over pure megapixel marketing.\n"
+                    "   • Software & Longevity: Distinguish bloatware-free clean OS (Pixel, Nothing, Moto) from ad-heavy skins, citing update policies.\n"
+                    "   • Comparisons: Provide clear side-by-side pros, cons, and a definitive 'Who Should Buy Which' verdict.\n"
+                    "4. FORMATTING: Use concise markdown, bold phone names with ₹ prices, and bullet points."
                 )
                 payload = {
                     "system_instruction": {"parts": [{"text": system_instruction}]},
-                    "contents": [{
-                        "parts": [{
-                            "text": f"Customer Question: {query}\n\nRetrieved Verified TechBoy Catalog Context:\n{context}"
-                        }]
-                    }],
+                    "contents": _format_gemini_contents(history, current_prompt),
                     "generationConfig": {
-                        "temperature": 0.2,
-                        "maxOutputTokens": 400
+                        "temperature": 0.25,
+                        "maxOutputTokens": 600
                     }
                 }
                 res = requests.post(url, json=payload, timeout=20)
@@ -425,14 +461,22 @@ class ChatbotAPIView(APIView):
                     "Authorization": f"Bearer {nvidia_key}",
                     "Content-Type": "application/json"
                 }
+                messages = [
+                    {"role": "system", "content": "You are TechBoy AI, an expert smartphone advisor. Answer strictly from the provided TechBoy catalog context. Use clean markdown formatting with bullets and bold prices."}
+                ]
+                if isinstance(history, list):
+                    for turn in history[-4:]:
+                        role = "user" if turn.get('role') in ('user', 'human') else "assistant"
+                        text = str(turn.get('text') or turn.get('content') or '').strip()
+                        if text:
+                            messages.append({"role": role, "content": text})
+                messages.append({"role": "user", "content": current_prompt})
+
                 data = {
                     "model": NVIDIA_CHAT_MODEL,
-                    "messages": [
-                        {"role": "system", "content": "You are TechBoy AI. Answer only from the retrieved TechBoy catalog context. Never invent prices, specs, or availability. If the context lacks the answer, say so. Be concise, conversational, and use Markdown bullets when recommending phones."},
-                        {"role": "user", "content": f"Question: {query}\n\nRetrieved TechBoy catalog context:\n{context}"}
-                    ],
-                    "temperature": 0.2,
-                    "max_tokens": 350,
+                    "messages": messages,
+                    "temperature": 0.25,
+                    "max_tokens": 500,
                 }
                 response = requests.post("https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=data, timeout=30)
                 if response.status_code == 200:
