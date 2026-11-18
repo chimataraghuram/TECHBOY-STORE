@@ -282,44 +282,66 @@ const Footer = ({ setCurrentView }) => {
                                     <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
                                     ENGINEERING CONTRIBUTORS
                                 </span>
-                                <span className="text-[10px] text-gray-500 font-bold">TEAM</span>
+                                <span className="text-[10px] text-gray-400 font-bold">5 CONTRIBUTORS</span>
                             </div>
                             <div className="grid grid-cols-2 gap-2 text-[11px]">
+                                {/* chimataraghuram (Lead) */}
+                                <a
+                                    href="https://github.com/chimataraghuram"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="col-span-2 flex items-center justify-between px-3 py-1.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-white transition-all group"
+                                    title="chimataraghuram (Lead Architect)"
+                                >
+                                    <div className="flex items-center gap-2">
+                                        <GithubIcon size={12} className="text-red-400 group-hover:scale-110 transition-transform shrink-0" />
+                                        <span className="font-bold text-[11px]">chimataraghuram</span>
+                                    </div>
+                                    <span className="text-[9px] font-black uppercase tracking-wider text-red-400 bg-red-500/20 px-2 py-0.5 rounded-md border border-red-500/30">
+                                        Lead
+                                    </span>
+                                </a>
+
+                                {/* Co-Contributors */}
                                 <a
                                     href="https://github.com/bchakradharreddy"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/5 hover:border-cyan-500/30 text-gray-300 hover:text-white transition-all group"
+                                    title="bchakradharreddy"
                                 >
-                                    <GithubIcon size={11} className="text-gray-400 group-hover:text-cyan-400" />
-                                    <span className="truncate font-semibold">bchakradharreddy</span>
+                                    <GithubIcon size={11} className="text-gray-400 group-hover:text-cyan-400 shrink-0" />
+                                    <span className="truncate font-semibold text-[10.5px]">bchakradharreddy</span>
                                 </a>
                                 <a
                                     href="https://github.com/Ramesh7075"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/5 hover:border-cyan-500/30 text-gray-300 hover:text-white transition-all group"
+                                    title="Ramesh7075"
                                 >
-                                    <GithubIcon size={11} className="text-gray-400 group-hover:text-cyan-400" />
-                                    <span className="truncate font-semibold">Ramesh7075</span>
+                                    <GithubIcon size={11} className="text-gray-400 group-hover:text-cyan-400 shrink-0" />
+                                    <span className="truncate font-semibold text-[10.5px]">Ramesh7075</span>
                                 </a>
                                 <a
                                     href="https://github.com/shalemshalem250-bot"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/5 hover:border-cyan-500/30 text-gray-300 hover:text-white transition-all group"
+                                    title="shalemshalem250-bot"
                                 >
-                                    <GithubIcon size={11} className="text-gray-400 group-hover:text-cyan-400" />
-                                    <span className="truncate font-semibold">shalemshalem250-bot</span>
+                                    <GithubIcon size={11} className="text-gray-400 group-hover:text-cyan-400 shrink-0" />
+                                    <span className="truncate font-semibold text-[10.5px]">shalemshalem250-bot</span>
                                 </a>
                                 <a
                                     href="https://github.com/hari7477"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/5 hover:border-cyan-500/30 text-gray-300 hover:text-white transition-all group"
+                                    title="hari7477"
                                 >
-                                    <GithubIcon size={11} className="text-gray-400 group-hover:text-cyan-400" />
-                                    <span className="truncate font-semibold">hari7477</span>
+                                    <GithubIcon size={11} className="text-gray-400 group-hover:text-cyan-400 shrink-0" />
+                                    <span className="truncate font-semibold text-[10.5px]">hari7477</span>
                                 </a>
                             </div>
                         </div>
