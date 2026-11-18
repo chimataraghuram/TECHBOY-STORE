@@ -129,3 +129,64 @@ class FeatureAPITests(APITestCase):
         url = reverse('profile')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+class ChatbotAPITests(APITestCase):
+    def setUp(self):
+        self.phone1 = Product.objects.create(
+            name="Alpha Speed 5G",
+            price=18999,
+            brand="Alpha",
+            category="Mid-Range",
+            tag="Gaming Champion",
+            description="Chip: Dimensity 7200 Ultra | Display: 120Hz AMOLED | Battery: 5000mAh 67W",
+            specs={"Processor": "Dimensity 7200 Ultra", "Display": "120Hz AMOLED", "Camera": "64MP OIS", "Battery": "5000mAh"}
+        )
+        self.phone2 = Product.objects.create(
+            name="Beta Pro Flagship",
+            price=49999,
+            brand="Beta",
+            category="Flagship",
+            tag="Pro Camera",
+            description="Chip: Snapdragon 8 Gen 3 | Camera: 50MP Sony LYT-900 | Battery: 5400mAh",
+            specs={"Processor": "Snapdragon 8 Gen 3", "Display": "2K LTPO 120Hz", "Camera": "50MP OIS LYTIA", "Battery": "5400mAh"}
+        )
+
+    def test_empty_query_personalized_greeting(self):
+        """Test empty query responds with friendly greeting personalized by user name."""
+        url = reverse('chat')
+        res = self.client.post(url, data={"user_name": "Raghuram"}, format='json')
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertIn("Raghuram", res.data.get('response', ''))
+
+    def test_gaming_budget_scenario_query(self):
+        """Test gaming scenario under 20k retrieves budget-compliant gaming phone."""
+        url = reverse('chat')
+        res = self.client.post(url, data={"query": "Best BGMI gaming phone under 20k"}, format='json')
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertIn('response', res.data)
+        products = res.data.get('products', [])
+        self.assertTrue(any("Alpha Speed 5G" in p['name'] for p in products))
+
+    def test_head_to_head_comparison_scenario(self):
+        """Test 'Alpha vs Beta' triggers intelligent comparison showdown."""
+        url = reverse('chat')
+        res = self.client.post(url, data={"query": "Alpha Speed 5G vs Beta Pro Flagship"}, format='json')
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        response_text = res.data.get('response', '')
+        self.assertTrue("Alpha" in response_text and "Beta" in response_text)
+
+    def test_multi_turn_history_acceptance(self):
+        """Test API accepts multi-turn conversational history and user_name seamlessly."""
+        url = reverse('chat')
+        payload = {
+            "query": "How is the battery backup?",
+            "user_name": "Chima",
+            "history": [
+                {"role": "user", "text": "Show me Alpha Speed 5G"},
+                {"role": "model", "text": "Alpha Speed 5G has Dimensity 7200 Ultra."}
+            ]
+        }
+        res = self.client.post(url, data=payload, format='json')
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertIn('response', res.data)
+

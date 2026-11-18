@@ -4,6 +4,7 @@ import { Sparkles, Bot, Send, Square, X, Compass, Mic, MicOff, Volume2, VolumeX 
 import logo from '../../images/logos/new-logo.jpg';
 import useVoiceSearch, { queryGeminiVoice } from '../hooks/useVoiceSearch';
 import localPhonesData from '../data/phones.json';
+import { useAuth } from '../context/AuthContext';
 
 const BACKEND_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
@@ -164,10 +165,16 @@ const formatInline = (str) => {
 };
 
 const ChatPopup = ({ isOpen, onClose }) => {
+    const auth = useAuth();
+    const user = auth?.user;
+    const userName = user?.displayName || user?.name || '';
+
     const [messages, setMessages] = useState([
         {
             id: 0,
-            text: "Hi! I'm **TechBoy AI** — your next-gen smartphone advisor.\n\nTell me your **budget, brand, or use case** (e.g. *best camera under ₹30K*, *gaming phone*, *iPhone vs Galaxy*) and I'll find you the perfect deal!",
+            text: userName
+                ? `Hi **${userName}**! I'm **TechBoy AI** — your personal smartphone advisor.\n\nAsk me about **BGMI 90 FPS phones, 4K camera flagships, side-by-side comparisons**, or any budget requirement!`
+                : "Hi! I'm **TechBoy AI** — your next-gen smartphone advisor.\n\nTell me your **budget, brand, or use case** (e.g. *best camera under ₹30K*, *gaming phone*, *iPhone vs Galaxy*) and I'll find you the perfect deal!",
             sender: 'ai',
             done: true
         }
@@ -196,7 +203,7 @@ const ChatPopup = ({ isOpen, onClose }) => {
             }
         });
 
-    const callBackend = async (userText, phones) => {
+    const callBackend = async (userText, phones, historyList = []) => {
         abortRef.current = new AbortController();
         const timeoutId = setTimeout(() => abortRef.current.abort(), 12000);
 
@@ -204,7 +211,14 @@ const ChatPopup = ({ isOpen, onClose }) => {
             const res = await fetch(`${BACKEND_URL}/chat/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: userText }),
+                body: JSON.stringify({
+                    message: userText,
+                    user_name: userName,
+                    history: (historyList || []).slice(-6).map(m => ({
+                        role: m.sender === 'user' ? 'user' : 'model',
+                        text: m.text
+                    }))
+                }),
                 signal: abortRef.current.signal
             });
             clearTimeout(timeoutId);
@@ -282,7 +296,7 @@ const ChatPopup = ({ isOpen, onClose }) => {
         setIsStreaming(true);
 
         try {
-            const result = await callBackend(text, livePhonesData);
+            const result = await callBackend(text, livePhonesData, messages);
             const replyText = result.text || 'No response.';
             setMessages(prev => prev.map(m =>
                 m.id === aiId ? { ...m, text: replyText } : m
@@ -321,10 +335,12 @@ const ChatPopup = ({ isOpen, onClose }) => {
     };
 
     const suggestions = [
-        { label: 'Under ₹15K', query: 'Best phone under 15000', icon: '📱' },
-        { label: 'Gaming Beast', query: 'Best gaming smartphone', icon: '🎮' },
-        { label: 'Pro Camera', query: 'Best camera phone with OIS', icon: '📷' },
-        { label: 'Battery King', query: 'Phone with best battery backup', icon: '🔋' },
+        { label: 'BGMI 90 FPS Under 25K', query: 'Best BGMI 90 FPS gaming phone under 25000', icon: '🎮' },
+        { label: '4K OIS Camera Under 30K', query: 'Best camera phone with OIS and 4K recording under 30000', icon: '📷' },
+        { label: 'iPhone vs S24 Ultra', query: 'Compare iPhone 16 vs Samsung Galaxy S24 Ultra', icon: '⚔️' },
+        { label: 'Clean OS (No Ads)', query: 'Best phones with clean UI, zero bloatware and 4 years updates', icon: '✨' },
+        { label: '6000mAh Battery King', query: 'Best smartphone with 6000mAh battery and fast charging', icon: '🔋' },
+        { label: 'Under ₹12K 5G Value', query: 'Best 5G smartphone under 12000 for daily use', icon: '💰' },
     ];
 
     const isFirstMessage = messages.length <= 1;
