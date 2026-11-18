@@ -66,7 +66,7 @@ Experience the premium tech shopping journey yourself: [https://techboy-store.ve
 
 | Icon | Feature | Description |
 | :--- | :--- | :--- |
-| 🤖 | **Catalog RAG Chatbot** | Server-side retrieval ranks the live TechBoy catalog before NVIDIA NIM Llama 3.1 generates answers with budget extraction, keeping recommendations grounded in stored prices and specs. |
+| 🤖 | **Catalog RAG Chatbot (RAG v2)** | Server-side retrieval ranks the live TechBoy catalog before Google Gemini 2.5 Flash (with NVIDIA NIM fallback) generates answers with multi-scenario training (gaming 90 FPS, 4K OIS, vs comparisons), conversational memory, and user personalization. |
 | 🎯 | **AI Price Drop Radar** | Real-time buy/wait indicators across product cards and deal modals (`BUY NOW`, `GOOD DEAL`, `WAIT & TRACK`) with calculated confidence ratings. |
 | 📧 | **Resend Email Engine** | Enterprise-grade transactional emails for account welcomes, security login alerts with IP/timestamp tracking, and instant price drop triggers. |
 | 📱 | **Analyst Picks & Specs** | Carefully curated smartphone tiers with unified filtering (Brand, Budget, 5G, Camera, RAM) and 5-point mini spec grids on every card. |
@@ -92,7 +92,8 @@ Experience the premium tech shopping journey yourself: [https://techboy-store.ve
 
 ### Backend (Production-Grade)
 - **Django 6 & Django REST Framework (DRF)** - High-stability API architecture with decoupled service layers
-- **RAG Concierge & Multi-Intent Parsing** - Contextual catalog retrieval paired with NVIDIA NIM Llama 3.1 and deterministic fallbacks
+- **RAG Concierge & Multi-Intent Parsing** - Contextual catalog retrieval paired with Google Gemini 2.5 Flash, NVIDIA NIM, and deterministic scenario fallbacks
+- **Automated Unit Test Suite** - Comprehensive Django APITestCase coverage for catalog discovery, RAG chatbot, price alerts, and click tracking
 - **Resend SDK & Email Service** - Branded, responsive HTML transactional emails with security tracking and SMTP fallback
 - **Redis & In-Memory Caching** - Multi-worker query and RAG response caching for low latency
 - **SQLite / PostgreSQL** - Indexed relational database modeling for products, price histories, alerts, and analytics
@@ -112,6 +113,7 @@ TECHBOY-STORE/
 │   │   ├── models.py       # Optimized DB Models with Indexing
 │   │   ├── views.py        # Thin ViewSet Layer with Caching & Auth
 │   │   ├── serializers.py  # Advanced Data Transform Layer
+│   │   ├── tests.py        # Comprehensive DRF Automated Test Suite
 │   │   └── exceptions.py   # Global Unified JSON Error Handler
 │   ├── core/               # Central Config (Settings, Cache, Email, Logging)
 │   └── requirements.txt    # Python dependencies (django, drf, resend, redis)
@@ -131,7 +133,7 @@ TECHBOY-STORE/
 ---
 
 ## 🛣️ Future Roadmap
-- [x] **AI Chatbot**: NVIDIA NIM LLM + RAG hybrid catalog grounding with budget extraction.
+- [x] **AI Chatbot (RAG v2)**: Google Gemini 2.5 Flash + NVIDIA NIM hybrid catalog grounding, few-shot scenario training (BGMI 90 FPS, 4K OIS, comparisons), user personalization, and conversational memory.
 - [x] **Price Drop Radar**: Predictive AI buy-or-wait recommendations with confidence scores.
 - [x] **Transactional Emails**: Resend API integration for security login alerts and price drop notifications.
 - [x] **Global Price Alerts**: Multi-channel alerts letting users track hardware price depreciation.
