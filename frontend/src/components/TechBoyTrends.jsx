@@ -338,7 +338,7 @@ const TechBoyTrends = () => {
                 </div>
 
                 {/* Compact Trend Cards Grid - Native 2-column mobile experience & fluid responsive breakpoints */}
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4 md:gap-5 lg:gap-6">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4 md:gap-5 lg:gap-6">
                     <AnimatePresence mode="popLayout">
                         {filteredAlerts.slice(0, displayCount).map((alert, idx) => {
                             const chart = generateChartData(alert);
@@ -404,7 +404,10 @@ const TechBoyTrends = () => {
                                             src={imageSrc}
                                             alt={alert.name}
                                             className="relative z-10 max-h-[88%] w-auto max-w-[88%] object-contain transition-transform duration-500 ease-out group-hover:scale-105 group-hover:-translate-y-1 drop-shadow-[0_14px_22px_rgba(0,0,0,0.9)]"
-                                            onError={(e) => { e.target.src = '/images/phones/apple-iphone-17-pro-max.png'; }}
+                                            onError={(e) => { 
+                                                e.target.onerror = null;
+                                                e.target.src = '/images/phones/apple-iphone-17.png'; 
+                                            }}
                                         />
                                     </div>
 

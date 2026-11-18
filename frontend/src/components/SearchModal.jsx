@@ -83,7 +83,7 @@ const SearchModal = ({ isOpen, onClose, onSelectResult }) => {
 
     return (
         <AnimatePresence>
-            <div className="fixed inset-0 z-[120] flex items-start justify-center pt-[6vh] sm:pt-[10vh] px-3 sm:px-4">
+            <div className="fixed inset-0 z-[120] flex items-start justify-center pt-[5vh] sm:pt-[10vh] px-2 sm:px-4">
                 <m.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -96,7 +96,7 @@ const SearchModal = ({ isOpen, onClose, onSelectResult }) => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -25, scale: 0.96 }}
                     transition={{ duration: 0.2 }}
-                    className="relative w-full max-w-2xl bg-[#0b0c12] border border-white/15 rounded-2xl sm:rounded-3xl shadow-[0_25px_70px_rgba(0,0,0,0.9),0_0_30px_rgba(255,31,61,0.15)] overflow-hidden"
+                    className="relative w-full max-w-[94vw] sm:max-w-2xl bg-[#0b0c12] border border-white/15 rounded-2xl sm:rounded-3xl shadow-[0_25px_70px_rgba(0,0,0,0.9),0_0_30px_rgba(255,31,61,0.15)] overflow-hidden"
                 >
                     {/* Search Input Bar */}
                     <div className="flex items-center gap-3 p-3.5 sm:p-4 border-b border-white/10 bg-white/[0.02]">

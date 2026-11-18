@@ -7,7 +7,7 @@ import { resolveProductImage } from '../utils/imageResolver';
 const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000/api');
 
 const TrackHub = () => {
-    const { user, authFetch, isAuthenticated } = useAuth();
+    const { user, authFetch, isAuthenticated, login } = useAuth();
     const [alerts, setAlerts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [editingAlert, setEditingAlert] = useState(null);
@@ -84,11 +84,19 @@ const TrackHub = () => {
 
     if (!isAuthenticated) {
         return (
-            <div className="min-h-[80vh] flex items-center justify-center bg-[#060101]">
-                <div className="text-center p-8 bg-white/5 border border-white/10 rounded-2xl">
-                    <Bell className="w-12 h-12 text-red-500 mx-auto mb-4" />
+            <div className="min-h-[80vh] flex items-center justify-center bg-[#060101] px-4">
+                <div className="text-center p-8 bg-white/5 border border-white/10 rounded-2xl max-w-md w-full shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-xl">
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-500">
+                        <Bell className="w-8 h-8" />
+                    </div>
                     <h2 className="text-2xl font-bold text-white mb-2">Sign in required</h2>
-                    <p className="text-gray-400 mb-6">Please sign in to view and manage your tracked smartphones.</p>
+                    <p className="text-gray-400 mb-6 text-sm">Please sign in to view, monitor, and manage your tracked smartphones and price drops.</p>
+                    <button
+                        onClick={login}
+                        className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white font-bold text-sm shadow-[0_0_20px_rgba(255,31,61,0.4)] transition-all active:scale-95 flex items-center justify-center gap-2"
+                    >
+                        Sign In with Google
+                    </button>
                 </div>
             </div>
         );

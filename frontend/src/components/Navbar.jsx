@@ -181,7 +181,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
                             </a>
 
                             {/* DESKTOP NAV LINKS — RED PILLS WITH SYMBOLS */}
-                            <div className="hidden xl:flex items-center gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/[0.08] backdrop-blur-md shrink-0">
+                            <div className="hidden lg:flex items-center gap-1.5 p-1 rounded-full bg-white/[0.04] border border-white/[0.08] backdrop-blur-md shrink-0">
                                 {NAV_ITEMS.map(item => {
                                     const Icon = item.icon;
                                     const isActive = currentView === 'trackhub' ? item.id === 'trackhub' : currentView === 'battle' ? item.id === 'battle' : (currentView === 'home' && activeSection === item.id);
@@ -189,7 +189,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
                                         <a
                                             key={item.id}
                                             href={`#${item.id}`}
-                                            className={`relative flex items-center gap-1.5 px-3.5 xl:px-4 py-1.5 text-[13.5px] font-bold tracking-wide rounded-full transition-all duration-250 select-none z-10 ${
+                                            className={`relative flex items-center gap-1.5 px-3.5 xl:px-4 py-1.5 text-[13px] xl:text-[13.5px] font-bold tracking-wide rounded-full transition-all duration-250 select-none z-10 ${
                                                 isActive ? 'text-white' : 'text-gray-300 hover:text-white hover:bg-white/[0.05]'
                                             }`}
                                             onClick={(e) => handleNavClick(e, item.id)}
@@ -209,7 +209,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
                             </div>
 
                             {/* RIGHT CLUSTER */}
-                            <div className="flex items-center justify-end gap-1.5 sm:gap-2.5 flex-1 xl:flex-none">
+                            <div className="flex items-center justify-end gap-1.5 sm:gap-2.5 flex-1 lg:flex-none">
 
                                 {/* Exchange Value Calculator Button */}
                                 <button
@@ -288,7 +288,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
             {typeof document !== 'undefined' && createPortal(
                 <nav 
                     aria-label="Mobile Navigation"
-                    className="xl:hidden fixed left-1/2 -translate-x-1/2 z-[9990] w-[calc(100%-20px)] sm:w-[calc(100%-32px)] max-w-[420px] rounded-full bg-gradient-to-b from-[#1c1c2a]/80 via-[#0e0e18]/90 to-[#07070d]/95 backdrop-blur-3xl border border-white/25 p-1.5 ring-1 ring-white/10 pointer-events-auto select-none"
+                    className="lg:hidden fixed left-1/2 -translate-x-1/2 z-[9990] w-[calc(100%-20px)] sm:w-[calc(100%-32px)] max-w-[420px] rounded-full bg-gradient-to-b from-[#1c1c2a]/80 via-[#0e0e18]/90 to-[#07070d]/95 backdrop-blur-3xl border border-white/25 p-1.5 ring-1 ring-white/10 pointer-events-auto select-none"
                     style={{
                         bottom: 'max(14px, env(safe-area-inset-bottom))',
                         boxShadow: '0 20px 50px rgba(0, 0, 0, 0.88), 0 0 30px rgba(255, 31, 61, 0.22), inset 0 1.5px 1px rgba(255, 255, 255, 0.35), inset 0 -1.5px 2px rgba(0, 0, 0, 0.6)'
