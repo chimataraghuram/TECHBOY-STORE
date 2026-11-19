@@ -109,10 +109,10 @@ function App() {
               {currentView === 'home' ? (
                 <m.div
                   key="home"
-                  initial={{ opacity: 0, y: 12, filter: 'blur(3px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, y: -8, filter: 'blur(3px)' }}
-                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <Hero 
                     onOpenAdvisor={() => setIsAdvisorOpen(true)} 
@@ -128,10 +128,10 @@ function App() {
               ) : currentView === 'battle' ? (
                 <m.div
                   key="battle"
-                  initial={{ opacity: 0, y: 12, filter: 'blur(3px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, y: -8, filter: 'blur(3px)' }}
-                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '500px', margin: '120px 20px', borderRadius: '16px'}}></div>}>
                     <BattleArena />
@@ -140,10 +140,10 @@ function App() {
               ) : currentView === 'trackhub' ? (
                 <m.div
                   key="trackhub"
-                  initial={{ opacity: 0, y: 12, filter: 'blur(3px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, y: -8, filter: 'blur(3px)' }}
-                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '500px', margin: '120px 20px', borderRadius: '16px'}}></div>}>
                     <TrackHub />
@@ -152,10 +152,10 @@ function App() {
               ) : currentView === 'profile' ? (
                 <m.div
                   key={`profile-${profileTab}`}
-                  initial={{ opacity: 0, y: 12, filter: 'blur(3px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, y: -8, filter: 'blur(3px)' }}
-                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '500px', margin: '120px 20px', borderRadius: '16px'}}></div>}>
                     <ProfilePage setCurrentView={handleViewChange} initialTab={profileTab} onSearch={setSearchTerm} />

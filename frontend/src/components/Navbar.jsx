@@ -297,7 +297,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
                     <div className="grid grid-cols-6 items-center justify-items-center gap-0.5">
                         {NAV_ITEMS.map((item) => {
                             const Icon = item.icon;
-                            const isActive = currentView === 'trackhub' ? item.id === 'trackhub' : (currentView === 'home' && activeSection === item.id);
+                            const isActive = currentView === 'trackhub' ? item.id === 'trackhub' : currentView === 'battle' ? item.id === 'battle' : (currentView === 'home' && activeSection === item.id);
                             return (
                                 <button
                                     key={item.id}

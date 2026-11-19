@@ -16,11 +16,11 @@ const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8000
 
 /* ─── Smooth tab change transition ─── */
 const pageVariants = {
-    initial: { opacity: 0, y: 10, filter: 'blur(3px)' },
-    animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
-    exit:    { opacity: 0, y: -6, filter: 'blur(3px)' }
+    initial: { opacity: 0, y: 8 },
+    animate: { opacity: 1, y: 0 },
+    exit:    { opacity: 0, y: -6 }
 };
-const pageTransition = { duration: 0.22, ease: [0.22, 1, 0.36, 1] };
+const pageTransition = { duration: 0.2, ease: [0.16, 1, 0.3, 1] };
 
 /* ─── Toggle switch component ─── */
 const Toggle = ({ checked, onChange }) => (

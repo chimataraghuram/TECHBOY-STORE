@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "audit:viewports": "node scripts/comprehensive_15_viewport_audit.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
