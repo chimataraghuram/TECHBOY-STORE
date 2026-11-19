@@ -166,7 +166,7 @@ function App() {
           </main>
           
           <Suspense fallback={<div className="section-fallback shimmer-bg" style={{height: '200px'}}></div>}>
-            <Footer setCurrentView={handleViewChange} />
+            <Footer setCurrentView={handleViewChange} onSearch={setSearchTerm} />
           </Suspense>
           </m.div>
         </>

@@ -3,7 +3,8 @@ import { m } from 'framer-motion';
 import logo from '../../images/logos/new-logo.jpg';
 import { 
     Search, Flame, Bookmark, ArrowUpRight, 
-    Globe, Send, BookOpen, User, Sparkles
+    Globe, Send, BookOpen, User, Sparkles,
+    Cpu, Activity, Swords, Zap, Layers
 } from 'lucide-react';
 
 const GithubIcon = ({ size = 15, className = "" }) => (
@@ -28,10 +29,19 @@ const LeetcodeIcon = ({ size = 15, className = "" }) => (
     </svg>
 );
 
-const Footer = ({ setCurrentView }) => {
+const Footer = ({ setCurrentView, onSearch }) => {
     const scrollTo = (id) => {
         if (setCurrentView) setCurrentView('home');
         setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 60);
+    };
+
+    const handleQuickSearch = (term) => {
+        if (onSearch) onSearch(term);
+        if (setCurrentView) setCurrentView('home');
+        setTimeout(() => {
+            const el = document.getElementById('products');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 60);
     };
 
     return (
@@ -47,153 +57,284 @@ const Footer = ({ setCurrentView }) => {
 
             <div className="relative z-10 mx-auto max-w-[1540px] px-5 sm:px-8 lg:px-12 pt-16 pb-10">
                 
-                {/* ── TOP 3-COLUMN COMMAND CENTER (SAME LAYOUT) ── */}
+                {/* ── TOP COMMAND CENTER ── */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
                     
-                    {/* COLUMN 1: BRAND & ABOUT THE PLATFORM (5 cols) */}
-                    <div className="lg:col-span-5 flex flex-col justify-start">
-                        {/* Logo + Header */}
-                        <div className="flex items-center gap-3.5 mb-5">
-                            <div className="relative group">
-                                <img 
-                                    src={logo} 
-                                    alt="TECHBOY STORE" 
-                                    className="h-12 w-12 rounded-2xl border-2 border-red-500/60 object-cover shadow-[0_0_20px_rgba(255,31,61,0.45)] transition-transform duration-300 group-hover:scale-105" 
-                                />
-                                <span className="absolute inset-0 rounded-2xl ring-1 ring-white/10 pointer-events-none" />
-                            </div>
-                            <div>
-                                <h3 className="text-white font-black tracking-wider text-[22px] flex items-center gap-1.5 leading-none">
-                                    TECHBOY <span className="text-red-500 drop-shadow-[0_0_12px_rgba(255,31,61,0.65)]">STORE</span>
-                                </h3>
-                                <p className="text-[10px] text-red-400 font-black tracking-[0.25em] uppercase mt-1.5 flex items-center gap-1.5">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-                                    NEXT-GEN SMARTPHONE INTELLIGENCE
+                    {/* LEFT 8-COLUMN COMMAND CENTER (SECTIONS 1 & 2 + INTELLIGENCE ARCHITECTURE CARD) */}
+                    <div className="lg:col-span-8 flex flex-col justify-between">
+                        
+                        {/* TOP ROW: SECTION 1 (BRAND & ABOUT) + SECTION 2 (HOW TO USE) */}
+                        <div className="grid grid-cols-1 md:grid-cols-8 gap-8 lg:gap-10 items-start">
+                            
+                            {/* SECTION 1: BRAND & ABOUT THE PLATFORM (5 of 8 cols) */}
+                            <div className="md:col-span-5 flex flex-col justify-start">
+                                {/* Logo + Header */}
+                                <div className="flex items-center gap-3.5 mb-5">
+                                    <div className="relative group">
+                                        <img 
+                                            src={logo} 
+                                            alt="TECHBOY STORE" 
+                                            className="h-12 w-12 rounded-2xl border-2 border-red-500/60 object-cover shadow-[0_0_20px_rgba(255,31,61,0.45)] transition-transform duration-300 group-hover:scale-105" 
+                                        />
+                                        <span className="absolute inset-0 rounded-2xl ring-1 ring-white/10 pointer-events-none" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-white font-black tracking-wider text-[22px] flex items-center gap-1.5 leading-none">
+                                            TECHBOY <span className="text-red-500 drop-shadow-[0_0_12px_rgba(255,31,61,0.65)]">STORE</span>
+                                        </h3>
+                                        <p className="text-[10px] text-red-400 font-black tracking-[0.25em] uppercase mt-1.5 flex items-center gap-1.5">
+                                            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                                            NEXT-GEN SMARTPHONE INTELLIGENCE
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Section Label */}
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] w-fit mb-4">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_6px_rgba(255,31,61,0.9)]" />
+                                    <span className="text-[10px] font-black text-gray-300 tracking-[0.18em] uppercase">
+                                        ABOUT THE PLATFORM
+                                    </span>
+                                </div>
+
+                                {/* Description */}
+                                <p className="text-gray-300 text-xs sm:text-[13.5px] leading-relaxed mb-3">
+                                    <strong className="text-white font-bold">TechBoy Store</strong> is an AI-driven smartphone intelligence platform built for modern tech buyers. It brings together live price tracking across Amazon and Flipkart, predictive price drop radar, 3D interactive phone inspection, automated WhatsApp/Email alerts, and head-to-head AI Battle Arena hardware scoring.
                                 </p>
+                                <div className="text-gray-400 text-xs sm:text-[13px] leading-relaxed mb-6">
+                                    Browse the <button type="button" onClick={() => scrollTo('products')} className="text-red-400 font-bold hover:underline transition-all inline cursor-pointer">Smartphone Catalog</button> for verified specs &amp; deal ratings, explore <button type="button" onClick={() => scrollTo('trends')} className="text-red-400 font-bold hover:underline transition-all inline cursor-pointer">TechBoy Trends</button> for 30-day price drops, or pit flagships against each other in the <button type="button" onClick={() => { if (setCurrentView) setCurrentView('battle'); }} className="text-red-400 font-bold hover:underline transition-all inline cursor-pointer">AI Battle Arena</button>.
+                                </div>
+
+                                {/* 3 Quick Highlight Tiles */}
+                                <div className="grid grid-cols-3 gap-2.5 mb-6">
+                                    <button 
+                                        onClick={() => scrollTo('products')} 
+                                        className="group p-3 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-red-500/50 hover:shadow-[0_0_15px_rgba(255,31,61,0.2)] text-left transition-all duration-300"
+                                    >
+                                        <div className="w-7 h-7 rounded-lg bg-red-500/10 border border-red-500/25 flex items-center justify-center text-red-400 mb-2 group-hover:scale-110 group-hover:bg-red-500/20 transition-all">
+                                            <Search size={13} />
+                                        </div>
+                                        <div className="text-[11px] font-black text-white uppercase tracking-tight">FIND PHONES</div>
+                                        <div className="text-[9px] text-gray-400 leading-tight mt-0.5">Multi-brand search</div>
+                                    </button>
+
+                                    <button 
+                                        onClick={() => scrollTo('trends')} 
+                                        className="group p-3 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-amber-500/50 hover:shadow-[0_0_15px_rgba(251,191,36,0.2)] text-left transition-all duration-300"
+                                    >
+                                        <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 mb-2 group-hover:scale-110 group-hover:bg-amber-500/20 transition-all">
+                                            <Flame size={13} />
+                                        </div>
+                                        <div className="text-[11px] font-black text-white uppercase tracking-tight">TRENDING</div>
+                                        <div className="text-[9px] text-gray-400 leading-tight mt-0.5">Price drops &amp; picks</div>
+                                    </button>
+
+                                    <button 
+                                        onClick={() => { if (setCurrentView) setCurrentView('trackhub'); }} 
+                                        className="group p-3 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-red-500/50 hover:shadow-[0_0_15px_rgba(255,31,61,0.2)] text-left transition-all duration-300"
+                                    >
+                                        <div className="w-7 h-7 rounded-lg bg-red-500/10 border border-red-500/25 flex items-center justify-center text-red-400 mb-2 group-hover:scale-110 group-hover:bg-red-500/20 transition-all">
+                                            <Bookmark size={13} />
+                                        </div>
+                                        <div className="text-[11px] font-black text-white uppercase tracking-tight">TRACKHUB</div>
+                                        <div className="text-[9px] text-gray-400 leading-tight mt-0.5">Alerts &amp; watchlist</div>
+                                    </button>
+                                </div>
+
+                                {/* Explore Catalog Capsule Button */}
+                                <m.button
+                                    whileHover={{ scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    onClick={() => scrollTo('products')}
+                                    className="w-fit flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 hover:border-red-500/50 text-white text-xs font-black tracking-wider transition-all shadow-[0_4px_16px_rgba(0,0,0,0.4)] hover:shadow-[0_0_18px_rgba(255,31,61,0.25)] group"
+                                >
+                                    <Sparkles size={13} className="text-red-400 group-hover:rotate-12 transition-transform" />
+                                    <span>EXPLORE SMARTPHONE CATALOG</span>
+                                    <ArrowUpRight size={13} className="text-gray-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                                </m.button>
+                            </div>
+
+                            {/* SECTION 2: HOW TO USE THIS PLATFORM (3 of 8 cols) */}
+                            <div className="md:col-span-3 flex flex-col justify-start">
+                                {/* Section Header */}
+                                <div className="flex items-center gap-2.5 mb-6">
+                                    <div className="w-9 h-9 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-red-400 shadow-sm">
+                                        <BookOpen size={16} />
+                                    </div>
+                                    <h4 className="text-white font-black text-sm tracking-wide uppercase leading-tight">
+                                        HOW TO USE THIS STORE
+                                    </h4>
+                                </div>
+
+                                {/* Steps List (1, 2, 3) */}
+                                <div className="space-y-4">
+                                    {/* Step 1 */}
+                                    <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors flex items-start gap-3.5 group">
+                                        <div className="w-7 h-7 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 text-xs font-black shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
+                                            1
+                                        </div>
+                                        <div>
+                                            <h5 className="text-white text-xs font-black tracking-wide uppercase">
+                                                1. SEARCH &amp; FILTER
+                                            </h5>
+                                            <p className="text-gray-400 text-[11px] leading-relaxed mt-1">
+                                                Pick your preferred brand, price budget, or specs. Live results update instantly without page reloads.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Step 2 */}
+                                    <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors flex items-start gap-3.5 group">
+                                        <div className="w-7 h-7 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 text-xs font-black shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
+                                            2
+                                        </div>
+                                        <div>
+                                            <h5 className="text-white text-xs font-black tracking-wide uppercase">
+                                                2. COMPARE &amp; BATTLE ARENA
+                                            </h5>
+                                            <p className="text-gray-400 text-[11px] leading-relaxed mt-1">
+                                                Compare up to 3 phones side-by-side in 3D, or run deep-learning benchmark showdowns with our interactive 5-axis Spec Radar.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Step 3 */}
+                                    <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors flex items-start gap-3.5 group">
+                                        <div className="w-7 h-7 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 text-xs font-black shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
+                                            3
+                                        </div>
+                                        <div>
+                                            <h5 className="text-white text-xs font-black tracking-wide uppercase">
+                                                3. AI RADAR &amp; TRACKHUB
+                                            </h5>
+                                            <p className="text-gray-400 text-[11px] leading-relaxed mt-1">
+                                                Monitor 30-day price trends, get AI Buy/Wait recommendations, and set target price drop alerts delivered to your inbox.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        {/* Section Label */}
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] w-fit mb-4">
-                            <span className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_6px_rgba(255,31,61,0.9)]" />
-                            <span className="text-[10px] font-black text-gray-300 tracking-[0.18em] uppercase">
-                                ABOUT THE PLATFORM
-                            </span>
-                        </div>
+                        {/* ── UPDATED SPANNING CARD DIRECTLY UNDER THE TWO SECTIONS ── */}
+                        <div className="mt-8 p-5 sm:p-6 rounded-3xl bg-[#0b0b12]/95 border border-white/[0.08] relative overflow-hidden backdrop-blur-xl shadow-[0_15px_40px_rgba(0,0,0,0.6)]">
+                            {/* Inner subtle top red specular gradient line */}
+                            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent pointer-events-none" />
 
-                        {/* Description */}
-                        <p className="text-gray-300 text-xs sm:text-[13.5px] leading-relaxed mb-3">
-                            <strong className="text-white font-bold">TechBoy Store</strong> is an AI-driven smartphone intelligence platform built for modern tech buyers. It brings together live price tracking across Amazon and Flipkart, predictive price drop radar, 3D interactive phone inspection, automated WhatsApp/Email alerts, and head-to-head AI Battle Arena hardware scoring.
-                        </p>
-                        <div className="text-gray-400 text-xs sm:text-[13px] leading-relaxed mb-6">
-                            Browse the <button type="button" onClick={() => scrollTo('products')} className="text-red-400 font-bold hover:underline transition-all inline cursor-pointer">Smartphone Catalog</button> for verified specs &amp; deal ratings, explore <button type="button" onClick={() => scrollTo('trends')} className="text-red-400 font-bold hover:underline transition-all inline cursor-pointer">TechBoy Trends</button> for 30-day price drops, or pit flagships against each other in the <button type="button" onClick={() => { if (setCurrentView) setCurrentView('battle'); }} className="text-red-400 font-bold hover:underline transition-all inline cursor-pointer">AI Battle Arena</button>.
-                        </div>
-
-                        {/* 3 Quick Highlight Tiles */}
-                        <div className="grid grid-cols-3 gap-2.5 mb-6">
-                            <button 
-                                onClick={() => scrollTo('products')} 
-                                className="group p-3 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-red-500/50 hover:shadow-[0_0_15px_rgba(255,31,61,0.2)] text-left transition-all duration-300"
-                            >
-                                <div className="w-7 h-7 rounded-lg bg-red-500/10 border border-red-500/25 flex items-center justify-center text-red-400 mb-2 group-hover:scale-110 group-hover:bg-red-500/20 transition-all">
-                                    <Search size={13} />
+                            {/* Section Header */}
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-3.5 border-b border-white/[0.06]">
+                                <div className="flex items-center gap-2.5">
+                                    <div className="w-8 h-8 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400">
+                                        <Cpu size={16} />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-white font-black text-xs sm:text-sm tracking-wide uppercase leading-tight flex items-center gap-2">
+                                            INTELLIGENCE ENGINE &amp; ARCHITECTURE
+                                        </h4>
+                                        <p className="text-[10px] text-gray-400 font-semibold tracking-wider uppercase mt-0.5">
+                                            HIGH-PERFORMANCE SMARTPHONE ANALYTICS PIPELINE
+                                        </p>
+                                    </div>
                                 </div>
-                                <div className="text-[11px] font-black text-white uppercase tracking-tight">FIND PHONES</div>
-                                <div className="text-[9px] text-gray-400 leading-tight mt-0.5">Multi-brand search</div>
-                            </button>
 
-                            <button 
-                                onClick={() => scrollTo('trends')} 
-                                className="group p-3 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-amber-500/50 hover:shadow-[0_0_15px_rgba(251,191,36,0.2)] text-left transition-all duration-300"
-                            >
-                                <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 mb-2 group-hover:scale-110 group-hover:bg-amber-500/20 transition-all">
-                                    <Flame size={13} />
-                                </div>
-                                <div className="text-[11px] font-black text-white uppercase tracking-tight">TRENDING</div>
-                                <div className="text-[9px] text-gray-400 leading-tight mt-0.5">Price drops &amp; picks</div>
-                            </button>
-
-                            <button 
-                                onClick={() => { if (setCurrentView) setCurrentView('trackhub'); }} 
-                                className="group p-3 rounded-2xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-red-500/50 hover:shadow-[0_0_15px_rgba(255,31,61,0.2)] text-left transition-all duration-300"
-                            >
-                                <div className="w-7 h-7 rounded-lg bg-red-500/10 border border-red-500/25 flex items-center justify-center text-red-400 mb-2 group-hover:scale-110 group-hover:bg-red-500/20 transition-all">
-                                    <Bookmark size={13} />
-                                </div>
-                                <div className="text-[11px] font-black text-white uppercase tracking-tight">TRACKHUB</div>
-                                <div className="text-[9px] text-gray-400 leading-tight mt-0.5">Alerts &amp; watchlist</div>
-                            </button>
-                        </div>
-
-                        {/* Explore Catalog Capsule Button */}
-                        <m.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            onClick={() => scrollTo('products')}
-                            className="w-fit flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/15 hover:border-red-500/50 text-white text-xs font-black tracking-wider transition-all shadow-[0_4px_16px_rgba(0,0,0,0.4)] hover:shadow-[0_0_18px_rgba(255,31,61,0.25)] group"
-                        >
-                            <Sparkles size={13} className="text-red-400 group-hover:rotate-12 transition-transform" />
-                            <span>EXPLORE SMARTPHONE CATALOG</span>
-                            <ArrowUpRight size={13} className="text-gray-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                        </m.button>
-                    </div>
-
-                    {/* COLUMN 2: HOW TO USE THIS PLATFORM (3 cols) */}
-                    <div className="lg:col-span-3 flex flex-col justify-start">
-                        {/* Section Header */}
-                        <div className="flex items-center gap-2.5 mb-6">
-                            <div className="w-9 h-9 rounded-2xl bg-white/[0.04] border border-white/10 flex items-center justify-center text-red-400 shadow-sm">
-                                <BookOpen size={16} />
-                            </div>
-                            <h4 className="text-white font-black text-sm tracking-wide uppercase leading-tight">
-                                HOW TO USE THIS STORE
-                            </h4>
-                        </div>
-
-                        {/* Steps List (1, 2, 3) */}
-                        <div className="space-y-4">
-                            {/* Step 1 */}
-                            <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors flex items-start gap-3.5 group">
-                                <div className="w-7 h-7 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 text-xs font-black shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
-                                    1
-                                </div>
-                                <div>
-                                    <h5 className="text-white text-xs font-black tracking-wide uppercase">
-                                        1. SEARCH &amp; FILTER
-                                    </h5>
-                                    <p className="text-gray-400 text-[11px] leading-relaxed mt-1">
-                                        Pick your preferred brand, price budget, or specs. Live results update instantly without page reloads.
-                                    </p>
+                                <div className="flex items-center gap-2">
+                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-[10px] font-bold">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                        SYSTEM ONLINE
+                                    </span>
+                                    <span className="text-[10px] text-gray-500 font-mono">v2.4.0</span>
                                 </div>
                             </div>
 
-                            {/* Step 2 */}
-                            <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors flex items-start gap-3.5 group">
-                                <div className="w-7 h-7 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 text-xs font-black shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
-                                    2
-                                </div>
-                                <div>
-                                    <h5 className="text-white text-xs font-black tracking-wide uppercase">
-                                        2. COMPARE &amp; BATTLE ARENA
-                                    </h5>
-                                    <p className="text-gray-400 text-[11px] leading-relaxed mt-1">
-                                        Compare up to 3 phones side-by-side in 3D, or run deep-learning benchmark showdowns with our interactive 5-axis Spec Radar.
-                                    </p>
-                                </div>
+                            {/* 4 Feature Telemetry Tiles */}
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mb-4">
+                                {/* Tile 1: Real-time Price Radar */}
+                                <button
+                                    type="button"
+                                    onClick={() => { if (setCurrentView) setCurrentView('trackhub'); }}
+                                    className="group/tile p-3 rounded-2xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/[0.06] hover:border-red-500/40 text-left transition-all duration-300 cursor-pointer"
+                                >
+                                    <div className="w-7 h-7 rounded-lg bg-red-500/10 border border-red-500/25 flex items-center justify-center text-red-400 mb-2 group-hover/tile:scale-110 transition-transform">
+                                        <Activity size={13} />
+                                    </div>
+                                    <div className="text-[11px] font-black text-white uppercase tracking-tight">AUTONOMOUS RADAR</div>
+                                    <div className="text-[9.5px] text-gray-400 leading-tight mt-0.5">Live price drop detection</div>
+                                </button>
+
+                                {/* Tile 2: AI Battle Benchmark */}
+                                <button
+                                    type="button"
+                                    onClick={() => { if (setCurrentView) setCurrentView('battle'); }}
+                                    className="group/tile p-3 rounded-2xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/[0.06] hover:border-amber-500/40 text-left transition-all duration-300 cursor-pointer"
+                                >
+                                    <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/25 flex items-center justify-center text-amber-400 mb-2 group-hover/tile:scale-110 transition-transform">
+                                        <Swords size={13} />
+                                    </div>
+                                    <div className="text-[11px] font-black text-white uppercase tracking-tight">SPEC RADAR AI</div>
+                                    <div className="text-[9.5px] text-gray-400 leading-tight mt-0.5">5-axis benchmark showdown</div>
+                                </button>
+
+                                {/* Tile 3: Instant Search & Filter */}
+                                <button
+                                    type="button"
+                                    onClick={() => scrollTo('products')}
+                                    className="group/tile p-3 rounded-2xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/[0.06] hover:border-cyan-500/40 text-left transition-all duration-300 cursor-pointer"
+                                >
+                                    <div className="w-7 h-7 rounded-lg bg-cyan-500/10 border border-cyan-500/25 flex items-center justify-center text-cyan-400 mb-2 group-hover/tile:scale-110 transition-transform">
+                                        <Zap size={13} />
+                                    </div>
+                                    <div className="text-[11px] font-black text-white uppercase tracking-tight">SUB-50MS QUERY</div>
+                                    <div className="text-[9.5px] text-gray-400 leading-tight mt-0.5">Fuzzy client-side matching</div>
+                                </button>
+
+                                {/* Tile 4: 3D WebGL Inspection */}
+                                <button
+                                    type="button"
+                                    onClick={() => scrollTo('products')}
+                                    className="group/tile p-3 rounded-2xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/[0.06] hover:border-purple-500/40 text-left transition-all duration-300 cursor-pointer"
+                                >
+                                    <div className="w-7 h-7 rounded-lg bg-purple-500/10 border border-purple-500/25 flex items-center justify-center text-purple-400 mb-2 group-hover/tile:scale-110 transition-transform">
+                                        <Layers size={13} />
+                                    </div>
+                                    <div className="text-[11px] font-black text-white uppercase tracking-tight">3D WEBGL STAGE</div>
+                                    <div className="text-[9.5px] text-gray-400 leading-tight mt-0.5">360° rotational phone lab</div>
+                                </button>
                             </div>
 
-                            {/* Step 3 */}
-                            <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors flex items-start gap-3.5 group">
-                                <div className="w-7 h-7 rounded-xl bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 text-xs font-black shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
-                                    3
+                            {/* Quick Discovery Tags Row */}
+                            <div className="pt-3 border-t border-white/[0.06] flex flex-wrap items-center justify-between gap-2.5">
+                                <div className="flex items-center gap-2 flex-wrap">
+                                    <span className="text-[10px] font-black uppercase tracking-wider text-gray-400 mr-1 flex items-center gap-1.5">
+                                        <Sparkles size={11} className="text-red-400" />
+                                        POPULAR FILTERS:
+                                    </span>
+                                    {[
+                                        { label: '5G Phones', query: '5G' },
+                                        { label: 'Snapdragon 8', query: 'Snapdragon' },
+                                        { label: 'Under ₹20K', query: '20000' },
+                                        { label: '120Hz AMOLED', query: '120Hz' },
+                                        { label: 'Flagships', query: 'Pro' }
+                                    ].map(item => (
+                                        <button
+                                            key={item.label}
+                                            type="button"
+                                            onClick={() => handleQuickSearch(item.query)}
+                                            className="px-2.5 py-1 rounded-full bg-white/[0.03] hover:bg-red-500/15 border border-white/[0.08] hover:border-red-500/40 text-[10.5px] font-bold text-gray-300 hover:text-white transition-all active:scale-95 cursor-pointer"
+                                        >
+                                            {item.label}
+                                        </button>
+                                    ))}
                                 </div>
-                                <div>
-                                    <h5 className="text-white text-xs font-black tracking-wide uppercase">
-                                        3. AI RADAR &amp; TRACKHUB
-                                    </h5>
-                                    <p className="text-gray-400 text-[11px] leading-relaxed mt-1">
-                                        Monitor 30-day price trends, get AI Buy/Wait recommendations, and set target price drop alerts delivered to your inbox.
-                                    </p>
+
+                                {/* Architecture Pill Badges */}
+                                <div className="flex items-center gap-1.5 text-[9.5px] text-gray-400 font-mono">
+                                    <span>React 19</span>
+                                    <span>•</span>
+                                    <span>Django 5</span>
+                                    <span>•</span>
+                                    <span>Three.js</span>
+                                    <span>•</span>
+                                    <span>Tailwind</span>
                                 </div>
                             </div>
                         </div>
