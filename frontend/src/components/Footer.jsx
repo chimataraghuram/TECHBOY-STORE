@@ -21,6 +21,13 @@ const LinkedinIcon = ({ size = 15, className = "" }) => (
     </svg>
 );
 
+const LeetcodeIcon = ({ size = 15, className = "" }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+        <path d="M16.102 17.93l-2.697 2.607c-.466.467-1.111.662-1.823.662s-1.357-.195-1.824-.662l-4.332-4.363c-.467-.467-.702-1.15-.702-1.863s.235-1.357.702-1.824l4.319-4.38c.467-.467 1.125-.645 1.837-.645s1.357.195 1.823.662l2.697 2.606c.514.515 1.365.497 1.9-.038.535-.536.553-1.387.039-1.901l-2.609-2.636a5.074 5.074 0 0 0-3.85-1.572 5.074 5.074 0 0 0-3.864 1.572l-4.332 4.364C2.334 11.233 2 12.115 2 13.067s.334 1.834 1.389 2.889l4.332 4.364c1.028 1.028 2.378 1.572 3.864 1.572s2.836-.544 3.85-1.572l2.609-2.636c.514-.514.496-1.365-.039-1.901-.535-.535-1.386-.553-1.9-.038z"/>
+        <path d="M20.811 13.01H10.666c-.704 0-1.274.57-1.274 1.274 0 .704.57 1.274 1.274 1.274h10.145c.704 0 1.274-.57 1.274-1.274 0-.704-.57-1.274-1.274-1.274z"/>
+    </svg>
+);
+
 const Footer = ({ setCurrentView }) => {
     const scrollTo = (id) => {
         if (setCurrentView) setCurrentView('home');
@@ -248,6 +255,18 @@ const Footer = ({ setCurrentView }) => {
                                 >
                                     <span>VISIT LINKEDIN</span>
                                     <LinkedinIcon size={14} className="stroke-[2.5]" />
+                                </m.a>
+
+                                <m.a
+                                    whileHover={{ scale: 1.02, y: -2 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    href="https://leetcode.com/u/chimataraghuram/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-[#FFA116] via-[#F89C15] to-[#E2850A] hover:from-[#FFB033] hover:to-[#FFA116] text-[#09090e] font-black text-xs tracking-wider transition-all shadow-[0_6px_22px_rgba(255,161,22,0.35)] border border-white/20 active:scale-[0.98]"
+                                >
+                                    <span>VISIT LEETCODE</span>
+                                    <LeetcodeIcon size={15} className="fill-current" />
                                 </m.a>
                             </div>
                         </div>
