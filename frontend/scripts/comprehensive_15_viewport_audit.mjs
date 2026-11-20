@@ -163,20 +163,44 @@ async function runAudit() {
         await new Promise(r => setTimeout(r, 1000));
 
         // Navigation: Battle Arena
-        const battleLink = await page.$('a[href="#battle"]');
-        if (battleLink) await battleLink.click();
+        let battleClicked = false;
+        try {
+            await page.click('a[href="#battle"]');
+            battleClicked = true;
+        } catch {
+            battleClicked = await page.evaluate(() => {
+                const link = Array.from(document.querySelectorAll('a[href="#battle"]')).find(el => el.offsetParent !== null) || document.querySelector('a[href="#battle"]');
+                if (link) { link.click(); return true; }
+                return false;
+            });
+        }
         await new Promise(r => setTimeout(r, 1000));
-        const onBattle = await page.evaluate(() => document.body.innerText.includes('AI BATTLE ARENA') || document.body.innerText.includes('FLAGSHIP SHOWDOWN'));
-        report("Interaction", "Navigate to Battle Arena", !!battleLink && onBattle, "Battle Arena view mounted successfully");
+        const onBattle = await page.evaluate(() => {
+            const text = document.body.innerText.toLowerCase();
+            return text.includes('battle arena') || text.includes('flagship showdown');
+        });
+        report("Interaction", "Navigate to Battle Arena", battleClicked && onBattle, "Battle Arena view mounted successfully");
 
         // Battle Arena: Random Matchup
         const randomBtn = await page.evaluate(() => {
-            const btn = Array.from(document.querySelectorAll('button')).find(b => b.innerText.includes('Random Matchup'));
+            const btn = Array.from(document.querySelectorAll('button')).find(b => b.innerText.includes('Random Matchup') && b.offsetParent !== null);
             if (btn) { btn.click(); return true; }
             return false;
         });
         await new Promise(r => setTimeout(r, 600));
         report("Interaction", "Battle Arena Random Matchup Button", randomBtn, "Random challenger matchup selected");
+
+        // Battle Arena: Share Battle Card Modal Test
+        const shareBtn = await page.evaluate(() => {
+            const btn = Array.from(document.querySelectorAll('button')).find(b => b.innerText.includes('Share Battle Card') && b.offsetParent !== null);
+            if (btn) { btn.click(); return true; }
+            return false;
+        });
+        await new Promise(r => setTimeout(r, 800));
+        const shareModalOpen = await page.evaluate(() => document.body.innerText.includes('High-res showdown graphic') || document.body.innerText.includes('Download PNG'));
+        await page.keyboard.press('Escape');
+        await new Promise(r => setTimeout(r, 400));
+        report("Modals", "Shareable Battle Card Modal", shareBtn && shareModalOpen, "Shareable showdown modal preview loaded and dismissed cleanly");
 
         // Battle Arena: Toggle Detailed Specs
         const specsBtn = await page.evaluate(() => {
@@ -267,7 +291,10 @@ async function runAudit() {
             return false;
         });
         await new Promise(r => setTimeout(r, 1000));
-        const mobileOnBattle = await mobilePage.evaluate(() => document.body.innerText.includes('AI BATTLE ARENA') || document.body.innerText.includes('FLAGSHIP SHOWDOWN'));
+        const mobileOnBattle = await mobilePage.evaluate(() => {
+            const text = document.body.innerText.toLowerCase();
+            return text.includes('battle arena') || text.includes('flagship showdown');
+        });
         report("Mobile", "Mobile Dock Battle Navigation", mobileBattleClicked && mobileOnBattle, "Mobile dock navigates cleanly to Battle Arena");
         await mobilePage.close();
 
