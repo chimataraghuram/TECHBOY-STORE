@@ -1,10 +1,11 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
-import { Swords, Trophy, Crown, Sparkles, RefreshCw, ChevronDown, Check, Zap, Camera, Battery, Monitor, DollarSign, Sliders, Cpu, HardDrive, Gauge, Eye, Flame } from 'lucide-react';
+import { Swords, Trophy, Crown, Sparkles, RefreshCw, ChevronDown, Check, Zap, Camera, Battery, Monitor, DollarSign, Sliders, Cpu, HardDrive, Gauge, Eye, Flame, Share2 } from 'lucide-react';
 import localPhonesData from '../data/phones.json';
 import { resolveProductImage } from '../utils/imageResolver';
 import { parseSpecs } from '../utils/specsParser';
 import logo from '../../images/logos/new-logo.jpg';
+import ShareBattleModal from './ShareBattleModal';
 
 const phones = Array.isArray(localPhonesData) ? localPhonesData : (localPhonesData?.phones || []);
 
@@ -113,9 +114,30 @@ const generateVerdict = (phoneA, phoneB, scoresA, scoresB) => {
 
 const BattleArena = () => {
     const [activeTab, setActiveTab] = useState('radar'); // 'radar' | 'specs'
+    const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
     const [phoneAId, setPhoneAId] = useState(phones[0]?.id || 1);
     const [phoneBId, setPhoneBId] = useState(phones[1]?.id || (phones[phones.length - 1]?.id || 2));
+
+    useEffect(() => {
+        try {
+            const hash = window.location.hash || '';
+            if (hash.includes('battle?')) {
+                const queryPart = hash.split('battle?')[1];
+                const params = new URLSearchParams(queryPart);
+                const aParam = params.get('a');
+                const bParam = params.get('b');
+                if (aParam && phones.some(p => p.id === Number(aParam))) {
+                    setPhoneAId(Number(aParam));
+                }
+                if (bParam && phones.some(p => p.id === Number(bParam))) {
+                    setPhoneBId(Number(bParam));
+                }
+            }
+        } catch {
+            // Fallback gracefully
+        }
+    }, []);
 
     const phoneA = useMemo(() => phones.find(p => p.id === Number(phoneAId)) || phones[0], [phones, phoneAId]);
     const phoneB = useMemo(() => phones.find(p => p.id === Number(phoneBId)) || phones[1], [phones, phoneBId]);
@@ -173,12 +195,21 @@ const BattleArena = () => {
                     Pick any two smartphones. Real-time benchmarks, spec parsing, and deep-learning comparative scoring reveal the undisputed champion.
                 </p>
 
-                <button
-                    onClick={randomizeMatchup}
-                    className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-xs font-medium text-gray-200 transition-all cursor-pointer hover:border-red-500/40"
-                >
-                    <RefreshCw size={13} /> Random Matchup
-                </button>
+                <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+                    <button
+                        onClick={randomizeMatchup}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-xs font-medium text-gray-200 transition-all cursor-pointer hover:border-red-500/40"
+                    >
+                        <RefreshCw size={13} /> Random Matchup
+                    </button>
+                    <button
+                        onClick={() => setIsShareModalOpen(true)}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-red-600/20 via-orange-500/20 to-amber-500/20 hover:from-red-600/30 hover:to-orange-500/30 border border-red-500/40 text-xs font-semibold text-white shadow-[0_0_15px_rgba(255,31,61,0.2)] transition-all cursor-pointer"
+                        title="Export and share high-res showdown graphic"
+                    >
+                        <Share2 size={13} className="text-red-400" /> Share Battle Card
+                    </button>
+                </div>
             </div>
 
             {/* Battle Heads */}
@@ -564,13 +595,22 @@ const BattleArena = () => {
                     </div>
 
                     <div className="flex-1 min-w-0">
-                        <div className="flex flex-wrap items-center gap-2 mb-2">
-                            <h4 className="text-lg sm:text-xl font-black text-white tracking-wide">
-                                TechBoy AI Deep Intelligence Verdict
-                            </h4>
-                            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-red-500/20 text-red-400 border border-red-500/40 shadow-sm">
-                                Trained v2.4 Spec Engine
-                            </span>
+                        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <div className="flex flex-wrap items-center gap-2">
+                                <h4 className="text-lg sm:text-xl font-black text-white tracking-wide">
+                                    TechBoy AI Deep Intelligence Verdict
+                                </h4>
+                                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-red-500/20 text-red-400 border border-red-500/40 shadow-sm">
+                                    Trained v2.4 Spec Engine
+                                </span>
+                            </div>
+                            <button
+                                onClick={() => setIsShareModalOpen(true)}
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 hover:border-red-500/40 text-xs font-semibold text-gray-200 hover:text-white transition-all cursor-pointer shadow-sm"
+                                title="Export showdown graphic"
+                            >
+                                <Share2 size={13} className="text-red-400" /> Export Card
+                            </button>
                         </div>
 
                         {/* Benchmark Headline & Scores */}
@@ -620,6 +660,17 @@ const BattleArena = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Shareable Battle Card Modal */}
+            <ShareBattleModal
+                isOpen={isShareModalOpen}
+                onClose={() => setIsShareModalOpen(false)}
+                phoneA={phoneA}
+                phoneB={phoneB}
+                scoresA={scoresA}
+                scoresB={scoresB}
+                verdict={verdict}
+            />
         </section>
     );
 };
