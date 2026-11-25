@@ -184,6 +184,7 @@ const HeroPhone3D = ({ className = '' }) => {
         return () => observer.disconnect();
     }, []);
 
+    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     if (!supported) return null;
 
     return (
@@ -192,8 +193,8 @@ const HeroPhone3D = ({ className = '' }) => {
                 <Hero3DBoundary>
                     <Suspense fallback={null}>
                         <Canvas
-                            frameloop={inView ? 'always' : 'never'}
-                            dpr={[1, 1.75]}
+                            frameloop={!inView ? 'never' : prefersReducedMotion ? 'demand' : 'always'}
+                            dpr={[1, 1.5]}
                             camera={{ position: [0, 0, 8.2], fov: 40 }}
                             gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
                             style={{ background: 'transparent' }}

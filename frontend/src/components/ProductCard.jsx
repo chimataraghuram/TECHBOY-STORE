@@ -138,11 +138,14 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
         const token = localStorage.getItem('techboy_token');
         if (token) {
             try {
-                await fetch(`${API_BASE_URL}/watchlist/`, {
+                const res = await fetch(`${API_BASE_URL}/watchlist/toggle/`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                     body: JSON.stringify({ product: product.id })
                 });
+                if (!res.ok) {
+                    console.warn('Backend watchlist toggle returned', res.status);
+                }
             } catch (err) {
                 console.error('Failed to sync backend watchlist', err);
             }
@@ -289,8 +292,8 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                         {tagline || 'Stylish Design. Smooth Performance. Great Value.'}
                     </p>
 
-                    {/* 5-Column Tech Specs Grid (matching reference image) */}
-                    <div className="grid grid-cols-5 gap-1 sm:gap-1.5 mt-2.5">
+                    {/* 5-Column Tech Specs Grid (3-col on narrow mobile, 5-col on sm+ to prevent overlap) */}
+                    <div className="grid grid-cols-3 sm:grid-cols-5 gap-1 sm:gap-1.5 mt-2.5">
                         {/* RAM */}
                         <div className="bg-[#121219]/90 border border-white/[0.07] hover:border-white/20 hover:bg-white/[0.04] transition-all rounded-lg p-1 sm:p-1.5 flex flex-col items-center justify-center text-center">
                             <MemoryStick size={12} className="text-gray-300 mb-0.5 sm:mb-1 shrink-0" />
@@ -374,8 +377,8 @@ const ProductCard = ({ product, onCompare, isComparing, onPriceAlert, index }) =
                         <PriceDropRadar currentPrice={currentPrice} prevPrice={prevPrice} discount={discount} compact={true} />
                     </div>
 
-                    {/* Bottom Action Grid: Wishlist, Track Price, Compare, and View Details */}
-                    <div className="grid grid-cols-4 gap-1.5 sm:gap-2 mt-3.5 pt-1">
+                    {/* Bottom Action Grid: 2x2 on narrow mobile, 4-col on sm+ to prevent clipping */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2 mt-3.5 pt-1">
                         {/* Wishlist */}
                         <m.button
                             whileHover={isTouchDevice ? {} : { scale: 1.05, y: -1 }}

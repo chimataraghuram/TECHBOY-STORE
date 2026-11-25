@@ -282,10 +282,15 @@ const RealisticPhone = ({ isHolographic }) => {
 
 const ThreeDViewer = () => {
     const [isHolographic, setIsHolographic] = useState(false);
+    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
     return (
         <div className="relative w-full h-full select-none overflow-hidden rounded-2xl bg-[radial-gradient(ellipse_at_center,#0d0f1a_0%,#040508_100%)]">
-            <Canvas camera={{ position: [0, 0, 6.8], fov: 45 }}>
+            <Canvas
+                dpr={[1, 1.5]}
+                gl={{ powerPreference: 'high-performance', antialias: true }}
+                camera={{ position: [0, 0, 6.8], fov: 45 }}
+            >
                 {/* Ambient & Studio Directional Lights */}
                 <ambientLight intensity={isHolographic ? 1.0 : 0.6} />
                 <directionalLight position={[4, 6, 5]} intensity={isHolographic ? 1.4 : 1.8} color={isHolographic ? '#00e5ff' : '#ffffff'} />
@@ -309,7 +314,7 @@ const ThreeDViewer = () => {
                     enablePan={false} 
                     maxPolarAngle={Math.PI / 1.4} 
                     minPolarAngle={Math.PI / 3.4}
-                    autoRotate={true}
+                    autoRotate={!prefersReducedMotion}
                     autoRotateSpeed={isHolographic ? 2.0 : 1.2}
                     dampingFactor={0.08}
                 />

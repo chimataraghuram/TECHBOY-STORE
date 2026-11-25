@@ -281,9 +281,9 @@ const ChatPopup = ({ isOpen, onClose }) => {
 
     useEffect(() => { scrollToBottom(); }, [messages, scrollToBottom]);
 
-    const handleSend = async (e) => {
+    const handleSend = async (e, overrideText = null) => {
         e?.preventDefault();
-        const text = inputValue.trim();
+        const text = (overrideText !== null ? overrideText : inputValue).trim();
         if (!text || isStreaming) return;
 
         const userId = msgIdRef.current++;
@@ -364,7 +364,7 @@ const ChatPopup = ({ isOpen, onClose }) => {
             <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-48 h-24 bg-red-500/20 blur-2xl pointer-events-none" />
 
             {/* ── HEADER ── */}
-            <div className="relative px-4 py-3.5 flex items-center justify-between border-b border-white/[0.08] bg-white/[0.02]">
+            <div className="relative px-4 py-3 flex items-center justify-between border-b border-white/[0.08] bg-white/[0.02] shrink-0">
                 <div className="flex items-center gap-3">
                     <div className="relative">
                         <img 
@@ -419,7 +419,7 @@ const ChatPopup = ({ isOpen, onClose }) => {
             </div>
 
             {/* ── MESSAGES CONTAINER ── */}
-            <div className="flex-1 p-4 overflow-y-auto space-y-3.5 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+            <div className="flex-1 min-h-0 p-3.5 sm:p-4 overflow-y-auto space-y-3 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
                 {messages.map(msg => (
                     <div 
                         key={msg.id} 
@@ -449,22 +449,20 @@ const ChatPopup = ({ isOpen, onClose }) => {
 
             {/* ── SUGGESTION PILLS (When starting) ── */}
             {isFirstMessage && (
-                <div className="px-4 pb-2 pt-1">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2 flex items-center gap-1.5">
+                <div className="px-3.5 sm:px-4 pb-2 pt-1 shrink-0">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5 flex items-center gap-1.5">
                         <Sparkles size={11} className="text-red-400" />
                         Quick Prompts
                     </p>
-                    <div className="grid grid-cols-2 gap-1.5">
+                    <div className="grid grid-cols-1 min-[360px]:grid-cols-2 gap-1.5">
                         {suggestions.map((s, i) => (
                             <button
                                 key={i}
                                 type="button"
-                                onClick={() => {
-                                    setInputValue(s.query);
-                                }}
-                                className="flex items-center gap-1.5 px-2.5 py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] hover:border-red-500/40 text-[11.5px] font-semibold text-gray-300 hover:text-white transition-all text-left group cursor-pointer"
+                                onClick={() => handleSend(null, s.query)}
+                                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] hover:border-red-500/40 text-[11px] font-semibold text-gray-300 hover:text-white transition-all text-left group cursor-pointer min-w-0"
                             >
-                                <span className="text-sm">{s.icon}</span>
+                                <span className="text-xs shrink-0">{s.icon}</span>
                                 <span className="truncate">{s.label}</span>
                             </button>
                         ))}
@@ -473,7 +471,7 @@ const ChatPopup = ({ isOpen, onClose }) => {
             )}
 
             {/* ── FOOTER INPUT ── */}
-            <form onSubmit={handleSend} aria-label="Ask TechBoy AI" className="p-3 bg-white/[0.02] border-t border-white/[0.08] flex items-center gap-2">
+            <form onSubmit={handleSend} aria-label="Ask TechBoy AI" className="p-3 bg-white/[0.02] border-t border-white/[0.08] flex items-center gap-2 shrink-0">
                 <div className="relative flex-1 flex items-center">
                     <input
                         type="text"
