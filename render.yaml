@@ -17,6 +17,10 @@ services:
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: CORS_ALLOW_ALL_ORIGINS
+        value: "False"
       - key: ALLOWED_HOSTS
         value: "*"
       - key: FIREBASE_SERVICE_ACCOUNT_JSON

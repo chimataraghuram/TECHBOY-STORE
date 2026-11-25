@@ -32,11 +32,11 @@ button:not([data-framer-motion]):active,
     transform: translateY(-2px);
   }
 
-  /* Pre-promote compositing layers before hover to avoid jank on first hover */
-  .product-card,
-  .glass-card,
-  .trend-card,
-  .hover-lift {
+  /* Promote compositing layer only during active hover to conserve GPU memory */
+  .product-card:hover,
+  .glass-card:hover,
+  .trend-card:hover,
+  .hover-lift:hover {
     will-change: transform;
   }
 }

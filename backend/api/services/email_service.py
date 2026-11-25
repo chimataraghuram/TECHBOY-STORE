@@ -1,5 +1,6 @@
 import os
 import logging
+from html import escape
 import resend
 
 logger = logging.getLogger(__name__)
@@ -72,7 +73,7 @@ def send_welcome_email(user_email: str, user_name: str = "Tech Explorer"):
                 <div style="font-size: 11px; color: #ff1f3d; font-weight: 700; letter-spacing: 2px; margin-top: 6px;">NEXT-GEN SMARTPHONE INTELLIGENCE</div>
             </div>
             <div class="content">
-                <div class="title">Welcome aboard, {user_name}! 🚀</div>
+                <div class="title">Welcome aboard, {escape(str(user_name or 'User'))}! 🚀</div>
                 <div class="text">
                     Your account has been successfully created. You now have access to real-time price tracking, verified specs, AI smartphone comparison, and instant drop alerts.
                 </div>
@@ -122,12 +123,12 @@ def send_login_notification_email(user_email: str, user_name: str = "User", ip_a
             <div class="logo">TECHBOY<span>STORE</span></div>
             <div class="title">Security Notice: New Login Detected</div>
             <div class="text">
-                Hello <strong>{user_name}</strong>, a sign-in was just recorded for your TechBoy Store account.
+                Hello <strong>{escape(str(user_name or 'User'))}</strong>, a sign-in was just recorded for your TechBoy Store account.
             </div>
             <div class="box">
-                <strong>Account:</strong> {user_email}<br>
-                <strong>Device/Browser:</strong> {user_agent[:60]}<br>
-                <strong>Network IP:</strong> {ip_address}
+                <strong>Account:</strong> {escape(str(user_email or ''))}<br>
+                <strong>Device/Browser:</strong> {escape(str(user_agent or 'Web Browser')[:60])}<br>
+                <strong>Network IP:</strong> {escape(str(ip_address or 'Unknown'))}
             </div>
             <div class="text" style="font-size: 13px;">
                 If this was you, you can safely disregard this email. If you did not initiate this sign-in, please change your password immediately.
@@ -149,9 +150,12 @@ def send_price_drop_alert_email(to_email: str, product_name: str, old_price: int
     savings = (old_price - new_price) if old_price and old_price > new_price else None
     savings_text = f"Save ₹{savings:,}" if savings else "Price Dropped!"
     
-    subject = f"🔥 Price Drop Alert: {product_name} is now ₹{new_price:,}!"
     link = deal_link or "https://techboy-store.vercel.app/"
-    image_tag = f'<img src="{product_image}" alt="{product_name}" style="max-height: 180px; max-width: 100%; border-radius: 12px; margin-bottom: 18px; object-fit: contain;">' if product_image else ''
+    safe_product_name = escape(str(product_name or ''))
+    safe_product_image = escape(str(product_image or ''), quote=True)
+    safe_link = escape(str(link), quote=True)
+    subject = f"🔥 Price Drop Alert: {product_name} is now ₹{new_price:,}!"
+    image_tag = f'<img src="{safe_product_image}" alt="{safe_product_name}" style="max-height: 180px; max-width: 100%; border-radius: 12px; margin-bottom: 18px; object-fit: contain;">' if product_image else ''
 
     html = f"""
     <!DOCTYPE html>
@@ -181,7 +185,7 @@ def send_price_drop_alert_email(to_email: str, product_name: str, old_price: int
             </div>
             <div class="content">
                 {image_tag}
-                <h2 style="font-size: 20px; margin: 0 0 10px 0; color: #ffffff;">{product_name}</h2>
+                <h2 style="font-size: 20px; margin: 0 0 10px 0; color: #ffffff;">{safe_product_name}</h2>
                 <div class="price-card">
                     {f'<div class="old-price">Previous: ₹{old_price:,}</div>' if old_price else ''}
                     <div class="new-price">₹{new_price:,}</div>
@@ -190,7 +194,7 @@ def send_price_drop_alert_email(to_email: str, product_name: str, old_price: int
                 <p style="color: #a1a1aa; font-size: 14px; line-height: 1.5;">
                     The price for this phone just dropped to meet your alert condition. Deals often sell out quickly — grab it before it resets!
                 </p>
-                <a href="{link}" class="btn">View Live Deal &rarr;</a>
+                <a href="{safe_link}" class="btn">View Live Deal &rarr;</a>
             </div>
             <div class="footer">
                 You are receiving this because you set a price alert on TechBoy Store.

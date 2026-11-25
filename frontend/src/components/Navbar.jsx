@@ -162,20 +162,20 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
             {/* TOP HEADER NAVBAR */}
             <nav className="tb-nav fixed top-0 left-0 right-0 z-[90] w-full" aria-label="Main navigation">
                 <div className="w-full border-b border-white/[0.06] bg-[#060608]/85 backdrop-blur-2xl shadow-[0_10px_40px_rgba(0,0,0,0.55)]">
-                    <div className="mx-auto max-w-[1560px] px-3 sm:px-5 lg:px-8">
-                        <div className="flex items-center justify-between gap-2 sm:gap-4 h-[62px] sm:h-[68px] md:h-[78px]">
+                    <div className="mx-auto max-w-[1560px] px-2.5 sm:px-5 lg:px-8">
+                        <div className="flex items-center justify-between gap-1 sm:gap-4 h-[62px] sm:h-[68px] md:h-[78px]">
 
                             {/* LOGO */}
-                            <a href="/#home" className="flex items-center gap-2 sm:gap-3 group shrink-0" onClick={(e) => handleNavClick(e, 'home')}>
+                            <a href="/#home" className="flex items-center gap-1.5 sm:gap-3 group shrink-0 min-w-0" onClick={(e) => handleNavClick(e, 'home')}>
                                 <span className="relative shrink-0">
                                     <img
                                         src={logo}
                                         alt="TECHBOY STORE"
-                                        className="h-10 w-10 sm:h-11 sm:w-11 md:h-12 md:w-12 lg:h-[50px] lg:w-[50px] rounded-full object-cover border border-red-500/60 shadow-[0_0_16px_rgba(255,31,61,0.4)] transition-transform duration-500 group-hover:scale-105 group-hover:shadow-[0_0_22px_rgba(255,31,61,0.65)]"
+                                        className="h-8 w-8 min-[380px]:h-9 min-[380px]:w-9 sm:h-11 sm:w-11 md:h-12 md:w-12 lg:h-[50px] lg:w-[50px] rounded-full object-cover border border-red-500/60 shadow-[0_0_16px_rgba(255,31,61,0.4)] transition-transform duration-500 group-hover:scale-105 group-hover:shadow-[0_0_22px_rgba(255,31,61,0.65)]"
                                     />
                                     <span className="absolute inset-0 rounded-full ring-1 ring-white/10 pointer-events-none" />
                                 </span>
-                                <span className="text-white font-extrabold tracking-wide text-[15px] sm:text-lg md:text-xl lg:text-[22px] whitespace-nowrap leading-none">
+                                <span className="text-white font-extrabold tracking-wide text-[13.5px] min-[380px]:text-[15px] sm:text-lg md:text-xl lg:text-[22px] whitespace-nowrap leading-none">
                                     TECHBOY <span className="text-red-500 drop-shadow-[0_0_12px_rgba(255,31,61,0.6)]">STORE</span>
                                 </span>
                             </a>
@@ -209,34 +209,34 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
                             </div>
 
                             {/* RIGHT CLUSTER */}
-                            <div className="flex items-center justify-end gap-1.5 sm:gap-2.5 flex-1 lg:flex-none">
+                            <div className="flex items-center justify-end gap-1 sm:gap-2.5 flex-1 lg:flex-none min-w-0">
 
                                 {/* Exchange Value Calculator Button */}
                                 <button
                                     type="button"
                                     onClick={() => setIsExchangeOpen(true)}
-                                    className="text-gray-300 hover:text-white p-2 sm:p-2.5 rounded-full hover:bg-white/[0.08] border border-white/10 hover:border-red-500/40 transition-all flex items-center justify-center shadow-sm hover:shadow-[0_0_15px_rgba(255,31,61,0.2)]"
+                                    className="text-gray-300 hover:text-white p-1.5 sm:p-2.5 rounded-full hover:bg-white/[0.08] border border-white/10 hover:border-red-500/40 transition-all flex items-center justify-center shadow-sm hover:shadow-[0_0_15px_rgba(255,31,61,0.2)] shrink-0"
                                     aria-label="Exchange Value Calculator"
                                     title="Exchange Value Calculator"
                                 >
-                                    <Calculator size={18} className="text-gray-300 hover:text-amber-400 transition-colors" />
+                                    <Calculator size={17} className="text-gray-300 hover:text-amber-400 transition-colors sm:w-[18px] sm:h-[18px]" />
                                 </button>
 
                                 {/* Sleek Search Icon Button (opens search modal) */}
                                 <button
                                     type="button"
                                     onClick={() => setIsSearchModalOpen(true)}
-                                    className="text-gray-300 hover:text-white p-2 sm:p-2.5 rounded-full hover:bg-white/[0.08] border border-white/10 hover:border-red-500/40 transition-all flex items-center justify-center shadow-sm hover:shadow-[0_0_15px_rgba(255,31,61,0.2)]"
+                                    className="text-gray-300 hover:text-white p-1.5 sm:p-2.5 rounded-full hover:bg-white/[0.08] border border-white/10 hover:border-red-500/40 transition-all flex items-center justify-center shadow-sm hover:shadow-[0_0_15px_rgba(255,31,61,0.2)] shrink-0"
                                     aria-label="Search smartphones"
                                     title="Search smartphones"
                                 >
-                                    <Search size={18} className="text-gray-300 hover:text-red-400 transition-colors" />
+                                    <Search size={17} className="text-gray-300 hover:text-red-400 transition-colors sm:w-[18px] sm:h-[18px]" />
                                 </button>
 
                                 {/* TechBoy AI (top header button, visible on mobile, tablet & desktop) */}
                                 <button
                                     onClick={onChatToggle}
-                                    className="relative flex items-center gap-1.5 sm:gap-2 text-[12.5px] sm:text-[13px] font-bold whitespace-nowrap bg-white/[0.05] border border-white/10 hover:border-red-500/40 hover:bg-red-500/10 p-2 sm:px-3.5 sm:py-2 rounded-full transition-all text-gray-200 hover:text-white group"
+                                    className="relative flex items-center gap-1.5 sm:gap-2 text-[12.5px] sm:text-[13px] font-bold whitespace-nowrap bg-white/[0.05] border border-white/10 hover:border-red-500/40 hover:bg-red-500/10 p-1.5 sm:px-3.5 sm:py-2 rounded-full transition-all text-gray-200 hover:text-white group shrink-0"
                                     aria-label="TechBoy AI"
                                 >
                                     <div className="relative flex items-center justify-center">
@@ -288,7 +288,7 @@ const Navbar = ({ onChatToggle, onSearch, searchTerm, currentView, setCurrentVie
             {typeof document !== 'undefined' && createPortal(
                 <nav 
                     aria-label="Mobile Navigation"
-                    className="lg:hidden fixed left-1/2 -translate-x-1/2 z-[9990] w-[calc(100%-20px)] sm:w-[calc(100%-32px)] max-w-[420px] rounded-full bg-gradient-to-b from-[#1c1c2a]/80 via-[#0e0e18]/90 to-[#07070d]/95 backdrop-blur-3xl border border-white/25 p-1.5 ring-1 ring-white/10 pointer-events-auto select-none"
+                    className="lg:hidden fixed left-1/2 -translate-x-1/2 z-[45] w-[calc(100%-20px)] sm:w-[calc(100%-32px)] max-w-[420px] rounded-full bg-gradient-to-b from-[#1c1c2a]/80 via-[#0e0e18]/90 to-[#07070d]/95 backdrop-blur-3xl border border-white/25 p-1.5 ring-1 ring-white/10 pointer-events-auto select-none"
                     style={{
                         bottom: 'max(14px, env(safe-area-inset-bottom))',
                         boxShadow: '0 20px 50px rgba(0, 0, 0, 0.88), 0 0 30px rgba(255, 31, 61, 0.22), inset 0 1.5px 1px rgba(255, 255, 255, 0.35), inset 0 -1.5px 2px rgba(0, 0, 0, 0.6)'

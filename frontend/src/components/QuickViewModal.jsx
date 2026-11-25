@@ -455,7 +455,7 @@ const QuickViewModal = ({ product, onClose, onOpenShare }) => {
                                                     <div className="text-[10px] uppercase font-bold tracking-wider text-gray-400">
                                                         {sixGrid.memory.label}
                                                     </div>
-                                                    <div className="flex items-center gap-6 text-xs sm:text-[13px] font-extrabold text-white mt-0.5">
+                                                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-[13px] font-extrabold text-white mt-0.5">
                                                         <div>
                                                             <span className="text-[10px] text-gray-400 font-normal mr-1">RAM</span>
                                                             {sixGrid.memory.ram}

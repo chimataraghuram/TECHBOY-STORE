@@ -342,19 +342,27 @@ class PriceAlertViewSet(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
     
     def get_queryset(self):
+        # Require authentication to list/read/modify/delete alerts to prevent email PII enumeration & IDOR
         if self.request.user.is_authenticated:
             return PriceAlert.objects.filter(user=self.request.user)
-        email = self.request.query_params.get('email')
-        return PriceAlert.objects.filter(email__iexact=email) if email else PriceAlert.objects.none()
+        return PriceAlert.objects.none()
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         product = serializer.validated_data['product']
         user = request.user if request.user.is_authenticated else None
-        email = (request.data.get('email') or (user.email if user else '')).strip().lower()
+        if user and user.email:
+            email = user.email.strip().lower()
+        else:
+            email = (request.data.get('email') or '').strip().lower()
         if not email:
             return Response({'error': 'Email is required for guest price alerts.'}, status=400)
+
+        # Prevent unauthenticated callers from overwriting an authenticated user's alert
+        if not user and PriceAlert.objects.filter(email=email, product=product, user__isnull=False).exists():
+            return Response({'error': 'Please sign in to update alerts for this account.'}, status=403)
+
         alert, created = PriceAlert.objects.update_or_create(
             email=email,
             product=product,
@@ -382,6 +390,21 @@ class WatchlistViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+    @action(detail=False, methods=['post'])
+    def toggle(self, request):
+        product_id = request.data.get('product') or request.data.get('product_id')
+        if not product_id:
+            return Response({'error': 'product id is required'}, status=status.HTTP_400_BAD_REQUEST)
+        existing = Watchlist.objects.filter(user=request.user, product_id=product_id)
+        if existing.exists():
+            existing.delete()
+            return Response({'saved': False}, status=status.HTTP_200_OK)
+        product = Product.objects.filter(id=product_id).first()
+        if not product:
+            return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
+        item = Watchlist.objects.create(user=request.user, product=product)
+        return Response({'saved': True, 'id': item.id}, status=status.HTTP_201_CREATED)
 
 def _format_gemini_contents(history, current_prompt):
     """
@@ -514,15 +537,13 @@ class TriggerDealsCronAPIView(APIView):
     def post(self, request):
         """
         Secure webhook / cron endpoint to update live market prices, graphs & store links.
-        Can be invoked by GitHub Actions or Vercel Cron with header Authorization: Bearer <CRON_SECRET>
+        Must be invoked by GitHub Actions or Vercel Cron with header Authorization: Bearer <CRON_SECRET>
         """
         auth_header = request.headers.get('Authorization', '')
-        secret = os.environ.get('CRON_SECRET', 'techboy_cron_secure_token')
-        
-        # Verify secret token if passed or verify in production
-        if secret and secret != 'techboy_cron_secure_token':
-            if auth_header != f"Bearer {secret}":
-                return Response({"error": "Unauthorized cron request"}, status=status.HTTP_401_UNAUTHORIZED)
+        secret = os.environ.get('CRON_SECRET', '')
+
+        if not secret or auth_header != f"Bearer {secret}":
+            return Response({"error": "Unauthorized cron request"}, status=status.HTTP_401_UNAUTHORIZED)
         
         from scripts.update_live_deals import update_all_deals
         res = update_all_deals()

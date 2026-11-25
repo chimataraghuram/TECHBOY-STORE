@@ -93,20 +93,16 @@ const StoreSection = ({ searchTerm, onSearch }) => {
     const triggerAutoUpdate = async () => {
         setIsAutoUpdating(true);
         try {
-            // Hit backend cron update endpoint
-            const res = await fetch(`${API_BASE_URL}/cron/update-deals/`, { method: 'POST' });
-            if (res.ok) {
-                // Refresh products list
-                const prodRes = await fetch(`${API_BASE_URL}/products/?limit=100`);
-                if (prodRes.ok) {
-                    const data = await prodRes.json();
-                    const list = data.results || data;
-                    if (list && list.length > 0) {
-                        setProducts(list);
-                    }
+            // Refresh products list cleanly without calling protected cron webhook from browser
+            const prodRes = await fetch(`${API_BASE_URL}/products/?limit=100`);
+            if (prodRes.ok) {
+                const data = await prodRes.json();
+                const list = data.results || data;
+                if (list && list.length > 0) {
+                    setProducts(list);
                 }
-                setLastSyncTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
             }
+            setLastSyncTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
         } catch (e) {
             console.warn("Auto-update failed:", e);
         } finally {
@@ -137,13 +133,13 @@ const StoreSection = ({ searchTerm, onSearch }) => {
         };
         load();
 
-        // Automatic background heartbeat polling every 45s for seamless device & price updates
+        // Background refresh every 5 minutes (only when tab is visible) to stay well within API rate limits
         const interval = setInterval(() => {
-            if (mounted) {
+            if (mounted && !document.hidden) {
                 load();
                 setLastSyncTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
             }
-        }, 45000);
+        }, 300000);
 
         return () => { 
             mounted = false; 
